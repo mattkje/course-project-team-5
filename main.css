@@ -1,0 +1,85 @@
+body {
+    font-family: Inter, sans-serif;
+    background-color: #ffffff;
+    color: #000000;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    font-family: Lobster, sans-serif;
+    padding-left: 20px;
+}
+
+img {
+    margin: auto;
+}
+
+.content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+}
+
+.header {
+    font-weight: bold;
+    background-color: #ffffff;
+    color: #000000;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-box {
+    color: #000000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 15px;
+    width: 70%;
+    align-content: center;
+    text-decoration: none;
+    display: flex;
+    margin: auto;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.hbox {
+    display: flex;
+}
+
+.hgrow {
+    margin: auto;
+}
+
+.bee {
+    width: 50px;
+    height: 50px;
+}
+
+.media-link-button {
+    background-color: #ffffff;
+    color: #000000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.search-button {
+    background-color: #ffce00;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.media-link-button:hover {
+    color: #8c8c8c;
+}
