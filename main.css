@@ -6,9 +6,17 @@ body {
     padding: 0;
 }
 
+footer {
+    background-color: #a38511;
+}
+
 h1 {
     font-family: Lobster, sans-serif;
     padding-left: 20px;
+}
+
+h2 {
+    font-size: large;
 }
 
 img {
@@ -30,6 +38,18 @@ img {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.greeting {
+    color: #000000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 15px;
+    width: 70%;
+    align-content: center;
+    text-decoration: none;
+    display: flex;
+    margin: auto;
+}
+
 .search-box {
     color: #000000;
     border: none;
@@ -40,7 +60,7 @@ img {
     text-decoration: none;
     display: flex;
     margin: auto;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
 }
 
 .hbox {
@@ -56,6 +76,12 @@ img {
     height: 50px;
 }
 
+.menu-icons {
+    width: 30px;
+    height: 30px;
+}
+
+
 .media-link-button {
     background-color: #ffffff;
     color: #000000;
@@ -69,7 +95,7 @@ img {
 }
 
 .search-button {
-    background-color: #ffce00;
+    background-color: #f0c419;
     color: #ffffff;
     border: none;
     padding: 10px 20px;
@@ -81,5 +107,28 @@ img {
 }
 
 .media-link-button:hover {
-    color: #8c8c8c;
+    opacity: 60%;
+}
+
+.media-link-button .text {
+    font-size: 0;
+    width: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.media-link-button:hover .text {
+    font-size: medium;
+    opacity: 1;
+}
+
+.search-button:hover {
+    background-color: #ffdf5d;
+}
+
+.right-content {
+    flex: 1; /* Allow the right content to take up remaining space */
+    display: flex;
+    justify-content: flex-end; /* Align content to the right */
+    align-items: center;
 }
