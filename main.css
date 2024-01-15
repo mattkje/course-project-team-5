@@ -26,6 +26,11 @@ img {
     padding: 0;
 }
 
+button {
+    background-color: transparent;
+    border-color: transparent;
+}
+
 .content {
     display: flex;
     justify-content: space-between;
