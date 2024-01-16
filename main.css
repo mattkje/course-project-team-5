@@ -1,7 +1,7 @@
 body {
     font-family: Inter, sans-serif;
     background-color: #ffffff;
-    color: #000000;
+    color: #242f46;
     margin: 0;
     padding: 0;
 }
@@ -40,13 +40,73 @@ button {
 .header {
     font-weight: bold;
     background-color: #ffffff;
-    color: #000000;
+    color: #242f46;
     text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    "box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1)";
+}
+
+.hero-box {
+    width: 70%;
+    margin: auto;
+}
+
+.hero-text {
+    font-family: Inter Bold, sans-serif;
+    font-size: 70px;
+    color: #242f46;
+    margin: 0;
+    padding: 0;
+}
+
+.hero-text-quality {
+    font-family: Inter Bold, sans-serif;
+    font-size: 70px;
+    color: #f0c419;
+    margin: auto;
+    margin-left: 20px;
+    padding: 0;
+}
+
+.hero-image {
+    width: 30%;
+    height: 30%;
+    border-radius: 15px;
+}
+
+.hero-description {
+    color: #3f3f3f;
+}
+
+.hero-hbox {
+    display: flex;
+    width: 70%;
+    padding: 10px 20px;
+    margin: auto;
+}
+
+.mail-box {
+    color: #cecece;
+    border-radius: 15px;
+    border: 2px solid #fff8e3;
+    padding: 5px;
+    width: 70%;
+    display: flex;
+}
+
+.mail-prompt {
+    font-family: Inter, sans-serif;
+    border: none;
+    color: #242f46;
+    margin-left: 10px;
+    user-select: none;
+}
+
+input:focus {
+    outline: none;
 }
 
 .greeting {
-    color: #000000;
+    color: #242f46;
     border: none;
     padding: 10px 20px;
     border-radius: 15px;
@@ -72,7 +132,7 @@ button {
 
 .content-box {
     position: relative;
-    color: #000000;
+    color: #242f46;
     border: none;
     border-radius: 15px;
     width: 70%;
@@ -141,7 +201,7 @@ button {
 
 .media-link-button {
     background-color: #ffffff;
-    color: #000000;
+    color: #242f46;
     border: none;
     padding: 10px 1%;
     border-radius: 5px;
@@ -161,6 +221,7 @@ button {
     display: flex;
     align-items: center;
     margin-right: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .media-link-button:hover {
