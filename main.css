@@ -6,9 +6,12 @@ body {
     padding: 0;
 }
 
-h1 {
-    font-family: Lobster, sans-serif;
+.logo-left {
     padding-left: 20px;
+}
+
+h1 {
+    font-family: Bebas Neue, sans-serif;
 }
 
 h2 {
@@ -23,6 +26,13 @@ img {
 button {
     background-color: transparent;
     border-color: transparent;
+}
+
+.menu-links {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 50px;
 }
 
 .content {
@@ -79,7 +89,7 @@ button {
     border: none;
     border-radius: 15px;
     font-size: 16px;
-    box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 1px 1px rgba(0, 0, 0, .25);
+    box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
 }
 
 .right-content {
@@ -221,8 +231,8 @@ input:focus {
 
 .search-button {
     width: 60px;
-    background-color: white;
-    color: #757575;
+    background-color: #242f46;
+    color: #ffffff;
     border: none;
     padding: 20px;
     border-radius: 10px;
@@ -250,7 +260,7 @@ input:focus {
 }
 
 .search-button:hover {
-    background-color: #ffdf5d;
+    background-color: #445883;
     box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
 }
 
@@ -316,7 +326,7 @@ footer a:hover {
     background-position: 12px 11px;
 
     &:hover {
-        background-color: #ffdf5d;
+        background-color: #445883;
         box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
     }
 
