@@ -28,6 +28,12 @@ button {
     border-color: transparent;
 }
 
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
 .menu-links {
     display: flex;
     justify-content: space-between;
@@ -46,15 +52,16 @@ button {
     background-color: #ffffff;
     color: #242f46;
     text-align: center;
-    "box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1)";
+    max-height: 8vh;
+    min-height: 8vh;
+
 }
 
 .hero-hbox {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    margin: auto;
-    width: 70%;
+    background: linear-gradient(45deg, #7fccff, #5872f1, #be3bff);
 }
 
 .hero-box {
@@ -63,17 +70,17 @@ button {
 }
 
 .hero-text {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', sans-serif; /* Apply Inter font as a fallback */
+    font-weight: bold;
     font-size: 60px;
-    color: #242f46;
-    margin: 0;
-    padding: 0;
+    text-transform: uppercase;
+    color: #ffffff;
 }
 
 .hero-description {
     font-family: 'Inter', sans-serif;
     font-size: 18px;
-    color: #666;
+    color: #ffffff;
     line-height: 1.5;
     margin-bottom: 20px;
 }
@@ -218,7 +225,6 @@ input:focus {
 
 
 .media-link-button {
-    background-color: #ffffff;
     color: #242f46;
     border: none;
     padding: 10px 1%;
@@ -226,11 +232,12 @@ input:focus {
     text-decoration: none;
     display: flex;
     align-items: center;
-    margin-right: 10px;
+    margin-right: 3vw;
 }
 
 .search-button {
-    width: 60px;
+    min-width: 6vw;
+    max-width: 6vw;
     background-color: #242f46;
     color: #ffffff;
     border: none;
