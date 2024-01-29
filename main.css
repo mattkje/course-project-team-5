@@ -15,7 +15,13 @@ h1 {
 }
 
 h2 {
-    font-size: large;
+    font-size: 40px;
+}
+
+h3 {
+    font-size: 30px;
+    font-weight: 900;
+    text-align: center;
 }
 
 img {
@@ -52,16 +58,13 @@ ul {
     background-color: #ffffff;
     color: #242f46;
     text-align: center;
-    max-height: 8vh;
-    min-height: 8vh;
-
 }
 
 .hero-hbox {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(45deg, #7fccff, #5872f1, #be3bff);
+    background: linear-gradient(45deg, #2D9AFF, #A7FF92);
 }
 
 .hero-box {
@@ -121,7 +124,8 @@ ul {
 }
 
 .hero-graphic {
-    max-width: 600px;
+    max-width: 700px;
+    width: 50%;
     top: 0;
     left: 0;
 }
@@ -129,6 +133,48 @@ ul {
 input:focus {
     outline: none;
 }
+
+.search-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10vh; /* Adjust as needed */
+}
+
+.search-bar {
+    box-sizing: border-box;
+    width: 60%;
+    height: 7vh;
+    border: 3px solid #606060;
+    border-radius: 20px;
+    position: relative; /* Make it a positioning context for the absolute position of the button */
+}
+
+.search-button {
+    position: absolute;
+    top: 50%;
+    right: 0.5vw;
+    transform: translateY(-50%);
+    padding: 0.7vw 1.2vw 0.7vw 1.2vw; /* Adjust padding as needed */
+    background-color: #342E37; /* Green color, you can change it */
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 0.7vw; /* Adjust border-radius to match the search bar */
+    cursor: pointer;
+}
+
+.search-prompt {
+    background: none;
+    width: 100%;
+    padding: 20px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 15px;
+    font-size: 16px;
+}
+
 
 .greeting {
     color: #242f46;
@@ -143,7 +189,6 @@ input:focus {
 }
 
 .search-box {
-    color: #000000;
     border: none;
     padding: 40px 20px;
     border-radius: 15px;
@@ -152,16 +197,12 @@ input:focus {
     text-decoration: none;
     display: flex;
     margin: auto;
-    box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
 }
 
 .content-box {
-    position: relative;
     color: #242f46;
     border: none;
     border-radius: 15px;
-    width: 70%;
-    height: 400px;
     align-content: center;
     text-decoration: none;
     margin-left: 15px;
@@ -170,14 +211,10 @@ input:focus {
 }
 
 .content-box-description {
-    color: #ffffff;
-    background-color: rgba(0,0,0,0.69);
+    color: #000000;
     padding: 20px 0;
     border-radius: 0 0 15px 15px;
     width: 100%;
-    position: absolute;
-    bottom: 0;
-    left: 0;
 
 }
 
@@ -186,9 +223,8 @@ input:focus {
 }
 
 .content-box-image {
-    width: 100%;
-    height: 400px;
-    object-fit: cover; /* or object-fit: contain; depending on your needs */
+    height: 250px;
+    object-fit: cover;
     border-radius: 15px;
 }
 
@@ -235,19 +271,14 @@ input:focus {
     margin-right: 3vw;
 }
 
-.search-button {
-    min-width: 6vw;
-    max-width: 6vw;
-    background-color: #242f46;
+.standard-button {
+    background-color: #342E37;
     color: #ffffff;
-    border: none;
+    font-weight: bold;
     padding: 20px;
     border-radius: 10px;
     text-decoration: none;
     display: flex;
-    align-items: center;
-    margin-right: 10px;
-    box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 1px 1px rgba(0, 0, 0, .25);
 }
 
 .media-link-button:hover {
@@ -266,7 +297,7 @@ input:focus {
     opacity: 1;
 }
 
-.search-button:hover {
+.standard-button:hover {
     background-color: #445883;
     box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
 }
@@ -368,5 +399,6 @@ footer a:hover {
 ,#alejandroBox:hover .additional-info
 ,#liBox:hover .additional-info {
     display: block;
+
 }
 

@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Learniverse</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap">
+
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bebas+Neue">
@@ -25,18 +27,14 @@
             </a>
         </div>
         <ul class="menu-links">
-            <li><a href="#pricing" class="media-link-button">Pricing</a></li>
+            <li><a href="#pricing" class="media-link-button">Pro</a></li>
             <li><a href="#" class="media-link-button">Categories</a></li>
             <li><a href="#" class="media-link-button">Contact</a></li>
             <li><a href="#" class="media-link-button">About</a></li>
         </ul>
         <div class="right-content">
             <a href="/login" class="media-link-button">Log in</a>
-            <a href="/signup" class="search-button">Get Started</a>
-            <button class="media-link-button">
-                <img class="menu-icons" src="media/menu.svg" alt="Menu Icon">
-            </button>
-
+            <a href="/signup" class="media-link-button">Get Started</a>
         </div>
     </div>
 </div>
@@ -51,9 +49,9 @@
                 engaging content and take the first step towards a brighter future.</p>
 
             <div class="mail-box">
-                <label for="myTextBox"></label><input class="mail-prompt" type="text" id="myTextBox" name="myTextBox" placeholder="Your Mail here">
+                <label for="myTextBox"></label><input class="mail-prompt" type="text" id="myTextBox" name="myTextBox" placeholder="example@mail.com">
                 <div class="right-content">
-                    <a href="#" class="search-button">Sign up</a>
+                    <a href="#" class="standard-button">Sign&nbsp;Up</a> <!--- Space messes up the text, TODO: Fix this temporary solution --->
                 </div>
             </div>
             <br>
@@ -70,7 +68,7 @@
              --->
 
         </div>
-        <img class="hero-graphic" src="https://freepngimg.com/thumb/sleep/40603-9-guy-picture-free-hd-image.png" alt="NeuBee Logo">
+        <img class="hero-graphic" src="https://s3-alpha-sig.figma.com/img/3260/0c93/ec5adb6e7430cef52693e4b177421a4d?Expires=1707696000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=H8fWu-MU6w8mJgUBA8zBIrVSZo53xhGJg4hSK1wg28uY~4c54HvHt9E28oiVcs3ti5qDuPeuYKt5aCBYgYaJXwX~RUuIWucNKjLzHRnmEjX5mq30~vLgpvhYxrrc99K8ChMLtX~yamBI4Ko8VEC5ppn7lgfhlbZhCE~Z-4JJL0HKfNOZy8VAuTolJ8EivCk~OZWp-qMSZL~sK0vWuzBVq8mRwW0-eBiGXrEk-0E2kfkXTMhTUBBQLHbtMdfxXVOPR4Th58OW5WK64Mimsw5tVeAgrlmbL-uilqW21uVlP7524wQ0H7kPyUuMJiZtoaiRn1r3Ga~vPEcpzXkhdkUC5w__" alt="NeuBee Logo">
     </div>
 
     <!---
@@ -83,105 +81,51 @@
 
 <br>
 
-<div class="greeting">
-    <h2>Get an estimate of a selection of items matching your budget</h2>
-</div>
+<h3>Explore a large selection of courses</h3>
 
-<div class="greeting">
-    <h2>With Learniverse Connect you can</h2>
-</div>
+<div class="search-container">
 
-<div class="search-box">
-    <div class="hbox">
-        <div class="content-box">
-            <img class="content-box-image" src="https://i.pinimg.com/736x/92/26/c8/9226c8611770bda484dc1b12cee6e849.jpg" alt="NeuBee Logo">
-            <div class="content-box-description">
-                <div class="hbox">
-                    <div>
-                        <h3 class="content-box-text">Perk 1</h3>
-                        <p class="content-box-text">Short text to describe perk</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="content-box">
-            <img class="content-box-image" src="https://i.pinimg.com/736x/92/26/c8/9226c8611770bda484dc1b12cee6e849.jpg" alt="NeuBee Logo">
-            <div class="content-box-description">
-                <div class="hbox">
-                    <div>
-                        <h3 class="content-box-text">Perk 2</h3>
-                        <p class="content-box-text">Short text to describe perk</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="content-box">
-            <img class="content-box-image" src="https://i.pinimg.com/736x/92/26/c8/9226c8611770bda484dc1b12cee6e849.jpg" alt="NeuBee Logo">
-            <div class="content-box-description">
-                <div class="hbox">
-                    <div>
-                        <h3 class="content-box-text">Perk 3</h3>
-                        <p class="content-box-text">Short text to describe perk</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="search-bar">
+        <label for="myTextBox"></label><input class="search-prompt" type="text" id="myTextBox" name="myTextBox" placeholder="What would you like to learn">
+        <a class="search-button">Search</a>
     </div>
 </div>
 
 <div class="greeting">
-    <h2 class="hero-text">Our Belief</h2>
+    <h2>Featured</h2>
 </div>
+
 <div class="search-box">
     <div class="hbox">
-        <h2>At Learniverse, we believe that learning knows no bounds, and our platform is designed to empower individuals like you to embark on a journey of lifelong learning.</h2>
         <div class="content-box">
-            <img class="content-box-image" src="https://media.istockphoto.com/id/1409329028/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=_zOuJu755g2eEUioiOUdz_mHKJQJn-tDgIAhQzyeKUQ=" alt="NeuBee Logo">
+            <img class="content-box-image" src="https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_azure.jpg" alt="NeuBee Logo">
             <div class="content-box-description">
                 <div class="hbox">
                     <div>
-                        <h3 class="content-box-text">Perk 1</h3>
-                        <p class="content-box-text">Short text to describe perk</p>
+                        <h3 class="content-box-text">Azure Cloud Course</h3>
+                        <p class="content-box-text">Short text to describe course</p>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-<br>
-<div class="greeting">
-    <h2 class="hero-text">Diverse Course Offerings</h2>
-</div>
-<div class="search-box">
-    <div class="hbox">
-        <h2>As a marketplace, we bring together a diverse array of courses from passionate and expert third-party providers, ensuring access to a comprehensive range of subjects and skills for personal and professional growth.</h2>
         <div class="content-box">
-            <img class="content-box-image" src="https://media.istockphoto.com/id/1409329028/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=_zOuJu755g2eEUioiOUdz_mHKJQJn-tDgIAhQzyeKUQ=" alt="NeuBee Logo">
+            <img class="content-box-image" src="https://www.jrebel.com/sites/default/files/image/2020-05/image-blog-revel-top-java-tools.jpg" alt="NeuBee Logo">
             <div class="content-box-description">
                 <div class="hbox">
                     <div>
-                        <h3 class="content-box-text">Perk 1</h3>
-                        <p class="content-box-text">Short text to describe perk</p>
+                        <h3 class="content-box-text">Java Course</h3>
+                        <p class="content-box-text">Short text to describe course</p>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-<br>
-<div class="greeting">
-    <h2 class="hero-text">Real-Time Engagement</h2>
-</div>
-<div class="search-box">
-    <div class="hbox">
-        <h2>While our courses predominantly take place in the virtual realm, we take pride in providing a unique blend of online learning and real-time engagement.</h2>
         <div class="content-box">
-            <img class="content-box-image" src="https://media.istockphoto.com/id/1409329028/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=_zOuJu755g2eEUioiOUdz_mHKJQJn-tDgIAhQzyeKUQ=" alt="NeuBee Logo">
+            <img class="content-box-image" src="https://a.storyblok.com/f/42126/2619097a28/common-issues-mysql-thumb.png" alt="NeuBee Logo">
             <div class="content-box-description">
                 <div class="hbox">
                     <div>
-                        <h3 class="content-box-text">Perk 1</h3>
-                        <p class="content-box-text">Short text to describe perk</p>
+                        <h3 class="content-box-text">MySQL Course</h3>
+                        <p class="content-box-text">Short text to describe course</p>
                     </div>
                 </div>
             </div>
@@ -190,45 +134,9 @@
 </div>
 
 <div class="greeting">
-    <h2 id="pricing" class="hero-text">Pricing</h2>
+    <h2>Pro Benefits</h2>
 </div>
-<div class="search-box">
-    <div class="hbox">
-        <div class="content-box">
-            <img class="content-box-image" src="https://media.istockphoto.com/id/1409329028/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=_zOuJu755g2eEUioiOUdz_mHKJQJn-tDgIAhQzyeKUQ=" alt="NeuBee Logo">
-            <div class="content-box-description">
-                <div class="hbox">
-                    <div>
-                        <h3 class="content-box-text">Free plan</h3>
-                        <p class="content-box-text">List with functions</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="content-box">
-            <img class="content-box-image" src="https://media.istockphoto.com/id/1409329028/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=_zOuJu755g2eEUioiOUdz_mHKJQJn-tDgIAhQzyeKUQ=" alt="NeuBee Logo">
-            <div class="content-box-description">
-                <div class="hbox">
-                    <div>
-                        <h3 class="content-box-text">Mid tier plan</h3>
-                        <p class="content-box-text">List with functions</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="content-box">
-            <img class="content-box-image" src="https://media.istockphoto.com/id/1409329028/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=_zOuJu755g2eEUioiOUdz_mHKJQJn-tDgIAhQzyeKUQ=" alt="NeuBee Logo">
-            <div class="content-box-description">
-                <div class="hbox">
-                    <div>
-                        <h3 class="content-box-text">Premium plan</h3>
-                        <p class="content-box-text">List with functions</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <!---
 <section class="rc-SocialProofContainerRedesign css-1s8difj">
