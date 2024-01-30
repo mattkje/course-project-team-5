@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6cd5c92c-ab06-42a5-8647-6e0214f66643" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/media/search.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/about/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/main.css" afterDir="false" />
@@ -21,6 +21,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
 }</component>
@@ -34,7 +37,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/mattikj/WebstormProjects/course-project-team-5/media",
+    "last_opened_file_path": "/home/mattikj/WebstormProjects/course-project-team-5/about",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -44,8 +47,26 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="QodanaHighlightedReportService">
+    <option name="localRunNotPublishedPersistedInfo">
+      <LocalReportPersistedInfo>
+        <option name="path" value="/tmp/qodana_output/qodana.sarif.json" />
+        <option name="reportGuid" value="d9c107b9-732c-45ea-9e0c-ebe47c5eb234" />
+        <option name="reportName" value="course-project-team-5/qodana/2024-01-30" />
+      </LocalReportPersistedInfo>
+    </option>
+  </component>
+  <component name="QodanaIsSelectedPersistenceService">
+    <option name="selectedOrLoading" value="true" />
+  </component>
+  <component name="QodanaReportsService">
+    <option name="descriptions">
+      <ReportDescription localRun="true" path="/tmp/qodana_output/qodana.sarif.json" reportGuid="d9c107b9-732c-45ea-9e0c-ebe47c5eb234" reportId="course-project-team-5/qodana/2024-01-30" />
+    </option>
+  </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/about" />
       <recent name="$PROJECT_DIR$/media" />
     </key>
   </component>
@@ -58,7 +79,11 @@
       <option name="presentableId" value="Default" />
       <updated>1706542404527</updated>
       <workItem from="1706542406154" duration="54000" />
-      <workItem from="1706542469826" duration="6008000" />
+      <workItem from="1706542469826" duration="6361000" />
+      <workItem from="1706560267381" duration="323000" />
+      <workItem from="1706562952492" duration="672000" />
+      <workItem from="1706568639774" duration="4000" />
+      <workItem from="1706601610668" duration="7230000" />
     </task>
     <servers />
   </component>

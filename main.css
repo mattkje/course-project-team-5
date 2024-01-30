@@ -1,17 +1,15 @@
 body {
     font-family: Inter, sans-serif;
     background-color: #ffffff;
-    color: #242f46;
+    color: #342E37;
     margin: 0;
     padding: 0;
 }
 
-.logo-left {
-    padding-left: 20px;
-}
 
 h1 {
-    font-family: Bebas Neue, sans-serif;
+    font-size: 50px;
+    font-weight: 900;
 }
 
 h2 {
@@ -22,6 +20,15 @@ h3 {
     font-size: 30px;
     font-weight: 900;
     text-align: center;
+}
+
+h4 {
+    font-family: Bebas Neue, sans-serif;
+    font-size: 30px;
+}
+
+h5 {
+    font-size: 20px;
 }
 
 img {
@@ -40,11 +47,16 @@ ul {
     padding: 0;
 }
 
-.menu-links {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-left: 50px;
+
+
+/* Header  */
+
+.header {
+    font-weight: bold;
+    background-color: #ffffff;
+    color: #342E37;
+    text-align: center;
+    height: 7vh;
 }
 
 .content {
@@ -53,12 +65,61 @@ ul {
     align-items: center;
 }
 
-.header {
-    font-weight: bold;
-    background-color: #ffffff;
-    color: #242f46;
-    text-align: center;
+.menu-links {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 50px;
 }
+
+.logo-left {
+    padding-left: 20px;
+}
+
+.header-button {
+    height: 7vh;
+    color: #242f46;
+    border: none;
+    padding: 10px 1%;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    margin-right: 3vw;
+}
+
+.header-button:hover {
+    opacity: 60%;
+}
+
+.header-button .text {
+    font-size: 0;
+    width: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.header-button:hover .text {
+    font-size: medium;
+    opacity: 1;
+}
+
+.fancy-button {
+    background: #342E37;
+    color: #ffffff;
+    font-weight: bold;
+    padding: 17px;
+    border-radius: 30px;
+    text-decoration: none;
+    display: flex;
+}
+
+.fancy-button:hover {
+    background-color: #445883;
+    box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
+}
+
+
+/* Hero  */
 
 .hero-hbox {
     display: flex;
@@ -74,7 +135,7 @@ ul {
 
 .hero-text {
     font-family: 'Inter', sans-serif; /* Apply Inter font as a fallback */
-    font-weight: bold;
+    font-weight: 900;
     font-size: 60px;
     text-transform: uppercase;
     color: #ffffff;
@@ -105,6 +166,7 @@ ul {
 .right-content {
     display: flex;
     align-items: center;
+    margin-right: 50px;
 }
 
 .hbox {
@@ -145,8 +207,7 @@ input:focus {
 .search-bar {
     box-sizing: border-box;
     width: 60%;
-    height: 7vh;
-    border: 3px solid #606060;
+    border: 3px solid #342E37;
     border-radius: 20px;
     position: relative; /* Make it a positioning context for the absolute position of the button */
 }
@@ -163,11 +224,18 @@ input:focus {
     border: none;
     border-radius: 0.7vw; /* Adjust border-radius to match the search bar */
     cursor: pointer;
+
+    &:hover {
+        background-color: #685f6c;
+        box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
+    }
 }
+
+
 
 .search-prompt {
     background: none;
-    width: 100%;
+    width: 60%;
     padding: 20px;
     margin-right: 10px;
     border: none;
@@ -177,7 +245,7 @@ input:focus {
 
 
 .greeting {
-    color: #242f46;
+    color: #342E37;
     border: none;
     padding: 10px 20px;
     border-radius: 15px;
@@ -200,7 +268,7 @@ input:focus {
 }
 
 .content-box {
-    color: #242f46;
+    color: #342E37;
     border: none;
     border-radius: 15px;
     align-content: center;
@@ -211,7 +279,7 @@ input:focus {
 }
 
 .content-box-description {
-    color: #000000;
+    color: #342E37;
     padding: 20px 0;
     border-radius: 0 0 15px 15px;
     width: 100%;
@@ -261,7 +329,7 @@ input:focus {
 
 
 .media-link-button {
-    color: #242f46;
+    color: #342E37;
     border: none;
     padding: 10px 1%;
     border-radius: 5px;
@@ -269,7 +337,24 @@ input:focus {
     display: flex;
     align-items: center;
     margin-right: 3vw;
+    &:hover {
+        opacity: 60%;
+    }
+
+    & .text {
+        font-size: 0;
+        width: 0;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    &:hover .text {
+        font-size: medium;
+        opacity: 1;
+    }
 }
+
+
 
 .standard-button {
     background-color: #342E37;
@@ -279,27 +364,11 @@ input:focus {
     border-radius: 10px;
     text-decoration: none;
     display: flex;
-}
 
-.media-link-button:hover {
-    opacity: 60%;
-}
-
-.media-link-button .text {
-    font-size: 0;
-    width: 0;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.media-link-button:hover .text {
-    font-size: medium;
-    opacity: 1;
-}
-
-.standard-button:hover {
-    background-color: #445883;
-    box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
+    &:hover {
+        background-color: #685f6c;
+        box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
+    }
 }
 
 .right-content {
@@ -310,7 +379,7 @@ input:focus {
 }
 
 footer {
-    background-color: #242f46;
+    background-color: #342E37;
     color: #fff;
     text-align: center;
     padding: 20px;
@@ -350,7 +419,7 @@ footer a:hover {
 
     padding: 12px 16px 12px 42px;
     border: none;
-    border-radius: 15px;
+    border-radius: 10px;
     box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 1px 1px rgba(0, 0, 0, .25);
 
     color: #757575;
@@ -401,4 +470,3 @@ footer a:hover {
     display: block;
 
 }
-
