@@ -6,7 +6,7 @@ Exam project for the IDATA2301 and IDATA2306 courses
 A simplified price
 aggregator web-shop in groups.
 
-The website is currently hosted [here](http://alpha.neubee.store/)
+The website is currently hosted [here](http://connect.learniverse.store/)
 
 According to:
 • Requirements from a customer
