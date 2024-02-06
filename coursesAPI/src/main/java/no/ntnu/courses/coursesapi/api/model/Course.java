@@ -1,5 +1,6 @@
 package no.ntnu.courses.coursesapi.api.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,12 +14,11 @@ public class Course {
     private int ects;
     private int hoursPerWeek;
     private List<String> relatedCertifications;
-    private CourseProviders providers;
+    private ArrayList<CourseProviders> providers;
     private String description;
 
     public Course(int productID, String title, String category, List<String> keywords, String level,
-                  Date closestCourseSession, int ects, int hoursPerWeek, List<String> relatedCertifications,
-                  CourseProviders providers, String description) {
+                  Date closestCourseSession, int ects, int hoursPerWeek, List<String> relatedCertifications, String description) {
         this.productID = productID;
         this.title = title;
         this.category = category;
@@ -28,7 +28,7 @@ public class Course {
         this.ects = ects;
         this.hoursPerWeek = hoursPerWeek;
         this.relatedCertifications = relatedCertifications;
-        this.providers = providers;
+        this.providers = new ArrayList<>();
         this.description = description;
     }
 
@@ -68,8 +68,12 @@ public class Course {
         this.relatedCertifications = relatedCertifications;
     }
 
-    public void setProviders(CourseProviders providers) {
-        this.providers = providers;
+    public void addProvider(CourseProviders addedProvider) {
+        providers.add(addedProvider);
+    }
+
+    public void removeProvider(CourseProviders deleteProvider) {
+        providers.remove(deleteProvider);
     }
 
     public void setDescription(String description) {
@@ -108,8 +112,12 @@ public class Course {
         return relatedCertifications;
     }
 
-    public CourseProviders getProviders() {
-        return providers;
+    public String getProviders() {
+        StringBuilder string = new StringBuilder();
+        for (CourseProviders courseProviders : providers) {
+            string.append("name:" + courseProviders.getName() + "Price:" + courseProviders.getPrice() + "Valuta" + courseProviders.getValuta());
+        }
+        return string.toString();
     }
 
     public String getDescription() {
