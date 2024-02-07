@@ -21,4 +21,5 @@ public class CourseController {
     public Course getCourse(@RequestParam Integer id) {
         return courseService.getCourse(id); //Create an Exception
     }
+
 }

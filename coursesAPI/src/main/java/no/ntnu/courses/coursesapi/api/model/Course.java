@@ -14,7 +14,7 @@ public class Course {
     private int ects;
     private int hoursPerWeek;
     private List<String> relatedCertifications;
-    private ArrayList<CourseProviders> providers;
+    private final ArrayList<CourseProviders> providers;
     private String description;
 
     public Course(int productID, String title, String category, List<String> keywords, String level,
@@ -115,7 +115,7 @@ public class Course {
     public String getProviders() {
         StringBuilder string = new StringBuilder();
         for (CourseProviders courseProviders : providers) {
-            string.append("name:" + courseProviders.getName() + "Price:" + courseProviders.getPrice() + "Currency" + courseProviders.getCurrency());
+            string.append("name:" + courseProviders.getName() + "Price:" + courseProviders.getPrice() + "Currency:" + courseProviders.getCurrency());
         }
         return string.toString();
     }

@@ -2,6 +2,7 @@
     --base-1: #5666ff;
     --base-2: #270e98;
     --light-1: #eaeaea;
+    --light-2: #adadad;
     --dark-1: #1a1a1a;
     --dark-2: #07002c;
 }
@@ -34,7 +35,7 @@ h3 {
 h4 {
     font-family: Bebas Neue, sans-serif;
     font-size: 30px;
-    color: var(--dark-1);
+    color: whitesmoke;
 }
 
 h5 {
@@ -98,7 +99,7 @@ ul {
 
 .header-button {
     height: 70px;
-    color: var(--dark-1);
+    color: var(--light-1);
     font-size: 20px;
     border: none;
     padding: 10px 1%;
@@ -140,7 +141,7 @@ ul {
 }
 
 .background {
-    background-image: url('/media/pexels-julia-m-cameron-4144923.jpg');
+    background-image: url('/coursesAPI/src/main/resources/static/mediaesAPI/src/main/resources/static/media/pexels-julia-m-cameron-4144923.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -174,7 +175,7 @@ ul {
     font-weight: 900;
     font-size: 60px;
     text-transform: uppercase;
-    color: var(--dark-1);
+    color: whitesmoke;
 }
 
 .hero-description {
@@ -195,7 +196,7 @@ ul {
     margin-right: 10px;
     border: none;
     border-radius: 15px;
-    font-size: 22px;
+    font-size: 19px;
     box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
 }
 
@@ -244,7 +245,7 @@ input:focus {
 .search-bar {
     box-sizing: border-box;
     width: 60%;
-    border: 3px solid #342E37;
+    border: 2px solid var(--light-2);
     border-radius: 20px;
     position: relative; /* Make it a positioning context for the absolute position of the button */
 }
@@ -268,12 +269,23 @@ input:focus {
     }
 }
 
+.search-icon {
+    position: absolute;
+    top: 50%;
+    left: 30px;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 30px;
+    margin: auto;
+    opacity: 50%;
+}
+
 
 
 .search-prompt {
     background: none;
     width: 60%;
-    padding: 20px;
+    padding: 20px 20px 20px 100px;
     margin-right: 10px;
     border: none;
     border-radius: 15px;
@@ -443,10 +455,6 @@ footer a {
 
 footer a:hover {
     text-decoration: underline;
-}
-
-footer h4 {
-    color: var(--light-1);
 }
 
 .footer-logo {
