@@ -115,7 +115,7 @@ public class Course {
     public String getProviders() {
         StringBuilder string = new StringBuilder();
         for (CourseProviders courseProviders : providers) {
-            string.append("name:" + courseProviders.getName() + "Price:" + courseProviders.getPrice() + "Valuta" + courseProviders.getValuta());
+            string.append("name:" + courseProviders.getName() + "Price:" + courseProviders.getPrice() + "Currency" + courseProviders.getCurrency());
         }
         return string.toString();
     }

@@ -5,12 +5,12 @@ import java.util.Currency;
 public class CourseProviders {
     private String name;
     private int price;
-    private Currency valuta;
+    private Currency currency;
 
-    public CourseProviders(String name, int price, Currency valuta) {
+    public CourseProviders(String name, int price, Currency currency) {
         this.name = name;
         this.price = price;
-        this.valuta = valuta;
+        this.currency = currency;
     }
 
     public String getName() {
@@ -21,8 +21,8 @@ public class CourseProviders {
         return this.price;
     }
 
-    public String getValuta() {
-        return this.valuta.getDisplayName();
+    public String getCurrency() {
+        return this.currency.getDisplayName();
     }
 
     public void setName(String name) {
@@ -33,7 +33,7 @@ public class CourseProviders {
         this.price = price;
     }
 
-    public void setValuta(Currency valuta) {
-        this.valuta = valuta;
+    public void setCurrency(Currency valuta) {
+        this.currency = valuta;
     }
 }
