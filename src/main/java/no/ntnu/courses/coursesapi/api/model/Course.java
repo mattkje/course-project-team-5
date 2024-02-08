@@ -11,7 +11,7 @@ public class Course {
     private List<String> keywords;
     private String level;
     private Date closestCourseSession;
-    private int ects;
+    private int courseSize;
     private int hoursPerWeek;
     private List<String> relatedCertifications;
     private final ArrayList<CourseProviders> providers;
@@ -25,7 +25,7 @@ public class Course {
         this.keywords = keywords;
         this.level = level;
         this.closestCourseSession = closestCourseSession;
-        this.ects = ects;
+        this.courseSize = ects;
         this.hoursPerWeek = hoursPerWeek;
         this.relatedCertifications = relatedCertifications;
         this.providers = new ArrayList<>();
@@ -56,8 +56,8 @@ public class Course {
         this.closestCourseSession = closestCourseSession;
     }
 
-    public void setEcts(int ects) {
-        this.ects = ects;
+    public void setCourseSize(int courseSize) {
+        this.courseSize = courseSize;
     }
 
     public void setHoursPerWeek(int hoursPerWeek) {
@@ -100,8 +100,8 @@ public class Course {
         return closestCourseSession;
     }
 
-    public int getEcts() {
-        return ects;
+    public int getCourseSize() {
+        return courseSize;
     }
 
     public int getHoursPerWeek() {
