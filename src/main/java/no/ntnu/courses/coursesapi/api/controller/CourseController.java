@@ -17,8 +17,8 @@ public class CourseController {
         this.courseService = courseService;
     }
 
-    @GetMapping("/course")
-    public Course getCourse(@RequestParam Integer id) {
+    @GetMapping("/course/{id}")
+    public Course getCourse(@RequestParam int id) {
         return courseService.getCourse(id); //Create an Exception
     }
 
