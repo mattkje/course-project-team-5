@@ -1,4 +1,6 @@
-package no.ntnu.courses.coursesapi.api.securityConfiguration;
+package no.ntnu.courses.coursesapi.api.securityConfiguration.user;
+
+import no.ntnu.courses.coursesapi.api.securityConfiguration.Role;
 
 import java.time.LocalDate;
 
