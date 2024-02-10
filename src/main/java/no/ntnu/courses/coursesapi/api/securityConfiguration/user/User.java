@@ -1,9 +1,6 @@
 package no.ntnu.courses.coursesapi.api.securityConfiguration.user;
 
-import jakarta.persistence.*;
 import no.ntnu.courses.coursesapi.api.securityConfiguration.Role;
-import org.springframework.data.annotation.Id;
-
 import java.time.LocalDate;
 
 
@@ -21,41 +18,39 @@ import java.time.LocalDate;
  */
 
 
-@Entity
-@Table(name = "users")
+
 public class User {
 
-    @jakarta.persistence.Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
 
 
-    @Column(nullable = false, unique = true, length = 16)
+
     private String userName;
 
-    @Column(nullable = false, unique = true, length = 45)
+
     private String email;
 
-    @Column(nullable = false, length = 64)
+
     private String password;
 
-    @Column(name = "first_name", nullable = false, length = 20)
+
     private String firstName;
 
-    @Column(name = "last_name", nullable = false, length = 20)
+
     private String lastName;
 
-    @Column(nullable = false, length = 10)
+
     private Role role;
 
-    @Column(nullable = false, length = 5)
+
     private boolean enabled;
-    @Column(nullable = false, length = 10)
+
     private final LocalDate createdAt = LocalDate.now();
 
-    @Column(nullable = false, length = 10)
+
     private LocalDate updatedAt;
-    @Column(name = "phoneNumber", nullable = true, length = 20)
+
     private String phoneNumber;
 
 

@@ -1,5 +1,6 @@
 package no.ntnu.courses.coursesapi.api.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,14 +29,16 @@ public class SiteController {
      */
     @GetMapping("/about")
     public String about() {
-        return "about/index.html";
+        return "about.html";
     }
 
     /*
      * Debug methods
      */
-    @GetMapping("/mobile")
-    public String mobile() {
-        return "mobile.html";
+    @GetMapping("/login")
+    public String login() {
+        return "login.html";
     }
+
+
 }

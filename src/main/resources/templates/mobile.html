@@ -9,15 +9,15 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bebas+Neue">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" type="text/css" href="mobile.css">
-    <link rel="icon" type="image/x-icon" href="media/lightbulb.svg">
-    <script src="main.js"></script>
+    <link th:href="@{/mobile.css}" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" th:href="@{media/lightbulb.svg}">
+    <script src="../static/main.js"></script>
 </head>
 <body>
 <div class="header">
     <a href="/" class="header-button">
         <h4 class="logo-left">Learniverse</h4>
-        <img class="bee" src="media/lightbulb.svg" alt="Learniverse">
+        <img class="bee" src="../static/media/lightbulb.svg" alt="Learniverse">
         <h4>Connect</h4>
     </a>
 </div>

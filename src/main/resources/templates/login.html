@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bebas+Neue">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link th:href="@{/main.css}" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" th:href="@{media/logo.png}">
+    <script src="../static/main.js"></script>
+</head>
+<body>
+
+<div class="header">
+    <div class="content">
+        <a href="/" class="header-button">
+            <img class="logo" th:src="@{media/logo.png}" alt="Connect">
+            <h4 class="logo-top">Learniverse&nbsp;</h4>
+            <h4 class="logo-bottom">Connect</h4>
+        </a>
+        <ul class="menu-links">
+            <li><a href="#" class="header-button">Pro</a></li>
+            <li><a href="#" class="header-button">Categories</a></li>
+            <li><a href="#" class="header-button">Contact</a></li>
+            <li><a href="/about" class="header-button">About</a></li>
+        </ul>
+        <div class="right-content">
+            <a href="/login" class="fancy-button">Get Started</a>
+        </div>
+    </div>
+    <br>
+</div>
+
+<div th:if="${param.error}" class="alert alert-danger">
+    Invalid username or password.
+</div>
+
+<div th:if="${param.logout}" class="alert alert-success">
+    You have been logged out.
+</div>
+
+<form th:action="@{/login}" method="post">
+    <div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required autofocus/>
+    </div>
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required/>
+    </div>
+    <div>
+        <button type="submit">Login</button>
+    </div>
+</form>
+
+</body>
+</html>
