@@ -1,1 +1,0 @@
-table,user,user,2,"CREATE TABLE user(userName, email, password, firstName, lastName, role, enabled, createdAt, updatedAt, phoneNumber)"

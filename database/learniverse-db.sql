@@ -1,4 +1,18 @@
-CREATE TABLE user(userName, email, password, firstName, lastName, role, enabled, createdAt, updatedAt, phoneNumber);
+CREATE DATABASE IF NOT EXISTS LearniverseDB;
+USE LearniverseDB;
+
+CREATE TABLE IF NOT EXISTS user(
+    userName VARCHAR(16),
+    email VARCHAR(64),
+    password VARCHAR(16),
+    firstName VARCHAR(16),
+    lastName VARCHAR(16),
+    role VARCHAR(16),
+    enabled VARCHAR(16),
+    createdAt DATETIME,
+    updatedAt DATETIME,
+    phoneNumber VARCHAR(16)
+);
 
 INSERT INTO user (userName, email, password, firstName, lastName, role, enabled, createdAt, updatedAt, phoneNumber)
 VALUES
@@ -7,8 +21,8 @@ VALUES
     ('bob_jones', 'bob@example.com', 'password789', 'Bob', 'Jones', 'ROLE_USER', false, '2024-02-10 08:30:00', '2024-02-10 08:30:00', '456123789');
 
 
-CREATE TABLE courses (
-    productID INTEGER PRIMARY KEY AUTOINCREMENT,
+CREATE TABLE IF NOT EXISTS courses (
+    productID INTEGER PRIMARY KEY AUTO_INCREMENT,
     category VARCHAR(100),
     title VARCHAR(255),
     keywords VARCHAR(255),
@@ -21,8 +35,7 @@ CREATE TABLE courses (
     image VARCHAR(255)
 );
 
--- Reset the table
-drop table courses;
+
 
 INSERT INTO courses (category, title, keywords, level, closest_course_session, course_size, hours_per_week, related_certifications, description, image)
 VALUES (
