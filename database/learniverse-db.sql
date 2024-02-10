@@ -173,5 +173,12 @@ VALUES (
     'Data Science and Analytics Courses',
     'Databricks fundamentals',
     ['Python', 'Machine learning', 'Programming', 'Data science', 'Neural networks', 'Databricks'],
+    'Beginner',
+    '19.08 - 30.08',
+    2,
+    10,
+    'Databricks Practitioner',
+    'Embark on your data journey with our beginner-level online course, Databricks Fundamentals. Designed for individuals new to the world of big data and analytics, this course offers a comprehensive introduction to the essential concepts of Databricks, a leading unified analytics platform. Led by experienced instructors, you'll navigate through the fundamentals of data exploration, data engineering, and collaborative data science using Databricks. No prior experience with big data technologies is required, making this course an ideal starting point for beginners eager to harness the power of Databricks for streamlined data processing and analysis. By the end of the course, you'll have a solid foundation in using Databricks to uncover insights from large datasets, setting you on a path towards mastering the intricacies of modern data analytics. Join us and demystify the fundamentals of Databricks in this accessible and empowering course.',
+    'https://upload.wikimedia.org/wikipedia/commons/6/63/Databricks_Logo.png'
 )
 ;
