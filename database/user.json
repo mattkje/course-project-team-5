@@ -1,0 +1,38 @@
+[
+  {
+    "userName": "john_doe",
+    "email": "john@example.com",
+    "password": "password123",
+    "firstName": "John",
+    "lastName": "Doe",
+    "role": "ROLE_USER",
+    "enabled": 1,
+    "createdAt": "2024-02-10 08:00:00",
+    "updatedAt": "2024-02-10 08:00:00",
+    "phoneNumber": "123456789"
+  },
+  {
+    "userName": "jane_smith",
+    "email": "jane@example.com",
+    "password": "password456",
+    "firstName": "Jane",
+    "lastName": "Smith",
+    "role": "ROLE_ADMIN",
+    "enabled": 1,
+    "createdAt": "2024-02-10 08:15:00",
+    "updatedAt": "2024-02-10 08:15:00",
+    "phoneNumber": "987654321"
+  },
+  {
+    "userName": "bob_jones",
+    "email": "bob@example.com",
+    "password": "password789",
+    "firstName": "Bob",
+    "lastName": "Jones",
+    "role": "ROLE_USER",
+    "enabled": 0,
+    "createdAt": "2024-02-10 08:30:00",
+    "updatedAt": "2024-02-10 08:30:00",
+    "phoneNumber": "456123789"
+  }
+]

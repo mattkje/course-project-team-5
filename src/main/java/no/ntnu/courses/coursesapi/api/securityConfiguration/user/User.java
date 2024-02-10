@@ -1,8 +1,12 @@
 package no.ntnu.courses.coursesapi.api.securityConfiguration.user;
 
+import jakarta.persistence.*;
 import no.ntnu.courses.coursesapi.api.securityConfiguration.Role;
+import org.springframework.data.annotation.Id;
 
 import java.time.LocalDate;
+
+
 
 /**
  * Represents a user in the application.
@@ -15,69 +19,45 @@ import java.time.LocalDate;
  * Additionally, users may have a phone number associated with their account for communication purposes.
  * TODO: More optional fields?
  */
+
+
+@Entity
+@Table(name = "users")
 public class User {
 
-    private final String userName; //Should always be final, do not change! >:(
-    private String firstName;
-    private String lastName;
-    private String email;
-    private Role role;
-    private String password;
-    private boolean enabled;
-    private final LocalDate createdAt;
+    @jakarta.persistence.Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
+
+    @Column(nullable = false, unique = true, length = 16)
+    private String userName;
+
+    @Column(nullable = false, unique = true, length = 45)
+    private String email;
+
+    @Column(nullable = false, length = 64)
+    private String password;
+
+    @Column(name = "first_name", nullable = false, length = 20)
+    private String firstName;
+
+    @Column(name = "last_name", nullable = false, length = 20)
+    private String lastName;
+
+    @Column(nullable = false, length = 10)
+    private Role role;
+
+    @Column(nullable = false, length = 5)
+    private boolean enabled;
+    @Column(nullable = false, length = 10)
+    private final LocalDate createdAt = LocalDate.now();
+
+    @Column(nullable = false, length = 10)
     private LocalDate updatedAt;
+    @Column(name = "phoneNumber", nullable = true, length = 20)
     private String phoneNumber;
 
-    /**
-     * Creates an instance of User with all fields.
-     *
-     * @param userName a username
-     * @param firstName First name
-     * @param lastName Last name
-     * @param email Email
-     * @param role User role
-     * @param password Password
-     * @param enabled Is user active //TODO: Is this necessary, maybe remove?
-     * @param phoneNumber Phone number
-     */
-    public User(String userName, String firstName, String lastName, String email, Role role, String password,
-                boolean enabled, String phoneNumber) {
-        this.userName = userName;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.role = role;
-        this.password = password;
-        this.enabled = enabled;
-        this.createdAt = LocalDate.now();
-        this.updatedAt = LocalDate.now();
-        this.phoneNumber = phoneNumber;
-    }
-
-    /**
-     * Creates an instance of User with Only required fields.
-     *
-     * @param userName a username
-     * @param firstName First name
-     * @param lastName Last name
-     * @param email Email
-     * @param role User role
-     * @param password Password
-     * @param enabled Is user active //TODO: Is this necessary, maybe remove?
-     */
-    public User(String userName, String firstName, String lastName, String email, Role role, String password,
-                boolean enabled) {
-        this.userName = userName;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.role = role;
-        this.password = password;
-        this.enabled = enabled;
-        this.createdAt = LocalDate.now();
-        this.updatedAt = LocalDate.now();
-    }
 
 
     /**
@@ -250,6 +230,14 @@ public class User {
      */
     public void updateUser() {
         this.updatedAt = LocalDate.now();
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 
 }
