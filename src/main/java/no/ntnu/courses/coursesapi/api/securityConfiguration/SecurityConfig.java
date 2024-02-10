@@ -22,6 +22,7 @@ public class SecurityConfig {
                 )
 
                 .formLogin(form -> form.loginPage("/login").permitAll())
+                .logout(withDefaults())
                 .build();
     }
 
