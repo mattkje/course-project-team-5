@@ -10,7 +10,7 @@ import java.util.Collection;
 @RestController
 public class CourseController {
 
-    private CourseService courseService;
+    private final CourseService courseService;
 
     @Autowired
     public CourseController(CourseService courseService) {
@@ -19,12 +19,17 @@ public class CourseController {
 
     @GetMapping("/api/courses/{id}")
     public Course getCourse(@PathVariable int id) {
-        return courseService.getCourse(id); //Create an Exception
+        return courseService.getCourseInfo(id); //Create an Exception
     }
 
     @GetMapping("/api/courses")
     public Collection<Course> getCourses() {
         return courseService.getAllCourses();
+    }
+
+    @GetMapping("/api/courses/{courseId}/{providerId}")
+    public CourseProviders getCourseFromProvider(@PathVariable int courseId, @PathVariable int providerId) {
+        return courseService.getCourse(courseId, providerId); //Create an Exception
     }
 
 }

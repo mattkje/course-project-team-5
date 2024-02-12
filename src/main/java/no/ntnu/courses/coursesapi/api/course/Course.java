@@ -12,25 +12,25 @@ public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int productID;
-    @Column(length = 255)
+    @Column()
     private String title;
     @Column(length = 100)
     private String category;
-    @Column(length = 255)
+    @Column()
     private String keywords;
     @Column(length = 50)
     private String level;
     @Column(name = "closest_course_session")
     private String closestCourseSession;
-    @Column(length = 5)
+    @Column(name = "course_size", length = 5)
     private double courseSize;
     @Column(name = "hours_per_week")
     private int hoursPerWeek;
-    @Column(length = 255)
+    @Column(name = "related_certifications")
     private String relatedCertifications;
-    @Column(name = "description")
+    @Column(name = "description", length = 6000)
     private String description;
-    @Column(length = 255)
+    @Column
     private String image;
 
 
@@ -75,6 +75,10 @@ public class Course {
         this.description = description;
     }
 
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -113,5 +117,9 @@ public class Course {
 
     public int getProductID() {
         return productID;
+    }
+
+    public String getImage() {
+        return image;
     }
 }
