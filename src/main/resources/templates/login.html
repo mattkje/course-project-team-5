@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bebas+Neue">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link th:href="@{/main.css}" rel="stylesheet" />
+    <link th:href="@{/about.css}" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" th:href="@{media/logo.png}">
     <script src="../static/main.js"></script>
 </head>
@@ -45,17 +45,33 @@
 </div>
 
 <form th:action="@{/login}" method="post">
-    <div>
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required autofocus/>
+    <div class="search-box">
+        <div class="hbox">
+            <div class="content-box">
+                <img class="content-box-image"
+                     src="https://a.storyblok.com/f/42126/2619097a28/common-issues-mysql-thumb.png" alt="NeuBee Logo">
+                <div class="content-box-description">
+                    <div class="hbox">
+                        <div>
+                            <div>
+                                <label for="username">Username:</label>
+                                <input class="mail-prompt" type="text" id="username" name="username" placeholder="username" required autofocus/>
+                            </div>
+                            <div>
+                                <label for="password">Password:</label>
+                                <input class="mail-prompt" type="password" id="password" name="password" placeholder="password" required/>
+                            </div>
+                            <div>
+                                <button class="standard-button" type="submit">Login</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required/>
-    </div>
-    <div>
-        <button type="submit">Login</button>
-    </div>
+
+
 </form>
 
 </body>
