@@ -1,4 +1,4 @@
-package no.ntnu.courses.coursesapi.api.model;
+package no.ntnu.courses.coursesapi.api.course;
 
 import java.util.Currency;
 

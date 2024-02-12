@@ -1,4 +1,4 @@
-package no.ntnu.courses.coursesapi.api.model;
+package no.ntnu.courses.coursesapi.api.course;
 
 import jakarta.persistence.*;
 
@@ -21,7 +21,7 @@ public class Course {
     @Column(length = 50)
     private String level;
     @Column(name = "closest_course_session")
-    private Date closestCourseSession;
+    private String closestCourseSession;
     @Column(length = 5)
     private double courseSize;
     @Column(name = "hours_per_week")
@@ -55,7 +55,7 @@ public class Course {
         this.level = level;
     }
 
-    public void setClosestCourseSession(Date closestCourseSession) {
+    public void setClosestCourseSession(String closestCourseSession) {
         this.closestCourseSession = closestCourseSession;
     }
 
@@ -91,7 +91,7 @@ public class Course {
         return level;
     }
 
-    public Date getClosestCourseSession() {
+    public String getClosestCourseSession() {
         return closestCourseSession;
     }
 

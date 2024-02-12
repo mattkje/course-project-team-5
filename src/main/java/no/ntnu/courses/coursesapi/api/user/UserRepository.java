@@ -1,4 +1,4 @@
-package no.ntnu.courses.coursesapi.api.securityConfiguration.user;
+package no.ntnu.courses.coursesapi.api.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,10 +1,6 @@
-package no.ntnu.courses.coursesapi.api.securityConfiguration.user;
+package no.ntnu.courses.coursesapi.api.user;
 
 import jakarta.persistence.*;
-import no.ntnu.courses.coursesapi.api.securityConfiguration.Role;
-
-
-import java.time.LocalDate;
 import java.util.Date;
 
 

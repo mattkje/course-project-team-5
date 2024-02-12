@@ -1,4 +1,4 @@
-package no.ntnu.courses.coursesapi.api.securityConfiguration;
+package no.ntnu.courses.coursesapi.api.user;
 
 /**
  * Enum representing different roles in the application.

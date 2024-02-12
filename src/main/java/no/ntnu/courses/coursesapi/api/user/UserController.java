@@ -1,4 +1,4 @@
-package no.ntnu.courses.coursesapi.api.securityConfiguration.user;
+package no.ntnu.courses.coursesapi.api.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
