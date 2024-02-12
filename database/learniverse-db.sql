@@ -1,24 +1,26 @@
 CREATE DATABASE IF NOT EXISTS LearniverseDB;
 USE LearniverseDB;
 
-CREATE TABLE IF NOT EXISTS user(
-    userName VARCHAR(16),
-    email VARCHAR(64),
-    password VARCHAR(16),
-    firstName VARCHAR(16),
-    lastName VARCHAR(16),
-    role VARCHAR(16),
-    enabled VARCHAR(16),
-    createdAt DATETIME,
-    updatedAt DATETIME,
-    phoneNumber VARCHAR(16)
+CREATE TABLE IF NOT EXISTS users(
+    id bigint AUTO_INCREMENT PRIMARY KEY,
+    user_name VARCHAR(16),
+    email VARCHAR(45),
+    password VARCHAR(64),
+    first_name VARCHAR(20),
+    last_name VARCHAR(20),
+    role TINYINT,
+    enabled BIT,
+    created_at DATE,
+    updated_at DATE,
+    phone_number VARCHAR(20)
 );
 
-INSERT INTO user (userName, email, password, firstName, lastName, role, enabled, createdAt, updatedAt, phoneNumber)
+INSERT INTO users (user_name, email, password, first_name, last_name, role, enabled, created_at, updated_at, phone_number)
 VALUES
-    ('john_doe', 'john@example.com', 'password123', 'John', 'Doe', 'ROLE_USER', true, '2024-02-10 08:00:00', '2024-02-10 08:00:00', '123456789'),
-    ('jane_smith', 'jane@example.com', 'password456', 'Jane', 'Smith', 'ROLE_ADMIN', true, '2024-02-10 08:15:00', '2024-02-10 08:15:00', '987654321'),
-    ('bob_jones', 'bob@example.com', 'password789', 'Bob', 'Jones', 'ROLE_USER', false, '2024-02-10 08:30:00', '2024-02-10 08:30:00', '456123789');
+                                                                                                                              ('john_doe', 'john.doe@example.com', 'password123', 'John', 'Doe', 1, 1, '2024-02-12', '2024-02-12', '+1234567890'),
+                                                                                                                              ('jane_smith', 'jane.smith@example.com', 'smithpassword', 'Jane', 'Smith', 2, 1, '2024-02-12', '2024-02-12', '+1987654321'),
+                                                                                                                              ('bob_johnson', 'bob.johnson@example.com', 'b0b!pass', 'Bob', 'Johnson', 1, 0, '2024-02-12', '2024-02-12', '+1122334455'),
+                                                                                                                              ('emily_davis', 'emily.davis@example.com', 'davispass123', 'Emily', 'Davis', 3, 1, '2024-02-12', '2024-02-12', '+1555666777');
 
 
 CREATE TABLE IF NOT EXISTS courses (

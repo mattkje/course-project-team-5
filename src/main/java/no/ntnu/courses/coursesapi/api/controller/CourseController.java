@@ -20,12 +20,12 @@ public class CourseController {
         this.courseService = courseService;
     }
 
-    @GetMapping("/courses/{id}")
+    @GetMapping("/api/courses/{id}")
     public Course getCourse(@PathVariable int id) {
         return courseService.getCourse(id); //Create an Exception
     }
 
-    @GetMapping("/courses")
+    @GetMapping("/api/courses")
     public Collection<Course> getCourses() {
         return courseService.getAllCourses();
     }

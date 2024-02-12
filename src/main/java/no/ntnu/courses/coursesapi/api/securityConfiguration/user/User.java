@@ -1,8 +1,11 @@
 package no.ntnu.courses.coursesapi.api.securityConfiguration.user;
 
+import jakarta.persistence.*;
 import no.ntnu.courses.coursesapi.api.securityConfiguration.Role;
-import java.time.LocalDate;
 
+
+import java.time.LocalDate;
+import java.util.Date;
 
 
 /**
@@ -18,39 +21,42 @@ import java.time.LocalDate;
  */
 
 
-
+@Entity
+@Table(name = "users")
 public class User {
 
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
-
+    @Column(length = 16)
     private String userName;
 
-
+    @Column(length = 45)
     private String email;
 
-
+    @Column(length = 64)
     private String password;
 
-
+    @Column(length = 20)
     private String firstName;
 
-
+    @Column(length = 20)
     private String lastName;
 
+    @Column
+    private byte role;
 
-    private Role role;
-
-
+    @Column
     private boolean enabled;
 
-    private final LocalDate createdAt = LocalDate.now();
+    @Column(name = "created_at")
+    private Date createdAt;
 
+    @Column(name = "updated_at")
+    private Date updatedAt;
 
-    private LocalDate updatedAt;
-
+    @Column(name = "phone_number", length = 20)
     private String phoneNumber;
 
 
@@ -96,7 +102,7 @@ public class User {
      *
      * @return The role of the user.
      */
-    public Role getRole() {
+    public Byte getRole() {
         return role;
     }
 
@@ -123,7 +129,7 @@ public class User {
      *
      * @return The date when the user account was created.
      */
-    public LocalDate getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
@@ -132,7 +138,7 @@ public class User {
      *
      * @return The date when the user account was last updated.
      */
-    public LocalDate getUpdatedAt() {
+    public Date getUpdatedAt() {
         return updatedAt;
     }
 
@@ -152,7 +158,6 @@ public class User {
      */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
-        updateUser();
     }
 
     /**
@@ -162,7 +167,6 @@ public class User {
      */
     public void setLastName(String lastName) {
         this.lastName = lastName;
-        updateUser();
     }
 
     /**
@@ -172,7 +176,6 @@ public class User {
      */
     public void setEmail(String email) {
         this.email = email;
-        updateUser();
     }
 
 
@@ -183,9 +186,9 @@ public class User {
      *
      * @param role The role to assign to the user (ADMIN, MODERATOR, USER)
      */
-    public void setRole(Role role) {
+    public void setRole(Byte role) {
         this.role = role;
-        updateUser();
+
     }
 
     /**
@@ -195,7 +198,6 @@ public class User {
      */
     public void setPassword(String password) {
         this.password = password;
-        updateUser();
     }
 
     /**
@@ -206,7 +208,6 @@ public class User {
      */
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
-        updateUser();
     }
 
     /**
@@ -216,16 +217,8 @@ public class User {
      */
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-        updateUser();
     }
 
-    /**
-     * Sets user updated status to now.
-     * This method should be called for every change.
-     */
-    public void updateUser() {
-        this.updatedAt = LocalDate.now();
-    }
 
     public void setId(Long id) {
         this.id = id;
