@@ -10,64 +10,44 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bebas+Neue">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link th:href="@{/about.css}" rel="stylesheet" />
+    <link th:href="@{/login.css}" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" th:href="@{media/logo.png}">
     <script src="../static/main.js"></script>
 </head>
+
 <body>
 
-<div class="header">
-    <div class="content">
-        <a href="/" class="header-button">
-            <img class="logo" th:src="@{media/logo.png}" alt="Connect">
-            <h4 class="logo-top">Learniverse&nbsp;</h4>
-            <h4 class="logo-bottom">Connect</h4>
-        </a>
-        <ul class="menu-links">
-            <li><a href="#" class="header-button">Pro</a></li>
-            <li><a href="#" class="header-button">Categories</a></li>
-            <li><a href="#" class="header-button">Contact</a></li>
-            <li><a href="/about" class="header-button">About</a></li>
-        </ul>
-        <div class="right-content">
-            <a href="/login" class="fancy-button">Get Started</a>
-        </div>
-    </div>
-    <br>
-</div>
 
-<div th:if="${param.error}" class="alert alert-danger">
-    Invalid username or password.
-</div>
-
-<div th:if="${param.logout}" class="alert alert-success">
-    You have been logged out.
-</div>
 
 <form th:action="@{/login}" method="post">
-    <div class="search-box">
-        <div class="hbox">
-            <div class="content-box">
-                <img class="content-box-image"
-                     src="https://a.storyblok.com/f/42126/2619097a28/common-issues-mysql-thumb.png" alt="NeuBee Logo">
-                <div class="content-box-description">
-                    <div class="hbox">
-                        <div>
-                            <div>
-                                <label for="username">Username:</label>
-                                <input class="mail-prompt" type="text" id="username" name="username" placeholder="username" required autofocus/>
-                            </div>
-                            <div>
-                                <label for="password">Password:</label>
-                                <input class="mail-prompt" type="password" id="password" name="password" placeholder="password" required/>
-                            </div>
-                            <div>
-                                <button class="standard-button" type="submit">Login</button>
-                            </div>
-                        </div>
-                    </div>
+    <div class="login-container">
+        <div class="login-box">
+            <div class="login-field-box">
+                <a href="/" class="header-button">
+                    <img class="logo" th:src="@{media/logo.png}" alt="Connect">
+                    <h4 class="logo-top">Learniverse&nbsp;</h4>
+                    <h4 class="logo-bottom">Connect</h4>
+                </a>
+                <div th:if="${param.error}" class="alert alert-danger">
+                    Invalid username or password.
+                </div>
+
+                <div th:if="${param.logout}" class="alert alert-success">
+                    You have been logged out.
+                </div>
+                <div class="login-text-field">
+                    <label for="username">Username:</label>
+                    <input class="login-prompt" type="text" id="username" name="username" placeholder="username" required autofocus/>
+                </div>
+                <div class="login-text-field">
+                    <label for="password">Password:</label>
+                    <input class="login-prompt" type="password" id="password" name="password" placeholder="password" required/>
+                </div>
+                <div class="login-text-field">
+                    <button class="standard-button" type="submit">Login</button>
                 </div>
             </div>
+            <img class="login-image" th:src="@{media/login.svg}" alt="Connect">
         </div>
     </div>
 

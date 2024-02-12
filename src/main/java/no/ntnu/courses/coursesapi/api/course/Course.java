@@ -2,16 +2,12 @@ package no.ntnu.courses.coursesapi.api.course;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 @Entity
 @Table(name = "courses")
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int productID;
+    private int courseId;
     @Column()
     private String title;
     @Column(length = 100)
@@ -35,8 +31,8 @@ public class Course {
 
 
 
-    public void setProductID(int productID) {
-        this.productID = productID;
+    public void setCourseId(int courseId) {
+        this.courseId = courseId;
     }
 
     public void setTitle(String title) {
@@ -115,8 +111,8 @@ public class Course {
         return description;
     }
 
-    public int getProductID() {
-        return productID;
+    public int getCourseId() {
+        return courseId;
     }
 
     public String getImage() {

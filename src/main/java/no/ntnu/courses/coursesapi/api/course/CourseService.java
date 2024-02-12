@@ -1,7 +1,5 @@
 package no.ntnu.courses.coursesapi.api.course;
 
-import no.ntnu.courses.coursesapi.api.course.CourseRepository;
-import no.ntnu.courses.coursesapi.api.course.Course;
 import no.ntnu.courses.coursesapi.api.provider.Provider;
 import no.ntnu.courses.coursesapi.api.provider.ProviderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +25,7 @@ public class CourseService {
 
     public Course getCourseInfo(Integer courseId) {
         for(Course course : courseRepository.findAll()) {
-            if(courseId == course.getProductID()) {
+            if(courseId == course.getCourseId()) {
                 return course;
             }
         }

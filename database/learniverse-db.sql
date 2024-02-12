@@ -2,7 +2,7 @@ CREATE DATABASE IF NOT EXISTS LearniverseDB;
 USE LearniverseDB;
 
 CREATE TABLE IF NOT EXISTS users(
-    id bigint AUTO_INCREMENT PRIMARY KEY,
+    user_id bigint AUTO_INCREMENT PRIMARY KEY,
     user_name VARCHAR(16),
     email VARCHAR(45),
     password VARCHAR(64),
@@ -24,7 +24,7 @@ VALUES
 
 
 CREATE TABLE IF NOT EXISTS courses (
-    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    course_id INTEGER PRIMARY KEY AUTO_INCREMENT,
     category VARCHAR(100),
     title VARCHAR(255),
     keywords VARCHAR(255),
