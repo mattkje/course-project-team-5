@@ -21,12 +21,6 @@ public class CourseService {
     public CourseService() throws ParseException {
         courseList = new ArrayList<>();
         //add courses to list
-        ArrayList<String> keywords = new ArrayList<>();
-        keywords.add("test");
-        ArrayList<String> certifications = new ArrayList<>();
-        certifications.add("Test certification");
-        Course course = new Course(1,"title1", "category1", keywords, "Beginner", new Date(), 1, 10, certifications, "test description");
-        courseList.add(course);
     }
 
     public Course getCourse(Integer id) {

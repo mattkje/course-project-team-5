@@ -1,36 +1,39 @@
 package no.ntnu.courses.coursesapi.api.model;
 
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Entity
+@Table(name = "courses")
 public class Course {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int productID;
+    @Column(length = 255)
     private String title;
+    @Column(length = 100)
     private String category;
-    private List<String> keywords;
+    @Column(length = 255)
+    private String keywords;
+    @Column(length = 50)
     private String level;
+    @Column(name = "closest_course_session")
     private Date closestCourseSession;
-    private int courseSize;
+    @Column(length = 5)
+    private double courseSize;
+    @Column(name = "hours_per_week")
     private int hoursPerWeek;
-    private List<String> relatedCertifications;
-    private final ArrayList<CourseProviders> providers;
+    @Column(length = 255)
+    private String relatedCertifications;
+    @Column(name = "description")
     private String description;
+    @Column(length = 255)
+    private String image;
 
-    public Course(int productID, String title, String category, List<String> keywords, String level,
-                  Date closestCourseSession, int ects, int hoursPerWeek, List<String> relatedCertifications, String description) {
-        this.productID = productID;
-        this.title = title;
-        this.category = category;
-        this.keywords = keywords;
-        this.level = level;
-        this.closestCourseSession = closestCourseSession;
-        this.courseSize = ects;
-        this.hoursPerWeek = hoursPerWeek;
-        this.relatedCertifications = relatedCertifications;
-        this.providers = new ArrayList<>();
-        this.description = description;
-    }
+
 
     public void setProductID(int productID) {
         this.productID = productID;
@@ -44,7 +47,7 @@ public class Course {
         this.category = category;
     }
 
-    public void setKeywords(List<String> keywords) {
+    public void setKeywords(String keywords) {
         this.keywords = keywords;
     }
 
@@ -64,16 +67,8 @@ public class Course {
         this.hoursPerWeek = hoursPerWeek;
     }
 
-    public void setRelatedCertifications(List<String> relatedCertifications) {
+    public void setRelatedCertifications(String relatedCertifications) {
         this.relatedCertifications = relatedCertifications;
-    }
-
-    public void addProvider(CourseProviders addedProvider) {
-        providers.add(addedProvider);
-    }
-
-    public void removeProvider(CourseProviders deleteProvider) {
-        providers.remove(deleteProvider);
     }
 
     public void setDescription(String description) {
@@ -88,7 +83,7 @@ public class Course {
         return category;
     }
 
-    public List<String> getKeywords() {
+    public String getKeywords() {
         return keywords;
     }
 
@@ -100,7 +95,7 @@ public class Course {
         return closestCourseSession;
     }
 
-    public int getCourseSize() {
+    public double getCourseSize() {
         return courseSize;
     }
 
@@ -108,16 +103,8 @@ public class Course {
         return hoursPerWeek;
     }
 
-    public List<String> getRelatedCertifications() {
+    public String getRelatedCertifications() {
         return relatedCertifications;
-    }
-
-    public String getProviders() {
-        StringBuilder string = new StringBuilder();
-        for (CourseProviders courseProviders : providers) {
-            string.append("name:" + courseProviders.getName() + "Price:" + courseProviders.getPrice() + "Currency:" + courseProviders.getCurrency());
-        }
-        return string.toString();
     }
 
     public String getDescription() {
