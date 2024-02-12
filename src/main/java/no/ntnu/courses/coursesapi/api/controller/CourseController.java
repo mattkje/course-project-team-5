@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collection;
+
 @RestController
 public class CourseController {
 
@@ -22,5 +24,9 @@ public class CourseController {
         return courseService.getCourse(id); //Create an Exception
     }
 
+    @GetMapping("/courses")
+    public Collection<Course> getCourses() {
+        return courseService.getAllCourses();
+    }
 
 }

@@ -38,6 +38,10 @@ public class CourseService {
         return null; //Change this!
     }
 
+    public List<Course> getAllCourses() {
+        return courseList;
+    }
+
     private void parseCourses() throws Exception {
         Object obj = new JSONParser().parse(new FileReader("courses.json"));
 
