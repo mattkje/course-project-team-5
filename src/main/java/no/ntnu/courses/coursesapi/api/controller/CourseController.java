@@ -4,6 +4,7 @@ import no.ntnu.courses.coursesapi.api.model.Course;
 import no.ntnu.courses.coursesapi.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,7 +21,7 @@ public class CourseController {
     }
 
     @GetMapping("/courses/{id}")
-    public Course getCourse(@RequestParam int id) {
+    public Course getCourse(@PathVariable int id) {
         return courseService.getCourse(id); //Create an Exception
     }
 
