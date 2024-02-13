@@ -1,6 +1,8 @@
 package no.ntnu.courses.coursesapi.api.general;
 
+import no.ntnu.courses.coursesapi.api.user.User;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
@@ -36,6 +38,13 @@ public class SiteController {
     @GetMapping("/login")
     public String login() {
         return "login.html";
+    }
+
+
+    @GetMapping("/register")
+    public String showRegistrationForm(Model model) {
+        model.addAttribute("user", new User());
+        return "register.html";
     }
 
 
