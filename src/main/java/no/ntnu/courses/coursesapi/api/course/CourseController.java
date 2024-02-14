@@ -21,9 +21,20 @@ public class CourseController {
         this.courseService = courseService;
     }
 
+    /**
+     * Returns the course that has the matching id as the path variable. If the course does not exist the method will
+     * return a NOT FOUND response.
+     *
+     * @param id id representing a course. All id's are different.
+     * @return a Http response either containing the course with matching id or a NOT FOUND response.
+     */
     @GetMapping("/api/courses/{id}")
-    public Course getCourse(@PathVariable int id) {
-        return courseService.getCourseInfo(id); //Create an Exception
+    public ResponseEntity<Course> getCourse(@PathVariable int id) {
+        if(courseService.getCourseInfo(id) == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.OK).body(courseService.getCourseInfo(id));
+        }
     }
 
     @GetMapping("/api/courses")
