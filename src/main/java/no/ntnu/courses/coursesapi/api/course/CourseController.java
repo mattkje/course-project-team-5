@@ -29,16 +29,16 @@ public class CourseController {
      * @return a Http response either containing the course with matching id or a NOT FOUND response.
      */
     @GetMapping("/api/courses/{id}")
-    public ResponseEntity<Course> getCourse(@PathVariable int id) {
+    public ResponseEntity<CourseProviders> getCourse(@PathVariable int id) {
         if(courseService.getCourseInfo(id) == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         } else {
-            return ResponseEntity.status(HttpStatus.OK).body(courseService.getCourseInfo(id));
+            return ResponseEntity.status(HttpStatus.OK).body(courseService.getCourseWithProviders(id));
         }
     }
 
     @GetMapping("/api/courses")
-    public Collection<Course> getCourses() {
+    public Collection<CourseProviders> getCourses() {
         return courseService.getAllCourses();
     }
 

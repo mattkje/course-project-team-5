@@ -17,7 +17,7 @@ public class Provider {
     @Column
     private String name;
     @Column
-    private int price;
+    private float price;
     @Column
     private String currency;
 
@@ -34,7 +34,7 @@ public class Provider {
         return this.courseId;
     }
 
-    public int getPrice() {
+    public float getPrice() {
         return this.price;
     }
 

@@ -2,13 +2,13 @@ window.onload = function() {
     fetch('/api/courses')
         .then(response => response.json())
         .then(data => {
-            data.forEach(course => {
+            data.forEach(courseProvider => {
                 const contentBox = document.createElement('a');
-                contentBox.href = `/api/courses/${course.courseid}/${course.providerid}`;
+                contentBox.href = `/api/courses/${courseProvider.course.courseId}`;
                 contentBox.className = 'content-box';
 
                 const image = document.createElement('img');
-                image.src = course.image;
+                image.src = courseProvider.course.image;
                 image.alt = 'Course Logo';
                 image.className = 'content-box-image';
                 contentBox.appendChild(image);
@@ -19,7 +19,7 @@ window.onload = function() {
 
                 const title = document.createElement('h2');
                 title.className = 'content-box-title';
-                title.textContent = course.title;
+                title.textContent = courseProvider.course.title;
                 descriptionBox.appendChild(title);
 
                 const hr = document.createElement('hr');
@@ -45,7 +45,7 @@ window.onload = function() {
 
                 const category = document.createElement('p');
                 category.className = 'content-box-text';
-                category.textContent = course.category;
+                category.textContent = courseProvider.course.category;
                 categoryAttribute.appendChild(category);
 
                 // Create and append the providers attribute
@@ -58,14 +58,29 @@ window.onload = function() {
                 providersIcon.src = 'media/providers.svg';
                 providersAttribute.appendChild(providersIcon);
 
-                const providers = document.createElement('p');
-                providers.className = 'content-box-text';
-                providers.textContent = `${course.providers} Providers`;
-                providersAttribute.appendChild(providers);
+                const providersElement = document.createElement('p');
+                providersElement.className = 'content-box-text';
+
+// Filter the providers array to only include the providers related to the specific course
+                const courseProviders = courseProvider.providers.filter(provider => provider.courseId === courseProvider.course.courseId);
+
+                if (Array.isArray(courseProviders) && courseProviders.length) {
+                    providersElement.innerHTML = `${courseProviders.length}&nbsp;Providers`;
+                } else {
+                    providersElement.innerHTML = 'No&nbsp;Providers';
+                }
+
+                providersAttribute.appendChild(providersElement);
 
                 const price = document.createElement('p');
                 price.className = 'content-button';
-                price.textContent = course.price;
+                const lowestPriceProvider = courseProviders.reduce((prev, curr) => {
+                    return (prev.price < curr.price) ? prev : curr;
+                });
+
+                const currency = lowestPriceProvider.currency;
+
+                price.textContent = currency + " " + lowestPriceProvider.price;
                 contentDescription.appendChild(price);
 
                 document.querySelector('.content-hbox').appendChild(contentBox);

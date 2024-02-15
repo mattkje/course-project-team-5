@@ -19,8 +19,23 @@ public class CourseService {
         this.providerRepository = providerRepository;
     }
 
-    public List<Course> getAllCourses() {
-        return courseRepository.findAll();
+    public List<CourseProviders> getAllCourses() {
+        List<CourseProviders> courseProviders = new ArrayList<>();
+        for (int i = 0; i < courseRepository.findAll().size(); i++) {
+            courseProviders.add(new CourseProviders(courseRepository.findAll().get(i), getProviders(i+1)));
+        }
+        return courseProviders;
+    }
+
+
+    public List<Provider> getProviders(Integer courseId) {
+        List<Provider> providers = new ArrayList<>();
+        for(Provider provider : providerRepository.findAll()) {
+            if (courseId == provider.getCourseId()) {
+                providers.add(provider);
+            }
+        }
+        return providers;
     }
 
     public Course getCourseInfo(Integer courseId) {
@@ -32,6 +47,12 @@ public class CourseService {
         return null;
     }
 
+    public CourseProviders getCourseWithProviders(Integer courseId) {
+        Course course = getCourseInfo(courseId);
+        List<Provider> providers = getProviders(courseId);
+        return new CourseProviders(course, providers);
+    }
+
     /**
      * This method should return a course with provider.
      *
@@ -40,11 +61,13 @@ public class CourseService {
      * @return The course
      */
     public CourseProviders getCourse(Integer courseId, Integer providerId) {
+        List<Provider> providers = new ArrayList<>();
         for(Provider provider : providerRepository.findAll()) {
             if(providerId == provider.getProviderId()) {
                 for(Course course : courseRepository.findAll()) {
                     if(courseId == provider.getCourseId()) {
-                        return new CourseProviders(course, provider);
+                        providers.add(provider);
+                        return new CourseProviders(course, providers);
                     }
                 }
 
