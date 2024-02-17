@@ -4,7 +4,7 @@ window.onload = function() {
         .then(data => {
             data.forEach(courseProvider => {
                 const contentBox = document.createElement('a');
-                contentBox.href = `/api/courses/${courseProvider.course.courseId}`;
+                contentBox.href = `/courses/${courseProvider.course.courseId}`;
                 contentBox.className = 'content-box';
 
                 const image = document.createElement('img');
@@ -61,7 +61,7 @@ window.onload = function() {
                 const providersElement = document.createElement('p');
                 providersElement.className = 'content-box-text';
 
-// Filter the providers array to only include the providers related to the specific course
+
                 const courseProviders = courseProvider.providers.filter(provider => provider.courseId === courseProvider.course.courseId);
 
                 if (Array.isArray(courseProviders) && courseProviders.length) {

@@ -4,7 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -37,13 +40,45 @@ public class CourseController {
         }
     }
 
+    /**
+     * Returns all the courses in the database.
+     * @return a collection of all the courses in the database.
+     */
     @GetMapping("/api/courses")
     public Collection<CourseProviders> getCourses() {
         return courseService.getAllCourses();
     }
 
+    /**
+     * Returns the course that has the matching id as the path variable.
+     * @param courseId The id of the course
+     * @param providerId The id of the provider
+     * @return a Http response either containing the course with matching id or a NOT FOUND response.
+     */
     @GetMapping("/api/courses/{courseId}/{providerId}")
     public CourseProviders getCourseFromProvider(@PathVariable int courseId, @PathVariable int providerId) {
-        return courseService.getCourse(courseId, providerId); //Create an Exception
+        if (courseService.getCourse(courseId, providerId) == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Course not found");
+        } else {
+            return courseService.getCourse(courseId, providerId);
+        }
+    }
+
+    /**
+     * Returns the course page that has the matching id as the path variable.
+     * @param courseId The id of the course
+     * @return a Http response either containing the course with matching id or a NOT FOUND response.
+     */
+    @GetMapping("/courses/{courseId}")
+    public ModelAndView getCoursePage(@PathVariable int courseId) {
+        ModelAndView modelAndView = new ModelAndView();
+        Course course = courseService.getCourseInfo(courseId);
+        if (course == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Course not found");
+        } else {
+            modelAndView.addObject("course", course);
+            modelAndView.setViewName("course");
+            return modelAndView;
+        }
     }
 }
