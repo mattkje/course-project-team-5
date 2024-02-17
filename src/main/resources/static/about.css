@@ -512,3 +512,9 @@ footer h4 {
     display: block;
 
 }
+
+.course-image {
+    height: 500px;
+    object-fit: cover;
+    border-radius: 15px 15px 0 0;
+}

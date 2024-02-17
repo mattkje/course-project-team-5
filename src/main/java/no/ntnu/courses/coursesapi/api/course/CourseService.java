@@ -61,18 +61,24 @@ public class CourseService {
      * @return The course
      */
     public CourseProviders getCourse(Integer courseId, Integer providerId) {
-        List<Provider> providers = new ArrayList<>();
-        for(Provider provider : providerRepository.findAll()) {
-            if(providerId == provider.getProviderId()) {
-                for(Course course : courseRepository.findAll()) {
-                    if(courseId == provider.getCourseId()) {
-                        providers.add(provider);
-                        return new CourseProviders(course, providers);
-                    }
-                }
+        Map<Integer, Provider> providerMap = new HashMap<>();
+        for (Provider provider : providerRepository.findAll()) {
+            providerMap.put(provider.getProviderId(), provider);
+        }
 
+        Provider provider = providerMap.get(providerId);
+        if (provider == null) {
+            return null;
+        }
+
+        List<Provider> providers = new ArrayList<>();
+        for (Course course : courseRepository.findAll()) {
+            if (courseId.equals(provider.getCourseId())) {
+                providers.add(provider);
+                return new CourseProviders(course, providers);
             }
         }
+
         return null;
     }
 }

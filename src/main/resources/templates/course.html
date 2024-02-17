@@ -11,14 +11,14 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bebas+Neue">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link th:href="@{/about.css}" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" th:href="@{media/logo.png}">
+    <link rel="icon" type="image/x-icon" th:href="@{/media/logo.png}">
     <script src="../static/main.js"></script>
 </head>
 <body>
 <div class="header">
     <div class="content">
         <a href="/" class="header-button">
-            <img class="logo" th:src="@{media/logo.png}" alt="Connect">
+            <img class="logo" th:src="@{/media/logo.png}" alt="Connect">
             <h4 class="logo-top">Learniverse&nbsp;</h4>
             <h4 class="logo-bottom">Connect</h4>
         </a>
@@ -40,14 +40,18 @@
 
 
 <div class="greeting">
-    <h2 th:text="${course.title}"></h2>
+    <h2 th:text="${courseProviders.course.title}"></h2>
 
-    <p th:text="${course.courseSize}"></p>
-    <p th:text="${course.closestCourseSession}"></p>
-    <p th:text="${course.hoursPerWeek}"></p>
-    <img th:src="${course.image}" alt="Course Image">
-    <p th:text="${course.keywords}"></p>
-    <p th:text="${course.description}"></p>
+    <p th:text="${courseProviders.course.courseSize}"></p>
+    <p th:text="${courseProviders.course.closestCourseSession}"></p>
+    <p th:text="${courseProviders.course.hoursPerWeek}"></p>
+    <img th:src="${courseProviders.course.image}" class="course-image" alt="Course Image">
+    <p th:text="${courseProviders.course.keywords}"></p>
+    <p th:text="${courseProviders.course.description}"></p>
+    <ul th:each="provider : ${courseProviders.providers}">
+        <li th:text="${provider.name}"></li>
+    </ul>
+
 
 </div>
 
@@ -57,7 +61,7 @@
     <div class="footer-content">
         <div class="footer-section">
             <a href="/" class="footer-logo">
-                <img class="logo" src="../static/media/logo.png" alt="Connect">
+                <img class="logo" th:src="@{/media/logo.png}" alt="Connect">
                 <h4 class="logo-top">Learniverse&nbsp;</h4>
                 <h4 class="logo-bottom">CONNECT</h4>
             </a>
@@ -75,7 +79,7 @@
         </div>
         <div class="footer-section">
             <h5>Created by Team 5 at</h5>
-            <img width="200px" src="../static/media/ntnu2.svg" alt="NeuBee Logo">
+            <img width="200px" th:src="@{/media/ntnu2.svg}" alt="NeuBee Logo">
         </div>
     </div>
 </footer>

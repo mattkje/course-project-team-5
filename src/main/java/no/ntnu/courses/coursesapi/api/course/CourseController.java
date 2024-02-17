@@ -72,11 +72,11 @@ public class CourseController {
     @GetMapping("/courses/{courseId}")
     public ModelAndView getCoursePage(@PathVariable int courseId) {
         ModelAndView modelAndView = new ModelAndView();
-        Course course = courseService.getCourseInfo(courseId);
-        if (course == null) {
+        CourseProviders courseProviders = courseService.getCourseWithProviders(courseId);
+        if (courseProviders == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Course not found");
         } else {
-            modelAndView.addObject("course", course);
+            modelAndView.addObject("courseProviders", courseProviders);
             modelAndView.setViewName("course");
             return modelAndView;
         }
