@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Learniverse</title>
+    <title>Page Not Found</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap">
@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link th:href="@{/main.css}" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" th:href="@{media/logo.png}">
-    <script th:src="@{main.js}"></script>
+    <script src="../../static/main.js"></script>
 </head>
 <body>
 <div class="background">
@@ -31,7 +31,7 @@
                     <li><a href="/about" class="header-button">About</a></li>
                 </ul>
                 <div class="right-content">
-                    <a href="/register" class="fancy-button">Get Started</a>
+                    <a href="/login" class="fancy-button">Get Started</a>
                 </div>
             </div>
             <br>
@@ -40,49 +40,27 @@
         <div class="hero-hbox">
             <div class="hero-container">
                 <div class="hero-box">
-                    <h1 class="hero-text">Unleash Your<br>Learning&nbsp;Journey</h1>
-                    <p class="hero-description">Empower your learning journey with Learniverse Connect. Access premium courses,
-                        explore diverse topics, and unleash your potential through our platform. Elevate your knowledge with
-                        engaging content and take the first step towards a brighter future.</p>
-
-                    <div class="mail-box">
-                        <label for="myTextBox"></label><input class="mail-prompt" type="text" name="myTextBox"
-                                                              placeholder="example@mail.com">
-                        <div class="right-content">
-                            <a href="/register" class="standard-button">Sign&nbsp;Up</a>
-                        </div>
-                    </div>
                     <br>
-                    <div class="hbox">
-                        <p style="color: #ffffff; margin-right: 10px">Already have an account?</p>
-                        <a href="/login" style="color: #ffffff; margin-right: 10px" class="media-link-button">Log in</a>
-
-
-                        <!--- <div class="right-content">
-                            <p style="color: #ffffff; margin-right: 10px">or</p>
-
-                            <button type="button" class="login-with-google-btn">
-                                Sign in with Google
-                            </button>
-                        </div> --->
-                    </div>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <h1 class="hero-text">403 Forbidden</h1>
+                    <p class="hero-description">Sorry, you do not have permission to access this page.</p>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
                     <br>
                 </div>
-                <!--- This image needs to be changed \/ --->
 
             </div>
         </div>
     </div>
 </div>
 
-
-<br>
-
-<h3>Explore a large selection of courses</h3>
-
-<div class="parent-container">
-    <!-- The content boxes will be appended here -->
-</div>
+<h3>Feel free to search our courses</h3>
 
 <div class="search-container">
 
@@ -93,20 +71,7 @@
     </div>
 </div>
 
-<div class="greeting">
-    <h2>Featured</h2>
-</div>
-
-<div class="search-box">
-    <div class="content-hbox">
-        <!--- Featured courses will be appended here --->
-    </div>
-</div>
-
-<div class="greeting">
-    <h2>Pro Benefits</h2>
-</div>
-
+<br>
 <br>
 <br>
 <br>
@@ -135,7 +100,7 @@
         </div>
         <div class="footer-section">
             <h5>Created by Team 5 at</h5>
-            <img width="200px" th:src="@{media/ntnu2.svg}" alt="NTNU Logo">
+            <img width="200px" th:src="@{media/ntnu2.svg}" alt="NeuBee Logo">
         </div>
     </div>
 </footer>

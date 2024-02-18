@@ -394,9 +394,11 @@ input:focus {
 
 
 
+
 .standard-button {
     background-color: var(--base-1);
     color: var(--light-1);
+    text-align: center;
     font-weight: bold;
     padding: 20px;
     border-radius: 10px;

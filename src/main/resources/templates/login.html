@@ -28,7 +28,7 @@
                     <h4 class="logo-top">Learniverse&nbsp;</h4>
                     <h4 class="logo-bottom">Connect</h4>
                 </a>
-                <div th:if="${param.error}" class="alert alert-danger">
+                <div th:if="${param.error}" class="alert-failed">
                     Invalid username or password.
                 </div>
 
@@ -43,11 +43,8 @@
                     <label for="password">Password:</label>
                     <input class="login-prompt" type="password" id="password" name="password" placeholder="password" required/>
                 </div>
-                <div class="login-text-field">
-                    <button class="standard-button" type="submit">Login</button>
-                </div>
+                <button class="standard-button" type="submit">Login</button>
             </div>
-            <img class="login-image" th:src="@{media/login.svg}" alt="Connect">
         </div>
     </div>
 

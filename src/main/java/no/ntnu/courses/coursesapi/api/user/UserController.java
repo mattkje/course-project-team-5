@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,6 +15,9 @@ import java.util.List;
 @RequestMapping("/api/users")
 public class UserController {
     private final UserService userService;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
     public UserController(UserService userService) {
@@ -25,15 +29,21 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @ApiOperation(value = "Create a new user", notes = "This endpoint creates a new user with the provided details.")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully created the user"),
-            @ApiResponse(code = 400, message = "Invalid request body"),
-            @ApiResponse(code = 500, message = "Internal server error")
-    })
-    @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        User createdUser = userService.createUser(user);
-        return new ResponseEntity<>(createdUser, HttpStatus.OK);
+
+
+
+    @PostMapping("/register")
+    public User register(@RequestBody RegistrationRequest request) {
+        User user = new User();
+        user.setUsername(request.getUsername());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setFirstName(request.getFirstName());
+        user.setLastName(request.getLastName());
+        user.setEmail(request.getEmail());
+        user.setPhoneNumber(request.getPhoneNumber());
+        user.setRole(Role.USER);
+        user.setEnabled(true);
+
+        return userService.createUser(user);
     }
 }

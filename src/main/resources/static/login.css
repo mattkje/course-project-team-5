@@ -14,7 +14,6 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    color: var(--dark-1);
     margin: 0;
     padding: 0;
 }
@@ -410,13 +409,18 @@ input:focus {
 
 
 .standard-button {
-    background-color: var(--base-1);
+    min-width: 100%;
+    background: var(--base-1);
     color: var(--light-1);
     font-weight: bold;
     padding: 20px;
-    border-radius: 10px;
-    text-decoration: none;
+    border-width: 2px;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 20px;
     display: flex;
+    justify-content: center;
+    align-items: center;
 
     &:hover {
         background-color: var(--base-2);
@@ -530,19 +534,17 @@ footer a:hover {
 
 
 .login-container {
-    background-color: rgba(0, 0, 0, 0.76);
+    background-color: rgba(0, 0, 0, 0.87);
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
 }
 
-.login-container h4 {
-    color: var(--dark-1);
-}
 
 .login-box {
-    background-color: var(--light-1);
+    backdrop-filter: blur(5px);
+    background-color: rgba(0, 0, 0, 0.44);
     display: flex;
     align-items: center;
     padding: 50px;
@@ -559,12 +561,24 @@ footer a:hover {
 }
 
 .login-prompt {
+    color: white;
+    min-width: 87%;
     background: none;
     padding: 20px;
-    border: 2px solid var(--light-2);
-    border-radius: 15px;
+    border: 2px solid var(--light-1);
+    border-radius: 20px;
     font-size: 19px;
     margin: 20px 0 20px 0;
+}
+
+.alert-failed {
+    color: red;
+    font-size: 14px;
+    margin: 0;
+}
+
+label {
+    color: white;
 }
 
 .login-text-field {
