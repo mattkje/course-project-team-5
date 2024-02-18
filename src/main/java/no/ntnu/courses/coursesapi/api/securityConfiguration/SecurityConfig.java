@@ -1,5 +1,6 @@
 package no.ntnu.courses.coursesapi.api.securityConfiguration;
 
+import no.ntnu.courses.coursesapi.api.user.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -24,7 +25,7 @@ public class SecurityConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/users").hasRole("ADMIN")
+                        .requestMatchers("/api/users/**").hasRole("ADMIN")
                         .anyRequest().permitAll()
                 )
                 .formLogin(form -> form.loginPage("/login").permitAll())
