@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -42,6 +43,8 @@ public class UserController {
         user.setEmail(request.getEmail());
         user.setPhoneNumber(request.getPhoneNumber());
         user.setRole(Role.USER);
+        user.setCreatedAt();
+        user.setUpdatedAt();
         user.setEnabled(true);
 
         return userService.createUser(user);

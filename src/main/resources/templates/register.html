@@ -26,35 +26,35 @@
                     <h4 class="logo-bottom">Connect</h4>
                 </a>
                 <div class="login-text-field">
-                    <label for="username">Username:</label>
-                    <input class="login-prompt" type="text" id="username" name="username" placeholder="username" required autofocus/>
+                    <label for="username">Username*:</label>
+                    <input class="login-prompt" type="text" id="username" name="username" placeholder="Enter a username" required autofocus/>
                 </div>
                 <div class="login-text-field">
-                    <label for="password">Password:</label>
-                    <input class="login-prompt" type="text" id="password" name="password" placeholder="password" required autofocus/>
+                    <label for="password">Password*:</label>
+                    <input class="login-prompt" type="text" id="password" name="password" placeholder="Enter a password" required autofocus/>
                 </div>
                 <div class="login-text-field">
-                    <label for="firstName">First Name:</label>
-                    <input class="login-prompt" type="text" id="firstName" name="firstName" placeholder="firstName" required autofocus/>
+                    <label for="firstName">First Name*:</label>
+                    <input class="login-prompt" type="text" id="firstName" name="firstName" placeholder="Enter your first name" required autofocus/>
                 </div>
                 <div class="login-text-field">
-                    <label for="lastName">Last Name:</label>
-                    <input class="login-prompt" type="text" id="lastName" name="lastName" placeholder="lastName" required autofocus/>
+                    <label for="lastName">Last Name*:</label>
+                    <input class="login-prompt" type="text" id="lastName" name="lastName" placeholder="Enter your last name" required autofocus/>
                 </div>
                 <div class="login-text-field">
-                    <label for="email">Email:</label>
-                    <input class="login-prompt" type="text" id="email" name="email" placeholder="email" required autofocus/>
+                    <label for="email">Email*:</label>
+                    <input class="login-prompt" type="text" id="email" name="email" placeholder="Enter your email" required autofocus/>
                 </div>
                 <div class="login-text-field">
                     <label for="phoneNumber">Phone Number:</label>
-                    <input class="login-prompt" type="text" id="phoneNumber" name="phoneNumber" placeholder="phoneNumber" required autofocus/>
+                    <input class="login-prompt" type="text" id="phoneNumber" name="phoneNumber" placeholder="Enter your phone number" required autofocus/>
                 </div>
 
-                <button class="standard-button" type="submit">Register</button>
+                <button class="standard-button" type="submit">Create user</button>
             </div>
+            <img class="login-image" th:src="@{media/signup.svg}" alt="Connect">
         </div>
     </div>
-
 </form>
 
 <script>
@@ -68,7 +68,7 @@
                 firstName: $('#firstName').val(),
                 lastName: $('#lastName').val(),
                 email: $('#email').val(),
-                phoneNumber: $('#phoneNumber').val()
+                phoneNumber: $('#phoneNumber').val(),
             };
 
             $.ajax({
@@ -86,5 +86,31 @@
         });
     });
 </script>
+<footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <a href="/" class="footer-logo">
+                <img class="logo" th:src="@{media/logo.png}" alt="Connect">
+                <h4 class="logo-top">Learniverse&nbsp;</h4>
+                <h4 class="logo-bottom">CONNECT</h4>
+            </a>
+        </div>
+        <div class="footer-section">
+            <h5>Contact Us</h5>
+            <p>Email: info@learniverse.com</p>
+            <p>Phone: +47 70 70 70 70</p>
+        </div>
+        <div class="footer-section">
+            <h5>Follow Us</h5>
+            <a href="#" target="_blank">Facebook</a>
+            <a href="#" target="_blank">Twitter</a>
+            <a href="#" target="_blank">Instagram</a>
+        </div>
+        <div class="footer-section">
+            <h5>Created by Team 5 at</h5>
+            <img width="200px" th:src="@{media/ntnu2.svg}" alt="NTNU Logo">
+        </div>
+    </div>
+</footer>
 </body>
-</html>>
+</html>

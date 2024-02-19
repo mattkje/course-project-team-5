@@ -5,6 +5,7 @@
     --light-2: #adadad;
     --dark-1: #1a1a1a;
     --dark-2: #07002c;
+    --dark-3: #656565;
 }
 
 
@@ -91,24 +92,26 @@ ul {
 
 .logo-top {
     font-weight: 900;
+    font-size: 2vw;
     padding-left: 5px;
+    color: var(--dark-1);
 }
 
 .logo-bottom {
+    font-size: 2vw;
     color: var(--base-1);
 }
 
 
 .header-button {
-    height: 70px;
-    color: var(--light-1);
+    color: var(--dark-1);
     font-size: 20px;
     border: none;
-    padding: 10px 1%;
+    padding: 0;
     text-decoration: none;
     display: flex;
     align-items: center;
-    margin-right: 3vw;
+    margin: auto;
 }
 
 .header-button:hover {
@@ -367,10 +370,10 @@ input:focus {
 }
 
 .logo {
-    width: 40px;
-    height: 40px;
-    padding-left: 20px;
-    transform:translateY(-3px);
+    width: 3vw;
+    height: 3vw;
+    padding-left: 3vw;
+    margin: auto;
 }
 
 .menu-icons {
@@ -409,15 +412,16 @@ input:focus {
 
 
 .standard-button {
-    min-width: 100%;
+    width: 17vw;
+    height: 1vh;
     background: var(--base-1);
     color: var(--light-1);
     font-weight: bold;
-    padding: 20px;
+    padding: 2vh;
     border-width: 2px;
-    border-radius: 20px;
+    border-radius: 2vh;
     text-align: center;
-    font-size: 20px;
+    font-size: 0.6vw;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -440,6 +444,7 @@ footer {
     color: var(--light-1);
     text-align: center;
     padding: 20px;
+    margin: 0;
 }
 
 .footer-content {
@@ -462,6 +467,25 @@ footer a {
 
 footer a:hover {
     text-decoration: underline;
+}
+
+footer .logo {
+    width: 40px;
+    height: 40px;
+    padding-left: 20px;
+    transform:translateY(-3px);
+}
+
+footer .logo-top {
+    font-size: 20px;
+    font-weight: bold;
+    padding-left: 10px;
+    color: var(--light-1);
+}
+
+footer .logo-bottom {
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .footer-logo {
@@ -539,36 +563,40 @@ footer a:hover {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    margin-bottom: 0;
 }
 
 
 .login-box {
-    backdrop-filter: blur(5px);
-    background-color: rgba(0, 0, 0, 0.44);
+    width: 50%;
+    height: 70%;
+    background-color: #FFFFFF;
     display: flex;
     align-items: center;
-    padding: 50px;
-    border-radius: 15px;
+    padding: 3vw;
+    border-radius: 2vh;
     box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
 }
 
 .login-box h1 {
-    margin-bottom: 20px;
+    margin-bottom: 2vh;
 }
 
 .login-field-box {
     align-items: center;
+    margin-bottom: 1vh;
 }
 
 .login-prompt {
-    color: white;
-    min-width: 87%;
+    color: var(--dark-3);
+    width: 15vw;
+    height: 1vh;
     background: none;
-    padding: 20px;
-    border: 2px solid var(--light-1);
-    border-radius: 20px;
-    font-size: 19px;
-    margin: 20px 0 20px 0;
+    padding: 2vh;
+    border: 0.15vw solid var(--dark-3);
+    border-radius: 2vh;
+    font-size: 0.6vw;
+    margin: 1vh 0 1vh 0;
 }
 
 .alert-failed {
@@ -578,10 +606,12 @@ footer a:hover {
 }
 
 label {
-    color: white;
+    color: var(--dark-3);
 }
 
+
 .login-text-field {
+    padding: 0;
     margin: 0;
     justify-content: center;
     align-items: flex-start;
@@ -589,9 +619,13 @@ label {
     flex-direction: column;
 }
 
+.login-text-field label {
+    font-size: 0.7vw;
+}
+
 .login-image {
-    max-width: 500px;
+    width: 50%;
     height: auto;
     margin: auto;
-    margin-bottom: 20px;
+    margin-bottom: 12vh;
 }
