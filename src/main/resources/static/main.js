@@ -1,4 +1,10 @@
 window.onload = function() {
+
+    populateCourses();
+    animateScroll();
+};
+
+function populateCourses() {
     fetch('/api/courses')
         .then(response => response.json())
         .then(data => {
@@ -87,4 +93,4 @@ window.onload = function() {
             });
         })
         .catch(error => console.error('Error:', error));
-};
+}
