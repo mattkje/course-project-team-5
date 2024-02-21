@@ -53,13 +53,13 @@ CREATE TABLE IF NOT EXISTS courses
     hours_per_week         INT,
     related_certifications VARCHAR(255),
     description            VARCHAR(5000),
-    image                  VARCHAR(255)
+    image_url                  VARCHAR(255)
 );
 
 
 -- Run this!!
 INSERT INTO courses (course_id, category, title, keywords, level, closest_course_session, course_size, hours_per_week,
-                     related_certifications, description, image)
+                     related_certifications, description, image_url)
 VALUES (1, 'Information Technology Courses', 'Real-Time Programming in Java',
         '["Java", "real-time programming", "multi-threading", "programming"]', 'Expert', '03.06 - 28.06', 7.5, 40,
         'Java SE 17 Programmer Professional',
@@ -124,7 +124,8 @@ CREATE TABLE IF NOT EXISTS providers
     course_id   FLOAT,
     name        VARCHAR(25),
     price       DECIMAL(10, 2),
-    currency    VARCHAR(5)
+    currency    VARCHAR(5),
+    FOREIGN KEY (course_id) REFERENCES courses(course_id)
 );
 
 INSERT INTO providers (course_id, name, price, currency)
@@ -168,9 +169,24 @@ VALUES (1, 'NTNU', 29999.00, 'NOK'),
        (12, 'University of Oslo', 20000.00, 'NOK'),
        (12, 'University of Bergen', 20000.00, 'NOK');
 
+CREATE TABLE keywords (
+    keyword_id INT AUTO_INCREMENT PRIMARY KEY,
+    keyword_name VARCHAR(100) NOT NULL
+);
 
+CREATE TABLE course_keywords (
+    course_id INT,
+    keyword_id INT,
+    PRIMARY KEY (course_id, keyword_id),
+    FOREIGN KEY (course_id) REFERENCES courses(course_id),
+    FOREIGN KEY (keyword_id) REFERENCES keywords(keyword_id)
+);
 
+INSERT INTO keywords (keyword_name)
+VALUES('Java'), ('Python'), ('C+');
 
+INSERT INTO course_keywords (course_id, keyword_id)
+VALUES(1, 1), (2, 1), (2, 2), (3, 3), (1, 3);
 
 
 
