@@ -1,9 +1,16 @@
 package no.ntnu.courses.coursesapi.api.general;
 
+import no.ntnu.courses.coursesapi.api.course.CourseProviders;
 import no.ntnu.courses.coursesapi.api.user.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.ModelAndView;
 
 
 /**
@@ -46,5 +53,15 @@ public class SiteController {
         model.addAttribute("user", new User());
         return "register.html";
     }
+
+    private static final Logger logger = LoggerFactory.getLogger(SiteController.class);
+
+    @GetMapping("/courses/{courseId}")
+    public String getCoursePage(@PathVariable int courseId) {
+        logger.info("Received request for course with ID: {}", courseId);
+        // Add any model attributes if needed
+        return "course";
+    }
+
 
 }

@@ -3,6 +3,8 @@ package no.ntnu.courses.coursesapi.api.user;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import java.util.Collections;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,5 +50,22 @@ public class UserController {
         user.setEnabled(true);
 
         return userService.createUser(user);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody Map<String, Object> payload) {
+        String username = (String) payload.get("username");
+        String password = (String) payload.get("password");
+
+
+        User user = userService.findByUsername(username);
+
+
+        if (user == null || !passwordEncoder.matches(password, user.getPassword())) {
+            return new ResponseEntity<>(Collections.singletonMap("error", "Invalid username or password."), HttpStatus.UNAUTHORIZED);
+        } else {
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
     }
 }

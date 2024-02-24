@@ -1,18 +1,15 @@
 package no.ntnu.courses.coursesapi.api.course;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
 
 @RestController
 public class CourseController {
@@ -64,11 +61,7 @@ public class CourseController {
         }
     }
 
-    /**
-     * Returns the course page that has the matching id as the path variable.
-     * @param courseId The id of the course
-     * @return a Http response either containing the course with matching id or a NOT FOUND response.
-     */
+    /*
     @GetMapping("/courses/{courseId}")
     public ModelAndView getCoursePage(@PathVariable int courseId) {
         ModelAndView modelAndView = new ModelAndView();
@@ -81,4 +74,10 @@ public class CourseController {
             return modelAndView;
         }
     }
+     */
+    /**
+     * Returns the course page that has the matching id as the path variable.
+     * @param courseId The id of the course
+     * @return a Http response either containing the course with matching id or a NOT FOUND response.
+     */
 }

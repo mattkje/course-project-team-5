@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,15 +10,15 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bebas+Neue">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link th:href="@{/about.css}" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" th:href="@{/media/logo.png}">
-    <script src="../static/main.js"></script>
+    <link href="about.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="media/logo.png">
+    <script src="scripts/main.js"></script>
 </head>
 <body>
 <div class="header">
     <div class="content">
         <a href="/" class="header-button">
-            <img class="logo" th:src="@{/media/logo.png}" alt="Connect">
+            <img class="logo" src="media/logo.png" alt="Connect">
             <h4 class="logo-top">Learniverse&nbsp;</h4>
             <h4 class="logo-bottom">Connect</h4>
         </a>
@@ -39,25 +39,8 @@
 <br>
 
 
-<div>
-    <h2 class="greeting" th:text="${courseProviders.course.title}"></h2>
-    <div class="greeting">
-        <img th:src="${courseProviders.course.image}" class="course-image" alt="Course Image">
-        <div>
-            <div class="content-hbox" th:each="provider : ${courseProviders.providers}">
-                <a class="fancy-button" type="button" th:text="${provider.name}"></a>
-            </div>
-            <hr>
-            <p th:text="${courseProviders.course.courseSize}"></p>
-            <p th:text="${courseProviders.course.closestCourseSession}"></p>
-            <p th:text="${courseProviders.course.hoursPerWeek}"></p>
-            <hr>
-        </div>
-    </div>
-    <div class="hero-hbox">
-        <p th:text="${courseProviders.course.keywords}"></p>
-        <p th:text="${courseProviders.course.description}"></p>
-    </div>
+<div class="greeting">
+    <h2>About Us</h2>
 
 </div>
 
@@ -67,7 +50,7 @@
     <div class="footer-content">
         <div class="footer-section">
             <a href="/" class="footer-logo">
-                <img class="logo" th:src="@{/media/logo.png}" alt="Connect">
+                <img class="logo" src="media/logo.png" alt="Connect">
                 <h4 class="logo-top">Learniverse&nbsp;</h4>
                 <h4 class="logo-bottom">CONNECT</h4>
             </a>
@@ -85,7 +68,7 @@
         </div>
         <div class="footer-section">
             <h5>Created by Team 5 at</h5>
-            <img width="200px" th:src="@{/media/ntnu2.svg}" alt="NeuBee Logo">
+            <img width="200px" src="media/ntnu2.svg" alt="NeuBee Logo">
         </div>
     </div>
 </footer>
