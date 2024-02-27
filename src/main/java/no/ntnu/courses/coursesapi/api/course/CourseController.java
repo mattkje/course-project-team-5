@@ -61,23 +61,4 @@ public class CourseController {
         }
     }
 
-    /*
-    @GetMapping("/courses/{courseId}")
-    public ModelAndView getCoursePage(@PathVariable int courseId) {
-        ModelAndView modelAndView = new ModelAndView();
-        CourseProviders courseProviders = courseService.getCourseWithProviders(courseId);
-        if (courseProviders == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Course not found");
-        } else {
-            modelAndView.addObject("courseProviders", courseProviders);
-            modelAndView.setViewName("course");
-            return modelAndView;
-        }
-    }
-     */
-    /**
-     * Returns the course page that has the matching id as the path variable.
-     * @param courseId The id of the course
-     * @return a Http response either containing the course with matching id or a NOT FOUND response.
-     */
 }

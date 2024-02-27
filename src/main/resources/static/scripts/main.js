@@ -1,7 +1,5 @@
 window.onload = function() {
-
     populateCourses();
-    animateScroll();
 };
 
 function populateCourses() {
@@ -10,7 +8,7 @@ function populateCourses() {
         .then(data => {
             data.forEach(courseProvider => {
                 const contentBox = document.createElement('a');
-                contentBox.href = `/courses/${courseProvider.course.courseId}`;
+                contentBox.href = `/courses?id=${courseProvider.course.courseId}`;
                 contentBox.className = 'content-box';
 
                 const image = document.createElement('img');

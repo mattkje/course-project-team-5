@@ -1,33 +1,29 @@
 window.onload = function() {
     populateCoursePage();
-
 };
-function populateCoursePage() {
-    // Get the course ID from the URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const courseId = urlParams.get('courseId');
 
-    // Fetch the course data from the API
-    fetch(`/api/courses/${courseId}`)
+function populateCoursePage() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get('id');
+
+
+    fetch(`/api/courses/${id}`)
         .then(response => response.json())
         .then(data => {
-            // Use the data to populate the HTML elements
-            document.getElementById('courseTitle').textContent = data.title;
-            document.getElementById('courseImage').src = data.image;
-            document.getElementById('courseSize').textContent = data.size;
-            document.getElementById('closestCourseSession').textContent = data.closestSession;
-            document.getElementById('hoursPerWeek').textContent = data.hoursPerWeek;
-            document.getElementById('courseKeywords').textContent = data.keywords.join(', ');
-            document.getElementById('courseDescription').textContent = data.description;
-
-            // Add the providers to the provider list
-            const providerList = document.getElementById('providerList');
-            data.providers.forEach(provider => {
-                const providerElement = document.createElement('div');
+            document.getElementById('courseDescription').innerText = data.course.description;
+            document.getElementById('courseImage').src = data.course.image;
+            document.getElementById('courseTitle').innerText = data.course.title;
+            document.getElementById('courseSize').innerText = `Course size: ${data.course.courseSize}`;
+            document.getElementById('closestCourseSession').innerText = `Closest course session: ${data.course.closestCourseSession}`;
+            document.getElementById('hoursPerWeek').innerText = `Hours per week: ${data.course.hoursPerWeek}`;
+            document.getElementById('providerList').dir = data.providers.forEach(provider => {
+                const providerElement = document.createElement('a');
+                providerElement.className = 'fancy-button';
+                providerElement.type = 'button';
                 providerElement.textContent = provider.name;
-                providerList.appendChild(providerElement);
+                document.getElementById('providerList').appendChild(providerElement);
             });
+
         })
         .catch(error => console.error('Error:', error));
-}
 }
