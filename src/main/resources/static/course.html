@@ -40,17 +40,23 @@
 
 
 <div class="providerList">
-    <h2 class="greeting" id="courseTitle"></h2>
+
     <div class="greeting">
         <img id="courseImage" class="course-image" alt="Course Image">
         <div>
+            <h2 class="greeting" id="courseTitle"></h2>
+            <hr>
+            <p>Providers</p>
             <div class="content-hbox" id="providerList">
                 <!-- Providers will be added here by JavaScript -->
             </div>
             <hr>
-            <p id="courseSize"></p>
-            <p id="closestCourseSession"></p>
-            <p id="hoursPerWeek"></p>
+            <div id="courseInformation">
+                <div class="courseInfoElement" id="courseSize"></div>
+                <div class="courseInfoElement" id="closestCourseSession"></div>
+                <div class="courseInfoElement" id="hoursPerWeek"></div>
+                <div class="courseInfoElement" id="relatedCertifications"></div>
+            </div>
             <hr>
         </div>
     </div>

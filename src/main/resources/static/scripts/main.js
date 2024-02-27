@@ -84,7 +84,16 @@ function populateCourses() {
 
                 const currency = lowestPriceProvider.currency;
 
-                price.textContent = currency + " " + lowestPriceProvider.price;
+                if (currency === 'USD') {
+                    price.textContent = "$" + lowestPriceProvider.price;
+                } else if (currency === 'EUR') {
+                    price.textContent = "€" + lowestPriceProvider.price;
+                } else if (currency === 'GBP') {
+                    price.textContent = "£" + lowestPriceProvider.price;
+                } else {
+                    price.textContent = currency + " " + lowestPriceProvider.price;
+                }
+
                 contentDescription.appendChild(price);
 
                 document.querySelector('.content-hbox').appendChild(contentBox);
