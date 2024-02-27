@@ -67,7 +67,7 @@ function populateCoursePage() {
 
 
             // Providers
-            document.getElementById('providerList').dir = data.providers.forEach(provider => {
+            data.providers.forEach(provider => {
                 const providerElement = document.createElement('button');
                 providerElement.className = 'provider-choose';
                 providerElement.type = 'button';

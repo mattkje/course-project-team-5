@@ -18,18 +18,16 @@ body {
 
 
 h1 {
-    font-size: 50px;
+    font-size: 40px;
     font-weight: 900;
 }
 
 h2 {
-    font-size: 40px;
+    font-size: 30px;
 }
 
 h3 {
-    font-size: 30px;
-    font-weight: 900;
-    text-align: center;
+    font-size: 20px;
 }
 
 h4 {
@@ -293,6 +291,13 @@ input:focus {
     margin: auto;
 }
 
+.course-description-box {
+    border: none;
+    padding: 10px 20px;
+    width: 70%;
+    margin: auto;
+}
+
 .search-box {
     border: none;
     padding: 40px 20px;
@@ -517,15 +522,22 @@ footer h4 {
 }
 
 .course-image {
-    height: 500px;
+    min-height: 100%;
+    width: 60%;
     object-fit: cover;
-    border-radius: 15px 15px 0 0;
+    border-radius: 15px;
+    margin: 30px 50px 0 0;
 }
 
 .content-hbox {
     width: 130%;
-    margin-left: 15%;
-    margin-right: 15%;
+}
+
+hr {
+    border: 0;
+    height: 3px;
+    background: var(--light-2);
+    margin: 20px 0;
 }
 
 .content-box-icon {
@@ -561,7 +573,8 @@ footer h4 {
     justify-content: flex-start;
     align-items: flex-start;
     flex-wrap: wrap;
-    margin-left: 50px;
+    margin-left: 5%;
+    margin-right: 5%;
 }
 
 .courseInfoElement {
@@ -574,4 +587,45 @@ footer h4 {
 .courseInfoElement p {
     font-weight: bold;
     color: #656565;
+}
+
+
+.enroll-button {
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
+    background: var(--base-1);
+    border-radius: 20px;
+    padding: 17px 23%;
+    font-size: 25px;
+    color: var(--light-1);
+    cursor: pointer;
+    transition: all .5s;
+}
+
+.enroll-button:hover {
+    background-color: var(--base-2);
+    box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
+}
+
+.wish-button {
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
+    background: black;
+    border-radius: 20px;
+    padding: 17px 6%;
+    font-size: 25px;
+    color: var(--light-1);
+    cursor: pointer;
+    transition: all .5s;
+}
+
+.wish-button:hover {
+    background-color: #3f3f3f;
+    box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
+}
+
+.course-action-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
