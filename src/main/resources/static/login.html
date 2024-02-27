@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" >
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,29 +10,29 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bebas+Neue">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link th:href="@{/login.css}" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" th:href="@{media/logo.png}">
-    <script src="../static/main.js"></script>
+    <link href="login.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="media/logo.png">
+    <script src="scripts/course.js"></script>
 </head>
 
 <body>
 
 
-
-<form th:action="@{/login}" method="post">
+<form id="loginForm">
     <div class="login-container">
         <div class="login-box">
             <div class="login-field-box">
                 <a href="/" class="header-button">
-                    <img class="logo" th:src="@{media/logo.png}" alt="Connect">
+                    <img class="logo" src="media/logo.png" alt="Connect">
                     <h4 class="logo-top">Learniverse&nbsp;</h4>
                     <h4 class="logo-bottom">Connect</h4>
                 </a>
-                <div th:if="${param.error}" class="alert-failed">
+
+                <div id="error" class="alert-failed" style="display: none;">
                     Invalid username or password.
                 </div>
 
-                <div th:if="${param.logout}" class="alert alert-success">
+                <div id="logout" class="alert alert-success" style="display: none;">
                     You have been logged out.
                 </div>
                 <div class="login-text-field">
@@ -47,7 +47,7 @@
                 <p>No account?</p>
                 <a class="standard-button" href="/register" type="submit">Sign up here</a>
             </div>
-            <img class="login-image" th:src="@{media/login.svg}" alt="Connect">
+            <img class="login-image" src="media/login.svg" alt="Connect">
         </div>
     </div>
 

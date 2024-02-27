@@ -1,45 +1,37 @@
 package no.ntnu.courses.coursesapi.api.general;
 
 import no.ntnu.courses.coursesapi.api.user.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
-
-/**
- * Class for navigating through html files
- */
 @Controller
 public class SiteController {
 
-    /**
-     * Responds to HTTP GET requests for / which should return the home page.
-     *
-     * @return The Home page
-     */
+    private static final Logger logger = LoggerFactory.getLogger(SiteController.class);
+
     @GetMapping("/")
     public String home() {
         return "index.html";
     }
 
-    /**
-     * Responds to HTTP GET requests for /about which should return the about page.
-     *
-     * @return The Home page
-     */
     @GetMapping("/about")
     public String about() {
         return "about.html";
     }
 
-    /*
-     * Debug methods
-     */
+    @GetMapping("/error")
+    public String error() {
+        return "error/error.html";
+    }
+
     @GetMapping("/login")
     public String login() {
         return "login.html";
     }
-
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
@@ -47,4 +39,8 @@ public class SiteController {
         return "register.html";
     }
 
+    @GetMapping("/courses")
+    public String getProductPage() {
+        return "course.html";
+    }
 }
