@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bebas+Neue">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link href="about.css" rel="stylesheet" />
+    <link href="defaultLight.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="media/logo.png">
     <script src="scripts/course.js"></script>
 </head>
@@ -40,7 +40,13 @@
 
 
 <div class="providerList">
-
+    <div class="courseLinkElement">
+        <a href="/" >Courses</a>
+        <p>&nbsp;->&nbsp;</p>
+        <a href="#" id="courseCategoryLink"></a>
+        <p>&nbsp;->&nbsp;</p>
+        <a href="#" id="courseTitleLink"></a>
+    </div>
     <div class="greeting">
         <img id="courseImage" class="course-image" alt="Course Image">
         <div>
@@ -56,6 +62,7 @@
                 <div class="courseInfoElement" id="closestCourseSession"></div>
                 <div class="courseInfoElement" id="hoursPerWeek"></div>
                 <div class="courseInfoElement" id="relatedCertifications"></div>
+                <div class="courseInfoElement" id="difficulty"></div>
             </div>
             <hr>
             <div class="course-action-box">

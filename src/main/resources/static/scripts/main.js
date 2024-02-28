@@ -96,7 +96,11 @@ function populateCourses() {
 
                 contentDescription.appendChild(price);
 
-                document.querySelector('.content-hbox').appendChild(contentBox);
+                document.querySelector('.featured').appendChild(contentBox.cloneNode(true));
+                document.querySelector('.data-Science').appendChild(contentBox.cloneNode(true));
+                document.querySelector('.digital-marketing').appendChild(contentBox.cloneNode(true));
+                document.querySelector('.information-technologies').appendChild(contentBox.cloneNode(true));
+
             });
         })
         .catch(error => console.error('Error:', error));
