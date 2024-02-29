@@ -1,5 +1,5 @@
 :root {
-    --base-1: #5666ff;
+    --base-1: #5564f5;
     --base-2: #270e98;
     --light-1: #eaeaea;
     --light-2: #adadad;
@@ -530,10 +530,7 @@ footer h4 {
 }
 
 .content-hbox {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    justify-content: space-between;
+
 }
 
 hr {
@@ -571,12 +568,12 @@ hr {
 }
 
 #courseInformation {
-    display: grid;
-    grid-template-columns: repeat(2, min-content);
-    grid-template-rows: repeat(3, min-content);
-    justify-items: start;
-    align-items: start;
-    grid-gap: 0 1vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin: 0 5%;
 }
 
 .courseInfoElement {
@@ -584,7 +581,6 @@ hr {
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
-    width: max-content;
 }
 
 .courseInfoElement p {
@@ -618,12 +614,10 @@ hr {
     background: var(--base-1);
     border-radius: 20px;
     padding: 17px 23%;
-    width: max-content;
     font-size: 25px;
     color: var(--light-1);
     cursor: pointer;
     transition: all .5s;
-    margin: 0 0 1vw 0;
 }
 
 .enroll-button:hover {
@@ -637,12 +631,10 @@ hr {
     background: black;
     border-radius: 20px;
     padding: 17px 6%;
-    width: max-content;
     font-size: 25px;
     color: var(--light-1);
     cursor: pointer;
     transition: all .5s;
-    margin: 0 0 1vw 0;
 }
 
 .wish-button:hover {
@@ -712,3 +704,49 @@ hr {
     border-radius: 15px;
     font-size: 16px;
 }
+
+.filter {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+input[type="radio"]:checked + label{
+    color: var(--base-1);
+    box-shadow: 0 0 7px var(--base-1);
+}
+input[type="radio"]{
+    visibility: hidden;
+    display: none;
+}
+
+.categorySelector label {
+    position: relative;
+    display: inline-block;
+    justify-content: center;
+    justify-items: center;
+    box-shadow: 0 0 7px var(--light-1);
+    border-radius: 15px;
+    padding: 10px;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.categorySelector label {
+    margin-bottom: 5px;
+}
+
+.categorySelector {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px 50px;
+    margin-top: 10%
+}
+
+.h3Center {
+    display: flex;
+    justify-content: center;
+}
+
+
