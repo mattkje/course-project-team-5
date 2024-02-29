@@ -1,60 +1,31 @@
 package no.ntnu.courses.coursesapi.api.provider;
 
-
 import jakarta.persistence.*;
-import no.ntnu.courses.coursesapi.api.course.Course;
-
 
 @Entity
-@Table(name = "providers")
+@Table(name = "providers") // replace with your new table name
 public class Provider {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int providerId;
-    @Column(name = "course_id")
-    private int courseId;
-    @Column
-    private String name;
-    @Column
-    private float price;
-    @Column
-    private String currency;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int providerId;
 
+  @Column
+  private String name;
 
-    public String getName() {
-        return this.name;
-    }
+  public int getProviderId() {
+    return this.providerId;
+  }
 
-    public int getProviderId() {
-        return this.providerId;
-    }
+  public String getName() {
+    return this.name;
+  }
 
-    public int getCourseId() {
-        return this.courseId;
-    }
+  public void setProviderId(int providerId) {
+    this.providerId = providerId;
+  }
 
-    public float getPrice() {
-        return this.price;
-    }
-
-    public String getCurrency() {
-        return this.currency;
-    }
-
-    public void setProviderId(int providerId) {
-        this.providerId = providerId;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 }

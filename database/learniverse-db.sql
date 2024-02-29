@@ -1,31 +1,20 @@
 CREATE DATABASE IF NOT EXISTS LearniverseDB;
 USE LearniverseDB;
 
-CREATE TABLE IF NOT EXISTS roles
-(
-    role_id   TINYINT AUTO_INCREMENT PRIMARY KEY,
-    role_name VARCHAR(20) NOT NULL
-);
-
-INSERT INTO roles (role_name)
-VALUES ('ADMIN'),
-       ('MODERATOR'),
-       ('USER');
 
 CREATE TABLE IF NOT EXISTS users
 (
-    user_id      bigint AUTO_INCREMENT PRIMARY KEY,
+    user_id      INT AUTO_INCREMENT PRIMARY KEY,
     user_name    VARCHAR(16),
     email        VARCHAR(45),
     password     VARCHAR(64),
     first_name   VARCHAR(20),
     last_name    VARCHAR(20),
-    role_id      TINYINT,
+    role         ENUM('ADMIN', 'MODERATOR', 'USER') NOT NULL DEFAULT 'USER',
     enabled      BOOLEAN,
-    created_at   DATE,
-    updated_at   DATE,
-    phone_number VARCHAR(20),
-    FOREIGN KEY (role_id) REFERENCES roles (role_id)
+    created_at   datetime(6),
+    updated_at   datetime(6),
+    phone_number VARCHAR(20)
 );
 
 
@@ -43,23 +32,23 @@ VALUES ('john_doe', 'john.doe@example.com', '$2a$10$v8zrek0TRlIUCME2Na10DeeiIBiH
 
 CREATE TABLE IF NOT EXISTS courses
 (
-    course_id              INTEGER PRIMARY KEY AUTO_INCREMENT,
+    course_id              INT PRIMARY KEY AUTO_INCREMENT,
     category               VARCHAR(100),
     title                  VARCHAR(255),
     keywords               VARCHAR(255),
     level                  VARCHAR(50),
     closest_course_session VARCHAR(50),
-    course_size            DECIMAL(5, 2),
+    course_size            FLOAT,
     hours_per_week         INT,
     related_certifications VARCHAR(255),
     description            VARCHAR(5000),
-    image_url                  VARCHAR(255)
+    image                  VARCHAR(255)
 );
 
 
 -- Run this!!
 INSERT INTO courses (course_id, category, title, keywords, level, closest_course_session, course_size, hours_per_week,
-                     related_certifications, description, image_url)
+                     related_certifications, description, image)
 VALUES (1, 'Information Technology Courses', 'Real-Time Programming in Java',
         '["Java", "real-time programming", "multi-threading", "programming"]', 'Expert', '03.06 - 28.06', 7.5, 40,
         'Java SE 17 Programmer Professional',
@@ -114,60 +103,85 @@ VALUES (1, 'Information Technology Courses', 'Real-Time Programming in Java',
         '["Python", "machine learning", "programming", "data science", "neural networks", "Databricks"]', 'Beginner',
         '19.08 - 30.08', 2, 10, 'Databricks Practitioner',
         'Embark on your data journey with our beginner-level online course, Databricks Fundamentals. Designed for individuals new to the world of big data and analytics, this course offers a comprehensive introduction to the essential concepts of Databricks, a leading unified analytics platform. Led by experienced instructors, youll navigate through the fundamentals of data exploration, data engineering, and collaborative data science using Databricks. No prior experience with big data technologies is required, making this course an ideal starting point for beginners eager to harness the power of Databricks for streamlined data processing and analysis. By the end of the course, youll have a solid foundation in using Databricks to uncover insights from large datasets, setting you on a path towards mastering the intricacies of modern data analytics. Join us and demystify the fundamentals of Databricks in this accessible and empowering course.',
-        'https://upload.wikimedia.org/wikipedia/commons/6/63/Databricks_Logo.png');
-
-
+        'https://upload.wikimedia.org/wikipedia/commons/6/63/Databricks_Logo.png'),
+        (13, 'Data Science and Analytics Courses', 'Håkon Sex Course',
+        '["Gay", "sex", "Penetration", "science", "Trans", "Wood"]', 'Beginner',
+        '19.08 - 30.08', 2, 10, 'Certified gay',
+        'Håkon will show you his willy and such...',
+        'https://github.com/mattkje/Paths/blob/e79ddbafb1992dec6dea7ca006c37754a7ae0cdc/Data/currentGpaths/Your%20Baby.png?raw=true');
 
 CREATE TABLE IF NOT EXISTS providers
 (
-    provider_id bigint AUTO_INCREMENT PRIMARY KEY,
-    course_id   FLOAT,
-    name        VARCHAR(25),
-    price       DECIMAL(10, 2),
-    currency    VARCHAR(5),
-    FOREIGN KEY (course_id) REFERENCES courses(course_id)
+    provider_id INT AUTO_INCREMENT PRIMARY KEY,
+    name        VARCHAR(64)
 );
 
-INSERT INTO providers (course_id, name, price, currency)
-VALUES (1, 'NTNU', 29999.00, 'NOK'),
-       (1, 'Oracle', 32000.00, 'NOK'),
-       (2, 'Apache Software Foundation', 800.00, 'USD'),
-       (2, 'NTNU', 10000.00, 'NOK'),
-       (4, 'Pearson', 899.00, 'USD'),
-       (3, 'Microsoft', 2999.00, 'NOK'),
-       (3, 'Pearson', 3000.00, 'NOK'),
-       (3, 'Oracle', 200.00, 'USD'),
-       (4, 'Microsoft', 200.00, 'USD'),
-       (4, 'NTNU', 1800.00, 'NOK'),
-       (4, 'Pearson', 200.00, 'USD'),
-       (5, 'Microsoft', 400.00, 'USD'),
-       (5, 'NTNU', 3600.00, 'NOK'),
-       (5, 'Pearson', 400.00, 'USD'),
-       (6, 'Amazon', 100.00, 'USD'),
-       (6, 'Pearson', 120.00, 'USD'),
-       (6, 'NTNU', 1800.00, 'NOK'),
-       (7, 'Adobe', 66000.00, 'NOK'),
-       (7, 'Apple', 80000.00, 'NOK'),
-       (7, 'Google', 6000.00, 'USD'),
-       (7, 'Microsoft', 6000.00, 'USD'),
-       (7, 'Amazon', 6000.00, 'USD'),
-       (8, 'Adobe', 66000.00, 'NOK'),
-       (8, 'Apple', 80000.00, 'NOK'),
-       (8, 'Google', 6000.00, 'USD'),
-       (8, 'Microsoft', 6000.00, 'USD'),
-       (8, 'Amazon', 6000.00, 'USD'),
-       (9, 'NTNU', 50000.00, 'NOK'),
-       (9, 'Microsoft', 50000.00, 'NOK'),
-       (9, 'Handelshøyskolen BI', 50000.00, 'NOK'),
-       (10, 'NTNU', 20000.00, 'NOK'),
-       (10, 'University of Oslo', 20000.00, 'NOK'),
-       (10, 'University of Bergen', 20000.00, 'NOK'),
-       (11, 'NTNU', 30000.00, 'NOK'),
-       (11, 'University of Oslo', 30000.00, 'NOK'),
-       (11, 'University of Bergen', 30000.00, 'NOK'),
-       (12, 'NTNU', 20000.00, 'NOK'),
-       (12, 'University of Oslo', 20000.00, 'NOK'),
-       (12, 'University of Bergen', 20000.00, 'NOK');
+INSERT INTO providers (provider_id, name)
+VALUES (1, 'NTNU'),
+       (2, 'Oracle'),
+       (3, 'Apache Software Foundation'),
+       (4, 'Pearson'),
+       (5, 'Microsoft'),
+       (6, 'Amazon'),
+       (7, 'Adobe'),
+       (8, 'Apple'),
+       (9, 'Google'),
+       (10, 'Handelshøyskolen BI'),
+       (11, 'University of Oslo'),
+       (12, 'University of Bergen');
+
+
+CREATE TABLE IF NOT EXISTS course_providers
+(
+    course_provider_id INT AUTO_INCREMENT PRIMARY KEY,
+    course_id   INT,
+    provider_id INT,
+    FOREIGN KEY (provider_id) REFERENCES providers(provider_id),
+    FOREIGN KEY (course_id) REFERENCES courses(course_id),
+    price       FLOAT,
+    currency    VARCHAR(5)
+);
+
+INSERT INTO course_providers (course_id, provider_id, price, currency)
+VALUES (1, 1, 29999.00, 'NOK'),
+       (1, 2, 32000.00, 'NOK'),
+       (2, 3, 800.00, 'USD'),
+       (2, 1, 10000.00, 'NOK'),
+       (4, 4, 899.00, 'USD'),
+       (3, 5, 2999.00, 'NOK'),
+       (3, 4, 3000.00, 'NOK'),
+       (3, 2, 200.00, 'USD'),
+       (4, 5, 200.00, 'USD'),
+       (4, 1, 1800.00, 'NOK'),
+       (4, 4, 200.00, 'USD'),
+       (5, 5, 400.00, 'USD'),
+       (5, 1, 3600.00, 'NOK'),
+       (5, 4, 400.00, 'USD'),
+       (6, 6, 100.00, 'USD'),
+       (6, 4, 120.00, 'USD'),
+       (6, 1, 1800.00, 'NOK'),
+       (7, 7, 66000.00, 'NOK'),
+       (7, 8, 80000.00, 'NOK'),
+       (7, 9, 6000.00, 'USD'),
+       (7, 5, 6000.00, 'USD'),
+       (7, 6, 6000.00, 'USD'),
+       (8, 7, 66000.00, 'NOK'),
+       (8, 8, 80000.00, 'NOK'),
+       (8, 9, 6000.00, 'USD'),
+       (8, 5, 6000.00, 'USD'),
+       (8, 6, 6000.00, 'USD'),
+       (9, 1, 50000.00, 'NOK'),
+       (9, 5, 50000.00, 'NOK'),
+       (9, 10, 50000.00, 'NOK'),
+       (10, 1, 20000.00, 'NOK'),
+       (10, 11, 20000.00, 'NOK'),
+       (10, 12, 20000.00, 'NOK'),
+       (11, 1, 30000.00, 'NOK'),
+       (11, 11, 30000.00, 'NOK'),
+       (11, 12, 30000.00, 'NOK'),
+       (12, 1, 20000.00, 'NOK'),
+       (12, 11, 20000.00, 'NOK'),
+       (12, 12, 20000.00, 'NOK');
 
 CREATE TABLE keywords (
     keyword_id INT AUTO_INCREMENT PRIMARY KEY,

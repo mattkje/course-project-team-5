@@ -530,7 +530,10 @@ footer h4 {
 }
 
 .content-hbox {
-
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    justify-content: space-between;
 }
 
 hr {
@@ -568,12 +571,12 @@ hr {
 }
 
 #courseInformation {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    margin: 0 5%;
+    display: grid;
+    grid-template-columns: repeat(2, min-content);
+    grid-template-rows: repeat(3, min-content);
+    justify-items: start;
+    align-items: start;
+    grid-gap: 0 1vw;
 }
 
 .courseInfoElement {
@@ -581,6 +584,7 @@ hr {
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
+    width: max-content;
 }
 
 .courseInfoElement p {
@@ -614,10 +618,12 @@ hr {
     background: var(--base-1);
     border-radius: 20px;
     padding: 17px 23%;
+    width: max-content;
     font-size: 25px;
     color: var(--light-1);
     cursor: pointer;
     transition: all .5s;
+    margin: 0 0 1vw 0;
 }
 
 .enroll-button:hover {
@@ -631,10 +637,12 @@ hr {
     background: black;
     border-radius: 20px;
     padding: 17px 6%;
+    width: max-content;
     font-size: 25px;
     color: var(--light-1);
     cursor: pointer;
     transition: all .5s;
+    margin: 0 0 1vw 0;
 }
 
 .wish-button:hover {

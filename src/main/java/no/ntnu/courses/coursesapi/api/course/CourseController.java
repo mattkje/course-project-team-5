@@ -1,13 +1,11 @@
 package no.ntnu.courses.coursesapi.api.course;
 
+import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Collection;
 
@@ -29,7 +27,7 @@ public class CourseController {
      * @return a Http response either containing the course with matching id or a NOT FOUND response.
      */
     @GetMapping("/api/courses/{id}")
-    public ResponseEntity<CourseProviders> getCourse(@PathVariable int id) {
+    public ResponseEntity<CourseWithProviders> getCourse(@PathVariable int id) {
         if(courseService.getCourseInfo(id) == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         } else {
@@ -42,7 +40,7 @@ public class CourseController {
      * @return a collection of all the courses in the database.
      */
     @GetMapping("/api/courses")
-    public Collection<CourseProviders> getCourses() {
+    public Collection<CourseWithProviders> getCourses() {
         return courseService.getAllCourses();
     }
 
@@ -53,7 +51,7 @@ public class CourseController {
      * @return a Http response either containing the course with matching id or a NOT FOUND response.
      */
     @GetMapping("/api/courses/{courseId}/{providerId}")
-    public CourseProviders getCourseFromProvider(@PathVariable int courseId, @PathVariable int providerId) {
+    public CourseWithProviders getCourseFromProvider(@PathVariable int courseId, @PathVariable int providerId) {
         if (courseService.getCourse(courseId, providerId) == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Course not found");
         } else {
@@ -61,4 +59,35 @@ public class CourseController {
         }
     }
 
+    /**
+     * Deletes a course from the api, the course is chosen by the given id parameter.
+     * @param id the id of the course to be deleted
+     * @return returns a Not found response if the course is not found. Or returns an OK response
+     *         if the course is found and deleted
+     */
+    @DeleteMapping("/api/course/{id}")
+    public ResponseEntity<String> deleteCourse(@PathVariable int id) {
+        if(getCourse(id) == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } else{
+            courseService.deleteCourse(Objects.requireNonNull(getCourse(id).getBody()).course());
+            return ResponseEntity.status(HttpStatus.OK).body("Course deleted");
+        }
+    }
+
+    /**
+     * Posts a new course into the API, the course cannot be null and responds with status
+     * Bad request if it is. If it is not null it responds with status Created.
+     * @param course The course to be added into the database
+     * @return either a bad request or created status.
+     */
+    @PostMapping("/api/course")
+    public ResponseEntity<Course> postCourse(Course course) {
+        if(course == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }else {
+            courseService.postCourse(course);
+            return ResponseEntity.status(HttpStatus.CREATED).body(course);
+        }
+    }
 }

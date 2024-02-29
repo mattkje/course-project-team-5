@@ -86,7 +86,7 @@ function populateCoursePage() {
                 const providerElement = document.createElement('button');
                 providerElement.className = 'provider-choose';
                 providerElement.type = 'button';
-                providerElement.innerHTML = provider.name + "<br>" + provider.price + " " + provider.currency;
+                providerElement.innerHTML = provider.name + "<br>" + provider.price + "&nbsp;" + provider.currency;
                 document.getElementById('providerList').appendChild(providerElement);
             });
 
