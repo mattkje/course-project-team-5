@@ -12,25 +12,25 @@ import jakarta.persistence.Table;
 public class Keywords {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private int keywordId;
 
-  @Column
-  private String keyword;
+  @Column(name = "keyword_name")
+  private String keywordName;
 
 
-  public void setId(Long id) {
-    this.id = id;
+  public void setId(int keyword_id) {
+    this.keywordId = keyword_id;
   }
 
-  public Long getId() {
-    return id;
+  public int getId() {
+    return keywordId;
   }
 
   public String getKeyword() {
-    return keyword;
+    return keywordName;
   }
 
-  public void setKeyword(String keyword) {
-    this.keyword = keyword;
+  public void setKeyword(String keywordName) {
+    this.keywordName = keywordName;
   }
 }

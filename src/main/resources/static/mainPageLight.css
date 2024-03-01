@@ -147,7 +147,7 @@ ul {
 }
 
 .background {
-    background-image: url('media/desk.jpg');
+    background-image: url('media/blurryStars.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -155,7 +155,7 @@ ul {
 }
 
 .background-overlay {
-    background: linear-gradient(rgba(0, 0, 33, 0.83), rgba(0, 0, 33, 0.74));
+    /*background: linear-gradient(rgba(0, 0, 33, 0.83), rgba(0, 0, 33, 0.74)); */
 }
 
 /* Hero  */
@@ -169,6 +169,7 @@ ul {
 
 .hero-container {
     display: flex;
+    justify-content: flex-start;
 }
 
 .hero-box {
@@ -228,11 +229,20 @@ ul {
 }
 
 .hero-image {
-    max-width: 400px;
-    height: auto;
-    position: absolute;
-    top: 150px;
-    left: 0;
+    margin-left: 7vw;
+    animation: pulse 6s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
 
 .hero-graphic {

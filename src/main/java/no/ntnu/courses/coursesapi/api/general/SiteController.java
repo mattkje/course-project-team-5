@@ -23,6 +23,11 @@ public class SiteController {
         return "about.html";
     }
 
+    @GetMapping("/explore")
+    public String explore() {
+        return "explore.html";
+    }
+
     @GetMapping("/error")
     public String error() {
         return "error/error.html";
