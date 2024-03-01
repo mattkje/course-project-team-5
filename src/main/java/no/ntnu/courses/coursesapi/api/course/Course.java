@@ -29,6 +29,12 @@ public class Course {
     @Column
     private String image;
 
+    /**
+     * This constructor is empty due to the use of the @Entity annotation.
+     */
+    public Course() {
+
+    }
 
 
     public void setCourseId(int courseId) {

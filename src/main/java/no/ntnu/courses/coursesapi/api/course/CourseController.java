@@ -65,11 +65,13 @@ public class CourseController {
      * @return returns a Not found response if the course is not found. Or returns an OK response
      *         if the course is found and deleted
      */
-    @DeleteMapping("/api/course/{id}")
+    @DeleteMapping("/api/courses/{id}")
     public ResponseEntity<String> deleteCourse(@PathVariable int id) {
         if(getCourse(id) == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        } else{
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+        else{
             courseService.deleteCourse(Objects.requireNonNull(getCourse(id).getBody()).course());
             return ResponseEntity.status(HttpStatus.OK).body("Course deleted");
         }
@@ -81,8 +83,8 @@ public class CourseController {
      * @param course The course to be added into the database
      * @return either a bad request or created status.
      */
-    @PostMapping("/api/course")
-    public ResponseEntity<Course> postCourse(Course course) {
+    @PostMapping("/api/courses")
+    public ResponseEntity<Course> postCourse(@RequestBody Course course) {
         if(course == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }else {
