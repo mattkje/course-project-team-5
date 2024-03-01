@@ -1,6 +1,8 @@
 package no.ntnu.courses.coursesapi.api.course;
 
 import java.util.Objects;
+
+import no.ntnu.courses.coursesapi.api.provider.CourseProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -90,6 +92,16 @@ public class CourseController {
         }else {
             courseService.postCourse(course);
             return ResponseEntity.status(HttpStatus.CREATED).body(course);
+        }
+    }
+
+    @PostMapping("/api/courses/{courseId}/providers")
+    public ResponseEntity<CourseProvider> postProvider(@PathVariable int courseId, @RequestBody CourseProvider provider) {
+        if(provider == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }else {
+            courseService.postProvider(courseId, provider);
+            return ResponseEntity.status(HttpStatus.CREATED).body(provider);
         }
     }
 }
