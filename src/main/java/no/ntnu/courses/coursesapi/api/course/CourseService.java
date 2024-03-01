@@ -97,4 +97,10 @@ public class CourseService {
     }
 
 
+    public void postProvider(int courseId, CourseProvider provider) {
+        if(provider != null) {
+            provider.setCourseId(courseId);
+            providerRepository.save(provider);
+        }
+    }
 }

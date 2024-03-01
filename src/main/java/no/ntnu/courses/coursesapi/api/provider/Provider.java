@@ -1,6 +1,10 @@
 package no.ntnu.courses.coursesapi.api.provider;
 
 import jakarta.persistence.*;
+import no.ntnu.courses.coursesapi.api.course.Course;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a provider of a course.
@@ -15,6 +19,13 @@ public class Provider {
 
   @Column
   private String name;
+
+  @ManyToMany(mappedBy = "providers")
+  private List<Course> courses = new ArrayList<>();
+
+    public Provider() { // This constructor is empty due to the use of the @Entity annotation
+
+    }
 
   /**
    * Get the id of the provider.

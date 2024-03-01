@@ -125,4 +125,8 @@ public class CourseProvider {
     public void setName(String providerName) {
         this.provider.setName(providerName);
     }
+
+    public void setCourseId(int courseId) {
+        this.courseId = courseId;
+    }
 }

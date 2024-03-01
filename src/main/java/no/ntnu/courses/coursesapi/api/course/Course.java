@@ -1,6 +1,10 @@
 package no.ntnu.courses.coursesapi.api.course;
 
 import jakarta.persistence.*;
+import no.ntnu.courses.coursesapi.api.provider.Provider;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "courses")
@@ -28,11 +32,13 @@ public class Course {
     private String description;
     @Column
     private String image;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "course_providers",
+            joinColumns = @JoinColumn(name = "course_id"),
+            inverseJoinColumns = @JoinColumn(name = "provider_id"))
+    private List<Provider> providers = new ArrayList<>();
 
-    /**
-     * This constructor is empty due to the use of the @Entity annotation.
-     */
-    public Course() {
+    public Course() { // This constructor is empty due to the use of the @Entity annotation
 
     }
 
