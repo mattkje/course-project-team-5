@@ -103,4 +103,12 @@ public class CourseService {
             providerRepository.save(provider);
         }
     }
+
+    public void deleteProvider(int courseId, int providerId) {
+        for (CourseProvider provider : providerRepository.findAll()) {
+            if (provider.getCourseId() == courseId && provider.getCourseProviderId() == providerId) {
+                providerRepository.delete(provider);
+            }
+        }
+    }
 }
