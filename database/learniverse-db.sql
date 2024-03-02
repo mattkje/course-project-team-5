@@ -189,15 +189,15 @@ CREATE TABLE keywords (
 );
 
 CREATE TABLE course_keywords (
+    course_keyword_id INT AUTO_INCREMENT PRIMARY KEY,
     course_id INT,
     keyword_id INT,
-    PRIMARY KEY (course_id, keyword_id),
     FOREIGN KEY (course_id) REFERENCES courses(course_id),
     FOREIGN KEY (keyword_id) REFERENCES keywords(keyword_id)
 );
 
-INSERT INTO keywords (keyword_name)
-VALUES('Java'), ('Python'), ('C+');
+INSERT INTO keywords (keyword_id, keyword_name)
+VALUES(1, 'Java'), (2, 'Python'), (3, 'C+');
 
 INSERT INTO course_keywords (course_id, keyword_id)
 VALUES(1, 1), (2, 1), (2, 2), (3, 3), (1, 3);
