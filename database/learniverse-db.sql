@@ -136,8 +136,6 @@ CREATE TABLE IF NOT EXISTS course_providers
     course_provider_id INT AUTO_INCREMENT PRIMARY KEY,
     course_id   INT,
     provider_id INT,
-    FOREIGN KEY (provider_id) REFERENCES providers(provider_id),
-    FOREIGN KEY (course_id) REFERENCES courses(course_id),
     price       FLOAT,
     currency    VARCHAR(5)
 );
@@ -191,9 +189,7 @@ CREATE TABLE keywords (
 CREATE TABLE course_keywords (
     course_keyword_id INT AUTO_INCREMENT PRIMARY KEY,
     course_id INT,
-    keyword_id INT,
-    FOREIGN KEY (course_id) REFERENCES courses(course_id),
-    FOREIGN KEY (keyword_id) REFERENCES keywords(keyword_id)
+    keyword_id INT
 );
 
 INSERT INTO keywords (keyword_id, keyword_name)
@@ -204,7 +200,20 @@ VALUES(1, 1), (2, 1), (2, 2), (3, 3), (1, 3);
 
 
 
+-- Exclusive courses
 
+INSERT INTO courses (course_id ,category, title, keywords, level, closest_course_session, course_size, hours_per_week,
+                     related_certifications, description, image)
+VALUES (14, 'Data Science and Analytics Courses', 'Data Visualization with Python',
+        '["Python", "data visualization", "programming", "data science"]', 'Intermediate', '01.10 - 30.10', 2, 15,
+        'Python Data Visualization Specialist',
+        'Dive into the world of data visualization with our intermediate-level online course, "Data Visualization with Python." This course is designed for individuals with a basic understanding of Python and data science, and it aims to provide a comprehensive introduction to the use of Python in creating meaningful and insightful data visualizations. Led by experienced instructors, you will learn how to use popular Python libraries such as Matplotlib and Seaborn to create plots, charts, and other visual representations of data. By the end of the course, you will have a solid foundation in using Python for data visualization, enabling you to effectively communicate data-driven insights.',
+        'https://drive.google.com/thumbnail?id=1_SaBbik-hb9gcM9bqE6mgyzZH63L7jOV&sz=w1000');
+
+
+INSERT INTO course_providers (course_id, provider_id, price, currency)
+VALUES
+    (14, 13, 10.00, 'SUB');
 
 
 

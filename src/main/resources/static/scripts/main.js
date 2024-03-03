@@ -1,13 +1,15 @@
 window.onload = function() {
-    populateCourses();
+    populateCourses('.featured', () => true);
+    populateCourses('.learniverse-pro', checkIfProCourse);
 };
 
-function populateCourses() {
+function populateCourses(selector, filterFn) {
     fetch('/api/courses')
         .then(response => response.json())
         .then(data => {
             data.forEach(courseProvider => {
-                const contentBox = document.createElement('a');
+                if (filterFn(courseProvider)) {
+                    const contentBox = document.createElement('a');
                 contentBox.href = `/courses?id=${courseProvider.course.courseId}`;
                 contentBox.className = 'content-box';
 
@@ -90,18 +92,22 @@ function populateCourses() {
                     price.textContent = "€" + lowestPriceProvider.price;
                 } else if (currency === 'GBP') {
                     price.textContent = "£" + lowestPriceProvider.price;
+                } else if (currency === 'SUB') {
+                    price.textContent = "$" + lowestPriceProvider.price + "/month";
+
                 } else {
                     price.textContent = currency + " " + lowestPriceProvider.price;
                 }
 
                 contentDescription.appendChild(price);
 
-                document.querySelector('.featured').appendChild(contentBox.cloneNode(true));
-                document.querySelector('.data-Science').appendChild(contentBox.cloneNode(true));
-                document.querySelector('.digital-marketing').appendChild(contentBox.cloneNode(true));
-                document.querySelector('.information-technologies').appendChild(contentBox.cloneNode(true));
-
+                    document.querySelector(selector).appendChild(contentBox.cloneNode(true));
+                }
             });
         })
         .catch(error => console.error('Error:', error));
+}
+
+function checkIfProCourse(courseProvider) {
+    return courseProvider.providers.some(provider => provider.name === "Learniverse");
 }
