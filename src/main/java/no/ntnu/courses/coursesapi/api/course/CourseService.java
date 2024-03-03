@@ -1,9 +1,10 @@
 package no.ntnu.courses.coursesapi.api.course;
 
+import no.ntnu.courses.coursesapi.api.keywords.CourseKeywords;
+import no.ntnu.courses.coursesapi.api.keywords.CourseKeywordsRepository;
+import no.ntnu.courses.coursesapi.api.keywords.Keywords;
 import no.ntnu.courses.coursesapi.api.provider.CourseProvider;
 import no.ntnu.courses.coursesapi.api.provider.CourseProviderRepository;
-import no.ntnu.courses.coursesapi.api.provider.Provider;
-import no.ntnu.courses.coursesapi.api.provider.ProviderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,17 +15,19 @@ public class CourseService {
 
     private final CourseRepository courseRepository;
     private final CourseProviderRepository providerRepository;
+    private final CourseKeywordsRepository keywordRepository;
 
     @Autowired
-    public CourseService(CourseRepository courseRepository, CourseProviderRepository providerRepository) {
+    public CourseService(CourseRepository courseRepository, CourseProviderRepository providerRepository, CourseKeywordsRepository keywordRepository) {
         this.courseRepository = courseRepository;
         this.providerRepository = providerRepository;
+        this.keywordRepository = keywordRepository;
     }
 
-    public List<CourseWithProviders> getAllCourses() {
-        List<CourseWithProviders> courseProviders = new ArrayList<>();
+    public List<CourseWithProvidersAndKeywords> getAllCourses() {
+        List<CourseWithProvidersAndKeywords> courseProviders = new ArrayList<>();
         for (int i = 0; i < courseRepository.findAll().size(); i++) {
-            courseProviders.add(new CourseWithProviders(courseRepository.findAll().get(i), getProviders(i+1)));
+            courseProviders.add(new CourseWithProvidersAndKeywords(courseRepository.findAll().get(i), getProviders(i+1), getKeywords(i+1)));
         }
         return courseProviders;
     }
@@ -40,6 +43,16 @@ public class CourseService {
         return providers;
     }
 
+    public List<CourseKeywords> getKeywords(Integer courseId) {
+        List<CourseKeywords> keywords = new ArrayList<>();
+        for(CourseKeywords keyword : keywordRepository.findAll()) {
+            if (courseId == keyword.getCourseId()) {
+                keywords.add(keyword);
+            }
+        }
+        return keywords;
+    }
+
     public Course getCourseInfo(Integer courseId) {
         for(Course course : courseRepository.findAll()) {
             if(courseId == course.getCourseId()) {
@@ -49,10 +62,11 @@ public class CourseService {
         return null;
     }
 
-    public CourseWithProviders getCourseWithProviders(Integer courseId) {
+    public CourseWithProvidersAndKeywords getCourseWithProviders(Integer courseId) {
         Course course = getCourseInfo(courseId);
         List<CourseProvider> providers = getProviders(courseId);
-        return new CourseWithProviders(course, providers);
+        List<CourseKeywords> keywords = getKeywords(courseId);
+        return new CourseWithProvidersAndKeywords(course, providers, keywords);
     }
 
     /**
@@ -62,10 +76,16 @@ public class CourseService {
      * @param courseId The id of the course
      * @return The course
      */
-    public CourseWithProviders getCourse(Integer courseId, Integer providerId) {
+    public CourseWithProvidersAndKeywords getCourse(Integer courseId, Integer providerId, Integer keywordId) {
         Map<Integer, CourseProvider> providerMap = new HashMap<>();
+        Map<Integer, CourseKeywords> keywordMap = new HashMap<>();
+
         for (CourseProvider provider : providerRepository.findAll()) {
             providerMap.put(provider.getCourseProviderId(), provider);
+        }
+
+        for (CourseKeywords keyword : keywordRepository.findAll()) {
+            keywordMap.put(keyword.getKeywordId(), keyword);
         }
 
         CourseProvider provider = providerMap.get(providerId);
@@ -73,11 +93,18 @@ public class CourseService {
             return null;
         }
 
+        CourseKeywords keyword = keywordMap.get(keywordId);
+        if (keyword == null) {
+            return null;
+        }
+
         List<CourseProvider> providers = new ArrayList<>();
+        List<CourseKeywords> keywords = new ArrayList<>();
         for (Course course : courseRepository.findAll()) {
-            if (courseId.equals(provider.getCourseId())) {
+            if (courseId.equals(provider.getCourseId()) && courseId.equals(keyword.getCourseId())) {
                 providers.add(provider);
-                return new CourseWithProviders(course, providers);
+                keywords.add(keyword);
+                return new CourseWithProvidersAndKeywords(course, providers, keywords);
             }
         }
 
@@ -101,6 +128,14 @@ public class CourseService {
         if(provider != null) {
             provider.setCourseId(courseId);
             providerRepository.save(provider);
+        }
+    }
+
+    public void deleteProvider(int courseId, int providerId) {
+        for (CourseProvider provider : providerRepository.findAll()) {
+            if (provider.getCourseId() == courseId && provider.getCourseProviderId() == providerId) {
+                providerRepository.delete(provider);
+            }
         }
     }
 }

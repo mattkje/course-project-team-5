@@ -1,22 +1,21 @@
 package no.ntnu.courses.coursesapi.api.keywords;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "keywords")
 public class Keywords {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int keywordId;
 
-  @Column(name = "keyword_name")
+  @Column
   private String keywordName;
 
+  public Keywords() { // This constructor is empty due to the use of the @Entity annotation
+
+  }
 
   public void setId(int keyword_id) {
     this.keywordId = keyword_id;
