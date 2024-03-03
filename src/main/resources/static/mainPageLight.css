@@ -44,7 +44,7 @@ h5 {
 
 hr {
     background: var(--light-2);
-    height: 2px;
+    height: 0.15vw;
     border: none;
 }
 
@@ -151,7 +151,6 @@ ul {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-
 }
 
 .background-overlay {
@@ -232,7 +231,6 @@ ul {
 .hero-image {
     max-width: 500px;
 
-    margin-left: 7vw;
     animation: pulse 6s infinite;
 }
 
@@ -245,6 +243,15 @@ ul {
     }
     100% {
         transform: scale(1);
+    }
+}
+
+@keyframes courseHover {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1.1);
     }
 }
 
@@ -340,26 +347,28 @@ input:focus {
 }
 
 .content-box {
-    width: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 14vw;
+    height: 38vh;
     background-color: white;
     color: var(--dark-1);
     border: none;
-    border-radius: 15px;
-    align-content: center;
+    border-radius: 1vw;
     text-decoration: none;
-    margin-left: 30px;
-    margin-right: 30px;
+    margin: 0 1vw;
     box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
+    transition: transform 0.5s ease;
 
     &:hover {
-        border: 3px #212121;
+        transform: scale(1.05);
     }
 }
 
 .content-box-description {
     color: var(--dark-1);
-    border-radius: 0 0 15px 15px;
-    margin: 20px;
+    margin: 0 1vw 1vw 1vw;
 
 }
 
@@ -367,36 +376,35 @@ input:focus {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    height: 60px;
+    height: 4vw;
 }
 
 .content-box-title {
-    font-size: 30px;
+    font-size: 1vw;
     font-weight: bold;
 
 }
 
 .content-box-text {
-    font-size: 10px;
+    font-size: 0.5vw;
     font-weight: 900;
     color: var(--light-2);
-    padding: 5px;
+    padding: 0.2vw;
     margin: auto;
 }
 
 .content-box-image {
-    height: 250px;
-    width: 350px;
+    margin: 0;
+    height: 19vh;
+    width: 14vw;
     object-fit: cover;
     border-radius: 15px;
-    box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
 }
 
 .content-box-icon {
-    width: 15px;
-    height: 15px;
-    margin: auto;
-    padding: 5px;
+    width: 0.7vw;
+    height: 0.7vw;
+    padding: 0.2vw;
 }
 
 .content-box-attribute {
@@ -414,20 +422,28 @@ input:focus {
 }
 
 .content-price {
-    padding: 0 15px 0 0;
+    padding: 0 0 0 0;
     position: absolute;
     right: 0;
 }
 
-.content-button {
-    background-color: black;
+.price-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
     color: var(--light-1);
-    font-weight: 900;
-    font-size: 18px;
-    padding: 20px;
-    border-radius: 10px;
-    margin: auto;
-    margin-right: 0;
+    border-width: 0.15vw;
+    background-color: var(--dark-1);
+    border-radius: 1vw;
+    margin: 0;
+}
+
+.content-button {
+    font-weight: bold;
+    font-size: 0.7vw;
+    padding: 0.2vw;
+    margin: 0;
 }
 
 .hbox {

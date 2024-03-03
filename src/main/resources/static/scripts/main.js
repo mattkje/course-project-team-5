@@ -78,6 +78,11 @@ function populateCourses(selector, filterFn) {
 
                 providersAttribute.appendChild(providersElement);
 
+                const startingAt = document.createElement('p');
+                startingAt.textContent = 'Starting at';
+                startingAt.className = 'content-button';
+                contentDescription.appendChild(startingAt);
+
                 const price = document.createElement('p');
                 price.className = 'content-button';
                 const lowestPriceProvider = courseProviders.reduce((prev, curr) => {
@@ -99,7 +104,12 @@ function populateCourses(selector, filterFn) {
                     price.textContent = currency + " " + lowestPriceProvider.price;
                 }
 
-                contentDescription.appendChild(price);
+                const priceBox = document.createElement('div');
+                priceBox.className = 'price-box';
+                priceBox.appendChild(startingAt);
+                priceBox.appendChild(price);
+
+                contentDescription.appendChild(priceBox);
 
                     document.querySelector(selector).appendChild(contentBox.cloneNode(true));
                 }
