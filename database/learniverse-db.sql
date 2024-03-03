@@ -128,7 +128,8 @@ VALUES (1, 'NTNU'),
        (9, 'Google'),
        (10, 'Handelshøyskolen BI'),
        (11, 'University of Oslo'),
-       (12, 'University of Bergen');
+       (12, 'University of Bergen'),
+       (13, 'Learniverse');
 
 
 CREATE TABLE IF NOT EXISTS course_providers

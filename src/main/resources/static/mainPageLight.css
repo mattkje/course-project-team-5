@@ -220,7 +220,8 @@ ul {
 .featured,
 .data-Science,
 .digital-marketing,
-.information-technologies{
+.information-technologies,
+.learniverse-pro{
     display: flex;
 }
 
