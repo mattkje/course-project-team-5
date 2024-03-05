@@ -176,12 +176,22 @@ ul {
     max-width: 600px;
 }
 
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
 .hero-text {
     font-family: 'Inter', sans-serif;
     font-weight: 900;
     font-size: 60px;
     text-transform: uppercase;
     color: whitesmoke;
+    animation: fadeIn ease 4s;
 }
 
 .hero-description {

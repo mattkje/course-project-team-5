@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>no.ntnu.courses</groupId>
-    <artifactId>coursesAPI</artifactId>
+    <artifactId>course-project-team-5</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>coursesAPI</name>
     <description>coursesAPI</description>
