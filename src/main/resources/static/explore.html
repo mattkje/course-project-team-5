@@ -12,14 +12,14 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href="explore.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="media/logo.svg">
-    <script src="scripts/main.js"></script>
+    <script src="scripts/explore.js"></script>
 </head>
 <body>
 
     <div class="header">
         <div class="content">
             <a href="/" class="header-button">
-                <img class="logo" src="media/logo.svg" alt="Connect">
+                <img class="logo"src="media/logo.svg" alt="Connect">
                 <h4 class="logo-top">Learniverse&nbsp;</h4>
                 <h4 class="logo-bottom">Connect</h4>
             </a>
@@ -55,23 +55,32 @@
 
 <div class="filter">
     <form class="categorySelector">
-        <input type="radio" name="categories" id="it" value="it" checked>
-        <label for="it">
-            <div class="categoryText">Information Technologies</div>
-        </label>
-        <input type="radio" name="categories" id="marketing" value="marketing">
-        <label for="marketing" >
-            <div class="categoryText">Digital Marketing</div>
-        </label>
-        <input type="radio" name="categories" id="business" value="business">
-        <label for="business">
-            <div class="categoryText">Business and Entrepreneurship</div>
-        </label>
-        <input type="radio" name="categories" id="dataScience" value="dataScience">
-        <label for="dataScience">Data Science and Analytics</label>
+        <input type="radio" name="categories" id="it" value="informationTechnologies" checked>
+        <label for="it" class="categoryText">Information Technologies</label>
+        <input type="radio" name="categories" id="marketing" value="digitalMarketing">
+        <label for="marketing" class="categoryText">Digital Marketing</label>
+        <input type="radio" name="categories" id="business" value="businessAndEntrepreneurship">
+        <label for="business" class="categoryText">Business and Entrepreneurship</label>
+        <input type="radio" name="categories" id="dataScience" value="dataScienceAndAnalytics">
+        <label for="dataScience" class="categoryText">Data Science and Analytics</label>
     </form>
 </div>
 
+<div id="informationTechnologies" style="display: none">
+    <p>Information Technologies</p>
+</div>
+
+<div id="digitalMarketing" style="display: none">
+    <p>Digital Marketing</p>
+</div>
+
+<div id="businessAndEntrepreneurship" style="display: none">
+    <p>Business and Entrepreneurship</p>
+</div>
+
+<div id="dataScienceAndAnalytics" style="display: none">
+    <p>Data Science and Analytics</p>
+</div>
 
 
 <footer>

@@ -713,9 +713,23 @@ hr {
 
 input[type="radio"]:checked + label{
     color: var(--base-1);
-    box-shadow: 0 0 7px var(--base-1);
+    border-color: var(--base-1);
+    border-style: solid;
 }
-input[type="radio"]{
+
+input[type="radio"]:hover + label{
+    color: var(--base-1);
+    border-color: var(--base-1);
+    border-style: solid;
+}
+
+input[type="radio"] + label {
+    color: var(--light-2);
+    border-color: var(--light-2);
+    border-style: solid;
+}
+
+input[type="radio"] {
     visibility: hidden;
     display: none;
 }
@@ -730,6 +744,7 @@ input[type="radio"]{
     padding: 10px;
     white-space: nowrap;
     text-align: center;
+    user-select: none;
 }
 
 .categorySelector label {
