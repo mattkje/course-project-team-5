@@ -1,0 +1,35 @@
+:root {
+    --base-1: #5666ff;
+    --base-2: #270e98;
+    --light-1: #eaeaea;
+    --light-2: #adadad;
+    --dark-1: #1a1a1a;
+    --dark-2: #07002c;
+}
+
+h1 {
+    font-size: 40px;
+    font-weight: 900;
+    color: var(--light-1);
+}
+
+h2 {
+    font-size: 30px;
+    color: var(--light-1);
+}
+
+h3 {
+    font-size: 20px;
+    color: var(--light-1);
+}
+
+h4 {
+    font-family: Bebas Neue, sans-serif;
+    font-size: 30px;
+    color: var(--light-1);
+}
+
+h5 {
+    font-size: 20px;
+    color: var(--light-1);
+}

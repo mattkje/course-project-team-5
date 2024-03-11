@@ -1,0 +1,37 @@
+:root {
+    --base-1: #5666ff;
+    --base-2: #270e98;
+    --light-1: #eaeaea;
+    --light-2: #adadad;
+    --dark-1: #1a1a1a;
+    --dark-2: #07002c;
+}
+
+body {
+    color: var(--dark-1);
+}
+
+.logo-top {
+    color: var(--light-1);
+}
+
+.hero-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: 60px;
+    text-transform: uppercase;
+    color: whitesmoke;
+    animation: fadeIn ease 4s;
+}
+
+.hero-description {
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    color: var(--light-1);
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+p {
+    color: var(--light-1);
+}

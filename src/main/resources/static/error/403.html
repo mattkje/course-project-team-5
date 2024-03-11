@@ -10,32 +10,18 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bebas+Neue">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link th:href="@{/main.css}" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" th:href="@{media/logo.png}">
+    <link rel="stylesheet" type="text/css" href="styles/mainPageLight.css">
+    <link rel="stylesheet" type="text/css" href="styles/mainPageText.css">
+    <link rel="stylesheet" type="text/css" href="styles/darkText.css">
+    <link rel="stylesheet" type="text/css" href="styles/lightButtons.css">
+    <link rel="stylesheet" type="text/css" href="styles/darkFooter.css">
+    <link rel="icon" type="image/x-icon" href="../media/logo.png">
     <script src="../scripts/main.js"></script>
 </head>
 <body>
 <div class="background">
     <div class="background-overlay">
-        <div class="header">
-            <div class="content">
-                <a href="/" class="header-button">
-                    <img class="logo" th:src="@{media/logo.png}" alt="Connect">
-                    <h4 class="logo-top">Learniverse&nbsp;</h4>
-                    <h4 class="logo-bottom">Connect</h4>
-                </a>
-                <ul class="menu-links">
-                    <li><a href="#" class="header-button">Pro</a></li>
-                    <li><a href="#" class="header-button">Categories</a></li>
-                    <li><a href="#" class="header-button">Contact</a></li>
-                    <li><a href="/about" class="header-button">About</a></li>
-                </ul>
-                <div class="right-content">
-                    <a href="/login" class="fancy-button">Get Started</a>
-                </div>
-            </div>
-            <br>
-        </div>
+        <div id="menubar"></div>
 
         <div class="hero-hbox">
             <div class="hero-container">
@@ -60,14 +46,17 @@
     </div>
 </div>
 
-<h3>Feel free to search our courses</h3>
+<div class="h3Center">
+    <h3>Feel free to search our courses</h3>
+</div>
+
 
 <div class="search-container">
 
     <div class="search-bar">
         <label for="myTextBox"></label><input class="search-prompt" type="text" id="myTextBox" name="myTextBox"
                                               placeholder="What would you like to learn?">
-        <img class="search-icon" th:src="@{media/search.png}" alt="Connect">
+        <img class="search-icon" src="../media/search.png" alt="Connect">
     </div>
 </div>
 
@@ -78,31 +67,6 @@
 <br>
 
 
-<footer>
-    <div class="footer-content">
-        <div class="footer-section">
-            <a href="/" class="footer-logo">
-                <img class="logo" th:src="@{media/logo.png}" alt="Connect">
-                <h4 class="logo-top">Learniverse&nbsp;</h4>
-                <h4 class="logo-bottom">CONNECT</h4>
-            </a>
-        </div>
-        <div class="footer-section">
-            <h5>Contact Us</h5>
-            <p>Email: info@learniverse.com</p>
-            <p>Phone: +47 70 70 70 70</p>
-        </div>
-        <div class="footer-section">
-            <h5>Follow Us</h5>
-            <a href="#" target="_blank">Facebook</a>
-            <a href="#" target="_blank">Twitter</a>
-            <a href="#" target="_blank">Instagram</a>
-        </div>
-        <div class="footer-section">
-            <h5>Created by Team 5 at</h5>
-            <img width="200px" th:src="@{media/ntnu2.svg}" alt="NeuBee Logo">
-        </div>
-    </div>
-</footer>
+<div id="footer"></div>
 </body>
 </html>

@@ -17,29 +17,6 @@ body {
 }
 
 
-h1 {
-    font-size: 40px;
-    font-weight: 900;
-}
-
-h2 {
-    font-size: 30px;
-}
-
-h3 {
-    font-size: 20px;
-}
-
-h4 {
-    font-family: Bebas Neue, sans-serif;
-    font-size: 30px;
-    color: var(--dark-1);
-}
-
-h5 {
-    font-size: 20px;
-}
-
 img {
     margin: auto;
     padding: 0;
@@ -95,57 +72,6 @@ ul {
 }
 
 
-.header-button {
-    height: 70px;
-    color: var(--dark-1);
-    font-size: 20px;
-    border: none;
-    padding: 10px 1%;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    margin-right: 3vw;
-}
-
-.header-button:hover {
-    opacity: 60%;
-}
-
-.header-button .text {
-    font-size: 0;
-    width: 0;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.header-button:hover .text {
-    font-size: medium;
-    opacity: 1;
-}
-
-.fancy-button {
-    background: var(--base-1);
-    color: var(--light-1);
-    font-weight: bold;
-    padding: 17px;
-    border-radius: 30px;
-    text-decoration: none;
-    display: flex;
-}
-
-.fancy-button:hover {
-    background-color: var(--base-2);
-    box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
-}
-
-.background {
-    background-image: url('/src/main/resources/static/mediaesAPI/src/main/resources/static/media/pexels-julia-m-cameron-4144923.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-
-}
-
 .background-overlay {
     background: linear-gradient(rgba(0, 0, 33, 0.83), rgba(0, 0, 33, 0.74));
 }
@@ -166,22 +92,6 @@ ul {
 .hero-box {
     flex: 1;
     max-width: 600px;
-}
-
-.hero-text {
-    font-family: 'Inter', sans-serif;
-    font-weight: 900;
-    font-size: 60px;
-    text-transform: uppercase;
-    color: var(--dark-1);
-}
-
-.hero-description {
-    font-family: 'Inter', sans-serif;
-    font-size: 18px;
-    color: var(--light-1);
-    line-height: 1.5;
-    margin-bottom: 20px;
 }
 
 .mail-box {
@@ -247,26 +157,6 @@ input:focus {
     border-radius: 20px;
     position: relative; /* Make it a positioning context for the absolute position of the button */
 }
-
-.search-button {
-    position: absolute;
-    top: 50%;
-    right: 0.5vw;
-    transform: translateY(-50%);
-    padding: 0.7vw 1.2vw 0.7vw 1.2vw;
-    background-color: var(--dark-1);
-    color: var(--light-1);;
-    font-weight: bold;
-    border: none;
-    border-radius: 0.7vw;
-    cursor: pointer;
-
-    &:hover {
-        background-color: #685f6c;
-        box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
-    }
-}
-
 
 
 .search-prompt {
@@ -365,61 +255,10 @@ input:focus {
     transform:translateY(-3px);
 }
 
-.logo-footer {
-    width: 40px;
-    height: 40px;
-}
-
 .menu-icons {
     width: 30px;
     height: 30px;
     padding: 0;
-}
-
-
-.media-link-button {
-    color: var(--dark-1);
-    border: none;
-    padding: 10px 1%;
-    border-radius: 5px;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    margin-right: 3vw;
-    &:hover {
-        opacity: 60%;
-    }
-
-    & .text {
-        font-size: 0;
-        width: 0;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-
-    &:hover .text {
-        font-size: medium;
-        opacity: 1;
-    }
-}
-
-
-
-
-.standard-button {
-    background-color: var(--base-1);
-    color: var(--light-1);
-    text-align: center;
-    font-weight: bold;
-    padding: 20px;
-    border-radius: 10px;
-    text-decoration: none;
-    display: flex;
-
-    &:hover {
-        background-color: var(--base-2);
-        box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
-    }
 }
 
 .right-content {
@@ -428,51 +267,6 @@ input:focus {
     justify-content: flex-end; /* Align content to the right */
     align-items: center;
 }
-
-
-footer {
-    background-color: var(--dark-1);
-    color: var(--light-1);
-    text-align: center;
-    padding: 20px;
-}
-
-.footer-content {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-}
-
-.footer-section {
-    width: 220px;
-    margin: 10px 0;
-}
-
-footer a {
-    color: var(--light-1);
-    text-decoration: none;
-    display: block;
-    margin: 5px 0;
-}
-
-footer .logo-top {
-    color: var(--light-1);
-    text-decoration: none;
-    display: block;
-    margin: 5px 0;
-}
-
-footer a:hover {
-    text-decoration: underline;
-}
-
-.footer-logo {
-    border: none;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-}
-
 
 
 .additional-info {
@@ -516,25 +310,6 @@ hr {
     padding: 5px;
 }
 
-.provider-choose {
-    font-family: 'Inter', sans-serif;
-    font-weight: bold;
-    box-shadow: inset 0 0 0 3px var(--light-2);
-    border-radius: 20px;
-    padding: 13px 20px;
-    font-size: 20px;
-    color: var(--light-2);
-    cursor: pointer;
-    transition: all .5s;
-}
-
-.provider-choose:hover,
-.provider-choose:active,
-.provider-choose:focus {
-    box-shadow: inset 0 0 0 3px var(--base-1);
-    color: var(--base-1);
-    outline: none;
-}
 
 #courseInformation {
     display: grid;
@@ -577,45 +352,6 @@ hr {
     text-decoration: none;
 }
 
-
-.enroll-button {
-    font-family: 'Inter', sans-serif;
-    font-weight: bold;
-    background: var(--base-1);
-    border-radius: 20px;
-    padding: 17px 23%;
-    width: max-content;
-    font-size: 25px;
-    color: var(--light-1);
-    cursor: pointer;
-    transition: all .5s;
-    margin: 0 0 1vw 0;
-}
-
-.enroll-button:hover {
-    background-color: var(--base-2);
-    box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
-}
-
-.wish-button {
-    font-family: 'Inter', sans-serif;
-    font-weight: bold;
-    background: black;
-    border-radius: 20px;
-    padding: 17px 6%;
-    width: max-content;
-    font-size: 25px;
-    color: var(--light-1);
-    cursor: pointer;
-    transition: all .5s;
-    margin: 0 0 1vw 0;
-}
-
-.wish-button:hover {
-    background-color: #3f3f3f;
-    box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
-}
-
 .course-action-box {
     display: flex;
     justify-content: space-between;
@@ -636,25 +372,6 @@ hr {
     border: 2px solid var(--light-2);
     border-radius: 20px;
     position: relative; /* Make it a positioning context for the absolute position of the button */
-}
-
-.search-button {
-    position: absolute;
-    top: 50%;
-    right: 0.5vw;
-    transform: translateY(-50%);
-    padding: 0.7vw 1.2vw 0.7vw 1.2vw;
-    background-color: var(--dark-1);
-    color: var(--light-2);;
-    font-weight: bold;
-    border: none;
-    border-radius: 0.7vw;
-    cursor: pointer;
-
-&:hover {
-     background-color: #685f6c;
-     box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
- }
 }
 
 .search-icon {
