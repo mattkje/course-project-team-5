@@ -365,6 +365,11 @@ input:focus {
     transform:translateY(-3px);
 }
 
+.logo-footer {
+    width: 40px;
+    height: 40px;
+}
+
 .menu-icons {
     width: 30px;
     height: 30px;
@@ -444,6 +449,13 @@ footer {
 }
 
 footer a {
+    color: var(--light-1);
+    text-decoration: none;
+    display: block;
+    margin: 5px 0;
+}
+
+footer .logo-top {
     color: var(--light-1);
     text-decoration: none;
     display: block;

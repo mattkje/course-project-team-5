@@ -1,6 +1,8 @@
 window.onload = function() {
     populateCourses('.featured', () => true);
     populateCourses('.learniverse-pro', checkIfProCourse);
+    loadComponent('footer');
+    loadComponent('menubar');
 };
 
 function populateCourses(selector, filterFn) {
@@ -121,3 +123,13 @@ function populateCourses(selector, filterFn) {
 function checkIfProCourse(courseProvider) {
     return courseProvider.providers.some(provider => provider.name === "Learniverse");
 }
+
+function loadComponent(component) {
+    fetch('components/' + component + '.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById(component).innerHTML = data;
+        });
+}
+
+
