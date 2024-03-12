@@ -1,13 +1,3 @@
-:root {
-    --base-1: #5564f5;
-    --base-2: #270e98;
-    --light-1: #eaeaea;
-    --light-2: #adadad;
-    --dark-1: #1a1a1a;
-    --dark-2: #07002c;
-}
-
-
 body {
     font-family: Inter, sans-serif;
     background-color: var(--light-1);

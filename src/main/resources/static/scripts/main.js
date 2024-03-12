@@ -10,6 +10,9 @@ function populateCourses(selector, filterFn) {
         .then(response => response.json())
         .then(data => {
             data.forEach(courseProvider => {
+                if (document.querySelector(selector).childElementCount >= 6) {
+                    return false;
+                }
                 if (filterFn(courseProvider)) {
                     const contentBox = document.createElement('a');
                 contentBox.href = `/courses?id=${courseProvider.course.courseId}`;
@@ -113,10 +116,11 @@ function populateCourses(selector, filterFn) {
 
                 contentDescription.appendChild(priceBox);
 
-                    document.querySelector(selector).appendChild(contentBox.cloneNode(true));
-                }
-            });
-        })
+                document.querySelector(selector).appendChild(contentBox.cloneNode(true));
+
+            }
+        });
+    })
         .catch(error => console.error('Error:', error));
 }
 

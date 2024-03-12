@@ -3,8 +3,9 @@
     --base-2: #270e98;
     --light-1: #eaeaea;
     --light-2: #adadad;
-    --dark-1: #1a1a1a;
-    --dark-2: #07002c;
+    --dark-1: #090909;
+    --dark-2: #1a1a1a;
+    --dark-3: #07002c;
 }
 
 
@@ -42,9 +43,16 @@ ul {
 
 /* Header  */
 
+#menubar {
+    backdrop-filter: blur(5px);
+    position: sticky;
+    top: 0;
+    width: 100%;
+}
+
 .header {
     font-weight: bold;
-    color: var(--dark-1);
+    color: var(--dark-3);
     text-align: center;
     height: 7vh;
 }
@@ -84,20 +92,22 @@ ul {
     100% { background-position: -100px 0; }
 }
 
+
+
 .background {
-    background-image: url('../media/stars.png');
-    background-repeat: repeat;
+    background-image: url("../media/starsTrans.png");
+    height: 100vh;
+    background-color: var(--dark-2);
+    background-repeat: no-repeat;
+    background-position: center;
     background-size: cover;
-    animation: slide 2s alternate infinite;
 }
 
-.background-overlay {
-    backdrop-filter: blur(5px);
-}
 
 /* Hero  */
 
 .hero-hbox {
+    height: 100vh;
     display: flex;
     justify-content: left;
     align-items: center;
@@ -123,10 +133,9 @@ ul {
     }
 }
 
-
-
 .mail-box {
     display: flex;
+    justify-content: space-between;
 }
 
 .mail-prompt {
@@ -161,11 +170,7 @@ ul {
     position: relative;
 }
 
-.hero-image {
-    max-width: 500px;
 
-    animation: pulse 6s infinite;
-}
 
 @keyframes pulse {
     0% {
@@ -187,6 +192,76 @@ ul {
         transform: scale(1.1);
     }
 }
+
+.planet1 {
+    position: relative;
+    height: 50vh;
+    animation: ease-in-out orbit 20s infinite, zindex 20s steps(1) infinite;
+    filter: drop-shadow(0 0 80px rgba(255, 255, 255, 0.35));
+    transition: filter 1s ease-in-out;
+
+    &:hover {
+        filter: drop-shadow(0 0 80px rgba(255, 255, 255, 0.79));
+    }
+}
+
+.planet2 {
+    position: relative;
+    height: 50vh;
+    animation: ease-in-out orbit2 20s infinite;
+    filter: drop-shadow(0 0 80px rgba(255, 255, 255, 0.35));
+    transition: filter 1s ease-in-out;
+
+    &:hover {
+        filter: drop-shadow(0 0 80px rgba(255, 255, 255, 0.79));
+    }
+}
+
+@keyframes zindex {
+    0%, 49.99% {
+        z-index: 1;
+    }
+    50%, 100% {
+        z-index: 0;
+    }
+}
+@keyframes orbit {
+    0% {
+        transform: translateX(30vw) scale(0.5) rotate(0deg);
+    }
+    25% {
+        transform: translateX(14vw) scale(1) rotate(22.5deg);
+    }
+    50% {
+        transform: translateX(0) scale(0.5) rotate(45deg);
+    }
+    75% {
+        transform: translateX(14vw) scale(0.2) rotate(22.5deg);
+    }
+    100% {
+        transform: translateX(30vw) scale(0.5) rotate(0deg);
+    }
+}
+
+@keyframes orbit2 {
+    0% {
+        transform: translateX(-30vw) scale(0.5) rotate(45deg);
+    }
+    25% {
+        transform: translateX(-14vw) scale(0.2) rotate(22.5deg);
+    }
+    50% {
+        transform: translateX(0) scale(0.5) rotate(0deg);
+    }
+    75% {
+        transform: translateX(-14vw) scale(1) rotate(22.5deg);
+    }
+    100% {
+        transform: translateX(-30vw) scale(0.5) rotate(45deg);
+    }
+}
+
+
 
 .hero-graphic {
     max-width: 700px;
@@ -267,7 +342,7 @@ input:focus {
     width: 14vw;
     height: 38vh;
     background-color: white;
-    color: var(--dark-1);
+    color: var(--dark-3);
     border: none;
     border-radius: 1vw;
     text-decoration: none;
@@ -281,7 +356,7 @@ input:focus {
 }
 
 .content-box-description {
-    color: var(--dark-1);
+    color: var(--dark-3);
     margin: 0 1vw 1vw 1vw;
 
 }
@@ -348,7 +423,7 @@ input:focus {
     text-align: center;
     color: var(--light-1);
     border-width: 0.15vw;
-    background-color: var(--dark-1);
+    background-color: var(--dark-3);
     border-radius: 1vw;
     margin: 0;
 }
@@ -404,3 +479,4 @@ input:focus {
 .additional-info {
     display: none;
 }
+
