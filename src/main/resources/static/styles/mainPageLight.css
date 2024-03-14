@@ -26,7 +26,7 @@ body {
 }
 
 hr {
-    background: var(--dark-2);
+    background: var(--light-2);
     height: 0.15vw;
     border: none;
 }
@@ -59,7 +59,7 @@ ul {
     background-color: rgba(29, 28, 32, 0.7);
     backdrop-filter: blur(5px);
     border: 1px solid rgba(255,255,255,.08);
-    margin: 2vw;
+    margin: 3vw;
     padding: 0 2vw;
     border-radius: 17px;
     display: flex;
@@ -71,12 +71,12 @@ ul {
     background-color: rgba(29, 28, 32, 0.7);
     backdrop-filter: blur(5px);
     border: 1px solid rgba(255,255,255,.08);
+    margin: 3vw;
     padding: 0 2vw 0 0;
     border-radius: 17px;
     display: flex;
     max-width: min-content;
     align-items: center;
-    margin-right: 1vw;
 }
 
 .right-content-general {
@@ -192,6 +192,12 @@ ul {
 .digital-marketing,
 .information-technologies,
 .learniverse-pro{
+    background-color: rgba(29, 28, 32, 0.7);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 17px;
+    padding: 3vw 0;
+    margin: 2vw 3vw;
     display: flex;
 }
 
@@ -317,7 +323,7 @@ input:focus {
     width: 30px;
     height: 30px;
     margin: auto;
-    opacity: 50%;
+    filter: brightness(0) invert(1);
 }
 
 
@@ -346,12 +352,12 @@ input:focus {
 
 .search-box {
     border: none;
-    padding: 40px 20px;
+    padding: 3vw 0;
     border-radius: 15px;
     align-content: center;
     text-decoration: none;
     display: flex;
-    margin: auto;
+    margin: 0;
 }
 
 .content-box {
@@ -366,7 +372,7 @@ input:focus {
     border: 1px solid rgba(255,255,255,.08);
     border-radius: 27px;
     text-decoration: none;
-    margin: 0 1vw;
+    margin: 0 0 0 2vw;
     box-shadow: 0 2px 5px #000;
     transition: transform 0.5s ease;
 
@@ -494,16 +500,13 @@ input:focus {
 }
 
 
-.right-content {
-    flex: 1;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
-
-
 
 .additional-info {
     display: none;
+}
+
+.featured-providers {
+    filter: brightness(0) invert(1);
+    height: 3vw;
 }
 

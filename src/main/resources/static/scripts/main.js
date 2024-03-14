@@ -11,7 +11,7 @@ function populateCourses(selector, filterFn) {
         .then(response => response.json())
         .then(data => {
             data.forEach(courseProvider => {
-                if (document.querySelector(selector).childElementCount >= 6) {
+                if (document.querySelector(selector).childElementCount >= 5) {
                     return false;
                 }
                 if (filterFn(courseProvider)) {
