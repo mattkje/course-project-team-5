@@ -5,14 +5,19 @@ button {
 
 .header-button {
     height: 70px;
-    color: var(--dark-2);
-    font-size: 1vw;
+    color: var(--light-1);
+    font-size: 20px;
     border: none;
     padding: 10px 1%;
     text-decoration: none;
     display: flex;
     align-items: center;
     margin-right: 3vw;
+}
+
+.right-content .header-button {
+    margin-right: 0;
+    margin-left: 3vw;
 }
 
 .header-button:hover {
@@ -181,4 +186,17 @@ button {
 .wish-button:hover {
     background-color: #3f3f3f;
     box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
+}
+
+.create-button {
+    height: 70px;
+    width: 70px;
+    background-color: rgba(29, 28, 32, 0.7);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 50px;
+    font-size: 30px;
+    color: white;
+    text-align: center;
+    margin-right: 0;
 }

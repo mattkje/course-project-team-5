@@ -10,8 +10,8 @@
 
 body {
     font-family: Inter, sans-serif;
-    background-color: var(--light-1);
-    color: var(--dark-2);
+    background-color: #0f1013;
+    color: var(--light-1);
     margin: 0;
     padding: 0;
 }
@@ -39,7 +39,7 @@ ul {
 
 .header {
     font-weight: bold;
-    color: var(--dark-2);
+    color: var(--light-1);
     text-align: center;
     height: 7vh;
 }
@@ -106,12 +106,6 @@ ul {
     border-radius: 15px;
     font-size: 22px;
     box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
-}
-
-.right-content {
-    display: flex;
-    align-items: center;
-    margin-right: 50px;
 }
 
 .hbox {
@@ -298,7 +292,7 @@ input:focus {
 hr {
     border: 0;
     height: 3px;
-    background: var(--light-2);
+    background: var(--light-1);
     margin: 20px 0;
 }
 
@@ -329,7 +323,7 @@ hr {
 
 .courseInfoElement p {
     font-weight: bold;
-    color: #656565;
+    color: var(--light-2);
 }
 
 .courseLinkElement {
@@ -342,12 +336,12 @@ hr {
 
 .courseLinkElement p {
     font-weight: bold;
-    color: #656565;
+    color: var(--light-2);
 }
 
 .courseLinkElement a {
     font-weight: bold;
-    color: #656565;
+    color: var(--light-2);
     text-decoration: none;
 }
 
@@ -396,9 +390,39 @@ hr {
 }
 
 #menubar {
-    background-color: var(--light-1);
-    box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
     position: sticky;
-    top: 0;
+    top: 2vw;
     width: 100%;
+    z-index: 100;
+}
+
+.left-content {
+    max-height: 70px;
+    background-color: rgba(29, 28, 32, 0.7);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255,255,255,.08);
+    margin: 2vw;
+    padding: 0 2vw;
+    border-radius: 17px;
+    display: flex;
+    align-items: center;
+}
+
+.right-content {
+    max-height: 70px;
+    background-color: rgba(29, 28, 32, 0.7);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255,255,255,.08);
+    padding: 0 2vw 0 0;
+    border-radius: 17px;
+    display: flex;
+    max-width: min-content;
+    align-items: center;
+    margin-right: 1vw;
+}
+
+.right-content-general {
+    display: flex;
+    align-items: center;
+    margin-right: 50px;
 }
