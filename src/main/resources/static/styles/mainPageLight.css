@@ -11,7 +11,11 @@
 
 body {
     font-family: Inter, sans-serif;
-    background-color: var(--light-1);
+    background-color: #0f1013;
+    background-image: url(https://uploads-ssl.webflow.com/6408bea3de5aef58b7e197d4/6438c3059d443cd7a78762eb_stars-bg.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
     margin: 0;
     padding: 0;
 }
@@ -22,7 +26,7 @@ body {
 }
 
 hr {
-    background: var(--light-2);
+    background: var(--dark-2);
     height: 0.15vw;
     border: none;
 }
@@ -95,9 +99,7 @@ ul {
 
 
 .background {
-    background-image: url("../media/starsTrans.png");
     height: 100vh;
-    background-color: var(--dark-2);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -196,25 +198,15 @@ ul {
 .planet1 {
     position: relative;
     height: 50vh;
-    animation: ease-in-out orbit 20s infinite, zindex 20s steps(1) infinite;
+    animation: ease-in-out orbit 5s, zindex 20s steps(1);
     filter: drop-shadow(0 0 80px rgba(255, 255, 255, 0.35));
-    transition: filter 1s ease-in-out;
-
-    &:hover {
-        filter: drop-shadow(0 0 80px rgba(255, 255, 255, 0.79));
-    }
 }
 
 .planet2 {
     position: relative;
     height: 50vh;
-    animation: ease-in-out orbit2 20s infinite;
+    animation: ease-in-out orbit2 5s infinite;
     filter: drop-shadow(0 0 80px rgba(255, 255, 255, 0.35));
-    transition: filter 1s ease-in-out;
-
-    &:hover {
-        filter: drop-shadow(0 0 80px rgba(255, 255, 255, 0.79));
-    }
 }
 
 @keyframes zindex {
@@ -227,19 +219,10 @@ ul {
 }
 @keyframes orbit {
     0% {
-        transform: translateX(30vw) scale(0.5);
-    }
-    25% {
-        transform: translateX(14vw) scale(1);
-    }
-    50% {
-        transform: translateX(0) scale(0.5);
-    }
-    75% {
-        transform: translateX(14vw) scale(0.2);
+        transform: scale(0.5);
     }
     100% {
-        transform: translateX(30vw) scale(0.5);
+        transform: scale(1)
     }
 }
 
@@ -275,6 +258,15 @@ input:focus {
     outline: none;
 }
 
+.search-section {
+    padding: 1vw 0;
+    margin: 0 10vw;
+    background-color: #1d1c20;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 17px;
+    backdrop-filter: blur(5px);
+}
+
 .search-container {
     position: relative;
     display: flex;
@@ -304,6 +296,7 @@ input:focus {
 
 
 .search-prompt {
+    color: var(--light-1);
     background: none;
     width: 60%;
     padding: 20px 20px 20px 100px;
@@ -338,16 +331,16 @@ input:focus {
 .content-box {
     display: flex;
     flex-direction: column;
+    padding: 1vw;
     justify-content: space-between;
     width: 14vw;
     height: 38vh;
-    background-color: #fff;
-    background-image: linear-gradient(#e7e7e7, #ffffff);
-    border: 1px solid rgba(35, 35, 35, 0.12);
-    border-radius: 17px;
+    background-color: #1d1c20;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 27px;
     text-decoration: none;
     margin: 0 1vw;
-    box-shadow: 0 2px 5px #a1a1a1;
+    box-shadow: 0 2px 5px #000;
     transition: transform 0.5s ease;
 
     &:hover {
@@ -364,7 +357,6 @@ input:focus {
 
 .content-box-description {
     color: var(--dark-3);
-    margin: 0 1vw 1vw 1vw;
 
 }
 
@@ -429,7 +421,7 @@ input:focus {
     justify-content: center;
     text-align: center;
     border-width: 0.15vw;
-    background-color: #ECECEC;
+    background-color: #363636;
     max-height: 3vw;
     border-radius: 1vw;
     margin: 0;
