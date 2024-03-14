@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS LearniverseDB;
-USE LearniverseDB;
+CREATE DATABASE IF NOT EXISTS learniversedb;
+USE learniversedb;
 
 
 CREATE TABLE IF NOT EXISTS users
@@ -180,7 +180,8 @@ VALUES (1, 1, 29999.00, 'NOK'),
        (11, 12, 30000.00, 'NOK'),
        (12, 1, 20000.00, 'NOK'),
        (12, 11, 20000.00, 'NOK'),
-       (12, 12, 20000.00, 'NOK');
+       (12, 12, 20000.00, 'NOK'),
+       (14, 13, 10.00, 'SUB');
 
 CREATE TABLE keywords (
     keyword_id INT AUTO_INCREMENT PRIMARY KEY,

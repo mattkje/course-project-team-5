@@ -1,6 +1,7 @@
 window.onload = function() {
     populateCourses('.featured', () => true);
     populateCourses('.learniverse-pro', checkIfProCourse);
+    populateCourses('.digital-marketing', checkIfDmCourse);
     loadComponent('footer');
     loadComponent('menubar');
 };
@@ -83,11 +84,6 @@ function populateCourses(selector, filterFn) {
 
                 providersAttribute.appendChild(providersElement);
 
-                const startingAt = document.createElement('p');
-                startingAt.textContent = 'Starting at';
-                startingAt.className = 'content-button';
-                contentDescription.appendChild(startingAt);
-
                 const price = document.createElement('p');
                 price.className = 'content-button';
                 const lowestPriceProvider = courseProviders.reduce((prev, curr) => {
@@ -111,7 +107,6 @@ function populateCourses(selector, filterFn) {
 
                 const priceBox = document.createElement('div');
                 priceBox.className = 'price-box';
-                priceBox.appendChild(startingAt);
                 priceBox.appendChild(price);
 
                 contentDescription.appendChild(priceBox);
@@ -128,6 +123,10 @@ function checkIfProCourse(courseProvider) {
     return courseProvider.providers.some(provider => provider.name === "Learniverse");
 }
 
+function checkIfDmCourse(courseProvider) {
+    return courseProvider.providers.find(provider => provider.name === "NTNU");
+}
+
 function loadComponent(component) {
     fetch('components/' + component + '.html')
         .then(response => response.text())
@@ -135,5 +134,4 @@ function loadComponent(component) {
             document.getElementById(component).innerHTML = data;
         });
 }
-
 
