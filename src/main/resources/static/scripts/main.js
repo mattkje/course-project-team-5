@@ -2,6 +2,8 @@ window.onload = function() {
     populateCourses('.featured', () => true);
     populateCourses('.learniverse-pro', checkIfProCourse);
     populateCourses('.digital-marketing', checkIfDmCourse);
+    populateCourses('.data-Science', checkIfDsCourse);
+    populateCourses('.information-technologies', checkIfItCourse);
     loadComponent('footer');
     loadComponent('menubar');
 };
@@ -124,7 +126,15 @@ function checkIfProCourse(courseProvider) {
 }
 
 function checkIfDmCourse(courseProvider) {
-    return courseProvider.providers.find(provider => provider.name === "NTNU");
+    return courseProvider.course.category === "Digital Marketing Courses";
+}
+
+function checkIfDsCourse(courseProvider) {
+    return courseProvider.course.category === "Data Science and Analytics Courses";
+}
+
+function checkIfItCourse(courseProvider) {
+    return courseProvider.course.category === "Information Technology Courses";
 }
 
 function loadComponent(component) {

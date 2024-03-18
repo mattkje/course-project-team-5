@@ -190,11 +190,12 @@ ul {
 .digital-marketing,
 .information-technologies,
 .learniverse-pro{
+    justify-content: space-between;
     background-color: rgba(29, 28, 32, 0.7);
     backdrop-filter: blur(5px);
     border: 1px solid rgba(255,255,255,.08);
     border-radius: 17px;
-    padding: 3vw 0;
+    padding: 3vw 2vw;
     margin: 2vw 3vw;
     display: flex;
 }
@@ -370,7 +371,6 @@ input:focus {
     border: 1px solid rgba(255,255,255,.08);
     border-radius: 27px;
     text-decoration: none;
-    margin: 0 0 0 2vw;
     box-shadow: 0 2px 5px #000;
     transition: transform 0.5s ease;
 
