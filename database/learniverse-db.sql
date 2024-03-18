@@ -181,7 +181,13 @@ VALUES (1, 1, 29999.00, 'NOK'),
        (12, 1, 20000.00, 'NOK'),
        (12, 11, 20000.00, 'NOK'),
        (12, 12, 20000.00, 'NOK'),
-       (14, 13, 10.00, 'SUB');
+       (14, 13, 10.00, 'SUB'),
+         (15, 13, 10.00, 'SUB'),
+         (16, 13, 10.00, 'SUB'),
+         (17, 13, 10.00, 'SUB'),
+         (18, 13, 10.00, 'SUB'),
+         (19, 12, 1000.00, 'USD'),
+         (20, 11, 100.00, 'USD');
 
 CREATE TABLE keywords (
     keyword_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -210,7 +216,27 @@ VALUES (14, 'Data Science and Analytics Courses', 'Data Visualization with Pytho
         '["Python", "data visualization", "programming", "data science"]', 'Intermediate', '01.10 - 30.10', 2, 15,
         'Python Data Visualization Specialist',
         'Dive into the world of data visualization with our intermediate-level online course, "Data Visualization with Python." This course is designed for individuals with a basic understanding of Python and data science, and it aims to provide a comprehensive introduction to the use of Python in creating meaningful and insightful data visualizations. Led by experienced instructors, you will learn how to use popular Python libraries such as Matplotlib and Seaborn to create plots, charts, and other visual representations of data. By the end of the course, you will have a solid foundation in using Python for data visualization, enabling you to effectively communicate data-driven insights.',
-        'https://drive.google.com/thumbnail?id=1_SaBbik-hb9gcM9bqE6mgyzZH63L7jOV&sz=w1000');
+        'https://drive.google.com/thumbnail?id=1_SaBbik-hb9gcM9bqE6mgyzZH63L7jOV&sz=w1000'),
+       (15, 'Software Development Courses', 'Advanced Java Programming',
+        '["Java", "programming", "software development"]', 'Advanced', '01.05 - 30.05', 4, 20,
+        'Oracle Certified Professional, Java SE 8 Programmer',
+        'This course is designed for students who are looking for an in-depth understanding of Java and OO principles. This course takes a deep dive into the intricacies of Java, covering topics such as exception handling, Java I/O, collections, generics, threads, JDBC, and more.',
+        'https://weedman.com/images/no-available-image.jpg'),
+       (16, 'Software Development Courses', 'Web Development with JavaScript',
+        '["JavaScript", "programming", "web development"]', 'Intermediate', '01.06 - 30.06', 3, 15,
+        'JavaScript Developer Certificate',
+        'This course covers the essential concepts and techniques for programming in JavaScript. Students will learn how to create dynamic web pages using JavaScript, including topics such as data types, control structures, functions, objects, arrays, and the Document Object Model (DOM).',
+        'https://weedman.com/images/no-available-image.jpg'),
+       (17, 'Software Development Courses', 'Advanced C++ Programming',
+        '["C++", "programming", "software development"]', 'Advanced', '01.07 - 30.07', 4, 20,
+        'C++ Certified Professional Programmer',
+        'This course is designed for students who are looking for an in-depth understanding of C++ and OO principles. This course takes a deep dive into the intricacies of C++, covering topics such as exception handling, C++ I/O, collections, generics, threads, and more.',
+        'https://weedman.com/images/no-available-image.jpg'),
+       (18, 'Data Science and Analytics Courses', 'Data Analysis with R',
+        '["R", "programming", "data analysis"]', 'Intermediate', '01.08 - 30.08', 3, 15,
+        'R Certified Data Analyst',
+        'This course covers the essential concepts and techniques for data analysis in R. Students will learn how to manipulate and analyze data using R, including topics such as data types, control structures, functions, objects, arrays, and data visualization.',
+        'https://weedman.com/images/no-available-image.jpg');
 
 
 INSERT INTO course_providers (course_id, provider_id, price, currency)
@@ -219,5 +245,18 @@ VALUES
 
 
 
+-- Extra courses
 
-
+INSERT INTO courses (course_id, category, title, keywords, level, closest_course_session, course_size, hours_per_week,
+                     related_certifications, description, image)
+VALUES
+    (19, 'Digital Marketing Courses', 'Advanced SEO Techniques',
+     '["SEO", "digital marketing", "keyword research", "link building"]', 'Advanced', '01.07 - 30.07', 4, 20,
+     'Google Analytics Individual Qualification',
+     'This course covers advanced SEO techniques including keyword research, link building, and technical SEO. Students will learn how to optimize their websites for search engines and improve their website''s ranking on search engine results pages.',
+     'https://weedman.com/images/no-available-image.jpg'),
+    (20, 'Digital Marketing Courses', 'Social Media Marketing Strategies',
+     '["social media", "digital marketing", "content creation", "analytics"]', 'Intermediate', '01.08 - 30.08', 3, 15,
+     'Hootsuite Social Marketing Certification',
+     'This course covers the essential concepts and techniques for social media marketing. Students will learn how to create engaging content, use analytics to measure success, and develop a comprehensive social media marketing strategy.',
+     'https://weedman.com/images/no-available-image.jpg');
