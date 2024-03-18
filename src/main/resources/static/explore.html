@@ -10,60 +10,83 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bebas+Neue">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link href="styles/explore.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="styles/defaultLight.css">
+    <link rel="stylesheet" type="text/css" href="styles/lightText.css">
+    <link rel="stylesheet" type="text/css" href="styles/lightButtons.css">
+    <link rel="stylesheet" type="text/css" href="styles/darkFooter.css">
     <link rel="icon" type="image/x-icon" href="media/logo.svg">
-    <script src="scripts/explore.js"></script>
+    <script src="scripts/course.js"></script>
 </head>
 <body>
-
 <div id="menubar"></div>
+
+<br>
+<br>
+<br>
 <br>
 
-<div class="h3Center">
-    <h3>Explore our courses</h3>
+<div class="search-section">
+    <div class="h3Center">
+        <h3>Explore a large selection of courses</h3>
+    </div>
+
+
+
+    <div class="search-container">
+
+        <div class="search-bar">
+            <label for="myTextBox"></label><input class="search-prompt" type="text" id="myTextBox" name="myTextBox"
+                                                  placeholder="Search for courses to boost your skills">
+            <img class="search-icon" src="media/search.png" alt="Connect">
+        </div>
+    </div>
 </div>
+<div class="explore-grid">
+    <div class="filter-box">
+        <div class="search-container">
+            <div class="content">
+                <label class="checkBox">
+                    <input id="ch1" type="checkbox">
+                    <div class="transition"></div>
+                </label>
+            </div>
+            <p>Category 1</p>
+        </div>
+        <div class="search-container">
+            <div class="content">
+                <label class="checkBox">
+                    <input id="ch1" type="checkbox">
+                    <div class="transition"></div>
+                </label>
+            </div>
+            <p>Category 2</p>
+        </div>
+        <div class="search-container">
+            <div class="content">
+                <label class="checkBox">
+                    <input id="ch1" type="checkbox">
+                    <div class="transition"></div>
+                </label>
+            </div>
+            <p>Category 3</p>
+        </div>
+        <div class="search-container">
+            <div class="content">
+                <label class="checkBox">
+                    <input id="ch1" type="checkbox">
+                    <div class="transition"></div>
+                </label>
+            </div>
+            <p>Category 4</p>
+        </div>
+    </div>
 
-
-
-
-<div class="search-container">
-
-    <div class="search-bar">
-        <label for="myTextBox"></label><input class="search-prompt" type="text" id="myTextBox" name="myTextBox"
-                                              placeholder="Search for courses to boost your skills">
-        <img class="search-icon" src="media/search.png" alt="Connect">
+    <div class="right-content-general">
+        <img class="planet1" src="media/logo.svg" alt="Gay">
     </div>
 </div>
 
 
-<div class="filter">
-    <form class="categorySelector">
-        <input type="radio" name="categories" id="it" value="informationTechnologies" checked>
-        <label for="it" class="categoryText">Information Technologies</label>
-        <input type="radio" name="categories" id="marketing" value="digitalMarketing">
-        <label for="marketing" class="categoryText">Digital Marketing</label>
-        <input type="radio" name="categories" id="business" value="businessAndEntrepreneurship">
-        <label for="business" class="categoryText">Business and Entrepreneurship</label>
-        <input type="radio" name="categories" id="dataScience" value="dataScienceAndAnalytics">
-        <label for="dataScience" class="categoryText">Data Science and Analytics</label>
-    </form>
-</div>
-
-<div id="informationTechnologies" style="display: none">
-    <p>Information Technologies</p>
-</div>
-
-<div id="digitalMarketing" style="display: none">
-    <p>Digital Marketing</p>
-</div>
-
-<div id="businessAndEntrepreneurship" style="display: none">
-    <p>Business and Entrepreneurship</p>
-</div>
-
-<div id="dataScienceAndAnalytics" style="display: none">
-    <p>Data Science and Analytics</p>
-</div>
 
 <div id="footer"></div>
 </body>

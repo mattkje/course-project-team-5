@@ -14,7 +14,7 @@ body {
     background-color: #0f1013;
     background-image: url(https://uploads-ssl.webflow.com/6408bea3de5aef58b7e197d4/6438c3059d443cd7a78762eb_stars-bg.png);
     background-repeat: no-repeat;
-    background-position: center;
+    background-position: top;
     background-size: contain;
     margin: 0;
     padding: 0;
@@ -48,49 +48,47 @@ ul {
 /* Header  */
 
 #menubar {
+    background-color: rgba(29, 28, 32, 0.7);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255,255,255,.08);
     position: sticky;
-    top: 2vw;
+    top: 0;
     width: 100%;
     z-index: 100;
 }
 
 .left-content {
     max-height: 70px;
-    background-color: rgba(29, 28, 32, 0.7);
-    backdrop-filter: blur(5px);
-    border: 1px solid rgba(255,255,255,.08);
-    margin: 3vw;
     padding: 0 2vw;
-    border-radius: 17px;
     display: flex;
     align-items: center;
 }
 
 .right-content {
     max-height: 70px;
-    background-color: rgba(29, 28, 32, 0.7);
-    backdrop-filter: blur(5px);
-    border: 1px solid rgba(255,255,255,.08);
     margin: 3vw;
-    padding: 0 2vw 0 0;
-    border-radius: 17px;
     display: flex;
     max-width: min-content;
     align-items: center;
+}
+
+.left-content-general {
+    display: flex;
+    align-items: center;
+    margin-left: 50px;
+    flex: 1; /* Allow the right content to take up remaining space */
+    justify-content: flex-end; /* Align content to the right */
 }
 
 .right-content-general {
     display: flex;
     align-items: center;
     margin-right: 50px;
+    flex: 1; /* Allow the right content to take up remaining space */
+    justify-content: flex-end; /* Align content to the right */
 }
 
-.header {
-    font-weight: bold;
-    color: var(--dark-3);
-    text-align: center;
-    height: 7vh;
-}
+
 
 .content {
     display: flex;
@@ -365,8 +363,8 @@ input:focus {
     flex-direction: column;
     padding: 1vw;
     justify-content: space-between;
-    width: 14vw;
-    height: 38vh;
+    width: 12vw;
+    height: 34vh;
     background-color: rgba(29, 28, 32, 0.7);
     backdrop-filter: blur(5px);
     border: 1px solid rgba(255,255,255,.08);
@@ -416,8 +414,8 @@ input:focus {
 
 .content-box-image {
     margin: 0;
-    height: 19vh;
-    width: 14vw;
+    height: 16vh;
+    width: 12vw;
     object-fit: cover;
     border-radius: 15px;
 }

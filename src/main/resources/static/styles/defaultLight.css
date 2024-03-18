@@ -37,11 +37,45 @@ ul {
 
 /* Header  */
 
-.header {
-    font-weight: bold;
-    color: var(--light-1);
-    text-align: center;
-    height: 7vh;
+#menubar {
+    background-color: rgba(29, 28, 32, 0.7);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255,255,255,.08);
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+}
+
+.left-content {
+    max-height: 70px;
+    padding: 0 2vw;
+    display: flex;
+    align-items: center;
+}
+
+.right-content {
+    max-height: 70px;
+    margin: 3vw;
+    display: flex;
+    max-width: min-content;
+    align-items: center;
+}
+
+.left-content-general {
+    display: flex;
+    align-items: center;
+    margin-left: 50px;
+    flex: 1; /* Allow the right content to take up remaining space */
+    justify-content: flex-end; /* Align content to the right */
+}
+
+.right-content-general {
+    display: flex;
+    align-items: center;
+    margin-right: 50px;
+    flex: 1; /* Allow the right content to take up remaining space */
+    justify-content: flex-end; /* Align content to the right */
 }
 
 .content {
@@ -57,6 +91,7 @@ ul {
     align-items: center;
     padding-left: 50px;
 }
+
 .logo-text-container {
     margin: 0;
     padding: 0;
@@ -175,6 +210,17 @@ input:focus {
     margin: auto;
 }
 
+.course {
+    border: none;
+    padding: 10px 20px;
+    width: 60%;
+    align-content: center;
+    justify-content: center;
+    text-decoration: none;
+    display: flex;
+    margin: auto;
+}
+
 .course-description-box {
     border: none;
     padding: 10px 20px;
@@ -254,13 +300,6 @@ input:focus {
     padding: 0;
 }
 
-.right-content {
-    flex: 1; /* Allow the right content to take up remaining space */
-    display: flex;
-    justify-content: flex-end; /* Align content to the right */
-    align-items: center;
-}
-
 
 .additional-info {
     display: none;
@@ -275,8 +314,8 @@ input:focus {
 }
 
 .course-image {
-    height: 600px;
-    width: 60%;
+    height: 500px;
+    width: 700px;
     object-fit: cover;
     border-radius: 15px;
     margin: 30px 50px 0 0;
@@ -303,6 +342,9 @@ hr {
     padding: 5px;
 }
 
+.course-info {
+    width: 400px;
+}
 
 #courseInformation {
     display: grid;
@@ -319,6 +361,13 @@ hr {
     align-items: center;
     justify-content: flex-start;
     width: max-content;
+}
+
+#relatedCertifications {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 10vw;
 }
 
 .courseInfoElement p {
@@ -347,7 +396,7 @@ hr {
 
 .course-action-box {
     display: flex;
-    justify-content: space-between;
+    justify-content: left;
     align-items: center;
 }
 
@@ -389,40 +438,180 @@ hr {
     font-size: 16px;
 }
 
-#menubar {
-    position: sticky;
-    top: 2vw;
-    width: 100%;
+
+
+.clear {
+    clear: both;
+}
+
+.checkBox {
+    display: block;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    border: 3px solid rgba(255, 255, 255, 0);
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0px 0px 0px 2px #fff;
+}
+
+.checkBox div {
+    width: 60px;
+    height: 60px;
+    background-color: #fff;
+    top: -52px;
+    left: -52px;
+    position: absolute;
+    transform: rotateZ(45deg);
     z-index: 100;
 }
 
-.left-content {
-    max-height: 70px;
+.checkBox input[type=checkbox]:checked + div {
+    left: -10px;
+    top: -10px;
+}
+
+.checkBox input[type=checkbox] {
+    position: absolute;
+    left: 50px;
+    visibility: hidden;
+}
+
+.transition {
+    transition: 300ms ease;
+}
+
+.filter-box {
     background-color: rgba(29, 28, 32, 0.7);
     backdrop-filter: blur(5px);
     border: 1px solid rgba(255,255,255,.08);
-    margin: 2vw;
-    padding: 0 2vw;
+    margin: 3vw;
+    padding:2vw;
     border-radius: 17px;
-    display: flex;
-    align-items: center;
 }
 
-.right-content {
-    max-height: 70px;
+.explore-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-gap: 20px;
+    padding: 20px;
+}
+
+.featured {
     background-color: rgba(29, 28, 32, 0.7);
     backdrop-filter: blur(5px);
     border: 1px solid rgba(255,255,255,.08);
-    padding: 0 2vw 0 0;
     border-radius: 17px;
+    padding: 3vw 0;
+    margin: 2vw 3vw;
     display: flex;
-    max-width: min-content;
-    align-items: center;
-    margin-right: 1vw;
 }
 
-.right-content-general {
+.content-box {
     display: flex;
-    align-items: center;
-    margin-right: 50px;
+    flex-direction: column;
+    padding: 1vw;
+    justify-content: space-between;
+    width: 12vw;
+    height: 34vh;
+    background-color: rgba(29, 28, 32, 0.7);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 27px;
+    text-decoration: none;
+    margin: 0 0 0 2vw;
+    box-shadow: 0 2px 5px #000;
+    transition: transform 0.5s ease;
+
+    &:hover {
+        transform: scale(1.05);
+    }
+}
+
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+.content-box-description {
+    color: var(--dark-3);
+
+}
+
+.content-description {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 4vw;
+}
+
+.content-box-title {
+    font-size: 1vw;
+    font-weight: bold;
+
+}
+
+.content-box-text {
+    font-size: 0.5vw;
+    font-weight: 900;
+    color: var(--light-2);
+    padding: 0.2vw;
+    margin: auto;
+}
+
+.content-box-image {
+    margin: 0;
+    height: 16vh;
+    width: 12vw;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+.content-box-icon {
+    width: 0.7vw;
+    height: 0.7vw;
+    padding: 0.2vw;
+}
+
+.content-box-attribute {
+    width: min-content;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row;
+    margin: 0;
+    padding: 0;
+}
+
+.content-box-attributes {
+    padding: 0;
+    margin: 0;
+}
+
+.content-price {
+    padding: 0 0 0 0;
+    position: absolute;
+    right: 0;
+}
+
+.price-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    border-width: 0.15vw;
+    background-color: #363636;
+    max-height: 3vw;
+    border-radius: 1vw;
+    margin: 0;
+}
+
+.content-button {
+    padding: 0 0.2vw;
+    font-weight: bold;
+    font-size: 1vw;
+    margin: 0;
+    color: #9F9F9F;
 }
