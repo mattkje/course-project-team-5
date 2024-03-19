@@ -6,7 +6,7 @@ button {
 .header-button {
     height: 70px;
     color: var(--light-1);
-    font-size: 20px;
+    font-size: 15px;
     border: none;
     padding: 10px 1%;
     text-decoration: none;

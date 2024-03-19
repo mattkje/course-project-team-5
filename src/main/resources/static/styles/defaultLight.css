@@ -363,7 +363,7 @@ hr {
     width: max-content;
 }
 
-#relatedCertifications {
+#relatedCertifications p{
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
