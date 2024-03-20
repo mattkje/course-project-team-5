@@ -15,17 +15,17 @@ public class SiteController {
 
     @GetMapping("/")
     public String home() {
-        return "index.html";
+        return "desktop/index.html";
     }
 
     @GetMapping("/about")
     public String about() {
-        return "about.html";
+        return "desktop/about.html";
     }
 
     @GetMapping("/explore")
     public String explore() {
-        return "explore.html";
+        return "desktop/explore.html";
     }
 
     @GetMapping("/error")
@@ -35,17 +35,22 @@ public class SiteController {
 
     @GetMapping("/login")
     public String login() {
-        return "login.html";
+        return "desktop/login.html";
     }
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
         model.addAttribute("user", new User());
-        return "register.html";
+        return "desktop/register.html";
     }
 
     @GetMapping("/courses")
     public String getProductPage() {
-        return "course.html";
+        return "desktop/course.html";
+    }
+
+    @GetMapping("/mobile")
+    public String mobile() {
+        return "mobile/index.html";
     }
 }

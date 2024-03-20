@@ -4,7 +4,7 @@ window.onload = function() {
 };
 
 function loadComponent(component) {
-    fetch('components/' + component + '.html')
+    fetch('../components/desktop/' + component + '.html')
         .then(response => response.text())
         .then(data => {
             document.getElementById(component).innerHTML = data;

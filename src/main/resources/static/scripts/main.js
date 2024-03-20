@@ -126,19 +126,19 @@ function checkIfProCourse(courseProvider) {
 }
 
 function checkIfDmCourse(courseProvider) {
-    return courseProvider.course.category === "Digital Marketing Courses";
+    return courseProvider.course.category === "Digital Marketing";
 }
 
 function checkIfDsCourse(courseProvider) {
-    return courseProvider.course.category === "Data Science and Analytics Courses";
+    return courseProvider.course.category === "Data Science and Analytics";
 }
 
 function checkIfItCourse(courseProvider) {
-    return courseProvider.course.category === "Information Technology Courses";
+    return courseProvider.course.category === "Information Technology";
 }
 
 function loadComponent(component) {
-    fetch('components/' + component + '.html')
+    fetch('../components/desktop/' + component + '.html')
         .then(response => response.text())
         .then(data => {
             document.getElementById(component).innerHTML = data;

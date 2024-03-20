@@ -10,13 +10,13 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bebas+Neue">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" type="text/css" href="styles/mainPageLight.css">
-    <link rel="stylesheet" type="text/css" href="styles/mainPageText.css">
-    <link rel="stylesheet" type="text/css" href="styles/lightText.css">
-    <link rel="stylesheet" type="text/css" href="styles/lightButtons.css">
-    <link rel="stylesheet" type="text/css" href="styles/darkFooter.css">
-    <link rel="icon" type="image/x-icon" href="media/logo.svg">
-    <script src="scripts/main.js"></script>
+    <link rel="stylesheet" type="text/css" href="../styles/desktop/mainPageLight.css">
+    <link rel="stylesheet" type="text/css" href="../styles/shared/mainPageText.css">
+    <link rel="stylesheet" type="text/css" href="../styles/shared/lightText.css">
+    <link rel="stylesheet" type="text/css" href="../styles/desktop/lightButtons.css">
+    <link rel="stylesheet" type="text/css" href="../styles/desktop/darkFooter.css">
+    <link rel="icon" type="image/x-icon" href="../media/logo.svg">
+    <script src="../scripts/main.js"></script>
 </head>
 <body>
 <div id="menubar"></div>
@@ -26,8 +26,10 @@
             <div class="hero-container">
                 <div class="hero-box">
                     <h1 class="hero-text">Unleash Your<br>Learning&nbsp;Journey</h1>
-                    <p class="hero-description">Empower your learning journey with Learniverse Connect. Access premium courses,
-                        explore diverse topics, and unleash your potential through our platform. Elevate your knowledge with
+                    <p class="hero-description">Empower your learning journey with Learniverse Connect. Access premium
+                        courses,
+                        explore diverse topics, and unleash your potential through our platform. Elevate your knowledge
+                        with
                         engaging content and take the first step towards a brighter future.</p>
 
                     <div class="mail-box">
@@ -43,7 +45,12 @@
                 </div>
             </div>
             <div class="right-content-general">
-                <img class="planet1" src="media/logo.svg" alt="Gay">
+                <div class="loader">
+                    <div class="blackhole">
+                        <div class="blackhole-circle"></div>
+                        <div class="blackhole-disc"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -58,13 +65,12 @@
     </div>
 
 
-
     <div class="search-container">
 
         <div class="search-bar">
             <label for="myTextBox"></label><input class="search-prompt" type="text" id="myTextBox" name="myTextBox"
                                                   placeholder="Search for courses to boost your skills">
-            <img class="search-icon" src="media/search.png" alt="Connect">
+            <img class="search-icon" src="../media/search.png" alt="Connect">
         </div>
     </div>
 </div>
@@ -79,16 +85,22 @@
 </div>
 
 
-
 <div class="search-section">
     <div class="h3Center">
         <h3>Featured courses from</h3>
     </div>
     <div class="greeting">
-        <img class="featured-providers" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Microsoft_logo_%282012%29.svg/1024px-Microsoft_logo_%282012%29.svg.png" alt="Provider"/>
-        <img class="featured-providers" src="https://1000logos.net/wp-content/uploads/2016/10/Apple-Logo.png" alt="Provider"/>
-        <img class="featured-providers" src="https://upload.wikimedia.org/wikipedia/en/thumb/3/35/Pearson_logo.svg/2560px-Pearson_logo.svg.png" alt="Provider"/>
-        <img class="featured-providers" src="    https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/2560px-Amazon_logo.svg.png" alt="Provider"/>
+        <img class="featured-providers"
+             src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Microsoft_logo_%282012%29.svg/1024px-Microsoft_logo_%282012%29.svg.png"
+             alt="Provider"/>
+        <img class="featured-providers" src="https://1000logos.net/wp-content/uploads/2016/10/Apple-Logo.png"
+             alt="Provider"/>
+        <img class="featured-providers"
+             src="https://upload.wikimedia.org/wikipedia/en/thumb/3/35/Pearson_logo.svg/2560px-Pearson_logo.svg.png"
+             alt="Provider"/>
+        <img class="featured-providers"
+             src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/2560px-Amazon_logo.svg.png"
+             alt="Provider"/>
     </div>
 </div>
 
@@ -124,15 +136,6 @@
 <div class="learniverse-pro">
     <!--- LP courses will be appended here --->
 </div>
-
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 
 <div id="footer"></div>
 </body>
