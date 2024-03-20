@@ -53,4 +53,9 @@ public class SiteController {
     public String mobile() {
         return "mobile/index.html";
     }
+
+    @GetMapping("/m-courses")
+    public String getMobileProductPage() {
+        return "mobile/course.html";
+    }
 }

@@ -26,7 +26,7 @@ function populateCourses(selector, filterFn) {
                 }
                 if (filterFn(courseProvider)) {
                     const contentBox = document.createElement('a');
-                    contentBox.href = `/courses?id=${courseProvider.course.courseId}`;
+                    contentBox.href = `/m-courses?id=${courseProvider.course.courseId}`;
                     contentBox.className = 'content-box';
 
                     const image = document.createElement('img');
