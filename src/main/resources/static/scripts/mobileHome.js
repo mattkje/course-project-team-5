@@ -2,6 +2,10 @@ window.onload = function() {
     loadComponent('footer');
     loadComponent('menubar');
     populateCourses('.featured', () => true);
+    populateCourses('.learniverse-pro', checkIfProCourse);
+    populateCourses('.digital-marketing', checkIfDmCourse);
+    populateCourses('.data-Science', checkIfDsCourse);
+    populateCourses('.information-technologies', checkIfItCourse);
 };
 
 function loadComponent(component) {
