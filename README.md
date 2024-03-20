@@ -1,7 +1,11 @@
 # course-project-team-5
 Exam project for the IDATA2301 and IDATA2306 courses
 
-![Logo](design/LogoPreviewNoBg.png)
+<p align="center">
+  <img src="design/logoApp.svg" alt="Logo" style="width:25%;height:25%;">
+</p>
+
+
 ## About the project
 
 A simplified price
@@ -59,6 +63,6 @@ shareable links, stock of products)
 
 ## External resources
 
-- **[Documentation](https://drive.google.com/drive/folders/1dnp1F-qoZYDw4lbvyHWyZIOfUUeed7VV)** Google drive folder containing all documents related to the course IDATA2301.
+- **[Documentation](https://drive.google.com/drive/folders/1dnp1F-qoZYDw4lbvyHWyZIOfUUeed7VV)** Google drive folder containing all documents.
 - **[Wireframes](https://www.figma.com/file/5t3L0Wnz9uqJoAvucoNp63/IDATA-2301-%26-2306-Wireframes?type=design&node-id=0%3A1&mode=design&t=kIWWhxp0uJbGogJn-1)** Sketches for the website, reference point for building web application.
 - **[Mindmap](https://mm.tt/app/map/3112803398?t=xNWqS5i0rP)** Ideas and notes related to the project.
