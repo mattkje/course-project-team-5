@@ -1,3 +1,7 @@
+if (/Mobi|Android/i.test(navigator.userAgent)) {
+    window.location.href = '/mobile';
+}
+
 window.onload = function() {
     populateCourses('.featured', () => true);
     populateCourses('.learniverse-pro', checkIfProCourse);
@@ -144,4 +148,3 @@ function loadComponent(component) {
             document.getElementById(component).innerHTML = data;
         });
 }
-

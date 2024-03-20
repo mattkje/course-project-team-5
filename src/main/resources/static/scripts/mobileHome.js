@@ -1,3 +1,7 @@
+if (!/Mobi|Android/i.test(navigator.userAgent)) {
+    window.location.href = '/';
+}
+
 window.onload = function() {
     loadComponent('footer');
     loadComponent('menubar');
@@ -94,6 +98,9 @@ function populateCourses(selector, filterFn) {
 
                     providersAttribute.appendChild(providersElement);
 
+                    const hr2 = document.createElement('hr');
+                    descriptionBox.appendChild(hr2);
+
                     const price = document.createElement('p');
                     price.className = 'content-button';
                     const lowestPriceProvider = courseProviders.reduce((prev, curr) => {
@@ -119,7 +126,7 @@ function populateCourses(selector, filterFn) {
                     priceBox.className = 'price-box';
                     priceBox.appendChild(price);
 
-                    contentDescription.appendChild(priceBox);
+                    descriptionBox.appendChild(priceBox);
 
                     document.querySelector(selector).appendChild(contentBox.cloneNode(true));
 
