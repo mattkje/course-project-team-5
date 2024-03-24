@@ -1,8 +1,7 @@
-if (!/Mobi|Android/i.test(navigator.userAgent)) {
-    window.location.href = '/';
-}
+//This is a temporary file to test the mobile home page.
 
 window.onload = function() {
+
     loadComponent('footer');
     loadComponent('menubar');
     populateCourses('.featured', () => true);

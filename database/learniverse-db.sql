@@ -221,22 +221,22 @@ VALUES (14, 'Data Science and Analytics', 'Data Visualization with Python',
         '["Java", "programming", "software development"]', 'Advanced', '01.05 - 30.05', 4, 20,
         'Oracle Certified Professional, Java SE 8 Programmer',
         'This course is designed for students who are looking for an in-depth understanding of Java and OO principles. This course takes a deep dive into the intricacies of Java, covering topics such as exception handling, Java I/O, collections, generics, threads, JDBC, and more.',
-        'https://weedman.com/images/no-available-image.jpg'),
+        null),
        (16, 'Software Development', 'Web Development with JavaScript',
         '["JavaScript", "programming", "web development"]', 'Intermediate', '01.06 - 30.06', 3, 15,
         'JavaScript Developer Certificate',
         'This course covers the essential concepts and techniques for programming in JavaScript. Students will learn how to create dynamic web pages using JavaScript, including topics such as data types, control structures, functions, objects, arrays, and the Document Object Model (DOM).',
-        'https://weedman.com/images/no-available-image.jpg'),
+        null),
        (17, 'Software Development', 'Advanced C++ Programming',
         '["C++", "programming", "software development"]', 'Advanced', '01.07 - 30.07', 4, 20,
         'C++ Certified Professional Programmer',
         'This course is designed for students who are looking for an in-depth understanding of C++ and OO principles. This course takes a deep dive into the intricacies of C++, covering topics such as exception handling, C++ I/O, collections, generics, threads, and more.',
-        'https://weedman.com/images/no-available-image.jpg'),
+        null),
        (18, 'Data Science and Analytics', 'Data Analysis with R',
         '["R", "programming", "data analysis"]', 'Intermediate', '01.08 - 30.08', 3, 15,
         'R Certified Data Analyst',
         'This course covers the essential concepts and techniques for data analysis in R. Students will learn how to manipulate and analyze data using R, including topics such as data types, control structures, functions, objects, arrays, and data visualization.',
-        'https://weedman.com/images/no-available-image.jpg');
+        null);
 
 
 INSERT INTO course_providers (course_id, provider_id, price, currency)
@@ -254,9 +254,9 @@ VALUES
      '["SEO", "digital marketing", "keyword research", "link building"]', 'Advanced', '01.07 - 30.07', 4, 20,
      'Google Analytics Individual Qualification',
      'This course covers advanced SEO techniques including keyword research, link building, and technical SEO. Students will learn how to optimize their websites for search engines and improve their website''s ranking on search engine results pages.',
-     'https://weedman.com/images/no-available-image.jpg'),
+     null),
     (20, 'Digital Marketing', 'Social Media Marketing Strategies',
      '["social media", "digital marketing", "content creation", "analytics"]', 'Intermediate', '01.08 - 30.08', 3, 15,
      'Hootsuite Social Marketing Certification',
      'This course covers the essential concepts and techniques for social media marketing. Students will learn how to create engaging content, use analytics to measure success, and develop a comprehensive social media marketing strategy.',
-     'https://weedman.com/images/no-available-image.jpg');
+     null);

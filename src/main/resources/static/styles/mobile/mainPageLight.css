@@ -414,7 +414,7 @@ input:focus {
 }
 
 .content-box-image {
-    --s: 200px; /* control the size */
+    --s: 200px;
     --c1: #1d1d1d;
     --c2: #4e4f51;
     --c3: #3c3c3c;

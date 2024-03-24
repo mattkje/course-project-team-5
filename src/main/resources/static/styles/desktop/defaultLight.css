@@ -1,6 +1,6 @@
 :root {
     --base-1: #584BEB;
-    --base-2: #270e98;
+    --base-2: #6E67FC;
     --light-1: #eaeaea;
     --light-2: #adadad;
     --dark-1: #090909;
@@ -210,22 +210,42 @@ input:focus {
     margin: auto;
 }
 
+.course-image {
+    position: absolute;
+    height: 600px;
+    width: 100%;
+    object-fit: cover;
+    margin: 0;
+}
+
+
 .course {
-    border: none;
     padding: 10px 20px;
-    width: 60%;
+    width: 1400px;
     align-content: center;
     justify-content: center;
     text-decoration: none;
     display: flex;
-    margin: auto;
+    margin: 200px auto 0 auto;
+    height: min-content;
+}
+
+.course-info {
+    position: relative;
+    padding: 10px 20px;
+    background-color: rgba(29, 28, 32, 0.8);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 27px;
+    box-shadow: 0 2px 5px #000;
+    width: 400px;
+    height: min-content;
 }
 
 .course-description-box {
     border: none;
     padding: 10px 20px;
-    width: 70%;
-    margin: auto;
+    margin: 400px auto 0 auto;
 }
 
 .search-box {
@@ -313,13 +333,6 @@ input:focus {
 
 }
 
-.course-image {
-    height: 500px;
-    width: 700px;
-    object-fit: cover;
-    border-radius: 15px;
-    margin: 30px 50px 0 0;
-}
 
 .content-hbox {
     display: grid;
@@ -342,9 +355,7 @@ hr {
     padding: 5px;
 }
 
-.course-info {
-    width: 400px;
-}
+
 
 #courseInformation {
     display: grid;
@@ -367,7 +378,7 @@ hr {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 10vw;
+    width: 200px;
 }
 
 .courseInfoElement p {
@@ -376,21 +387,32 @@ hr {
 }
 
 .courseLinkElement {
+    padding: 0 7px;
+    background-color: rgba(29, 28, 32, 0.8);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 25px;
+    box-shadow: 0 2px 5px #000;
+    z-index: 100;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
     margin-left: 100px;
+    position: relative;
+    top: 7px;
+    width: min-content;
+    white-space: nowrap;
 }
 
 .courseLinkElement p {
     font-weight: bold;
-    color: var(--light-2);
+    color: white;
 }
 
 .courseLinkElement a {
     font-weight: bold;
-    color: var(--light-2);
+    color: white;
     text-decoration: none;
 }
 
@@ -571,9 +593,9 @@ hr {
 }
 
 .content-box-icon {
-    width: 0.7vw;
-    height: 0.7vw;
-    padding: 0.2vw;
+    width: 20px;
+    height: 20px;
+    padding: 5px;
 }
 
 .content-box-attribute {

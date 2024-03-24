@@ -18,16 +18,30 @@ function populateCoursePage() {
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id');
 
-
     fetch(`/api/courses/${id}`)
-        .then(response => response.json())
+        //Checking if course exists
+        .then(response => {
+            if (!response.ok) {
+                if (response.status === 404) {
+                    //Use custom course not found page?
+                    window.location.href = '/404';
+                } else {
+                    throw new Error('Network response was not ok');
+                }
+            }
+            return response.json();
+        })
+        //Continuing if course exists
         .then(data => {
+
+            //Populating the similar courses box
             populateCourses('.featured');
+
+            //Populating the course page
             document.getElementById('courseCategoryLink').innerText = data.course.category;
             document.getElementById('courseTitleLink').innerText = data.course.title;
-
             document.getElementById('courseDescription').innerText = data.course.description;
-            document.getElementById('courseImage').src = data.course.image;
+            document.getElementById('courseImage').src = data.course.image || 'media/noImage.svg';
             document.getElementById('courseTitle').innerText = data.course.title;
 
             // Course size
@@ -73,7 +87,7 @@ function populateCoursePage() {
             certificationIcon.src = 'media/cert.svg';
 
             const certificationText = document.createElement('p');
-            certificationText.innerText += `${data.course.relatedCertifications}` + " Certificate";
+            certificationText.innerText += `${data.course.relatedCertifications}`;
 
             const courseCertElement = document.getElementById('relatedCertifications');
             courseCertElement.appendChild(certificationIcon);

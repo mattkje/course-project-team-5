@@ -158,8 +158,8 @@ button {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 200px;
-    height: 40px;
+    width: 70%;
+    height: 50px;
     border-radius: 12px;
     cursor: pointer;
     transition: all .5s;
@@ -204,8 +204,8 @@ button {
 }
 
 .CartBtn {
-    width: 140px;
-    height: 40px;
+    width: 40%;
+    height: 50px;
     border-radius: 12px;
     border: none;
     background-color: var(--dark-1);
