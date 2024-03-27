@@ -3,7 +3,7 @@ body {
 }
 
 .logo-top {
-    color: var(--light-1);
+    color: var(--dark-1);
 }
 
 .hero-text {
@@ -28,5 +28,5 @@ p {
 }
 
 .header-button {
-    color: var(--light-1) !important;
+    color: var(--dark-1) !important;
 }

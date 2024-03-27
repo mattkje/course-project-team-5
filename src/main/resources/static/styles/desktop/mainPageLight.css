@@ -11,7 +11,7 @@
 
 body {
     font-family: Inter, sans-serif;
-    background-color: #0f1013;
+    background-color: var(--light-1);
     background-image: url(https://uploads-ssl.webflow.com/6408bea3de5aef58b7e197d4/6438c3059d443cd7a78762eb_stars-bg.png);
     background-repeat: no-repeat;
     background-position: top;
@@ -48,9 +48,9 @@ ul {
 /* Header  */
 
 #menubar {
-    background-color: rgba(29, 28, 32, 0.7);
+    background-color: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(5px);
-    border: 1px solid rgba(255,255,255,.08);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     position: sticky;
     top: 0;
     width: 100%;
@@ -136,6 +136,8 @@ ul {
 
 .background {
     height: 100vh;
+    background-image: url(https://uploads-ssl.webflow.com/6408bea3de5aef58b7e197d4/6438c3059d443cd7a78762eb_stars-bg.png);
+    background-color: #1a1a1a;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -198,9 +200,9 @@ ul {
 .information-technologies,
 .learniverse-pro{
     justify-content: space-between;
-    background-color: rgba(29, 28, 32, 0.7);
+    background-color: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(5px);
-    border: 1px solid rgba(255,255,255,.08);
+    border: 1px solid rgba(0, 0, 0, 0.08);
     border-radius: 17px;
     padding: 3vw 2vw;
     margin: 2vw 3vw;
@@ -298,9 +300,9 @@ input:focus {
 .search-section {
     padding: 1vw 0;
     margin: 0 10vw;
-    background-color: rgba(29, 28, 32, 0.7);
+    background-color: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(5px);
-    border: 1px solid rgba(255,255,255,.08);
+    border: 1px solid rgba(0, 0, 0, 0.08);
     border-radius: 17px;
     backdrop-filter: blur(5px);
 }
@@ -316,7 +318,7 @@ input:focus {
 .search-bar {
     box-sizing: border-box;
     width: 60%;
-    border: 2px solid var(--light-2);
+    border: 2px solid #282828;
     border-radius: 20px;
     position: relative; /* Make it a positioning context for the absolute position of the button */
 }
@@ -329,7 +331,7 @@ input:focus {
     width: 30px;
     height: 30px;
     margin: auto;
-    filter: brightness(0) invert(1);
+    filter: brightness(0);
 }
 
 
@@ -373,12 +375,12 @@ input:focus {
     justify-content: space-between;
     width: 12vw;
     height: 34vh;
-    background-color: rgba(29, 28, 32, 0.7);
+    background-color: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(5px);
-    border: 1px solid rgba(255,255,255,.08);
+    border: 1px solid rgba(0, 0, 0, 0.08);
     border-radius: 27px;
     text-decoration: none;
-    box-shadow: 0 2px 5px #000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
     transition: transform 0.5s ease;
 
     &:hover {
@@ -477,7 +479,6 @@ input:focus {
     justify-content: center;
     text-align: center;
     border-width: 0.15vw;
-    background-color: #363636;
     max-height: 3vw;
     border-radius: 1vw;
     margin: 0;
@@ -488,7 +489,7 @@ input:focus {
     font-weight: bold;
     font-size: 1vw;
     margin: 0;
-    color: #9F9F9F;
+    color: #282828;
 }
 
 .hbox {
@@ -529,7 +530,6 @@ input:focus {
 }
 
 .featured-providers {
-    filter: brightness(0) invert(1);
     height: 3vw;
 }
 

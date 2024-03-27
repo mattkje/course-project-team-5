@@ -2,6 +2,7 @@ window.onload = function () {
     loadComponent('footer');
     loadComponent('menubar');
     populateCoursePage();
+    initMap(-25.344, 131.036);
 };
 
 function loadComponent(component) {
@@ -189,7 +190,7 @@ function populateCourses(selector) {
                     contentBox.className = 'content-box';
 
                     const image = document.createElement('img');
-                    image.src = courseProvider.course.image;
+                    image.src = courseProvider.course.image || 'media/noImage.svg';
                     image.alt = 'Course Logo';
                     image.className = 'content-box-image';
                     contentBox.appendChild(image);
@@ -287,5 +288,34 @@ function populateCourses(selector) {
         })
         .catch(error => console.error('Error:', error));
 }
+
+// Initialize and add the map
+// Initialize and add the map
+let map;
+
+async function initMap(lat, lng) {
+
+    const position = { lat: lat, lng: lng };
+
+
+    const { Map } = await google.maps.importLibrary("maps");
+    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+
+    // The map, centered at Uluru
+    map = new Map(document.getElementById("map"), {
+        zoom: 8,
+        center: position,
+        mapId: "DEMO_MAP_ID",
+    });
+
+    // The marker, positioned at Uluru
+    const marker = new AdvancedMarkerElement({
+        map: map,
+        position: position,
+        title: "Uluru",
+    });
+}
+
+
 
 
