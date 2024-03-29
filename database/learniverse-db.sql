@@ -260,3 +260,23 @@ VALUES
      'Hootsuite Social Marketing Certification',
      'This course covers the essential concepts and techniques for social media marketing. Students will learn how to create engaging content, use analytics to measure success, and develop a comprehensive social media marketing strategy.',
      null);
+
+CREATE TABLE currencies (
+                            code VARCHAR(3) PRIMARY KEY,
+                            name VARCHAR(50),
+                            symbol VARCHAR(5),
+                            rate DECIMAL(10, 2)
+);
+
+INSERT INTO currencies (code, name, symbol, rate) VALUES
+                                                      ('USD', 'United States Dollar', '$', 1),
+                                                      ('EUR', 'Euro', '€', 0.85),
+                                                      ('GBP', 'British Pound', '£', 0.75),
+                                                      ('JPY', 'Japanese Yen', '¥', 110.57),
+                                                      ('AUD', 'Australian Dollar', '$', 1.36),
+                                                      ('CAD', 'Canadian Dollar', '$', 1.27),
+                                                      ('CHF', 'Swiss Franc', 'CHF', 0.92),
+                                                      ('CNY', 'Chinese Yuan', '¥', 6.45),
+                                                      ('SEK', 'Swedish Krona', 'kr', 8.76),
+                                                      ('NZD', 'New Zealand Dollar', '$', 1.44),
+                                                      ('NOK', 'Norwegian Krone', 'kr', 8.68);

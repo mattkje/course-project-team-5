@@ -7,6 +7,5 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface CourseRepository extends JpaRepository<Course, Long> {
-    @Query("SELECT u FROM Course u WHERE u.courseId = ?1")
-    public List<CourseProvider> findAllProvidersByCourseId(int courseId);
+
 }
