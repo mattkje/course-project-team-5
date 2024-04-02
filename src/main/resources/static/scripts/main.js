@@ -183,9 +183,14 @@ function currency() {
             currencies.forEach(currency => {
                 const option = document.createElement('option');
                 option.value = currency.code;
-                option.text = currency.name;
+                option.text = currency.code + ' - ' + currency.symbol;
                 select.appendChild(option);
             });
+
+            const defaultCurrency = setDefaultCurrency();
+            if (defaultCurrency) {
+                select.value = defaultCurrency;
+            }
             document.getElementById('currencySelect').addEventListener('change', function() {
                 document.cookie = `defaultCurrency=${this.value}; path=/; max-age=31536000`;
                 location.reload();

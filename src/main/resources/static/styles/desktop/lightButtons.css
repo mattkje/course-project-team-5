@@ -158,6 +158,8 @@ button {
 .enroll-button {
     font-family: 'Inter', sans-serif;
     font-weight: bold;
+    color: white;
+    font-size: 1.04em;
     background: var(--base-1);
     display: flex;
     align-items: center;

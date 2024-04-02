@@ -270,13 +270,13 @@ CREATE TABLE currencies (
 
 INSERT INTO currencies (code, name, symbol, rate) VALUES
                                                       ('USD', 'United States Dollar', '$', 1),
-                                                      ('EUR', 'Euro', '€', 0.85),
-                                                      ('GBP', 'British Pound', '£', 0.75),
-                                                      ('JPY', 'Japanese Yen', '¥', 110.57),
-                                                      ('AUD', 'Australian Dollar', '$', 1.36),
-                                                      ('CAD', 'Canadian Dollar', '$', 1.27),
-                                                      ('CHF', 'Swiss Franc', 'CHF', 0.92),
-                                                      ('CNY', 'Chinese Yuan', '¥', 6.45),
-                                                      ('SEK', 'Swedish Krona', 'kr', 8.76),
-                                                      ('NZD', 'New Zealand Dollar', '$', 1.44),
-                                                      ('NOK', 'Norwegian Krone', 'kr', 8.68);
+                                                      ('EUR', 'Euro', '€', 0.93),
+                                                      ('GBP', 'British Pound', '£', 0.80),
+                                                      ('JPY', 'Japanese Yen', '¥', 151.68),
+                                                      ('AUD', 'Australian Dollar', '$', 1.54),
+                                                      ('CAD', 'Canadian Dollar', '$', 1.36),
+                                                      ('CHF', 'Swiss Franc', 'CHF', 0.91),
+                                                      ('CNY', 'Chinese Yuan', '¥', 7.24),
+                                                      ('SEK', 'Swedish Krona', 'kr', 10.80),
+                                                      ('NZD', 'New Zealand Dollar', '$', 1.68),
+                                                      ('NOK', 'Norwegian Krone', 'kr', 10.95);

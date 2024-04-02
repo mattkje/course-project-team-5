@@ -2,6 +2,7 @@ window.onload = function () {
     loadComponent('footer');
     loadComponent('menubar');
     populateCoursePage();
+    currency();
     initMap(-25.344, 131.036);
 };
 
@@ -19,128 +20,159 @@ function populateCoursePage() {
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id');
 
-    fetch(`/api/courses/${id}`)
-        //Checking if course exists
-        .then(response => {
-            if (!response.ok) {
-                if (response.status === 404) {
-                    //Use custom course not found page?
-                    window.location.href = '/404';
-                } else {
-                    throw new Error('Network response was not ok');
-                }
-            }
-            return response.json();
-        })
-        //Continuing if course exists
-        .then(data => {
+    // Fetch the currency data
+    fetch('/api/currency')
+        .then(response => response.json())
+        .then(currencies => {
 
-            //Populating the similar courses box
-            populateCourses('.featured');
+            fetch(`/api/courses/${id}`)
+                //Checking if course exists
+                .then(response => {
+                    if (!response.ok) {
+                        if (response.status === 404) {
+                            //Use custom course not found page?
+                            window.location.href = '/404';
+                        } else {
+                            throw new Error('Network response was not ok');
+                        }
+                    }
+                    return response.json();
+                })
+                //Continuing if course exists
+                .then(data => {
 
-            //Populating the course page
-            document.getElementById('courseCategoryLink').innerText = data.course.category;
-            document.getElementById('courseTitleLink').innerText = data.course.title;
-            document.getElementById('courseDescription').innerText = data.course.description;
-            document.getElementById('courseImage').src = data.course.image || 'media/noImage.svg';
-            document.getElementById('courseTitle').innerText = data.course.title;
+                    //Populating the similar courses box
+                    populateCourses('.featured');
 
-            // Course size
-            const sizeIcon = document.createElement('img');
-            sizeIcon.className = 'content-box-icon';
-            sizeIcon.src = 'media/credits.svg';
+                    //Populating the course page
+                    document.getElementById('courseCategoryLink').innerText = data.course.category;
+                    document.getElementById('courseTitleLink').innerText = data.course.title;
+                    document.getElementById('courseDescription').innerText = data.course.description;
+                    document.getElementById('courseImage').src = data.course.image || 'media/noImage.svg';
+                    document.getElementById('courseTitle').innerText = data.course.title;
 
-            const sizeText = document.createElement('p');
-            sizeText.innerText += `${data.course.courseSize}` + " ECTS Credits";
+                    const sizeIcon = document.createElement('img');
+                    sizeIcon.className = 'content-box-icon';
+                    sizeIcon.src = 'media/credits.svg';
 
-            const courseSizeElement = document.getElementById('courseSize');
-            courseSizeElement.appendChild(sizeIcon);
-            courseSizeElement.appendChild(sizeText);
+                    const sizeText = document.createElement('p');
+                    sizeText.innerText += `${data.course.courseSize}` + " ECTS Credits";
 
-            // Course duration
-            const durationIcon = document.createElement('img');
-            durationIcon.className = 'content-box-icon';
-            durationIcon.src = 'media/calendar.svg';
+                    const courseSizeElement = document.getElementById('courseSize');
+                    courseSizeElement.appendChild(sizeIcon);
+                    courseSizeElement.appendChild(sizeText);
 
-            const durationText = document.createElement('p');
-            const rawDate = `${data.course.closestCourseSession}`;
-            durationText.innerText += formatDate(rawDate);
+                    // Course duration
+                    const durationIcon = document.createElement('img');
+                    durationIcon.className = 'content-box-icon';
+                    durationIcon.src = 'media/calendar.svg';
 
-            const courseDurationElement = document.getElementById('closestCourseSession');
-            courseDurationElement.appendChild(durationIcon);
-            courseDurationElement.appendChild(durationText);
+                    const durationText = document.createElement('p');
+                    const rawDate = `${data.course.closestCourseSession}`;
+                    durationText.innerText += formatDate(rawDate);
 
-            // Course hours per week
-            const hoursIcon = document.createElement('img');
-            hoursIcon.className = 'content-box-icon';
-            hoursIcon.src = 'media/size.svg';
+                    const courseDurationElement = document.getElementById('closestCourseSession');
+                    courseDurationElement.appendChild(durationIcon);
+                    courseDurationElement.appendChild(durationText);
 
-            const hoursText = document.createElement('p');
-            hoursText.innerText += `${data.course.hoursPerWeek}` + " h/w";
+                    // Course hours per week
+                    const hoursIcon = document.createElement('img');
+                    hoursIcon.className = 'content-box-icon';
+                    hoursIcon.src = 'media/size.svg';
 
-            const courseHoursElement = document.getElementById('hoursPerWeek');
-            courseHoursElement.appendChild(hoursIcon);
-            courseHoursElement.appendChild(hoursText);
+                    const hoursText = document.createElement('p');
+                    hoursText.innerText += `${data.course.hoursPerWeek}` + " h/w";
 
-            // Course certification
-            const certificationIcon = document.createElement('img');
-            certificationIcon.className = 'content-box-icon';
-            certificationIcon.src = 'media/cert.svg';
+                    const courseHoursElement = document.getElementById('hoursPerWeek');
+                    courseHoursElement.appendChild(hoursIcon);
+                    courseHoursElement.appendChild(hoursText);
 
-            const certificationText = document.createElement('p');
-            certificationText.innerText += `${data.course.relatedCertifications}`;
+                    // Course certification
+                    const certificationIcon = document.createElement('img');
+                    certificationIcon.className = 'content-box-icon';
+                    certificationIcon.src = 'media/cert.svg';
 
-            const courseCertElement = document.getElementById('relatedCertifications');
-            courseCertElement.appendChild(certificationIcon);
-            courseCertElement.appendChild(certificationText);
+                    const certificationText = document.createElement('p');
+                    certificationText.innerText += `${data.course.relatedCertifications}`;
 
-            // Course difficulty
-            const difficultyIcon = document.createElement('img');
-            difficultyIcon.className = 'content-box-icon';
-            difficultyIcon.src = 'media/level.svg';
+                    const courseCertElement = document.getElementById('relatedCertifications');
+                    courseCertElement.appendChild(certificationIcon);
+                    courseCertElement.appendChild(certificationText);
 
-            const difficultyText = document.createElement('p');
-            difficultyText.innerText += `${data.course.level}`;
+                    // Course difficulty
+                    const difficultyIcon = document.createElement('img');
+                    difficultyIcon.className = 'content-box-icon';
+                    difficultyIcon.src = 'media/level.svg';
 
-            const courseDifficultyElement = document.getElementById('difficulty');
-            courseDifficultyElement.appendChild(difficultyIcon);
-            courseDifficultyElement.appendChild(difficultyText);
+                    const difficultyText = document.createElement('p');
+                    difficultyText.innerText += `${data.course.level}`;
 
+                    const courseDifficultyElement = document.getElementById('difficulty');
+                    courseDifficultyElement.appendChild(difficultyIcon);
+                    courseDifficultyElement.appendChild(difficultyText);
 
-            // Providers
-            data.providers.forEach(provider => {
-                const providerElement = document.createElement('button');
-                providerElement.className = 'provider-choose';
-                providerElement.type = 'button';
-                if (provider.currency === "SUB") {
-                    providerElement.innerHTML = provider.name + "<br>" + provider.price + "&nbsp;" + "/month";
-                } else {
-                    providerElement.innerHTML = provider.name + "<br>" + provider.price + "&nbsp;" + provider.currency;
-                }
-                document.getElementById('providerList').appendChild(providerElement);
-            });
+                    // Providers
+                    data.providers.forEach(provider => {
+                        const providerElement = document.createElement('button');
+                        providerElement.className = 'provider-choose';
+                        providerElement.type = 'button';
 
-            // If no data, hide the element. (Value from the database is "null", not null, hence the string comparison.)
-            if (`${data.course.relatedCertifications}` === "null") {
-                courseCertElement.style.display = "none";
-            }
-            if (`${data.course.courseSize}` === "null") {
-                courseSizeElement.style.display = "none";
-            }
-            if (`${data.course.closestCourseSession}` === "null") {
-                courseDurationElement.style.display = "none";
-            }
-            if (`${data.course.level}` === "null") {
-                courseDifficultyElement.style.display = "none";
-            }
-            if (`${data.course.hoursPerWeek}` === "null") {
-                courseHoursElement.style.display = "none";
-            }
+                        let defaultCurrency = setDefaultCurrency() || 'USD';
 
+                        let symbol = '';
+                        let rate = 1;
 
+                        for (let i = 0; i < currencies.length; i++) {
+                            if (currencies[i].code === provider.currency) {
+                                rate = currencies[i].rate;
+                                break;
+                            }
+                        }
+
+                        const priceInDefaultCurrency = provider.price / rate;
+
+                        for (let i = 0; i < currencies.length; i++) {
+                            if (currencies[i].code === defaultCurrency) {
+                                symbol = currencies[i].symbol;
+                                rate = currencies[i].rate;
+                                break;
+                            }
+                        }
+
+                        const finalPrice = priceInDefaultCurrency * rate;
+
+                        if (provider.currency === "SUB") {
+                            providerElement.innerHTML = provider.name;
+                        } else {
+                            providerElement.innerHTML = provider.name;
+                        }
+                        document.getElementById('providerList').appendChild(providerElement);
+                        providerElement.addEventListener('click', function() {
+                            document.getElementById('enrollButton').textContent = "Enroll for " + symbol + finalPrice.toFixed(2);
+                        });
+                    });
+
+                    if (`${data.course.relatedCertifications}` === "null") {
+                        courseCertElement.style.display = "none";
+                    }
+                    if (`${data.course.courseSize}` === "null") {
+                        courseSizeElement.style.display = "none";
+                    }
+                    if (`${data.course.closestCourseSession}` === "null") {
+                        courseDurationElement.style.display = "none";
+                    }
+                    if (`${data.course.level}` === "null") {
+                        courseDifficultyElement.style.display = "none";
+                    }
+                    if (`${data.course.hoursPerWeek}` === "null") {
+                        courseHoursElement.style.display = "none";
+                    }
+                })
+                .catch(error => console.error('Error:', error));
         })
         .catch(error => console.error('Error:', error));
 }
+
 
 //Should add "st", "nd", "rd" or "th" to the day number.
 function getOrdinalSuffix(day) {
@@ -176,117 +208,171 @@ function formatDate(closestCourseSession) {
     return `${formattedStartDate} -> ${formattedEndDate}`;
 }
 
-function populateCourses(selector) {
+
+function populateCourses(selector, filterFn) {
+    document.querySelector(selector).innerHTML = '';
+    const defaultCurrency = setDefaultCurrency() || 'USD';
     fetch('/api/courses')
         .then(response => response.json())
         .then(data => {
-            data.forEach(courseProvider => {
-                if (document.querySelector(selector).childElementCount >= 5) {
-                    return false;
-                }
-                if (courseProvider.course.category === document.getElementById('courseCategoryLink').innerText) {
-                    const contentBox = document.createElement('a');
-                    contentBox.href = `/courses?id=${courseProvider.course.courseId}`;
-                    contentBox.className = 'content-box';
+            fetch('/api/currency')
+                .then(response => response.json())
+                .then(currencies => {
+                    data.forEach(courseProvider => {
+                        if (document.querySelector(selector).childElementCount >= 5) {
+                            return false;
+                        }
+                        if (courseProvider.course.category === document.getElementById('courseCategoryLink').innerText) {
+                            const contentBox = document.createElement('a');
+                            contentBox.href = `/courses?id=${courseProvider.course.courseId}`;
+                            contentBox.className = 'content-box';
 
-                    const image = document.createElement('img');
-                    image.src = courseProvider.course.image || 'media/noImage.svg';
-                    image.alt = 'Course Logo';
-                    image.className = 'content-box-image';
-                    contentBox.appendChild(image);
+                            const image = document.createElement('img');
+                            image.src = courseProvider.course.image || 'media/noImage.svg';
+                            image.alt = 'Course image';
+                            image.className = 'content-box-image';
+                            contentBox.appendChild(image);
 
-                    const descriptionBox = document.createElement('div');
-                    descriptionBox.className = 'content-box-description';
-                    contentBox.appendChild(descriptionBox);
+                            const descriptionBox = document.createElement('div');
+                            descriptionBox.className = 'content-box-description';
+                            contentBox.appendChild(descriptionBox);
 
-                    const title = document.createElement('h2');
-                    title.className = 'content-box-title';
-                    title.textContent = courseProvider.course.title;
-                    descriptionBox.appendChild(title);
+                            const title = document.createElement('h2');
+                            title.className = 'content-box-title';
+                            title.textContent = courseProvider.course.title;
+                            descriptionBox.appendChild(title);
 
-                    const hr = document.createElement('hr');
-                    descriptionBox.appendChild(hr);
+                            const hr = document.createElement('hr');
+                            descriptionBox.appendChild(hr);
 
-                    const contentDescription = document.createElement('div');
-                    contentDescription.className = 'content-description';
-                    descriptionBox.appendChild(contentDescription);
+                            const contentDescription = document.createElement('div');
+                            contentDescription.className = 'content-description';
+                            descriptionBox.appendChild(contentDescription);
 
-                    const attributes = document.createElement('div');
-                    attributes.className = 'content-box-attributes';
-                    contentDescription.appendChild(attributes);
+                            const attributes = document.createElement('div');
+                            attributes.className = 'content-box-attributes';
+                            contentDescription.appendChild(attributes);
 
-                    // Create and append the category attribute
-                    const categoryAttribute = document.createElement('div');
-                    categoryAttribute.className = 'content-box-attribute';
-                    attributes.appendChild(categoryAttribute);
+                            // Create and append the category attribute
+                            const categoryAttribute = document.createElement('div');
+                            categoryAttribute.className = 'content-box-attribute';
+                            attributes.appendChild(categoryAttribute);
 
-                    const categoryIcon = document.createElement('img');
-                    categoryIcon.className = 'content-box-icon';
-                    categoryIcon.src = 'media/category.svg'; // Replace with actual path
-                    categoryAttribute.appendChild(categoryIcon);
+                            const categoryIcon = document.createElement('img');
+                            categoryIcon.className = 'content-box-icon';
+                            categoryIcon.src = 'media/category.svg'; // Replace with actual path
+                            categoryAttribute.appendChild(categoryIcon);
 
-                    const category = document.createElement('p');
-                    category.className = 'content-box-text';
-                    category.textContent = courseProvider.course.category;
-                    categoryAttribute.appendChild(category);
+                            const category = document.createElement('p');
+                            category.className = 'content-box-text';
+                            category.textContent = courseProvider.course.category;
+                            categoryAttribute.appendChild(category);
 
-                    // Create and append the providers attribute
-                    const providersAttribute = document.createElement('div');
-                    providersAttribute.className = 'content-box-attribute';
-                    attributes.appendChild(providersAttribute);
+                            // Create and append the providers attribute
+                            const providersAttribute = document.createElement('div');
+                            providersAttribute.className = 'content-box-attribute';
+                            attributes.appendChild(providersAttribute);
 
-                    const providersIcon = document.createElement('img');
-                    providersIcon.className = 'content-box-icon';
-                    providersIcon.src = 'media/providers.svg';
-                    providersAttribute.appendChild(providersIcon);
+                            const providersIcon = document.createElement('img');
+                            providersIcon.className = 'content-box-icon';
+                            providersIcon.src = 'media/providers.svg';
+                            providersAttribute.appendChild(providersIcon);
 
-                    const providersElement = document.createElement('p');
-                    providersElement.className = 'content-box-text';
+                            const providersElement = document.createElement('p');
+                            providersElement.className = 'content-box-text';
 
 
-                    const courseProviders = courseProvider.providers.filter(provider => provider.courseId === courseProvider.course.courseId);
+                            const courseProviders = courseProvider.providers.filter(provider => provider.courseId === courseProvider.course.courseId);
 
-                    if (Array.isArray(courseProviders) && courseProviders.length) {
-                        providersElement.innerHTML = `${courseProviders.length}&nbsp;Providers`;
-                    } else {
-                        providersElement.innerHTML = 'No&nbsp;Providers';
-                    }
+                            if (Array.isArray(courseProviders) && courseProviders.length) {
+                                providersElement.innerHTML = `${courseProviders.length}&nbsp;Providers`;
+                            } else {
+                                providersElement.innerHTML = 'No&nbsp;Providers';
+                            }
 
-                    providersAttribute.appendChild(providersElement);
+                            providersAttribute.appendChild(providersElement);
 
-                    const price = document.createElement('p');
-                    price.className = 'content-button';
-                    const lowestPriceProvider = courseProviders.reduce((prev, curr) => {
-                        return (prev.price < curr.price) ? prev : curr;
+                            const price = document.createElement('p');
+                            price.className = 'content-button';
+
+
+                            const lowestPriceProvider = courseProviders.reduce((prev, curr) => {
+                                return (prev.price < curr.price) ? prev : curr;
+                            });
+
+                            const currency = lowestPriceProvider.currency;
+                            const priceInCurrency = lowestPriceProvider.price;
+
+
+                            let symbol = '';
+                            let rate = 1;
+
+                            for (let i = 0; i < currencies.length; i++) {
+                                if (currencies[i].code === currency) {
+                                    rate = currencies[i].rate;
+                                    break;
+                                }
+                            }
+
+                            const priceInDefaultCurrency = priceInCurrency / rate;
+
+                            for (let i = 0; i < currencies.length; i++) {
+                                if (currencies[i].code === defaultCurrency) {
+                                    symbol = currencies[i].symbol;
+                                    rate = currencies[i].rate;
+                                    break;
+                                }
+                            }
+
+                            const finalPrice = priceInDefaultCurrency * rate;
+
+                            if (currency === 'SUB') {
+                                price.textContent = symbol + finalPrice.toFixed(2) + "/month";
+                            } else {
+                                price.textContent = symbol + finalPrice.toFixed(2);
+                            }
+
+                            const priceBox = document.createElement('div');
+                            priceBox.className = 'price-box';
+                            priceBox.appendChild(price);
+
+                            contentDescription.appendChild(priceBox);
+
+                            document.querySelector(selector).appendChild(contentBox.cloneNode(true));
+                        }
                     });
+                })
+                .catch(error => console.error('Error:', error));
+        })
+        .catch(error => console.error('Error:', error));
+}
 
-                    const currency = lowestPriceProvider.currency;
-
-                    if (currency === 'USD') {
-                        price.textContent = "$" + lowestPriceProvider.price;
-                    } else if (currency === 'EUR') {
-                        price.textContent = "€" + lowestPriceProvider.price;
-                    } else if (currency === 'GBP') {
-                        price.textContent = "£" + lowestPriceProvider.price;
-                    } else if (currency === 'SUB') {
-                        price.textContent = "$" + lowestPriceProvider.price + "/month";
-
-                    } else {
-                        price.textContent = currency + " " + lowestPriceProvider.price;
-                    }
-
-                    const priceBox = document.createElement('div');
-                    priceBox.className = 'price-box';
-                    priceBox.appendChild(price);
-
-                    contentDescription.appendChild(priceBox);
-
-                    document.querySelector(selector).appendChild(contentBox.cloneNode(true));
-
-                }
+function currency() {
+    fetch('/api/currency')
+        .then(response => response.json())
+        .then(currencies => {
+            const select = document.getElementById('currencySelect');
+            currencies.forEach(currency => {
+                const option = document.createElement('option');
+                option.value = currency.code;
+                option.text = currency.name;
+                select.appendChild(option);
+            });
+            document.getElementById('currencySelect').addEventListener('change', function() {
+                document.cookie = `defaultCurrency=${this.value}; path=/; max-age=31536000`;
+                location.reload();
             });
         })
         .catch(error => console.error('Error:', error));
+
+}
+
+function setDefaultCurrency() {
+    const cookies = document.cookie.split('; ');
+    const defaultCurrencyCookie = cookies.find(row => row.startsWith('defaultCurrency='));
+    if (defaultCurrencyCookie) {
+        return defaultCurrencyCookie.split('=')[1];
+    }
 }
 
 // Initialize and add the map
@@ -316,6 +402,37 @@ async function initMap(lat, lng) {
     });
 }
 
+function currency() {
+    fetch('/api/currency')
+        .then(response => response.json())
+        .then(currencies => {
+            const select = document.getElementById('currencySelect');
+            currencies.forEach(currency => {
+                const option = document.createElement('option');
+                option.value = currency.code;
+                option.text = currency.code + ' - ' + currency.symbol;
+                select.appendChild(option);
+            });
 
+            const defaultCurrency = setDefaultCurrency();
+            if (defaultCurrency) {
+                select.value = defaultCurrency;
+            }
+            document.getElementById('currencySelect').addEventListener('change', function() {
+                document.cookie = `defaultCurrency=${this.value}; path=/; max-age=31536000`;
+                location.reload();
+            });
+        })
+        .catch(error => console.error('Error:', error));
+
+}
+
+function setDefaultCurrency() {
+    const cookies = document.cookie.split('; ');
+    const defaultCurrencyCookie = cookies.find(row => row.startsWith('defaultCurrency='));
+    if (defaultCurrencyCookie) {
+        return defaultCurrencyCookie.split('=')[1];
+    }
+}
 
 
