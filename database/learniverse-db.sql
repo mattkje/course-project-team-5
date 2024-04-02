@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS users
     password     VARCHAR(64),
     first_name   VARCHAR(20),
     last_name    VARCHAR(20),
-    role         ENUM('ADMIN', 'MODERATOR', 'USER') NOT NULL DEFAULT 'USER',
+    role         ENUM ('ADMIN', 'MODERATOR', 'USER') NOT NULL DEFAULT 'USER',
     enabled      BOOLEAN,
     created_at   datetime(6),
     updated_at   datetime(6),
@@ -20,7 +20,8 @@ CREATE TABLE IF NOT EXISTS users
 
 INSERT INTO users (user_name, email, password, first_name, last_name, role, enabled, created_at, updated_at,
                    phone_number)
-VALUES ('john_doe', 'john.doe@example.com', '$2a$10$v8zrek0TRlIUCME2Na10DeeiIBiHD1gpAeEU5m9FzIpw4C/YABf9O', 'John', 'Doe', 1, true, '2024-02-12', '2024-02-12',
+VALUES ('john_doe', 'john.doe@example.com', '$2a$10$v8zrek0TRlIUCME2Na10DeeiIBiHD1gpAeEU5m9FzIpw4C/YABf9O', 'John',
+        'Doe', 1, true, '2024-02-12', '2024-02-12',
         '+1234567890'),
        ('jane_smith', 'jane.smith@example.com', 'smithpassword', 'Jane', 'Smith', 2, true, '2024-02-12', '2024-02-12',
         '+1987654321'),
@@ -104,7 +105,7 @@ VALUES (1, 'Information Technology', 'Real-Time Programming in Java',
         '19.08 - 30.08', 2, 10, 'Databricks Practitioner',
         'Embark on your data journey with our beginner-level online course, Databricks Fundamentals. Designed for individuals new to the world of big data and analytics, this course offers a comprehensive introduction to the essential concepts of Databricks, a leading unified analytics platform. Led by experienced instructors, youll navigate through the fundamentals of data exploration, data engineering, and collaborative data science using Databricks. No prior experience with big data technologies is required, making this course an ideal starting point for beginners eager to harness the power of Databricks for streamlined data processing and analysis. By the end of the course, youll have a solid foundation in using Databricks to uncover insights from large datasets, setting you on a path towards mastering the intricacies of modern data analytics. Join us and demystify the fundamentals of Databricks in this accessible and empowering course.',
         'https://www.databricks.com/sites/default/files/2023-11/databricks-og-universal.png'),
-        (13, 'Data Science and Analytics', 'Håkon Sex Course',
+       (13, 'Data Science and Analytics', 'Håkon Sex Course',
         '["Gay", "sex", "Penetration", "science", "Trans", "Wood"]', 'Beginner',
         '19.08 - 30.08', 2, 10, 'Certified gay',
         'Håkon will show you his willy and such...',
@@ -135,82 +136,91 @@ VALUES (1, 'NTNU'),
 CREATE TABLE IF NOT EXISTS course_providers
 (
     course_provider_id INT AUTO_INCREMENT PRIMARY KEY,
-    course_id   INT,
-    provider_id INT,
-    price       FLOAT,
-    currency    VARCHAR(5)
+    course_id          INT,
+    provider_id        INT,
+    price              FLOAT,
+    currency           VARCHAR(5),
+    latitude           DECIMAL(9, 6),
+    longitude          DECIMAL(9, 6)
 );
 
-INSERT INTO course_providers (course_id, provider_id, price, currency)
-VALUES (1, 1, 29999.00, 'NOK'),
-       (1, 2, 32000.00, 'NOK'),
-       (2, 3, 800.00, 'USD'),
-       (2, 1, 10000.00, 'NOK'),
-       (4, 4, 899.00, 'USD'),
-       (3, 5, 2999.00, 'NOK'),
-       (3, 4, 3000.00, 'NOK'),
-       (3, 2, 200.00, 'USD'),
-       (4, 5, 200.00, 'USD'),
-       (4, 1, 1800.00, 'NOK'),
-       (4, 4, 200.00, 'USD'),
-       (5, 5, 400.00, 'USD'),
-       (5, 1, 3600.00, 'NOK'),
-       (5, 4, 400.00, 'USD'),
-       (6, 6, 100.00, 'USD'),
-       (6, 4, 120.00, 'USD'),
-       (6, 1, 1800.00, 'NOK'),
-       (7, 7, 66000.00, 'NOK'),
-       (7, 8, 80000.00, 'NOK'),
-       (7, 9, 6000.00, 'USD'),
-       (7, 5, 6000.00, 'USD'),
-       (7, 6, 6000.00, 'USD'),
-       (8, 7, 66000.00, 'NOK'),
-       (8, 8, 80000.00, 'NOK'),
-       (8, 9, 6000.00, 'USD'),
-       (8, 5, 6000.00, 'USD'),
-       (8, 6, 6000.00, 'USD'),
-       (9, 1, 50000.00, 'NOK'),
-       (9, 5, 50000.00, 'NOK'),
-       (9, 10, 50000.00, 'NOK'),
-       (10, 1, 20000.00, 'NOK'),
-       (10, 11, 20000.00, 'NOK'),
-       (10, 12, 20000.00, 'NOK'),
-       (11, 1, 30000.00, 'NOK'),
-       (11, 11, 30000.00, 'NOK'),
-       (11, 12, 30000.00, 'NOK'),
-       (12, 1, 20000.00, 'NOK'),
-       (12, 11, 20000.00, 'NOK'),
-       (12, 12, 20000.00, 'NOK'),
-       (14, 13, 10.00, 'SUB'),
-         (15, 13, 10.00, 'SUB'),
-         (16, 13, 10.00, 'SUB'),
-         (17, 13, 10.00, 'SUB'),
-         (18, 13, 10.00, 'SUB'),
-         (19, 12, 1000.00, 'USD'),
-         (20, 11, 100.00, 'USD');
+INSERT INTO course_providers (course_id, provider_id, price, currency, latitude, longitude)
+VALUES (1, 1, 29999.00, 'NOK', 40.712776, -74.005974),
+       (1, 2, 32000.00, 'NOK', 51.507351, -0.127758),
+       (2, 3, 800.00, 'USD', 48.856614, 2.352222),
+       (2, 1, 10000.00, 'NOK', 35.689487, 139.691706),
+       (4, 4, 899.00, 'USD', -33.868820, 151.209296),
+       (3, 5, 2999.00, 'NOK', 34.052235, -118.243683),
+       (3, 4, 3000.00, 'NOK', 41.902782, 12.496366),
+       (3, 2, 200.00, 'USD', -23.550520, -46.633308),
+       (4, 5, 200.00, 'USD', 28.613939, 77.209023),
+       (4, 1, 1800.00, 'NOK', 39.904200, 116.407396),
+       (4, 4, 200.00, 'USD', 40.712776, -74.005974),
+       (5, 5, 400.00, 'USD', 51.507351, -0.127758),
+       (5, 1, 3600.00, 'NOK', 48.856614, 2.352222),
+       (5, 4, 400.00, 'USD', 35.689487, 139.691706),
+       (6, 6, 100.00, 'USD', -33.868820, 151.209296),
+       (6, 4, 120.00, 'USD', 34.052235, -118.243683),
+       (6, 1, 1800.00, 'NOK', 41.902782, 12.496366),
+       (7, 7, 66000.00, 'NOK', -23.550520, -46.633308),
+       (7, 8, 80000.00, 'NOK', 28.613939, 77.209023),
+       (7, 9, 6000.00, 'USD', 39.904200, 116.407396),
+       (7, 5, 6000.00, 'USD', 40.712776, -74.005974),
+       (7, 6, 6000.00, 'USD', 51.507351, -0.127758),
+       (8, 7, 66000.00, 'NOK', 48.856614, 2.352222),
+       (8, 8, 80000.00, 'NOK', 35.689487, 139.691706),
+       (8, 9, 6000.00, 'USD', -33.868820, 151.209296),
+       (8, 5, 6000.00, 'USD', 34.052235, -118.243683),
+       (8, 6, 6000.00, 'USD', 41.902782, 12.496366),
+       (9, 1, 50000.00, 'NOK', -23.550520, -46.633308),
+       (9, 5, 50000.00, 'NOK', 28.613939, 77.209023),
+       (9, 10, 50000.00, 'NOK', 39.904200, 116.407396),
+       (10, 1, 20000.00, 'NOK', 40.712776, -74.005974),
+       (10, 11, 20000.00, 'NOK', 51.507351, -0.127758),
+       (10, 12, 20000.00, 'NOK', 48.856614, 2.352222),
+       (11, 1, 30000.00, 'NOK', 35.689487, 139.691706),
+       (11, 11, 30000.00, 'NOK', -33.868820, 151.209296),
+       (11, 12, 30000.00, 'NOK', 34.052235, -118.243683),
+       (12, 1, 20000.00, 'NOK', 41.902782, 12.496366),
+       (12, 11, 20000.00, 'NOK', -23.550520, -46.633308),
+       (12, 12, 20000.00, 'NOK', 28.613939, 77.209023),
+       (14, 13, 10.00, 'SUB', 39.904200, 116.407396),
+       (15, 13, 10.00, 'SUB', 40.712776, -74.005974),
+       (16, 13, 10.00, 'SUB', 51.507351, -0.127758),
+       (17, 13, 10.00, 'SUB', 48.856614, 2.352222),
+       (18, 13, 10.00, 'SUB', 35.689487, 139.691706),
+       (19, 12, 1000.00, 'USD', -33.868820, 151.209296),
+       (20, 11, 100.00, 'USD', 34.052235, -118.243683);
 
-CREATE TABLE keywords (
-    keyword_id INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE keywords
+(
+    keyword_id   INT AUTO_INCREMENT PRIMARY KEY,
     keyword_name VARCHAR(100) NOT NULL
 );
 
-CREATE TABLE course_keywords (
+CREATE TABLE course_keywords
+(
     course_keyword_id INT AUTO_INCREMENT PRIMARY KEY,
-    course_id INT,
-    keyword_id INT
+    course_id         INT,
+    keyword_id        INT
 );
 
 INSERT INTO keywords (keyword_id, keyword_name)
-VALUES(1, 'Java'), (2, 'Python'), (3, 'C+');
+VALUES (1, 'Java'),
+       (2, 'Python'),
+       (3, 'C+');
 
 INSERT INTO course_keywords (course_id, keyword_id)
-VALUES(1, 1), (2, 1), (2, 2), (3, 3), (1, 3);
-
+VALUES (1, 1),
+       (2, 1),
+       (2, 2),
+       (3, 3),
+       (1, 3);
 
 
 -- Exclusive courses
 
-INSERT INTO courses (course_id ,category, title, keywords, level, closest_course_session, course_size, hours_per_week,
+INSERT INTO courses (course_id, category, title, keywords, level, closest_course_session, course_size, hours_per_week,
                      related_certifications, description, image)
 VALUES (14, 'Data Science and Analytics', 'Data Visualization with Python',
         '["Python", "data visualization", "programming", "data science"]', 'Intermediate', '01.10 - 30.10', 2, 15,
@@ -240,43 +250,42 @@ VALUES (14, 'Data Science and Analytics', 'Data Visualization with Python',
 
 
 INSERT INTO course_providers (course_id, provider_id, price, currency)
-VALUES
-    (14, 13, 10.00, 'SUB');
-
+VALUES (14, 13, 10.00, 'SUB');
 
 
 -- Extra courses
 
 INSERT INTO courses (course_id, category, title, keywords, level, closest_course_session, course_size, hours_per_week,
                      related_certifications, description, image)
-VALUES
-    (19, 'Digital Marketing', 'Advanced SEO Techniques',
-     '["SEO", "digital marketing", "keyword research", "link building"]', 'Advanced', '01.07 - 30.07', 4, 20,
-     'Google Analytics Individual Qualification',
-     'This course covers advanced SEO techniques including keyword research, link building, and technical SEO. Students will learn how to optimize their websites for search engines and improve their website''s ranking on search engine results pages.',
-     null),
-    (20, 'Digital Marketing', 'Social Media Marketing Strategies',
-     '["social media", "digital marketing", "content creation", "analytics"]', 'Intermediate', '01.08 - 30.08', 3, 15,
-     'Hootsuite Social Marketing Certification',
-     'This course covers the essential concepts and techniques for social media marketing. Students will learn how to create engaging content, use analytics to measure success, and develop a comprehensive social media marketing strategy.',
-     null);
+VALUES (19, 'Digital Marketing', 'Advanced SEO Techniques',
+        '["SEO", "digital marketing", "keyword research", "link building"]', 'Advanced', '01.07 - 30.07', 4, 20,
+        'Google Analytics Individual Qualification',
+        'This course covers advanced SEO techniques including keyword research, link building, and technical SEO. Students will learn how to optimize their websites for search engines and improve their website''s ranking on search engine results pages.',
+        null),
+       (20, 'Digital Marketing', 'Social Media Marketing Strategies',
+        '["social media", "digital marketing", "content creation", "analytics"]', 'Intermediate', '01.08 - 30.08', 3,
+        15,
+        'Hootsuite Social Marketing Certification',
+        'This course covers the essential concepts and techniques for social media marketing. Students will learn how to create engaging content, use analytics to measure success, and develop a comprehensive social media marketing strategy.',
+        null);
 
-CREATE TABLE currencies (
-                            code VARCHAR(3) PRIMARY KEY,
-                            name VARCHAR(50),
-                            symbol VARCHAR(5),
-                            rate DECIMAL(10, 2)
+CREATE TABLE currencies
+(
+    code   VARCHAR(3) PRIMARY KEY,
+    name   VARCHAR(50),
+    symbol VARCHAR(5),
+    rate   DECIMAL(10, 2)
 );
 
-INSERT INTO currencies (code, name, symbol, rate) VALUES
-                                                      ('USD', 'United States Dollar', '$', 1),
-                                                      ('EUR', 'Euro', '€', 0.93),
-                                                      ('GBP', 'British Pound', '£', 0.80),
-                                                      ('JPY', 'Japanese Yen', '¥', 151.68),
-                                                      ('AUD', 'Australian Dollar', '$', 1.54),
-                                                      ('CAD', 'Canadian Dollar', '$', 1.36),
-                                                      ('CHF', 'Swiss Franc', 'CHF', 0.91),
-                                                      ('CNY', 'Chinese Yuan', '¥', 7.24),
-                                                      ('SEK', 'Swedish Krona', 'kr', 10.80),
-                                                      ('NZD', 'New Zealand Dollar', '$', 1.68),
-                                                      ('NOK', 'Norwegian Krone', 'kr', 10.95);
+INSERT INTO currencies (code, name, symbol, rate)
+VALUES ('USD', 'United States Dollar', '$', 1),
+       ('EUR', 'Euro', '€', 0.93),
+       ('GBP', 'British Pound', '£', 0.80),
+       ('JPY', 'Japanese Yen', '¥', 151.68),
+       ('AUD', 'Australian Dollar', '$', 1.54),
+       ('CAD', 'Canadian Dollar', '$', 1.36),
+       ('CHF', 'Swiss Franc', 'CHF', 0.91),
+       ('CNY', 'Chinese Yuan', '¥', 7.24),
+       ('SEK', 'Swedish Krona', 'kr', 10.80),
+       ('NZD', 'New Zealand Dollar', '$', 1.68),
+       ('NOK', 'Norwegian Krone', 'kr', 10.95);

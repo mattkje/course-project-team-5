@@ -3,7 +3,6 @@ window.onload = function () {
     loadComponent('menubar');
     populateCoursePage();
     currency();
-    initMap(-25.344, 131.036);
 };
 
 function loadComponent(component) {
@@ -149,6 +148,7 @@ function populateCoursePage() {
                         document.getElementById('providerList').appendChild(providerElement);
                         providerElement.addEventListener('click', function() {
                             document.getElementById('enrollButton').textContent = "Enroll for " + symbol + finalPrice.toFixed(2);
+                            initMap(provider.latitude, provider.longitude);
                         });
                     });
 

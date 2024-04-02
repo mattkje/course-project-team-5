@@ -5,7 +5,7 @@ button {
 
 .header-button {
     height: 70px;
-    color: var(--dark-1);
+    color: white;
     font-size: 15px;
     border: none;
     padding: 10px 1%;
@@ -138,7 +138,7 @@ button {
     height: 60px;
     width: 95%;
     font-size: 1.04em;
-    text-align: left;
+    text-align: center;
     cursor: pointer;
     transition: all .5s;
     margin: 5px 0;

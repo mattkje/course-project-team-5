@@ -2,10 +2,6 @@ body {
     color: var(--dark-1);
 }
 
-.logo-top {
-    color: var(--dark-1);
-}
-
 .hero-text {
     font-family: 'Inter', sans-serif;
     font-weight: 900;
@@ -25,8 +21,4 @@ body {
 
 p {
     color: var(--light-1);
-}
-
-.header-button {
-    color: var(--dark-1) !important;
 }

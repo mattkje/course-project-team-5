@@ -2,6 +2,7 @@ package no.ntnu.courses.coursesapi.api.provider;
 
 
 import jakarta.persistence.*;
+import java.math.BigDecimal;
 
 /**
  * The CourseProvider class is a JPA entity that represents the course_providers table in the database.
@@ -26,6 +27,12 @@ public class CourseProvider {
     private float price;
     @Column
     private String currency;
+
+    @Column(precision = 9, scale = 6)
+    private BigDecimal latitude;
+
+    @Column(precision = 9, scale = 6)
+    private BigDecimal longitude;
 
     /**
      * Get the id of the course provider.
@@ -128,5 +135,21 @@ public class CourseProvider {
 
     public void setCourseId(int courseId) {
         this.courseId = courseId;
+    }
+
+    public BigDecimal getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(BigDecimal latitude) {
+        this.latitude = latitude;
+    }
+
+    public BigDecimal getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(BigDecimal longitude) {
+        this.longitude = longitude;
     }
 }
