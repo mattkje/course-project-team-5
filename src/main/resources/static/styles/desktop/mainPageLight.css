@@ -135,7 +135,8 @@ ul {
 
 
 .background {
-    height: 100vh;
+    top: 0;
+    height: 60vh;
     background-image: url(https://uploads-ssl.webflow.com/6408bea3de5aef58b7e197d4/6438c3059d443cd7a78762eb_stars-bg.png);
     background-color: #1a1a1a;
     background-repeat: no-repeat;
@@ -147,7 +148,7 @@ ul {
 /* Hero  */
 
 .hero-hbox {
-    height: 100vh;
+    height: 60vh;
     display: flex;
     justify-content: left;
     align-items: center;
