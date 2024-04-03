@@ -48,7 +48,7 @@ ul {
 /* Header  */
 
 #menubar {
-    background-color: rgba(6, 6, 16, 0.7);
+    background-color: rgba(6, 6, 16, 0.9);
     backdrop-filter: blur(5px);
     border: 1px solid rgba(255, 255, 255, 0.08);
     position: sticky;
@@ -152,6 +152,13 @@ ul {
 
 }
 
+.bend-bottom {
+    rotate: 180deg;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 /* Hero  */
 
 .hero-hbox {
@@ -183,8 +190,30 @@ ul {
     }
 }
 
+.pro-icon {
+
+}
+
+.pro-box {
+    background: linear-gradient(180deg, rgba(21, 16, 82, 0.14) 0%, rgba(158, 150, 255, 0.14) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    margin: 0;
+}
+
+.pro-box h2 {
+    color: white;
+}
+
 .course-section {
     background-color: var(--light-1);
+    margin: 0;
 }
 
 .mail-box {
@@ -214,13 +243,13 @@ ul {
 .information-technologies,
 .learniverse-pro{
     justify-content: space-between;
-    background-color: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(5px);
+    background: white;
     border: 1px solid rgba(0, 0, 0, 0.08);
-    border-radius: 17px;
+    border-radius: 40px;
     padding: 3vw 2vw;
     margin: 2vw 3vw;
     display: flex;
+
 }
 
 .stack-pane {
@@ -358,11 +387,11 @@ input:focus {
 .content-box {
     display: flex;
     flex-direction: column;
-    padding: 1vw;
+    padding: 20px;
     justify-content: space-between;
-    width: 12vw;
-    height: 34vh;
-    background-color: rgba(255, 255, 255, 0.7);
+    width: 230px;
+    height: 350px;
+    background-color: rgba(255, 255, 255);
     backdrop-filter: blur(5px);
     border: 1px solid rgba(0, 0, 0, 0.08);
     border-radius: 27px;
@@ -395,16 +424,16 @@ input:focus {
 }
 
 .content-box-title {
-    font-size: 1vw;
+    font-size: 20px;
     font-weight: bold;
 
 }
 
 .content-box-text {
-    font-size: 0.5vw;
+    font-size: 10px;
     font-weight: 900;
     color: var(--light-2);
-    padding: 0.2vw;
+    padding: 10px;
     margin: auto;
 }
 
@@ -428,16 +457,16 @@ input:focus {
     );
     background-size: var(--s) calc(var(--s) * 0.577);
     margin: 0;
-    height: 16vh;
-    width: 12vw;
+    height: 170px;
+    width: 230px;
     object-fit: cover;
     border-radius: 15px;
 }
 
 .content-box-icon {
-    width: 0.7vw;
-    height: 0.7vw;
-    padding: 0.2vw;
+    width: 10px;
+    height: 10px;
+    padding: 5px;
 }
 
 .content-box-attribute {
@@ -465,16 +494,16 @@ input:focus {
     flex-direction: column;
     justify-content: center;
     text-align: center;
-    border-width: 0.15vw;
-    max-height: 3vw;
-    border-radius: 1vw;
+    border-width: 1px;
+    max-height: 30px;
+    border-radius: 10px;
     margin: 0;
 }
 
 .content-button {
-    padding: 0 0.2vw;
+    padding: 0 10px;
     font-weight: bold;
-    font-size: 1vw;
+    font-size: 20px;
     margin: 0;
     color: #282828;
 }
@@ -500,6 +529,11 @@ input:focus {
     transform: translateY(-3px);
 }
 
+.cart {
+    width: 35px;
+    height: 35px;
+}
+
 .img-white {
     filter: brightness(100);
 }
@@ -518,6 +552,7 @@ input:focus {
 
 .featured-providers {
     height: 3vw;
+    filter: brightness(0) invert(1);
 }
 
 

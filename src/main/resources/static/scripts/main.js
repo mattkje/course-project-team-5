@@ -96,6 +96,8 @@ function populateCourses(selector, filterFn) {
 
                             providersAttribute.appendChild(providersElement);
 
+
+
                             const price = document.createElement('p');
                             price.className = 'content-button';
 
