@@ -4,19 +4,29 @@ body {
 
 .hero-text {
     font-family: 'Inter', sans-serif;
-    font-weight: 900;
     font-size: 60px;
     text-transform: uppercase;
-    color: whitesmoke;
-    animation: fadeIn ease 4s;
+    font-style: normal;
+    font-weight: 700;
+    background: linear-gradient(180deg, #FFFFFF -148.55%, #9087EF 236.16%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+    margin-top: 200px;
 }
 
 .hero-description {
     font-family: 'Inter', sans-serif;
     font-size: 18px;
-    color: var(--light-1);
     line-height: 1.5;
     margin-bottom: 20px;
+    font-style: normal;
+    font-weight: 500;
+    text-align: center;
+    color: #8F98EC;
+    max-width: 470px;
+
 }
 
 p {

@@ -1,6 +1,5 @@
-package no.ntnu.courses.coursesapi.api.securityConfiguration;
+package no.ntnu.courses.coursesapi.api.config;
 
-import no.ntnu.courses.coursesapi.api.user.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
