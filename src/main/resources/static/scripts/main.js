@@ -2,6 +2,8 @@ if (/Mobi|Android/i.test(navigator.userAgent)) {
     window.location.href = '/mobile';
 }
 
+
+
 window.onload = function () {
     loadComponent('menubar');
     loadComponent('footer');
@@ -11,6 +13,7 @@ window.onload = function () {
     populateCourses('.data-Science', checkIfDsCourse);
     populateCourses('.information-technologies', checkIfItCourse);
     currency();
+    loadButtons();
 };
 
 function populateCourses(selector, filterFn) {
@@ -36,6 +39,10 @@ function populateCourses(selector, filterFn) {
                             image.alt = 'Course image';
                             image.className = 'content-box-image';
                             contentBox.appendChild(image);
+
+                            const image2 = document.createElement('img');
+                            image2.className = 'content-box-image-banner';
+                            contentBox.appendChild(image2);
 
                             const descriptionBox = document.createElement('div');
                             descriptionBox.className = 'content-box-description';
@@ -133,6 +140,7 @@ function populateCourses(selector, filterFn) {
                             const finalPrice = priceInDefaultCurrency * rate;
 
                             if (currency === 'SUB') {
+                                image2.src = 'media/proBanner.svg';
                                 price.textContent = symbol + finalPrice.toFixed(2) + "/month";
                             } else {
                                 price.textContent = symbol + finalPrice.toFixed(2);
@@ -209,3 +217,17 @@ function setDefaultCurrency() {
         return defaultCurrencyCookie.split('=')[1];
     }
 }
+
+function loadButtons() {
+    document.getElementById('showPro').addEventListener('click', function() {
+        var proInfoText = document.getElementById('proInfoText');
+        if (proInfoText.style.height === '0px') {
+            proInfoText.style.height = '300px';
+            proInfoText.style.opacity = '1';
+        } else {
+            proInfoText.style.height = '0px';
+            proInfoText.style.opacity = '0';
+        }
+    });
+}
+
