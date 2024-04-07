@@ -113,9 +113,10 @@ function populateCoursePage() {
                     // Course location
                     const locationIcon = document.createElement('img');
                     locationIcon.className = 'content-box-icon';
-                    locationIcon.src = 'media/location.svg';
+                    locationIcon.src = 'media/physical.svg';
 
                     const locationText = document.createElement('p');
+                    locationText.innerText += "Physical location";
 
                     const locationElement = document.getElementById('location');
                     locationElement.appendChild(locationIcon);
@@ -154,7 +155,8 @@ function populateCoursePage() {
 
                         if (provider.currency === "SUB") {
                             providerElement.innerHTML = provider.name;
-                            locationElement.innerText = 'Online';
+                            locationIcon.src = 'media/online.svg';
+                            locationText.innerText = 'Online';
                         } else {
                             providerElement.innerHTML = provider.name;
                         }
