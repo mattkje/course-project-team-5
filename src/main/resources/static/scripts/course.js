@@ -110,6 +110,18 @@ function populateCoursePage() {
                     courseDifficultyElement.appendChild(difficultyIcon);
                     courseDifficultyElement.appendChild(difficultyText);
 
+                    // Course location
+                    const locationIcon = document.createElement('img');
+                    locationIcon.className = 'content-box-icon';
+                    locationIcon.src = 'media/location.svg';
+
+                    const locationText = document.createElement('p');
+
+                    const locationElement = document.getElementById('location');
+                    locationElement.appendChild(locationIcon);
+                    locationElement.appendChild(locationText);
+
+
                     // Providers
                     data.providers.forEach(provider => {
                         const providerElement = document.createElement('button');
@@ -142,6 +154,7 @@ function populateCoursePage() {
 
                         if (provider.currency === "SUB") {
                             providerElement.innerHTML = provider.name;
+                            locationElement.innerText = 'Online';
                         } else {
                             providerElement.innerHTML = provider.name;
                         }
@@ -281,8 +294,9 @@ function populateCourses(selector, filterFn) {
                             const providersElement = document.createElement('p');
                             providersElement.className = 'content-box-text';
 
-
                             const courseProviders = courseProvider.providers.filter(provider => provider.courseId === courseProvider.course.courseId);
+
+
 
                             if (Array.isArray(courseProviders) && courseProviders.length) {
                                 providersElement.innerHTML = `${courseProviders.length}&nbsp;Providers`;
@@ -381,25 +395,35 @@ let map;
 
 async function initMap(lat, lng) {
 
-    const position = { lat: lat, lng: lng };
+    if (lat === null || lng === null) {
+        onlineCourse();
+    } else {
 
+        document.getElementById('map-container').style.display = "block";
+        const position = { lat: lat, lng: lng };
 
-    const { Map } = await google.maps.importLibrary("maps");
-    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+        const { Map } = await google.maps.importLibrary("maps");
+        const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
 
-    // The map, centered at Uluru
-    map = new Map(document.getElementById("map"), {
-        zoom: 8,
-        center: position,
-        mapId: "DEMO_MAP_ID",
-    });
+        // The map, centered at Uluru
+        map = new Map(document.getElementById("map"), {
+            zoom: 8,
+            center: position,
+            mapId: "DEMO_MAP_ID",
+        });
 
-    // The marker, positioned at Uluru
-    const marker = new AdvancedMarkerElement({
-        map: map,
-        position: position,
-        title: "Uluru",
-    });
+        // The marker, positioned at Uluru
+        const marker = new AdvancedMarkerElement({
+            map: map,
+            position: position,
+            title: "Uluru",
+        });
+    }
+
+}
+
+function onlineCourse() {
+    document.getElementById('map-container').style.display = "none";
 }
 
 function currency() {

@@ -449,8 +449,9 @@ input:focus {
 .content-box-image-banner {
     width: 200px;
     position: relative;
-    border-radius: 15px;
-    top: 40px;
+    margin: 0;
+    bottom: 10px;
+    right: 25px;
 }
 
 .content-box-icon {

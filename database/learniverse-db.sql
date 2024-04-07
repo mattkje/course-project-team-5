@@ -184,13 +184,13 @@ VALUES (1, 1, 29999.00, 'NOK', 40.712776, -74.005974),
        (12, 1, 20000.00, 'NOK', 41.902782, 12.496366),
        (12, 11, 20000.00, 'NOK', -23.550520, -46.633308),
        (12, 12, 20000.00, 'NOK', 28.613939, 77.209023),
-       (14, 13, 9.99, 'SUB', 39.904200, 116.407396),
-       (15, 13, 9.99, 'SUB', 40.712776, -74.005974),
-       (16, 13, 9.99, 'SUB', 51.507351, -0.127758),
-       (17, 13, 9.99, 'SUB', 48.856614, 2.352222),
-       (18, 13, 9.99, 'SUB', 35.689487, 139.691706),
-       (19, 12, 1000.00, 'USD', -33.868820, 151.209296),
-       (20, 11, 100.00, 'USD', 34.052235, -118.243683);
+       (14, 13, 9.99, 'SUB', null, null),
+       (15, 13, 9.99, 'SUB', null, null),
+       (16, 13, 9.99, 'SUB', null, null),
+       (17, 13, 9.99, 'SUB', null, null),
+       (18, 13, 9.99, 'SUB', null, null),
+       (19, 12, 1000.00, 'USD', null, null),
+       (20, 11, 100.00, 'USD', null, null);
 
 CREATE TABLE keywords
 (
@@ -226,27 +226,27 @@ VALUES (14, 'Data Science and Analytics', 'Data Visualization with Python',
         '["Python", "data visualization", "programming", "data science"]', 'Intermediate', '01.10 - 30.10', 2, 15,
         'Python Data Visualization Specialist',
         'Dive into the world of data visualization with our intermediate-level online course, "Data Visualization with Python." This course is designed for individuals with a basic understanding of Python and data science, and it aims to provide a comprehensive introduction to the use of Python in creating meaningful and insightful data visualizations. Led by experienced instructors, you will learn how to use popular Python libraries such as Matplotlib and Seaborn to create plots, charts, and other visual representations of data. By the end of the course, you will have a solid foundation in using Python for data visualization, enabling you to effectively communicate data-driven insights.',
-        'https://drive.google.com/thumbnail?id=1_SaBbik-hb9gcM9bqE6mgyzZH63L7jOV&sz=w1000'),
+        'https://datascientest.com/en/wp-content/uploads/sites/9/2023/09/matplotlib-graphs-1024x576.png'),
        (15, 'Software Development', 'Advanced Java Programming',
         '["Java", "programming", "software development"]', 'Advanced', '01.05 - 30.05', 4, 20,
         'Oracle Certified Professional, Java SE 8 Programmer',
         'This course is designed for students who are looking for an in-depth understanding of Java and OO principles. This course takes a deep dive into the intricacies of Java, covering topics such as exception handling, Java I/O, collections, generics, threads, JDBC, and more.',
-        null),
+        'https://www.mindsmapped.com/wp-content/uploads/2016/08/Advanced-Java-J2EE.jpeg'),
        (16, 'Software Development', 'Web Development with JavaScript',
         '["JavaScript", "programming", "web development"]', 'Intermediate', '01.06 - 30.06', 3, 15,
         'JavaScript Developer Certificate',
         'This course covers the essential concepts and techniques for programming in JavaScript. Students will learn how to create dynamic web pages using JavaScript, including topics such as data types, control structures, functions, objects, arrays, and the Document Object Model (DOM).',
-        null),
+        'https://www.digitalsilk.com/wp-content/uploads/2020/06/website-development-process-hero-image.png.webp'),
        (17, 'Software Development', 'Advanced C++ Programming',
         '["C++", "programming", "software development"]', 'Advanced', '01.07 - 30.07', 4, 20,
         'C++ Certified Professional Programmer',
         'This course is designed for students who are looking for an in-depth understanding of C++ and OO principles. This course takes a deep dive into the intricacies of C++, covering topics such as exception handling, C++ I/O, collections, generics, threads, and more.',
-        null),
+        'https://familycomputercentre.com/wp-content/uploads/fp-cpp-adv.jpg'),
        (18, 'Data Science and Analytics', 'Data Analysis with R',
         '["R", "programming", "data analysis"]', 'Intermediate', '01.08 - 30.08', 3, 15,
         'R Certified Data Analyst',
         'This course covers the essential concepts and techniques for data analysis in R. Students will learn how to manipulate and analyze data using R, including topics such as data types, control structures, functions, objects, arrays, and data visualization.',
-        null);
+        'https://www.orbitanalytics.com/wp-content/uploads/2019/06/R-language-advanced-analytics1024x560.jpg');
 
 
 INSERT INTO course_providers (course_id, provider_id, price, currency)
