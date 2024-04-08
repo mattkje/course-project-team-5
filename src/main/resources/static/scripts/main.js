@@ -183,7 +183,7 @@ function loadComponent(component) {
         });
 }
 
-function currency() {
+function currency(){
     fetch('/api/currency')
         .then(response => response.json())
         .then(currencies => {
