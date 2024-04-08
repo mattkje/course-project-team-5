@@ -1,5 +1,5 @@
 CREATE DATABASE IF NOT EXISTS learniversedb;
-USE l*earniversedb;
+USE learniversedb;
 
 CREATE TABLE course_keywords
 (
@@ -83,7 +83,6 @@ CREATE TABLE users
     first_name   VARCHAR(20) NULL,
     last_name    VARCHAR(20) NULL,
     active       BIT(1)      NOT NULL,
-    enabled      BIT(1)      NULL,
     created_at   datetime    NULL,
     updated_at   datetime    NULL,
     phone_number VARCHAR(20) NULL,

@@ -50,28 +50,17 @@ public class SecurityConfiguration {
    */
   @Bean
   public SecurityFilterChain configureAuthorizationFilterChain(HttpSecurity http) throws Exception {
-    // Set up the authorization requests, starting from most restrictive at the top,
-    // to least restrictive on the bottom
     http
-        // Disable CSRF and CORS checks. Without this it will be hard to make automated tests.
         .csrf(AbstractHttpConfigurer::disable)
         .cors(AbstractHttpConfigurer::disable)
-        // Authentication URL is accessible for everyone
-        .authorizeHttpRequests((auth) -> auth.requestMatchers("/authenticate").permitAll())
-        // The default URL / is accessible to everyone
-        .authorizeHttpRequests((authorize) -> authorize.requestMatchers("/").permitAll())
-        // Any other request will be authenticated with a stateless policy
+
+        .authorizeHttpRequests((auth) -> auth.requestMatchers("/login").permitAll())
         .authorizeHttpRequests((authorize) -> authorize.anyRequest().permitAll())
-        // Enable stateless session policy
         .sessionManagement((session) ->
             session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-        // Enable our JWT authentication filter
         .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
-    // Necessary authorization for each endpoint will be configured by each method,
-    // using @PreAuthorize
     return http.build();
-
   }
 
   @Bean

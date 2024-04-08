@@ -1,5 +1,6 @@
 package no.ntnu.courses.coursesapi.api.user;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -65,6 +66,7 @@ public class User {
     private boolean active = true;
 
 
+    @JsonManagedReference
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
         joinColumns = @JoinColumn(name = "user_id"),
@@ -72,10 +74,6 @@ public class User {
     )
     private Set<Role> roles = new LinkedHashSet<>();
 
-
-    @Schema(description = "The status of the user account")
-    @Column
-    private boolean enabled;
 
     @Schema(description = "The date when the user account was created")
     @Column(name = "created_at")
@@ -135,15 +133,6 @@ public class User {
      */
     public String getPassword() {
         return password;
-    }
-
-    /**
-     * Checks if the user's account is enabled.
-     *
-     * @return true if the user's account is enabled, false otherwise.
-     */
-    public boolean isEnabled() {
-        return enabled;
     }
 
     /**
@@ -212,16 +201,6 @@ public class User {
      */
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    /**
-     * Sets the status of the user. Disable if user is not active for a
-     * certain amount of time.
-     *
-     * @param enabled User status.
-     */
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
     }
 
     /**
