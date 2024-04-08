@@ -26,9 +26,7 @@ function populateCourses(selector, filterFn) {
                 .then(response => response.json())
                 .then(currencies => {
                     data.forEach(courseProvider => {
-                        if (document.querySelector(selector).childElementCount >= 5) {
-                            return false;
-                        }
+
                         if (filterFn(courseProvider)) {
                             const contentBox = document.createElement('a');
                             contentBox.href = `/courses?id=${courseProvider.course.courseId}`;
@@ -229,5 +227,55 @@ function loadButtons() {
             proInfoText.style.opacity = '0';
         }
     });
+
+    const scrollAmount = 335; // Amount of pixels to scroll
+    const scrollDuration = 500; //Time to scroll
+
+    function smoothScroll(target, direction) {
+        const start = target.scrollLeft;
+        const increment = direction === 'right' ? scrollAmount : -scrollAmount;
+        let startTime = null;
+
+        function animateScroll(currentTime) {
+            if (!startTime) {
+                startTime = currentTime;
+            }
+
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / scrollDuration, 1);
+
+            // Used copilot to generate the easing function
+            const easeInOutCubic = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+            const easedProgress = easeInOutCubic(progress);
+
+            target.scrollLeft = start + increment * easedProgress;
+
+            if (progress < 1) {
+                requestAnimationFrame(animateScroll);
+            }
+        }
+
+        requestAnimationFrame(animateScroll);
+    }
+
+    function addScrollEvent(containerId, leftButtonId, rightButtonId) {
+        const container = document.querySelector(containerId);
+        const scrollLeftButton = document.getElementById(leftButtonId);
+        const scrollRightButton = document.getElementById(rightButtonId);
+
+        scrollLeftButton.addEventListener('click', () => {
+            smoothScroll(container, 'left');
+        });
+
+        scrollRightButton.addEventListener('click', () => {
+            smoothScroll(container, 'right');
+        });
+    }
+
+    addScrollEvent('.featured', 'scrollLeftButton', 'scrollRightButton');
+    addScrollEvent('.data-Science', 'scrollLeftButton-ds', 'scrollRightButton-ds');
+    addScrollEvent('.digital-marketing', 'scrollLeftButton-dm', 'scrollRightButton-dm');
+    addScrollEvent('.information-technologies', 'scrollLeftButton-it', 'scrollRightButton-it');
+    addScrollEvent('.learniverse-pro', 'scrollLeftButton-lp', 'scrollRightButton-lp');
 }
 

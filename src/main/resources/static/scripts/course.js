@@ -116,7 +116,7 @@ function populateCoursePage() {
                     locationIcon.src = 'media/physical.svg';
 
                     const locationText = document.createElement('p');
-                    locationText.innerText += "Physical location";
+                    locationText.innerText += "On-site";
 
                     const locationElement = document.getElementById('location');
                     locationElement.appendChild(locationIcon);
@@ -157,14 +157,20 @@ function populateCoursePage() {
                             providerElement.innerHTML = provider.name;
                             locationIcon.src = 'media/online.svg';
                             locationText.innerText = 'Online';
+                            document.getElementById('providerList').appendChild(providerElement);
+                            providerElement.addEventListener('click', function() {
+                                document.getElementById('enrollButton').textContent = "Enroll for " + symbol + finalPrice.toFixed(2) + "/month";
+                                initMap(provider.latitude, provider.longitude);
+                            });
                         } else {
                             providerElement.innerHTML = provider.name;
+                            document.getElementById('providerList').appendChild(providerElement);
+                            providerElement.addEventListener('click', function() {
+                                document.getElementById('enrollButton').textContent = "Buy for " + symbol + finalPrice.toFixed(2);
+                                initMap(provider.latitude, provider.longitude);
+                            });
                         }
-                        document.getElementById('providerList').appendChild(providerElement);
-                        providerElement.addEventListener('click', function() {
-                            document.getElementById('enrollButton').textContent = "Enroll for " + symbol + finalPrice.toFixed(2);
-                            initMap(provider.latitude, provider.longitude);
-                        });
+
                     });
 
                     if (`${data.course.relatedCertifications}` === "null") {
