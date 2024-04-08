@@ -38,6 +38,11 @@ public class SiteController {
         return "desktop/login.html";
     }
 
+    @GetMapping("/cart")
+    public String cart() {
+        return "desktop/cart.html";
+    }
+
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
         model.addAttribute("user", new User());
