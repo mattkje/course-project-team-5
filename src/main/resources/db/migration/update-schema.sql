@@ -1,5 +1,5 @@
 CREATE DATABASE IF NOT EXISTS learniversedb;
-USE learniversedb;
+USE l*earniversedb;
 
 CREATE TABLE course_keywords
 (
@@ -62,7 +62,7 @@ CREATE TABLE providers
 
 CREATE TABLE roles
 (
-    id   BIGINT       NOT NULL,
+    id   BIGINT AUTO_INCREMENT NOT NULL,
     name VARCHAR(255) NULL,
     CONSTRAINT pk_roles PRIMARY KEY (id)
 );
@@ -76,8 +76,8 @@ CREATE TABLE user_roles
 
 CREATE TABLE users
 (
-    user_id      INT         NOT NULL,
-    user_name    VARCHAR(16) NULL,
+    id      INT AUTO_INCREMENT NOT NULL,
+    username    VARCHAR(16) NULL,
     email        VARCHAR(45) NULL,
     password     VARCHAR(64) NULL,
     first_name   VARCHAR(20) NULL,
@@ -87,7 +87,7 @@ CREATE TABLE users
     created_at   datetime    NULL,
     updated_at   datetime    NULL,
     phone_number VARCHAR(20) NULL,
-    CONSTRAINT pk_users PRIMARY KEY (user_id)
+    CONSTRAINT pk_users PRIMARY KEY (id)
 );
 
 ALTER TABLE course_keywords
@@ -100,9 +100,9 @@ ALTER TABLE user_roles
     ADD CONSTRAINT fk_userol_on_role FOREIGN KEY (role_id) REFERENCES roles (id);
 
 ALTER TABLE user_roles
-    ADD CONSTRAINT fk_userol_on_user FOREIGN KEY (user_id) REFERENCES users (user_id);
+    ADD CONSTRAINT fk_userol_on_user FOREIGN KEY (user_id) REFERENCES users (id);
 
-INSERT INTO users (user_id, user_name, email, password, first_name, last_name, active, created_at, updated_at,
+INSERT INTO users (id, username, email, password, first_name, last_name, active, created_at, updated_at,
                    phone_number)
 VALUES (1, 'john_doe', 'john.doe@example.com', '$2a$10$v8zrek0TRlIUCME2Na10DeeiIBiHD1gpAeEU5m9FzIpw4C/YABf9O', 'John',
         'Doe', true, '2024-02-12', '2024-02-12',

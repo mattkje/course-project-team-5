@@ -21,6 +21,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -57,7 +59,14 @@ public class UserController {
         user.setLastName(request.getLastName());
         user.setEmail(request.getEmail());
         user.setPhoneNumber(request.getPhoneNumber());
-        user.addRole(new Role("USER"));
+
+        Role role = roleRepository.findByName("USER");
+        if (role == null) {
+            role = new Role("USER");
+            roleRepository.save(role);
+        }
+        user.addRole(role);
+
         user.setCreatedAt();
         user.setUpdatedAt();
         user.setEnabled(true);

@@ -39,10 +39,10 @@ public class User {
     @Id
     @Schema(description = "The user ID", example = "1")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int userId;
+    private int id;
 
     @Schema(description = "The username of the user", example = "user123")
-    @Column(name = "user_name", length = 16)
+    @Column(length = 16)
     private String username;
 
     @Schema(description = "The email address of the user")
@@ -234,12 +234,12 @@ public class User {
     }
 
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUserId(int id) {
+        this.id = id;
     }
 
     public int getUserId() {
-        return userId;
+        return id;
     }
 
     public void setCreatedAt() {

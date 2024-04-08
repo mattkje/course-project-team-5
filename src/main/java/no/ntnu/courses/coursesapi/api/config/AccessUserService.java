@@ -35,6 +35,12 @@ public class AccessUserService implements UserDetailsService {
   }
 
   public User createUser(User user) {
+    // Check if a user with the same username already exists
+    if (userRepository.findByUsername(user.getUsername()).isPresent()) {
+      throw new UsernameAlreadyExistsException("A user with the username " + user.getUsername() + " already exists");
+    }
+
+    // Save the user to the database
     return userRepository.save(user);
   }
 }
