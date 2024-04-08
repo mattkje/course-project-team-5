@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href="../styles/desktop/loginLight.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="../media/logo.svg">
-    <script src="../scripts/course.js"></script>
+    <script src="../scripts/authentication.js"></script>
 </head>
 
 <body>
@@ -53,34 +53,5 @@
 
 
 </form>
-<script>
-    document.getElementById('loginForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-
-        var username = document.getElementById('username').value;
-        var password = document.getElementById('password').value;
-
-        fetch('/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: 'username=' + encodeURIComponent(username) + '&password=' + encodeURIComponent(password),
-        })
-            .then(function(response) {
-                if (response.ok) {
-                    // If the login was successful, redirect the user to the desired page
-                    window.location.href = '/';
-                } else {
-                    // If the login failed, display an error message
-                    document.getElementById('error').style.display = 'block';
-                }
-            })
-            .catch(function(error) {
-                console.error('Error:', error);
-            });
-    });
-
-</script>
 </body>
 </html>

@@ -256,6 +256,7 @@ function loadButtons() {
         }
 
         requestAnimationFrame(animateScroll);
+        document.getElementById('usernameLabel').textContent = 'Welcome, ' + localStorage.getItem('username');
     }
 
     function addScrollEvent(containerId, leftButtonId, rightButtonId) {
@@ -279,3 +280,7 @@ function loadButtons() {
     addScrollEvent('.learniverse-pro', 'scrollLeftButton-lp', 'scrollRightButton-lp');
 }
 
+function logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+}

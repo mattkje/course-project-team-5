@@ -1,26 +1,43 @@
 package no.ntnu.courses.coursesapi.api.user;
 
-import java.util.Collections;
-import java.util.Map;
+import no.ntnu.courses.coursesapi.api.config.AccessUserService;
+import no.ntnu.courses.coursesapi.api.config.AuthenticationRequest;
+import no.ntnu.courses.coursesapi.api.config.AuthenticationResponse;
+import no.ntnu.courses.coursesapi.api.config.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
-    private final UserService userService;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserController(UserService userService) {
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private UserDetailsService userDetailsService;
+
+    @Autowired
+    private JwtUtil jwtUtil;
+
+    private final AccessUserService userService;
+
+    @Autowired
+    public UserController(AccessUserService userService) {
         this.userService = userService;
     }
 
@@ -28,7 +45,6 @@ public class UserController {
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
-
 
 
 
@@ -41,7 +57,7 @@ public class UserController {
         user.setLastName(request.getLastName());
         user.setEmail(request.getEmail());
         user.setPhoneNumber(request.getPhoneNumber());
-        user.setRole(Role.USER);
+        user.addRole(new Role("USER"));
         user.setCreatedAt();
         user.setUpdatedAt();
         user.setEnabled(true);
@@ -49,20 +65,19 @@ public class UserController {
         return userService.createUser(user);
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody Map<String, Object> payload) {
-        String username = (String) payload.get("username");
-        String password = (String) payload.get("password");
-
-
-        User user = userService.findByUsername(username);
-
-
-        if (user == null || !passwordEncoder.matches(password, user.getPassword())) {
-            return new ResponseEntity<>(Collections.singletonMap("error", "Invalid username or password."), HttpStatus.UNAUTHORIZED);
-        } else {
-
-            return new ResponseEntity<>(HttpStatus.OK);
+    @PostMapping("/authenticate")
+    public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequest authenticationRequest) {
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                authenticationRequest.getUsername(),
+                authenticationRequest.getPassword()));
+        } catch (BadCredentialsException e) {
+            return new ResponseEntity<>("Invalid username or password", HttpStatus.UNAUTHORIZED);
         }
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(
+            authenticationRequest.getUsername());
+        final String jwt = jwtUtil.generateToken(userDetails);
+        return ResponseEntity.ok(new AuthenticationResponse(jwt));
     }
+
 }

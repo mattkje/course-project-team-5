@@ -5,11 +5,17 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import java.util.Date;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 
 /**
@@ -55,10 +61,17 @@ public class User {
     @Column(name = "last_name", length = 20)
     private String lastName;
 
-    @Schema(description = "The role of the user", example = "ADMIN, MODERATOR, USER")
-    @Enumerated(EnumType.STRING)
-    @Column(length = 20)
-    private Role role;
+
+    private boolean active = true;
+
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_roles",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles = new LinkedHashSet<>();
+
 
     @Schema(description = "The status of the user account")
     @Column
@@ -114,14 +127,6 @@ public class User {
         return email;
     }
 
-    /**
-     * Retrieves the role of the user.
-     *
-     * @return The role of the user.
-     */
-    public Role getRole() {
-        return role;
-    }
 
     /**
      * Retrieves the password of the user.
@@ -201,18 +206,6 @@ public class User {
 
 
     /**
-     * Sets the role of the user to the specified role.
-     * The available roles are: ADMIN, MODERATOR, and USER.
-     * To assign the user the ADMIN role, pass Role.ADMIN as the argument.
-     *
-     * @param role The role to assign to the user (ADMIN, MODERATOR, USER)
-     */
-    public void setRole(Role role) {
-        this.role = role;
-
-    }
-
-    /**
      * Sets a password for the user
      *
      * @param password The new password.
@@ -257,4 +250,24 @@ public class User {
         this.updatedAt = new Date();
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void addRole(Role role) {
+        roles.add(role);
+    }
 }

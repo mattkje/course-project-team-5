@@ -1,61 +1,119 @@
 CREATE DATABASE IF NOT EXISTS learniversedb;
 USE learniversedb;
 
-
-CREATE TABLE users (
-                       user_id INT PRIMARY KEY AUTO_INCREMENT,
-                       user_name    VARCHAR(16) NULL,
-                       email        VARCHAR(45) NULL,
-                       password     VARCHAR(64) NULL,
-                       first_name   VARCHAR(20) NULL,
-                       last_name    VARCHAR(20) NULL,
-                       active       BIT(1)      NOT NULL,
-                       created_at   datetime    NULL,
-                       updated_at   datetime    NULL,
-                       phone_number VARCHAR(20) NULL
+CREATE TABLE course_keywords
+(
+    course_keyword_id INT AUTO_INCREMENT NOT NULL,
+    course_id         INT                NULL,
+    keyword_id        INT                NULL,
+    CONSTRAINT pk_course_keywords PRIMARY KEY (course_keyword_id)
 );
 
+CREATE TABLE course_providers
+(
+    course_provider_id INT AUTO_INCREMENT NOT NULL,
+    course_id          INT                NULL,
+    provider_id        INT                NULL,
+    price              FLOAT              NULL,
+    currency           VARCHAR(255)       NULL,
+    latitude           DECIMAL(9, 6)      NULL,
+    longitude          DECIMAL(9, 6)      NULL,
+    CONSTRAINT pk_course_providers PRIMARY KEY (course_provider_id)
+);
 
-INSERT INTO users (user_name, email, password, first_name, last_name, active, created_at, updated_at,
+CREATE TABLE courses
+(
+    course_id              INT           NOT NULL,
+    title                  VARCHAR(255)  NULL,
+    category               VARCHAR(100)  NULL,
+    keywords               VARCHAR(255)  NULL,
+    level                  VARCHAR(50)   NULL,
+    closest_course_session VARCHAR(255)  NULL,
+    course_size            DOUBLE        NULL,
+    hours_per_week         INT           NULL,
+    related_certifications VARCHAR(255)  NULL,
+    `description`          VARCHAR(6000) NULL,
+    image                  VARCHAR(255)  NULL,
+    CONSTRAINT pk_courses PRIMARY KEY (course_id)
+);
+
+CREATE TABLE currencies
+(
+    code   VARCHAR(255)   NOT NULL,
+    name   VARCHAR(255)   NULL,
+    symbol VARCHAR(255)   NULL,
+    rate   DECIMAL(10, 2) NULL,
+    CONSTRAINT pk_currencies PRIMARY KEY (code)
+);
+
+CREATE TABLE keywords
+(
+    keyword_id   INT          NOT NULL,
+    keyword_name VARCHAR(255) NULL,
+    CONSTRAINT pk_keywords PRIMARY KEY (keyword_id)
+);
+
+CREATE TABLE providers
+(
+    provider_id INT          NOT NULL,
+    name        VARCHAR(255) NULL,
+    CONSTRAINT pk_providers PRIMARY KEY (provider_id)
+);
+
+CREATE TABLE roles
+(
+    id   BIGINT       NOT NULL,
+    name VARCHAR(255) NULL,
+    CONSTRAINT pk_roles PRIMARY KEY (id)
+);
+
+CREATE TABLE user_roles
+(
+    role_id BIGINT NOT NULL,
+    user_id INT    NOT NULL,
+    CONSTRAINT pk_user_roles PRIMARY KEY (role_id, user_id)
+);
+
+CREATE TABLE users
+(
+    user_id      INT         NOT NULL,
+    user_name    VARCHAR(16) NULL,
+    email        VARCHAR(45) NULL,
+    password     VARCHAR(64) NULL,
+    first_name   VARCHAR(20) NULL,
+    last_name    VARCHAR(20) NULL,
+    active       BIT(1)      NOT NULL,
+    enabled      BIT(1)      NULL,
+    created_at   datetime    NULL,
+    updated_at   datetime    NULL,
+    phone_number VARCHAR(20) NULL,
+    CONSTRAINT pk_users PRIMARY KEY (user_id)
+);
+
+ALTER TABLE course_keywords
+    ADD CONSTRAINT FK_COURSE_KEYWORDS_ON_KEYWORD FOREIGN KEY (keyword_id) REFERENCES keywords (keyword_id);
+
+ALTER TABLE course_providers
+    ADD CONSTRAINT FK_COURSE_PROVIDERS_ON_PROVIDER FOREIGN KEY (provider_id) REFERENCES providers (provider_id);
+
+ALTER TABLE user_roles
+    ADD CONSTRAINT fk_userol_on_role FOREIGN KEY (role_id) REFERENCES roles (id);
+
+ALTER TABLE user_roles
+    ADD CONSTRAINT fk_userol_on_user FOREIGN KEY (user_id) REFERENCES users (user_id);
+
+INSERT INTO users (user_id, user_name, email, password, first_name, last_name, active, created_at, updated_at,
                    phone_number)
-VALUES ('john_doe', 'john.doe@example.com', '$2a$10$v8zrek0TRlIUCME2Na10DeeiIBiHD1gpAeEU5m9FzIpw4C/YABf9O', 'John',
+VALUES (1, 'john_doe', 'john.doe@example.com', '$2a$10$v8zrek0TRlIUCME2Na10DeeiIBiHD1gpAeEU5m9FzIpw4C/YABf9O', 'John',
         'Doe', true, '2024-02-12', '2024-02-12',
         '+1234567890'),
-       ('jane_smith', 'jane.smith@example.com', 'smithpassword', 'Jane', 'Smith', true, '2024-02-12', '2024-02-12',
+       (2, 'jane_smith', 'jane.smith@example.com', 'smithpassword', 'Jane', 'Smith', true, '2024-02-12', '2024-02-12',
         '+1987654321'),
-       ('bob_johnson', 'bob.johnson@example.com', 'b0b!pass', 'Bob', 'Johnson', false, '2024-02-12', '2024-02-12',
+       (3, 'bob_johnson', 'bob.johnson@example.com', 'b0b!pass', 'Bob', 'Johnson', false, '2024-02-12', '2024-02-12',
         '+1122334455'),
-       ('emily_davis', 'emily.davis@example.com', 'davispass123', 'Emily', 'Davis', true, '2024-02-12', '2024-02-12',
+       (4, 'emily_davis', 'emily.davis@example.com', 'davispass123', 'Emily', 'Davis', true, '2024-02-12', '2024-02-12',
         '+1555666777');
 
-CREATE TABLE roles (
-                       id BIGINT PRIMARY KEY AUTO_INCREMENT,
-                       name VARCHAR(255)
-);
-
-CREATE TABLE user_roles (
-                            user_id BIGINT,
-                            role_id BIGINT,
-                            PRIMARY KEY (user_id, role_id)
-);
-
-CREATE TABLE IF NOT EXISTS courses
-(
-    course_id              INT PRIMARY KEY AUTO_INCREMENT,
-    category               VARCHAR(100),
-    title                  VARCHAR(255),
-    keywords               VARCHAR(255),
-    level                  VARCHAR(50),
-    closest_course_session VARCHAR(50),
-    course_size            FLOAT,
-    hours_per_week         INT,
-    related_certifications VARCHAR(255),
-    description            VARCHAR(5000),
-    image                  VARCHAR(255)
-);
-
-
--- Run this!!
 INSERT INTO courses (course_id, category, title, keywords, level, closest_course_session, course_size, hours_per_week,
                      related_certifications, description, image)
 VALUES (1, 'Information Technology', 'Real-Time Programming in Java',
@@ -119,12 +177,6 @@ VALUES (1, 'Information Technology', 'Real-Time Programming in Java',
         'Håkon will show you his willy and such...',
         'https://github.com/mattkje/Paths/blob/e79ddbafb1992dec6dea7ca006c37754a7ae0cdc/Data/currentGpaths/Your%20Baby.png?raw=true');
 
-CREATE TABLE IF NOT EXISTS providers
-(
-    provider_id INT AUTO_INCREMENT PRIMARY KEY,
-    name        VARCHAR(64)
-);
-
 INSERT INTO providers (provider_id, name)
 VALUES (1, 'NTNU'),
        (2, 'Oracle'),
@@ -139,18 +191,6 @@ VALUES (1, 'NTNU'),
        (11, 'University of Oslo'),
        (12, 'University of Bergen'),
        (13, 'Learniverse');
-
-
-CREATE TABLE IF NOT EXISTS course_providers
-(
-    course_provider_id INT AUTO_INCREMENT PRIMARY KEY,
-    course_id          INT,
-    provider_id        INT,
-    price              FLOAT,
-    currency           VARCHAR(5),
-    latitude           DECIMAL(9, 6),
-    longitude          DECIMAL(9, 6)
-);
 
 INSERT INTO course_providers (course_id, provider_id, price, currency, latitude, longitude)
 VALUES (1, 1, 29999.00, 'NOK', 62.49151100481676, 6.2356728695082415),
@@ -200,19 +240,6 @@ VALUES (1, 1, 29999.00, 'NOK', 62.49151100481676, 6.2356728695082415),
        (19, 12, 1000.00, 'USD', 60.387980480834656, 5.321840740337752),
        (20, 11, 100.00, 'USD', 59.94055289029062, 10.721540432557507);
 
-CREATE TABLE keywords
-(
-    keyword_id   INT AUTO_INCREMENT PRIMARY KEY,
-    keyword_name VARCHAR(100) NOT NULL
-);
-
-CREATE TABLE course_keywords
-(
-    course_keyword_id INT AUTO_INCREMENT PRIMARY KEY,
-    course_id         INT,
-    keyword_id        INT
-);
-
 INSERT INTO keywords (keyword_id, keyword_name)
 VALUES (1, 'Java'),
        (2, 'Python'),
@@ -256,7 +283,6 @@ VALUES (14, 'Data Science and Analytics', 'Data Visualization with Python',
         'This course covers the essential concepts and techniques for data analysis in R. Students will learn how to manipulate and analyze data using R, including topics such as data types, control structures, functions, objects, arrays, and data visualization.',
         'https://www.orbitanalytics.com/wp-content/uploads/2019/06/R-language-advanced-analytics1024x560.jpg');
 
-
 INSERT INTO course_providers (course_id, provider_id, price, currency)
 VALUES (14, 13, 9.99, 'SUB');
 
@@ -276,14 +302,6 @@ VALUES (19, 'Digital Marketing', 'Advanced SEO Techniques',
         'Hootsuite Social Marketing Certification',
         'This course covers the essential concepts and techniques for social media marketing. Students will learn how to create engaging content, use analytics to measure success, and develop a comprehensive social media marketing strategy.',
         null);
-
-CREATE TABLE currencies
-(
-    code   VARCHAR(3) PRIMARY KEY,
-    name   VARCHAR(50),
-    symbol VARCHAR(5),
-    rate   DECIMAL(10, 2)
-);
 
 INSERT INTO currencies (code, name, symbol, rate)
 VALUES ('USD', 'United States Dollar', '$', 1),
