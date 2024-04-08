@@ -136,12 +136,14 @@ ul {
 
 .background {
     top: 0;
-    height: 86vh;
+    height: 800px;
     background: linear-gradient(180deg, rgba(21, 16, 82, 0.14) 0%, rgba(158, 150, 255, 0.14) 100%);
     display: flex;
     justify-content: end;
     align-items: center;
     flex-direction: column;
+    width: 100%;
+    margin: 0;
 
 }
 
@@ -602,4 +604,11 @@ input:focus {
     opacity: 0;
     overflow: hidden;
     transition: height 0.5s ease-out, opacity 0.5s ease-out;
+}
+
+.cart-icon-small {
+    width: 5px;
+    height: 5px;
+    padding: 0;
+    margin: 0;
 }

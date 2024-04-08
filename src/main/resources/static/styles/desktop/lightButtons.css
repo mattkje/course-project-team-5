@@ -183,6 +183,11 @@ button {
     box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
 }
 
+.enroll-button:active {
+    transform: scale(0.95);
+    transition-duration: .5s;
+}
+
 .wish-button {
     font-family: 'Inter', sans-serif;
     font-weight: bold;
