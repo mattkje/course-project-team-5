@@ -228,7 +228,7 @@ function loadButtons() {
         }
     });
 
-    const scrollAmount = 335; // Amount of pixels to scroll
+    const scrollAmount = 332; // Amount of pixels to scroll
     const scrollDuration = 500; //Time to scroll
 
     function smoothScroll(target, direction) {
