@@ -58,6 +58,7 @@
   background-clip: text;
   color: transparent;
   margin-top: 200px;
+  animation: ease-in-out fadeIn 2s;
 }
 
 .hero-description {
@@ -70,12 +71,12 @@
   text-align: center;
   color: #8F98EC;
   max-width: 470px;
-
+  animation: ease-in-out fadeIn 2s;
 }
 
 .planet1 {
   height: 250px;
-  animation: ease-in-out orbit 5s infinite;
+  animation: ease-in-out pulse 5s infinite;
 }
 
 .bend {
@@ -84,5 +85,25 @@
   padding: 0;
 
 }
+
+@keyframes pulse {
+  0% {
+    transform: translateY(70px) scale(1.2);
+  }
+  50% {
+    transform: translateY(70px) scale(1.4);
+  }
+  100% {
+    transform: translateY(70px) scale(1.2);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+}}
 
 </style>

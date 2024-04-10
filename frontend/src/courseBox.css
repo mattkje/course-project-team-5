@@ -3,9 +3,9 @@
     flex-direction: column;
     padding: 20px;
     justify-content: space-between;
-    min-width: 230px;
-    max-width: 230px;
-    height: 350px;
+    min-width: 270px;
+    max-width: 270px;
+    height: 360px;
     background-color: rgba(255, 255, 255);
     backdrop-filter: blur(5px);
     border: 1px solid rgba(0, 0, 0, 0.08);
@@ -27,11 +27,6 @@
     text-rendering: optimizeLegibility;
 }
 
-.content-box-description {
-    color: var(--dark-3);
-
-}
-
 .content-description {
     display: flex;
     flex-direction: row;
@@ -48,7 +43,7 @@
 .content-box-text {
     font-size: 10px;
     font-weight: 900;
-    color: var(--light-2);
+    color: #ADADAD;
     padding: 10px;
     margin: auto;
 }
@@ -113,4 +108,10 @@
     font-size: 20px;
     margin: 0;
     color: #282828;
+}
+
+hr {
+    background: #ADADAD;
+    height: 0.15vw;
+    border: none;
 }
