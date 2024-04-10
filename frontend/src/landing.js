@@ -3,6 +3,7 @@ if (/Mobi|Android/i.test(navigator.userAgent)) {
 }
 
 
+const API_URL = 'http://localhost:8080/api';
 
 window.onload = function () {
     populateCourses('.featured', () => true);
@@ -17,15 +18,16 @@ window.onload = function () {
 function populateCourses(selector, filterFn) {
     document.querySelector(selector).innerHTML = '';
     const defaultCurrency = setDefaultCurrency() || 'USD';
-    fetch('http://localhost:8080/api/courses')
+    fetch(API_URL + '/courses')
         .then(response => response.json())
         .then(data => {
-            fetch('http://localhost:8080/api/currency')
+            fetch(API_URL + '/currency')
                 .then(response => response.json())
                 .then(currencies => {
                     data.forEach(courseProvider => {
 
                         if (filterFn(courseProvider)) {
+
                             const contentBox = document.createElement('a');
                             contentBox.href = `/courses?id=${courseProvider.course.courseId}`;
                             contentBox.className = 'content-box';
@@ -175,7 +177,7 @@ function checkIfItCourse(courseProvider) {
 
 
 function currency(){
-    fetch('http://localhost:8080/api/currency')
+    fetch(API_URL + '/currency')
         .then(response => response.json())
         .then(currencies => {
             const select = document.getElementById('currencySelect');

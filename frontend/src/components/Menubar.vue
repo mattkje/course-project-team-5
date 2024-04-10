@@ -28,10 +28,7 @@ defineProps({
           <a href="/cart" class="fancy-button">
             <img class="cart" src="/cart.svg" alt="Cart">
           </a>
-          <select class="fancy-button" id="currencySelect" @change="updateCurrency">
-            <option v-for="currency in currencies" :value="currency.code">
-              {{ currency.code }} - {{ currency.symbol }}
-            </option>
+          <select class="fancy-button" id="currencySelect">
           </select>
           <a href="/register" class="standard-button">Get Started</a>
         </div>
@@ -40,41 +37,6 @@ defineProps({
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      currencies: [],
-      defaultCurrency: null,
-    };
-  },
-  methods: {
-    fetchCurrencies() {
-      fetch('http://localhost:8080/api/currency')
-          .then(response => response.json())
-          .then(currencies => {
-            this.currencies = currencies;
-            this.defaultCurrency = this.setDefaultCurrency();
-          })
-          .catch(error => console.error('Error:', error));
-    },
-    setDefaultCurrency() {
-      const cookies = document.cookie.split('; ');
-      const defaultCurrencyCookie = cookies.find(row => row.startsWith('defaultCurrency='));
-      if (defaultCurrencyCookie) {
-        return defaultCurrencyCookie.split('=')[1];
-      }
-    },
-    updateCurrency(event) {
-      document.cookie = `defaultCurrency=${event.target.value}; path=/; max-age=31536000`;
-      location.reload();
-    },
-  },
-  mounted() {
-    this.fetchCurrencies();
-  },
-};
-</script>
 
 <style scoped>
 

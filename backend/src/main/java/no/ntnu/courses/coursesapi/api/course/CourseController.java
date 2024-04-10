@@ -41,6 +41,7 @@ public class CourseController {
      * Returns all the courses in the database.
      * @return a collection of all the courses in the database.
      */
+
     @GetMapping("/api/courses")
     public Collection<CourseWithProvidersAndKeywords> getCourses() {
         return courseService.getAllCourses();

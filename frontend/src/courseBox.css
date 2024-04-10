@@ -1,0 +1,116 @@
+.content-box {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    justify-content: space-between;
+    min-width: 230px;
+    max-width: 230px;
+    height: 350px;
+    background-color: rgba(255, 255, 255);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 27px;
+    text-decoration: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+    transition: transform 0.5s ease;
+    margin: 30px;
+
+    &:hover {
+        transform: scale(1.05);
+    }
+}
+
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+.content-box-description {
+    color: var(--dark-3);
+
+}
+
+.content-description {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 4vw;
+}
+
+.content-box-title {
+    font-size: 20px;
+    font-weight: bold;
+
+}
+
+.content-box-text {
+    font-size: 10px;
+    font-weight: 900;
+    color: var(--light-2);
+    padding: 10px;
+    margin: auto;
+}
+
+.content-box-image {
+    margin: 0;
+    height: 170px;
+    width: 230px;
+    object-fit: cover;
+    border-radius: 15px;
+    position: absolute;
+}
+
+.content-box-image-banner {
+    width: 200px;
+    position: relative;
+    margin: 0;
+    bottom: 10px;
+    right: 25px;
+}
+
+.content-box-icon {
+    width: 10px;
+    height: 10px;
+    padding: 5px;
+}
+
+.content-box-attribute {
+    width: min-content;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: row;
+    margin: 0;
+    padding: 0;
+}
+
+.content-box-attributes {
+    padding: 0;
+    margin: 0;
+}
+
+.content-price {
+    padding: 0 0 0 0;
+    position: absolute;
+    right: 0;
+}
+
+.price-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    border-width: 1px;
+    max-height: 30px;
+    border-radius: 10px;
+    margin: 0;
+}
+
+.content-button {
+    padding: 0 10px;
+    font-weight: bold;
+    font-size: 20px;
+    margin: 0;
+    color: #282828;
+}

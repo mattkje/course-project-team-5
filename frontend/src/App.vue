@@ -1,6 +1,7 @@
 <script setup>
 import Menubar from "@/components/Menubar.vue";
 import Footer from "@/components/Footer.vue";
+import "@/courseBox.css"
 import "@/landing.js";
 </script>
 
@@ -532,5 +533,33 @@ button {
   }
 }
 
+.content-box {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  justify-content: space-between;
+  min-width: 230px;
+  max-width: 230px;
+  height: 350px;
+  background-color: rgba(255, 255, 255);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 27px;
+  text-decoration: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+  transition: transform 0.5s ease;
+  margin: 30px;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
 
 </style>
