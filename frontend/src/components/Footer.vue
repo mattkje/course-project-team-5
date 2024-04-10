@@ -3,6 +3,7 @@
 </script>
 
 <template>
+  <img class="bend-bottom" src="/bend.svg" alt="Connect">
   <footer>
     <div class="footer-content">
       <div class="footer-section">
@@ -37,7 +38,8 @@ footer {
   background: linear-gradient(180deg, rgba(21, 16, 82, 0.14) 100%, rgba(158, 150, 255, 0.14) 10%);
   color: #EAEAEA;
   text-align: center;
-  padding: 20px;
+  padding: 0 20px;
+  margin: 0;
 }
 
 .footer-content {
@@ -82,5 +84,11 @@ footer a:hover {
   height: 40px;
 }
 
+.bend-bottom {
+  rotate: 180deg;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
 </style>
 

@@ -120,8 +120,6 @@
     </div>
   </div>
 
-  <img class="bend-bottom" src="/bend.svg" alt="Connect">
-
 </template>
 
 <script setup>
@@ -162,7 +160,7 @@ function populateCourses(selector, filterFn) {
                   contentBox.className = 'content-box';
 
                   const image = document.createElement('img');
-                  image.src = courseProvider.course.image || 'media/noImage.svg';
+                  image.src = courseProvider.course.image || '/noImage.svg';
                   image.alt = 'Course image';
                   image.className = 'content-box-image';
                   contentBox.appendChild(image);

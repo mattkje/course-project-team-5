@@ -1,0 +1,86 @@
+.courseLinkElement p {
+    font-weight: bold;
+    color: white;
+}
+.courseInfoElement p {
+    font-weight: bold;
+    color: #282828;
+}
+#relatedCertifications p{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 200px;
+}
+#courseInformation {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    justify-items: start;
+    align-items: start;
+    grid-gap: 20px;
+}
+.content-box-icon {
+    width: 25px;
+    height: 25px;
+    margin: auto;
+    padding: 5px;
+}
+
+.standard-button {
+    background-color: #584BEB;
+    color: #EAEAEA;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 10px;
+    text-decoration: none;
+    display: flex;
+    width: max-content;
+
+    &:hover {
+        background-color: #6E67FC;
+        box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
+    }
+}
+
+.standard-button-dark {
+    background-color: #090909;
+    color: #EAEAEA;
+    font-weight: bold;
+    padding: 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    display: flex;
+
+    &:hover {
+        background-color: #07002C;
+        box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
+    }
+}
+
+.provider-choose {
+    background: none;
+    border: 2px solid #494949;
+    border-radius: 15px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    color: #494949;
+    height: 60px;
+    width: 95%;
+    font-size: 1.04em;
+    text-align: center;
+    cursor: pointer;
+    transition: all .5s;
+    margin: 5px 0;
+}
+
+.provider-choose:hover,
+.provider-choose:active,
+.provider-choose:focus {
+    border: 2px solid #584BEB;
+    background-color: #584BEB;
+    color: white;
+    outline: none;
+}
+
+

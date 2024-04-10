@@ -1,82 +1,90 @@
 
 
 <template>
-  <div class="providerList">
-    <div class="course-image-box">
-      <img id="courseImage" class="course-image" alt="Course Image">
-      <div class="course-image-blur"></div>
-    </div>
-    <div class="courseLinkElement">
-      <a href="/">Courses</a>
-      <p>&nbsp;->&nbsp;</p>
-      <a href="#" id="courseCategoryLink"></a>
-      <p>&nbsp;->&nbsp;</p>
-      <a href="#" id="courseTitleLink"></a>
-    </div>
-    <div class="course">
-      <div class="course-description-box">
-        <h3>Course Description</h3>
-        <p id="courseKeywords"></p>
-        <p id="courseDescription"></p>
+  <div class="course-page-background">
+    <div class="providerList">
+      <div class="course-image-box">
+        <img id="courseImage" class="course-image" alt="Course Image">
+        <div class="course-image-blur"></div>
       </div>
-      <div class="course-info">
-        <h2 id="courseTitle"></h2>
-        <hr>
-        <h3>Providers</h3>
-        <div class="content-hbox" id="providerList">
-          <!-- Providers will be added here by JavaScript -->
+      <div class="courseLinkElement">
+        <a href="/">Courses</a>
+        <p>&nbsp;->&nbsp;</p>
+        <a href="#" id="courseCategoryLink"></a>
+        <p>&nbsp;->&nbsp;</p>
+        <a href="#" id="courseTitleLink"></a>
+      </div>
+      <div class="course">
+        <div class="course-description-box">
+          <h3>Course Description</h3>
+          <p id="courseKeywords"></p>
+          <p id="courseDescription"></p>
         </div>
-        <hr>
-        <div id="courseInformation">
-          <div class="courseInfoElement" id="courseSize"></div>
-          <div class="courseInfoElement" id="closestCourseSession"></div>
-          <div class="courseInfoElement" id="hoursPerWeek"></div>
-          <div class="courseInfoElement" id="relatedCertifications"></div>
-          <div class="courseInfoElement" id="difficulty"></div>
-          <div class="courseInfoElement" id="location"></div>
-        </div>
-        <hr>
-        <div class="course-action-box">
-          <button id="enrollButton" class="enroll-button">
-            Buy now
-          </button>
-          <button class="CartBtn">
+        <div class="course-info">
+          <h2 id="courseTitle"></h2>
+          <hr>
+          <h3>Providers</h3>
+          <div class="content-hbox" id="providerList">
+            <!-- Providers will be added here by JavaScript -->
+          </div>
+          <hr>
+          <div id="courseInformation">
+            <div class="courseInfoElement" id="courseSize"></div>
+            <div class="courseInfoElement" id="closestCourseSession"></div>
+            <div class="courseInfoElement" id="hoursPerWeek"></div>
+            <div class="courseInfoElement" id="relatedCertifications"></div>
+            <div class="courseInfoElement" id="difficulty"></div>
+            <div class="courseInfoElement" id="location"></div>
+          </div>
+          <hr>
+          <div class="course-action-box">
+            <button id="enrollButton" class="enroll-button">
+              Buy now
+            </button>
+            <button class="CartBtn">
                     <span class="IconContainer">
                         <img class="cart-icon-small" src="/cart-small.svg" alt="Cart">
                     </span>
-            <p class="text">Add to Cart</p>
-          </button>
+              <p class="text">Add to Cart</p>
+            </button>
+          </div>
         </div>
       </div>
     </div>
+    <div id="map-container" class="map-container" style="display: none">
+      <h3>Course Location</h3>
+      <div id="map" ></div>
+
+    </div>
+
+
+    <div class="greeting">
+      <h2>Similar Courses</h2>
+    </div>
+
+    <div class="featured">
+      <!--- Featured courses will be appended here --->
+    </div>
+    <div class="greeting">
+    </div>
   </div>
-  <div id="map-container" class="map-container" style="display: none">
-    <h3>Course Location</h3>
-    <div id="map" ></div>
-
-  </div>
-
-
-  <div class="greeting">
-    <h2>Similar Courses</h2>
-  </div>
-
-  <div class="featured">
-    <!--- Featured courses will be appended here --->
-  </div>
-
 </template>
 
 <script setup>
 import { onMounted } from 'vue';
+import "@/assets/coursePage.css"
 onMounted(() => {
   populateCoursePage();
   currency();
 });
 
 const API_URL = 'http://localhost:8080/api';
-// Function to populate the course page with the course data
 
+// Google Maps API (Looks like nonsense, but is not. So Do Not Delete!)
+(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
+({key: "AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg", v: "weekly"});
+
+// Function to populate the course page with the course data
 function populateCoursePage() {
   const urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get('id');
@@ -109,12 +117,12 @@ function populateCoursePage() {
               document.getElementById('courseCategoryLink').innerText = data.course.category;
               document.getElementById('courseTitleLink').innerText = data.course.title;
               document.getElementById('courseDescription').innerText = data.course.description;
-              document.getElementById('courseImage').src = data.course.image || 'media/noImage.svg';
+              document.getElementById('courseImage').src = data.course.image || '/noImage.svg';
               document.getElementById('courseTitle').innerText = data.course.title;
 
               const sizeIcon = document.createElement('img');
               sizeIcon.className = 'content-box-icon';
-              sizeIcon.src = 'media/credits.svg';
+              sizeIcon.src = '/credits.svg';
 
               const sizeText = document.createElement('p');
               sizeText.innerText += `${data.course.courseSize}` + " ECTS Credits";
@@ -126,7 +134,7 @@ function populateCoursePage() {
               // Course duration
               const durationIcon = document.createElement('img');
               durationIcon.className = 'content-box-icon';
-              durationIcon.src = 'media/calendar.svg';
+              durationIcon.src = '/calendar.svg';
 
               const durationText = document.createElement('p');
               const rawDate = `${data.course.closestCourseSession}`;
@@ -139,7 +147,7 @@ function populateCoursePage() {
               // Course hours per week
               const hoursIcon = document.createElement('img');
               hoursIcon.className = 'content-box-icon';
-              hoursIcon.src = 'media/size.svg';
+              hoursIcon.src = '/size.svg';
 
               const hoursText = document.createElement('p');
               hoursText.innerText += `${data.course.hoursPerWeek}` + " h/w";
@@ -151,7 +159,7 @@ function populateCoursePage() {
               // Course certification
               const certificationIcon = document.createElement('img');
               certificationIcon.className = 'content-box-icon';
-              certificationIcon.src = 'media/cert.svg';
+              certificationIcon.src = '/cert.svg';
 
               const certificationText = document.createElement('p');
               certificationText.innerText += `${data.course.relatedCertifications}`;
@@ -163,7 +171,7 @@ function populateCoursePage() {
               // Course difficulty
               const difficultyIcon = document.createElement('img');
               difficultyIcon.className = 'content-box-icon';
-              difficultyIcon.src = 'media/level.svg';
+              difficultyIcon.src = '/level.svg';
 
               const difficultyText = document.createElement('p');
               difficultyText.innerText += `${data.course.level}`;
@@ -175,7 +183,7 @@ function populateCoursePage() {
               // Course location
               const locationIcon = document.createElement('img');
               locationIcon.className = 'content-box-icon';
-              locationIcon.src = 'media/physical.svg';
+              locationIcon.src = '/physical.svg';
 
               const locationText = document.createElement('p');
               locationText.innerText += "On-site";
@@ -217,7 +225,7 @@ function populateCoursePage() {
 
                 if (provider.currency === "SUB") {
                   providerElement.innerHTML = provider.name;
-                  locationIcon.src = 'media/online.svg';
+                  locationIcon.src = '/online.svg';
                   locationText.innerText = 'Online';
                   document.getElementById('providerList').appendChild(providerElement);
                   providerElement.addEventListener('click', function() {
@@ -311,7 +319,7 @@ function populateCourses(selector, filterFn) {
                   contentBox.className = 'content-box';
 
                   const image = document.createElement('img');
-                  image.src = courseProvider.course.image || 'media/noImage.svg';
+                  image.src = courseProvider.course.image || '/noImage.svg';
                   image.alt = 'Course image';
                   image.className = 'content-box-image';
                   contentBox.appendChild(image);
@@ -343,7 +351,7 @@ function populateCourses(selector, filterFn) {
 
                   const categoryIcon = document.createElement('img');
                   categoryIcon.className = 'content-box-icon';
-                  categoryIcon.src = 'media/category.svg'; // Replace with actual path
+                  categoryIcon.src = '/category.svg'; // Replace with actual path
                   categoryAttribute.appendChild(categoryIcon);
 
                   const category = document.createElement('p');
@@ -358,7 +366,7 @@ function populateCourses(selector, filterFn) {
 
                   const providersIcon = document.createElement('img');
                   providersIcon.className = 'content-box-icon';
-                  providersIcon.src = 'media/providers.svg';
+                  providersIcon.src = '/providers.svg';
                   providersAttribute.appendChild(providersIcon);
 
                   const providersElement = document.createElement('p');
@@ -431,8 +439,7 @@ function populateCourses(selector, filterFn) {
       .catch(error => console.error('Error:', error));
 }
 
-// Initialize and add the map
-// Initialize and add the map
+
 let map;
 
 async function initMap(lat, lng) {
@@ -506,17 +513,8 @@ function setDefaultCurrency() {
 </script>
 
 <style scoped>
-:root {
-  --base-1: #584BEB;
-  --base-2: #6E67FC;
-  --light-1: #eaeaea;
-  --light-2: #adadad;
-  --dark-1: #090909;
-  --dark-2: #1a1a1a;
-  --dark-3: #07002c;
-}
 
-body {
+.course-page-background {
   font-family: Inter, sans-serif;
   background-color: #eaeaea;
   color: #090909;
@@ -877,37 +875,12 @@ hr {
   margin: 20px 0;
 }
 
-.content-box-icon {
-  width: 20px;
-  height: 20px;
-  margin: auto;
-  padding: 5px;
-}
-
-
-
-#courseInformation {
-  display: grid;
-  grid-template-columns: repeat(2, min-content);
-  grid-template-rows: repeat(3, min-content);
-  justify-items: start;
-  align-items: start;
-  grid-gap: 0 1vw;
-}
-
 .courseInfoElement {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
   width: max-content;
-}
-
-#relatedCertifications p{
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 200px;
 }
 
 .courseInfoElement p {
@@ -1042,13 +1015,6 @@ hr {
   border-radius: 17px;
 }
 
-.explore-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  grid-gap: 20px;
-  padding: 20px;
-}
-
 .featured {
   background-color: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(5px);
@@ -1059,112 +1025,7 @@ hr {
   display: flex;
 }
 
-.content-box {
-  display: flex;
-  flex-direction: column;
-  padding: 1vw;
-  justify-content: space-between;
-  width: 12vw;
-  height: 34vh;
-  background-color: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(5px);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 27px;
-  text-decoration: none;
-  margin: 0 0 0 2vw;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
-  transition: transform 0.5s ease;
 
-  &:hover {
-    transform: scale(1.05);
-  }
-}
-
-* {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
-
-.content-box-description {
-  color: var(--dark-3);
-
-}
-
-.content-description {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  height: 4vw;
-}
-
-.content-box-title {
-  font-size: 1vw;
-  font-weight: bold;
-
-}
-
-.content-box-text {
-  font-size: 0.5vw;
-  font-weight: 900;
-  color: var(--light-2);
-  padding: 0.2vw;
-  margin: auto;
-}
-
-.content-box-image {
-  margin: 0;
-  height: 16vh;
-  width: 12vw;
-  object-fit: cover;
-  border-radius: 15px;
-}
-
-.content-box-icon {
-  width: 20px;
-  height: 20px;
-  padding: 5px;
-}
-
-.content-box-attribute {
-  width: min-content;
-  display: flex;
-  align-items: flex-start;
-  flex-direction: row;
-  margin: 0;
-  padding: 0;
-}
-
-.content-box-attributes {
-  padding: 0;
-  margin: 0;
-}
-
-.content-price {
-  padding: 0 0 0 0;
-  position: absolute;
-  right: 0;
-}
-
-.price-box {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-  border-width: 0.15vw;
-  max-height: 3vw;
-  border-radius: 1vw;
-  margin: 0;
-}
-
-.content-button {
-  padding: 0 0.2vw;
-  font-weight: bold;
-  font-size: 1vw;
-  margin: 0;
-  color: #282828;
-}
 .map-container {
   display: flex;
   flex-direction: column;
@@ -1181,6 +1042,112 @@ hr {
   border-radius: 15px;
   box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
   transition: transform 0.5s ease;
+}
+
+button {
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.header-button .text {
+  font-size: 0;
+  width: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.header-button:hover .text {
+  font-size: medium;
+  opacity: 1;
+}
+
+
+
+.enroll-button {
+  font-family: 'Inter', sans-serif;
+  font-weight: bold;
+  color: white;
+  font-size: 1.04em;
+  background: #584BEB;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70%;
+  height: 50px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all .5s;
+  margin-right: 10px;
+}
+
+.enroll-button:hover {
+  background-color: #6E67FC;
+  box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
+}
+
+.enroll-button:active {
+  transform: scale(0.95);
+  transition-duration: .5s;
+}
+
+.CartBtn {
+  width: 40%;
+  height: 50px;
+  border-radius: 12px;
+  border: none;
+  background-color: #090909;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition-duration: .5s;
+  overflow: hidden;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.103);
+  position: relative;
+}
+
+.IconContainer {
+  position: absolute;
+  left: -50px;
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 2;
+  transition-duration: .5s;
+}
+
+.text {
+  height: 100%;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(255, 255, 255);
+  z-index: 1;
+  transition-duration: .5s;
+  font-size: 1.04em;
+  font-weight: 600;
+}
+
+.CartBtn:hover .IconContainer {
+  transform: translateX(58px);
+  border-radius: 40px;
+  transition-duration: .5s;
+}
+
+.CartBtn:hover .text {
+  transform: translate(10px,0px);
+  transition-duration: .5s;
+}
+
+.CartBtn:active {
+  transform: scale(0.95);
+  transition-duration: .5s;
 }
 
 </style>

@@ -108,6 +108,7 @@
 }
 
 .logo-bottom {
+  font-weight: 900;
   color: #584BEB;
 }
 
