@@ -27,27 +27,30 @@ An example of such webshop is: https://athotel.com/
 
 ## Technologies Used
 
-This project is built using two powerful technologies:
+This project is built using two frameworks, each representing a different side of the web application. The backend is built using Spring Boot, while the frontend is built using Vue.js. Below is a brief description of each of the:
 
-<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+<div style="display: flex; flex-direction: column">
 
-<div>
+## [Spring Boot](https://spring.io/projects/spring-boot)
 
-### [Spring Boot](https://spring.io/projects/spring-boot)
+<div style="display: flex">
 
 Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications that you can "just run". It takes an opinionated view of the Spring platform and third-party libraries so you can get started with minimum fuss.
 
-<img src="https://www.vectorlogo.zone/logos/springio/springio-icon.svg" alt="Spring Boot Logo" width="50%">
+<img src="https://www.vectorlogo.zone/logos/springio/springio-icon.svg" alt="Spring Boot Logo" width="15%" height="15%">
 
 </div>
+</div>
 
-<div>
+<div style="display: flex; flex-direction: column">
 
-### [Vue.js](https://vuejs.org/)
+## [Vue.js](https://vuejs.org/ )
+
+<div  style="display: flex">
 
 Vue.js is a progressive JavaScript framework for building user interfaces. Unlike other monolithic frameworks, Vue is designed from the ground up to be incrementally adoptable.
 
-<img src="https://vuejs.org/images/logo.png" alt="Vue.js Logo" width="50%">
+<img src="https://vuejs.org/images/logo.png" alt="Vue.js Logo" width="15%" height="15%">
 
 </div>
 
