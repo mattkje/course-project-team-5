@@ -6,9 +6,17 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+/**
+ * Configuration for the MVC.
+ */
 @Configuration
 public class MvcConfig implements WebMvcConfigurer {
 
+  /**
+   * This method allows frontend to access the backend.
+   *
+   * @param registry The registry to add the mapping to.
+   */
   @Override
   public void addCorsMappings(CorsRegistry registry) {
     registry.addMapping("/**")
