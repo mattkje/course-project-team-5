@@ -68,11 +68,8 @@
 </template>
 
 <script>
-import Footer from "@/App.vue";
-import Menubar from "@/App.vue";
 
 export default {
-  components: {Menubar, Footer},
   props: ['id'],
   mounted() {
     populateCoursePage();
@@ -507,5 +504,681 @@ export default {
 </script>
 
 <style scoped>
+:root {
+  --base-1: #584BEB;
+  --base-2: #6E67FC;
+  --light-1: #eaeaea;
+  --light-2: #adadad;
+  --dark-1: #090909;
+  --dark-2: #1a1a1a;
+  --dark-3: #07002c;
+}
+
+body {
+  font-family: Inter, sans-serif;
+  background-color: var(--light-1);
+  color: var(--dark-1);
+  margin: 0;
+  padding: 0;
+}
+
+
+img {
+  margin: auto;
+  padding: 0;
+}
+
+button {
+  background-color: transparent;
+  border-color: transparent;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+
+
+/* Header  */
+
+#menubar {
+  background-color: rgba(6, 6, 16, 0.9);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+.left-content {
+  max-height: 70px;
+  padding: 0 2vw;
+  display: flex;
+  align-items: center;
+}
+
+.right-content {
+  max-height: 70px;
+  margin: 3vw;
+  display: flex;
+  max-width: min-content;
+  align-items: center;
+}
+
+.left-content-general {
+  display: flex;
+  align-items: center;
+  margin-left: 50px;
+  flex: 1; /* Allow the right content to take up remaining space */
+  justify-content: flex-end; /* Align content to the right */
+}
+
+.right-content-general {
+  display: flex;
+  align-items: center;
+  margin-right: 50px;
+  flex: 1; /* Allow the right content to take up remaining space */
+  justify-content: flex-end; /* Align content to the right */
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 70px;
+}
+
+.menu-links {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 50px;
+}
+
+.logo-text-container {
+  margin: 0;
+  padding: 0;
+}
+
+.logo-top {
+  font-weight: 900;
+  padding-left: 5px;
+}
+
+.logo-bottom {
+  color: var(--base-1);
+}
+
+
+.background-overlay {
+  background: linear-gradient(rgba(0, 0, 33, 0.83), rgba(0, 0, 33, 0.74));
+}
+
+/* Hero  */
+
+.hero-hbox {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  padding-left: 10vw;
+}
+
+.hero-container {
+  display: flex;
+}
+
+.hero-box {
+  flex: 1;
+  max-width: 600px;
+}
+
+.mail-box {
+  display: flex;
+}
+
+.mail-prompt {
+  width: 100%;
+  padding: 20px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 15px;
+  font-size: 22px;
+  box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
+}
+
+.hbox {
+  display: flex;
+}
+
+.stack-pane {
+  position: relative;
+}
+
+.hero-image {
+  max-width: 400px;
+  height: auto;
+  position: absolute;
+  top: 150px;
+  left: 0;
+}
+
+.hero-graphic {
+  max-width: 700px;
+  width: 50%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+input:focus {
+  outline: none;
+}
+
+.search-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10vh; /* Adjust as needed */
+}
+
+.search-bar {
+  box-sizing: border-box;
+  width: 60%;
+  border: 3px solid #b2aece;
+  border-radius: 20px;
+  position: relative; /* Make it a positioning context for the absolute position of the button */
+}
+
+
+.search-prompt {
+  background: none;
+  width: 60%;
+  padding: 20px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 15px;
+  font-size: 16px;
+}
+
+
+.greeting {
+  border: none;
+  padding: 10px 20px;
+  border-radius: 15px;
+  width: 70%;
+  align-content: center;
+  text-decoration: none;
+  display: flex;
+  margin: auto;
+}
+
+.course-image {
+  background-color: #3c3c3c;
+  position: absolute;
+  height: 600px;
+  width: 100%;
+  object-fit: cover;
+  margin: 0;
+}
+
+.course-image-blur {
+  position: relative;
+  height: 600px;
+  padding: 0;
+  width: 100%;
+  margin: 0;
+  background: linear-gradient(to top, rgba(15, 16, 19, 0.68) 0%, transparent 20%);
+}
+
+.course-image-box {
+  position: absolute;
+  height: 600px;
+  width: 100%;
+  margin: 0;
+}
+
+.course {
+  padding: 10px 20px;
+  width: 1400px;
+  align-content: center;
+  justify-content: center;
+  text-decoration: none;
+  display: flex;
+  margin: 200px auto 0 auto;
+  height: min-content;
+}
+
+.course-info {
+  position: relative;
+  padding: 10px 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 27px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+  width: 400px;
+  height: min-content;
+}
+
+.course-description-box {
+  border: none;
+  padding: 10px 20px;
+  margin: 400px auto 0 auto;
+}
+
+.search-box {
+  border: none;
+  padding: 40px 20px;
+  border-radius: 15px;
+  width: 70%;
+  align-content: center;
+  text-decoration: none;
+  display: flex;
+  margin: auto;
+}
+
+.content-box {
+  color: var(--dark-1);
+  border: none;
+  border-radius: 15px;
+  align-content: center;
+  text-decoration: none;
+  margin-left: 15px;
+  margin-right: 15px;
+  box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
+}
+
+.content-box-description {
+  color: var(--dark-1);
+  padding: 20px 0;
+  border-radius: 0 0 15px 15px;
+  width: 100%;
+
+}
+
+.content-box-text {
+  padding: 0 5px;
+}
+
+.content-box-image {
+  height: 250px;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+.content-price {
+  padding: 0 15px 0 0;
+  position: absolute;
+  right: 0;
+}
+
+.hbox {
+  display: flex;
+}
+
+.product-slide {
+  display: flex;
+  margin: 30px auto auto;
+}
+
+.hgrow {
+  margin: auto;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  padding-left: 20px;
+  transform:translateY(-3px);
+}
+
+.cart {
+  width: 35px;
+  height: 35px;
+}
+
+.menu-icons {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+}
+
+
+.additional-info {
+  display: none;
+}
+
+#carlBox:hover .additional-info,
+#mattBox:hover .additional-info
+,#alejandroBox:hover .additional-info
+,#liBox:hover .additional-info {
+  display: block;
+
+}
+
+
+.content-hbox {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: auto;
+  justify-content: space-between;
+}
+
+hr {
+  border: 0;
+  height: 3px;
+  background:  #282828;
+  margin: 20px 0;
+}
+
+.content-box-icon {
+  width: 20px;
+  height: 20px;
+  margin: auto;
+  padding: 5px;
+}
+
+
+
+#courseInformation {
+  display: grid;
+  grid-template-columns: repeat(2, min-content);
+  grid-template-rows: repeat(3, min-content);
+  justify-items: start;
+  align-items: start;
+  grid-gap: 0 1vw;
+}
+
+.courseInfoElement {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  width: max-content;
+}
+
+#relatedCertifications p{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 200px;
+}
+
+.courseInfoElement p {
+  font-weight: bold;
+  color: #282828;
+}
+
+.courseLinkElement {
+  padding: 0 7px;
+  background-color: rgba(29, 28, 32, 0.8);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 25px;
+  box-shadow: 0 2px 5px #000;
+  z-index: 50;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  margin-left: 100px;
+  position: relative;
+  top: 7px;
+  width: min-content;
+  white-space: nowrap;
+}
+
+.courseLinkElement p {
+  font-weight: bold;
+  color: white;
+}
+
+.courseLinkElement a {
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+}
+
+.course-action-box {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.search-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10vh; /* Adjust as needed */
+}
+
+.search-bar {
+  box-sizing: border-box;
+  width: 60%;
+  border: 2px solid var(--light-2);
+  border-radius: 20px;
+  position: relative; /* Make it a positioning context for the absolute position of the button */
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  left: 30px;
+  transform: translateY(-50%);
+  width: 30px;
+  height: 30px;
+  margin: auto;
+  opacity: 50%;
+}
+
+
+.search-prompt {
+  background: none;
+  width: 60%;
+  padding: 20px 20px 20px 100px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 15px;
+  font-size: 16px;
+}
+
+
+
+.clear {
+  clear: both;
+}
+
+.checkBox {
+  display: block;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  border: 3px solid rgba(255, 255, 255, 0);
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0px 0px 0px 2px #fff;
+}
+
+.checkBox div {
+  width: 60px;
+  height: 60px;
+  background-color: #fff;
+  top: -52px;
+  left: -52px;
+  position: absolute;
+  transform: rotateZ(45deg);
+  z-index: 100;
+}
+
+.checkBox input[type=checkbox]:checked + div {
+  left: -10px;
+  top: -10px;
+}
+
+.checkBox input[type=checkbox] {
+  position: absolute;
+  left: 50px;
+  visibility: hidden;
+}
+
+.transition {
+  transition: 300ms ease;
+}
+
+.filter-box {
+  background-color: rgba(29, 28, 32, 0.7);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255,255,255,.08);
+  margin: 3vw;
+  padding:2vw;
+  border-radius: 17px;
+}
+
+.explore-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 20px;
+  padding: 20px;
+}
+
+.featured {
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 17px;
+  padding: 3vw 0;
+  margin: 2vw 3vw;
+  display: flex;
+}
+
+.content-box {
+  display: flex;
+  flex-direction: column;
+  padding: 1vw;
+  justify-content: space-between;
+  width: 12vw;
+  height: 34vh;
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 27px;
+  text-decoration: none;
+  margin: 0 0 0 2vw;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+  transition: transform 0.5s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.content-box-description {
+  color: var(--dark-3);
+
+}
+
+.content-description {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 4vw;
+}
+
+.content-box-title {
+  font-size: 1vw;
+  font-weight: bold;
+
+}
+
+.content-box-text {
+  font-size: 0.5vw;
+  font-weight: 900;
+  color: var(--light-2);
+  padding: 0.2vw;
+  margin: auto;
+}
+
+.content-box-image {
+  margin: 0;
+  height: 16vh;
+  width: 12vw;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+.content-box-icon {
+  width: 20px;
+  height: 20px;
+  padding: 5px;
+}
+
+.content-box-attribute {
+  width: min-content;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: row;
+  margin: 0;
+  padding: 0;
+}
+
+.content-box-attributes {
+  padding: 0;
+  margin: 0;
+}
+
+.content-price {
+  padding: 0 0 0 0;
+  position: absolute;
+  right: 0;
+}
+
+.price-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  border-width: 0.15vw;
+  max-height: 3vw;
+  border-radius: 1vw;
+  margin: 0;
+}
+
+.content-button {
+  padding: 0 0.2vw;
+  font-weight: bold;
+  font-size: 1vw;
+  margin: 0;
+  color: #282828;
+}
+.map-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 1400px;
+  margin: auto;
+  border-radius: 30px;
+}
+#map {
+  height: 400px;
+  width: 1400px;
+  object-fit: cover;
+  border-radius: 15px;
+  box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
+  transition: transform 0.5s ease;
+}
 
 </style>

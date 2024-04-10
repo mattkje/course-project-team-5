@@ -133,7 +133,8 @@ import { onMounted } from 'vue';
 
 const API_URL = 'http://localhost:8080/api';
 
-window.onload = function () {
+
+onMounted(() => {
   populateCourses('.featured', () => true);
   populateCourses('.learniverse-pro', checkIfProCourse);
   populateCourses('.digital-marketing', checkIfDmCourse);
@@ -141,7 +142,7 @@ window.onload = function () {
   populateCourses('.information-technologies', checkIfItCourse);
   currency();
   loadButtons();
-};
+});
 
 function populateCourses(selector, filterFn) {
   document.querySelector(selector).innerHTML = '';
