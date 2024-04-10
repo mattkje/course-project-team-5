@@ -22,9 +22,9 @@
       </div>
       <div class="footer-section">
         <h5>Useful Links</h5>
-        <a href="/categories" target="_blank">Categories</a>
-        <a href="/explore" target="_blank">Explore</a>
-        <a href="/about" target="_blank">About us</a>
+        <router-link to="/categories" target="_blank">Categories</router-link>
+        <router-link to="/explore" target="_blank">Explore</router-link>
+        <router-link to="/about" target="_blank">About us</router-link>
       </div>
     </div>
   </footer>

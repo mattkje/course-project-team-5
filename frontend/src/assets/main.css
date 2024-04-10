@@ -1,14 +1,10 @@
 @import './base.css';
-
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
 #app {
 
 }
 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
-}
+
 body {
   font-family: 'Inter', sans-serif;
   color: var(--dark-1);
@@ -22,6 +18,7 @@ h1 {
 
 h2 {
   font-size: 30px;
+  font-weight: bold;
   color:  #282828;
 }
 

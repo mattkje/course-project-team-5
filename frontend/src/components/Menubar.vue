@@ -1,10 +1,5 @@
 <script setup>
-defineProps({
-  msg: {
-    type: String,
-    required: true
-  }
-})
+
 </script>
 
 <template>
@@ -12,25 +7,25 @@ defineProps({
     <div class="header">
       <div class="content">
         <div class="left-content">
-          <a href="/" class="header-button">
+          <router-link to="/" class="header-button">
             <img class="logo" src="/logo.svg" alt="Connect">
             <h4 class="logo-top">Learniverse&nbsp;</h4>
             <h4 class="logo-bottom">Connect</h4>
-          </a>
+          </router-link>
           <div class="menu-links">
-            <a href="/explore" class="header-button">Explore</a>
-            <a href="/community" class="header-button">Community</a>
-            <a href="/pro" class="header-button">Learniverse&nbsp;Pro</a>
+            <router-link to="/explore" class="header-button">Explore</router-link>
+            <router-link to="/community" class="header-button">Community</router-link>
+            <router-link to="/pro" class="header-button">Learniverse&nbsp;Pro</router-link>
           </div>
         </div>
 
         <div class="right-content">
-          <a href="/cart" class="fancy-button">
+          <router-link to="/cart" class="fancy-button">
             <img class="cart" src="/cart.svg" alt="Cart">
-          </a>
+          </router-link>
           <select class="fancy-button" id="currencySelect">
           </select>
-          <a href="/register" class="standard-button">Get Started</a>
+          <router-link to="/register" class="standard-button">Get Started</router-link>
         </div>
       </div>
     </div>
@@ -124,7 +119,7 @@ defineProps({
 }
 
 .fancy-button {
-  color: var(--light-1);
+  color: #EAEAEA;
   font-family: 'Inter', sans-serif;
   font-weight: bold;
   padding: 10px;
