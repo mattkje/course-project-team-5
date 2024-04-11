@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,6 +12,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import no.ntnu.courses.coursesapi.api.role.Role;
+
 import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -87,7 +87,29 @@ public class User {
     @Column(name = "phone_number", length = 20)
     private String phoneNumber;
 
+    //This is needed for JPA
+    public User() {
+    }
 
+    /**
+     * Creates a new user with the specified username, email, password, first name, last name, and phone number.
+     * This constructor is used to create dummy data.
+     *
+     * @param username The username of the user.
+     * @param email The email address of the user.
+     * @param password The password of the user.
+     * @param firstName The first name of the user.
+     * @param lastName The last name of the user.
+     * @param phoneNumber The phone number of the user.
+     */
+    public User(String username, String email, String password, String firstName, String lastName, String phoneNumber) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+    }
 
     /**
      * Retrieves the username of the user.
@@ -249,4 +271,5 @@ public class User {
     public void addRole(Role role) {
         roles.add(role);
     }
+
 }

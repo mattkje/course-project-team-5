@@ -1,5 +1,6 @@
-package no.ntnu.courses.coursesapi.api.user;
+package no.ntnu.courses.coursesapi.api.role;
 
+import no.ntnu.courses.coursesapi.api.role.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package no.ntnu.courses.coursesapi.api.user;
+package no.ntnu.courses.coursesapi.api.role;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
@@ -7,6 +7,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import no.ntnu.courses.coursesapi.api.user.User;
+
 import java.util.LinkedHashSet;
 import java.util.Set;
 

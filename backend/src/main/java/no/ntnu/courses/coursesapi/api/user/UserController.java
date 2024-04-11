@@ -4,8 +4,9 @@ import no.ntnu.courses.coursesapi.api.config.AccessUserService;
 import no.ntnu.courses.coursesapi.api.config.AuthenticationRequest;
 import no.ntnu.courses.coursesapi.api.config.AuthenticationResponse;
 import no.ntnu.courses.coursesapi.api.config.JwtUtil;
+import no.ntnu.courses.coursesapi.api.role.Role;
+import no.ntnu.courses.coursesapi.api.role.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,7 +14,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,27 +52,16 @@ public class UserController {
 
 
     @PostMapping("/register")
-    public User register(@RequestBody RegistrationRequest request) {
-        User user = new User();
-        user.setUsername(request.getUsername());
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setFirstName(request.getFirstName());
-        user.setLastName(request.getLastName());
-        user.setEmail(request.getEmail());
-        user.setPhoneNumber(request.getPhoneNumber());
-
-        Role role = roleRepository.findByName("USER");
-        if (role == null) {
-            role = new Role("USER");
-            roleRepository.save(role);
+    public ResponseEntity<String> register(@RequestBody RegistrationRequest request) {
+        String errorMessage = userService.tryCreateNewUser(request.getUsername(), request.getPassword(),
+                request.getEmail(), request.getFirstName(), request.getLastName(), request.getPhoneNumber());
+        ResponseEntity<String> response;
+        if (errorMessage == null) {
+            response = new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            response = new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
         }
-        user.addRole(role);
-
-        user.setCreatedAt();
-        user.setUpdatedAt();
-        user.setActive(true);
-
-        return userService.createUser(user);
+        return response;
     }
 
     @PostMapping("/login")

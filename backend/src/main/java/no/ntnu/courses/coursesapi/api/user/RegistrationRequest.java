@@ -83,7 +83,6 @@ public class RegistrationRequest {
     }
 
 
-
     /**
      * Retrieves the phone number of the user.
      *

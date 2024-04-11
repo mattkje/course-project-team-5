@@ -1,6 +1,6 @@
 package no.ntnu.courses.coursesapi.api.config;
 
-import no.ntnu.courses.coursesapi.api.user.Role;
+import no.ntnu.courses.coursesapi.api.role.Role;
 import no.ntnu.courses.coursesapi.api.user.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
