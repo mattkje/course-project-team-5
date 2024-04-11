@@ -1,0 +1,285 @@
+button {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.header-button {
+    height: 70px;
+    color: white;
+    font-size: 15px;
+    border: none;
+    padding: 10px 1%;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    margin-right: 3vw;
+}
+
+.right-content .header-button {
+    margin-right: 0;
+    margin-left: 3vw;
+}
+
+.header-button:hover {
+    opacity: 60%;
+}
+
+.header-button .text {
+    font-size: 0;
+    width: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.header-button:hover .text {
+    font-size: medium;
+    opacity: 1;
+}
+
+.fancy-button {
+    color: var(--light-1);
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 10px;
+    text-decoration: none;
+    display: flex;
+    margin: 0 10px;
+    max-height: 50px;
+    background: #0C0C0C;
+    border: 0.5px solid #252525;
+
+}
+
+.fancy-button:hover {
+    background-color: #262626;
+    box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
+}
+
+.search-button {
+    position: absolute;
+    top: 50%;
+    right: 0.5vw;
+    transform: translateY(-50%);
+    padding: 0.7vw 1.2vw 0.7vw 1.2vw;
+    background-color: var(--dark-2);
+    color: var(--light-2);;
+    font-weight: bold;
+    border: none;
+    border-radius: 0.7vw;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #685f6c;
+        box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
+    }
+}
+
+.media-link-button {
+    color: var(--dark-2);
+    border: none;
+    padding: 10px 1%;
+    border-radius: 5px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    margin-right: 3vw;
+
+    &:hover {
+        opacity: 60%;
+    }
+
+    & .text {
+        font-size: 0;
+        width: 0;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    &:hover .text {
+        font-size: medium;
+        opacity: 1;
+    }
+}
+
+
+.standard-button {
+    background-color: var(--base-1);
+    color: var(--light-1);
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 10px;
+    text-decoration: none;
+    display: flex;
+    width: max-content;
+
+    &:hover {
+        background-color: var(--base-2);
+        box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
+    }
+}
+
+.standard-button-dark {
+    background-color: var(--dark-1);
+    color: var(--light-1);
+    font-weight: bold;
+    padding: 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    display: flex;
+
+    &:hover {
+        background-color: var(--dark-3);
+        box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
+    }
+}
+
+.provider-choose {
+    background: none;
+    border: 2px solid #494949;
+    border-radius: 15px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    color: #494949;
+    height: 60px;
+    width: 95%;
+    font-size: 1.04em;
+    text-align: center;
+    cursor: pointer;
+    transition: all .5s;
+    margin: 5px 0;
+}
+
+.provider-choose:hover,
+.provider-choose:active,
+.provider-choose:focus {
+    border: 2px solid var(--base-1);
+    background-color: var(--base-1);
+    color: white;
+    outline: none;
+}
+
+
+
+.enroll-button {
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
+    color: white;
+    font-size: 1.04em;
+    background: var(--base-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70%;
+    height: 50px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all .5s;
+    margin-right: 10px;
+}
+
+.enroll-button:hover {
+    background-color: var(--base-2);
+    box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
+}
+
+.enroll-button:active {
+    transform: scale(0.95);
+    transition-duration: .5s;
+}
+
+.wish-button {
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
+    background: black;
+    border-radius: 20px;
+    padding: 17px 6%;
+    width: max-content;
+    font-size: 25px;
+    color: var(--light-1);
+    cursor: pointer;
+    transition: all .5s;
+    margin: 0 0 1vw 0;
+}
+
+.wish-button:hover {
+    background-color: #3f3f3f;
+    box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
+}
+
+.create-button {
+    height: 70px;
+    width: 70px;
+    background-color: rgba(29, 28, 32, 0.7);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 50px;
+    font-size: 30px;
+    color: white;
+    text-align: center;
+    margin-right: 0;
+}
+
+.CartBtn {
+    width: 40%;
+    height: 50px;
+    border-radius: 12px;
+    border: none;
+    background-color: var(--dark-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition-duration: .5s;
+    overflow: hidden;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.103);
+    position: relative;
+}
+
+.IconContainer {
+    position: absolute;
+    left: -50px;
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    z-index: 2;
+    transition-duration: .5s;
+}
+
+.icon {
+    border-radius: 1px;
+}
+
+.text {
+    height: 100%;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(255, 255, 255);
+    z-index: 1;
+    transition-duration: .5s;
+    font-size: 1.04em;
+    font-weight: 600;
+}
+
+.CartBtn:hover .IconContainer {
+    transform: translateX(58px);
+    border-radius: 40px;
+    transition-duration: .5s;
+}
+
+.CartBtn:hover .text {
+    transform: translate(10px,0px);
+    transition-duration: .5s;
+}
+
+.CartBtn:active {
+    transform: scale(0.95);
+    transition-duration: .5s;
+}

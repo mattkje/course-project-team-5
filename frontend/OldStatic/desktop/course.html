@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learniverse</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bebas+Neue">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" type="text/css" href="../styles/desktop/defaultLight.css">
+    <link rel="stylesheet" type="text/css" href="../styles/shared/darkText.css">
+    <link rel="stylesheet" type="text/css" href="../styles/desktop/lightButtons.css">
+    <link rel="stylesheet" type="text/css" href="../styles/desktop/darkFooter.css">
+    <link rel="icon" type="image/x-icon" href="../../assets/logo.svg">
+    <script src="../scripts/course.js"></script>
+</head>
+
+<body>
+<div id="menubar"></div>
+<div class="providerList">
+    <div class="course-image-box">
+        <img id="courseImage" class="course-image" alt="Course Image">
+        <div class="course-image-blur"></div>
+    </div>
+    <div class="courseLinkElement">
+        <a href="/">Courses</a>
+        <p>&nbsp;->&nbsp;</p>
+        <a href="#" id="courseCategoryLink"></a>
+        <p>&nbsp;->&nbsp;</p>
+        <a href="#" id="courseTitleLink"></a>
+    </div>
+    <div class="course">
+        <div class="course-description-box">
+            <h3>Course Description</h3>
+            <p id="courseKeywords"></p>
+            <p id="courseDescription"></p>
+        </div>
+        <div class="course-info">
+            <h2 id="courseTitle"></h2>
+            <hr>
+            <h3>Providers</h3>
+            <div class="content-hbox" id="providerList">
+                <!-- Providers will be added here by JavaScript -->
+            </div>
+            <hr>
+            <div id="courseInformation">
+                <div class="courseInfoElement" id="courseSize"></div>
+                <div class="courseInfoElement" id="closestCourseSession"></div>
+                <div class="courseInfoElement" id="hoursPerWeek"></div>
+                <div class="courseInfoElement" id="relatedCertifications"></div>
+                <div class="courseInfoElement" id="difficulty"></div>
+                <div class="courseInfoElement" id="location"></div>
+            </div>
+            <hr>
+            <div class="course-action-box">
+                <button id="enrollButton" class="enroll-button">
+                    Buy now
+                </button>
+                <button class="CartBtn">
+                    <span class="IconContainer">
+                        <img class="cart-icon-small" src="../../../public/cart-small.svg" alt="Cart">
+                    </span>
+                    <p class="text">Add to Cart</p>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="map-container" class="map-container" style="display: none">
+    <h3>Course Location</h3>
+    <div id="map" ></div>
+
+    <script></script>
+
+</div>
+
+
+<div class="greeting">
+    <h2>Similar Courses</h2>
+</div>
+
+<div class="featured">
+    <!--- Featured courses will be appended here --->
+</div>
+
+<div id="footer"></div>
+</body>
+</html>

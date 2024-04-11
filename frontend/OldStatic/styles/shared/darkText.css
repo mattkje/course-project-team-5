@@ -1,0 +1,30 @@
+h1 {
+    font-size: 40px;
+    font-weight: 900;
+    color:  #282828;
+}
+
+h2 {
+    font-size: 30px;
+    color:  #282828;
+}
+
+h3 {
+    font-size: 20px;
+    color:  #282828;
+}
+
+h4 {
+    font-family: Bebas Neue, sans-serif;
+    font-size: 30px;
+    color:  white;
+}
+
+h5 {
+    font-size: 20px;
+    color:  #282828;
+}
+
+footer h5 {
+    color: var(--light-1);
+}

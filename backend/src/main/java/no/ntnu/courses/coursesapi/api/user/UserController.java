@@ -83,7 +83,7 @@ public class UserController {
         }
     }
 
-    @PutMapping("/{username]")
+    @PutMapping("/{username}")
     public ResponseEntity<String> updateProfile(@PathVariable String username, @RequestBody UserProfileDto profileData)
             throws InterruptedException {
         User sessionUser = userService.getSessionUser();
