@@ -127,9 +127,10 @@ import ProBox from "@/components/ProBox.vue";
 import HeroSection from "@/components/HeroSection.vue";
 
 import "@/courseBox.css"
-import { onMounted } from 'vue';
+import {getCurrentInstance, onMounted} from 'vue';
 
-const API_URL = 'http://localhost:8080/api';
+const { appContext } = getCurrentInstance();
+const API_URL = appContext.config.globalProperties.$apiAddress;
 
 
 onMounted(() => {

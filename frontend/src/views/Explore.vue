@@ -1,4 +1,8 @@
 <script setup>
+import {getCurrentInstance} from "vue";
+
+const { appContext } = getCurrentInstance();
+const API_URL = appContext.config.globalProperties.$apiAddress;
 
 </script>
 
