@@ -1,11 +1,3 @@
-<script setup>
-import {getCurrentInstance} from "vue";
-
-const { appContext } = getCurrentInstance();
-const API_URL = appContext.config.globalProperties.$apiAddress;
-
-</script>
-
 <template>
   <div class="search-section">
     <div class="h3Center">
@@ -80,6 +72,14 @@ const API_URL = appContext.config.globalProperties.$apiAddress;
     </div>
   </div>
 </template>
+
+<script setup>
+import {getCurrentInstance} from "vue";
+
+const { appContext } = getCurrentInstance();
+const API_URL = appContext.config.globalProperties.$apiAddress;
+
+</script>
 
 <style scoped>
 .category-container {
