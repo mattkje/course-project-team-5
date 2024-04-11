@@ -6,6 +6,7 @@ import java.util.List;
 import no.ntnu.courses.coursesapi.api.role.Role;
 import no.ntnu.courses.coursesapi.api.role.RoleRepository;
 import no.ntnu.courses.coursesapi.api.user.User;
+import no.ntnu.courses.coursesapi.api.user.UserProfileDto;
 import no.ntnu.courses.coursesapi.api.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -138,5 +139,14 @@ public class AccessUserService implements UserDetailsService {
    */
   private String createHash(String password) {
     return BCrypt.hashpw(password, BCrypt.gensalt());
+  }
+
+  public boolean updateProfile(User sessionUser, UserProfileDto profileData) {
+    sessionUser.setFirstName(profileData.getFirstName());
+    sessionUser.setLastName(profileData.getLastName());
+    sessionUser.setEmail(profileData.getEmail());
+    sessionUser.setPhoneNumber(profileData.getPhoneNumber());
+    userRepository.save(sessionUser);
+    return true;
   }
 }
