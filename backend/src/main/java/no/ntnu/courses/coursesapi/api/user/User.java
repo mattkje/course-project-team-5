@@ -102,7 +102,7 @@ public class User {
      * @param lastName The last name of the user.
      * @param phoneNumber The phone number of the user.
      */
-    public User(String username, String email, String password, String firstName, String lastName, String phoneNumber) {
+    public User(String username, String password, String email, String firstName, String lastName, String phoneNumber) {
         this.username = username;
         this.email = email;
         this.password = password;

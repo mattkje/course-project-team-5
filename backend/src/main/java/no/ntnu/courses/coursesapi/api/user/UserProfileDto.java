@@ -10,7 +10,7 @@ public class UserProfileDto {
     private String email;
     private String phoneNumber;
 
-    public UserProfileDto(String username, String firstName, String lastName, String email, String phoneNumber) {
+    public UserProfileDto(String username, String email, String firstName, String lastName, String phoneNumber) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;

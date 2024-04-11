@@ -314,3 +314,7 @@ VALUES ('USD', 'United States Dollar', '$', 1),
        ('SEK', 'Swedish Krona', 'kr', 10.80),
        ('NZD', 'New Zealand Dollar', '$', 1.68),
        ('NOK', 'Norwegian Krone', 'kr', 10.95);
+
+INSERT INTO roles (id, name)
+VALUES (1, 'ROLE_USER'),
+       (2, 'ROLE_ADMIN');

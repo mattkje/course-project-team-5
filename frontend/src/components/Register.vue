@@ -1,8 +1,8 @@
 <script setup>
-import {getCurrentInstance, ref} from 'vue';
+import { ref } from 'vue';
+import { sendApiRequest } from '../js/requests.js';
+import { redirectTo } from '../js/navigation.js';
 
-const { appContext } = getCurrentInstance();
-const API_URL = appContext.config.globalProperties.$apiAddress;
 
 const username = ref('');
 const password = ref('');
@@ -12,37 +12,29 @@ const email = ref('');
 const phoneNumber = ref('');
 
 const register = async () => {
-  const formData = {
-    username: username.value,
-    password: password.value,
-    firstName: firstName.value,
-    lastName: lastName.value,
-    email: email.value,
-    phoneNumber: phoneNumber.value,
+  const signupData = {
+    "username": username.value,
+    "password": password.value,
+    "email": email.value,
+    "firstName": firstName.value,
+    "lastName": lastName.value,
+    "phoneNumber": phoneNumber.value
   };
-
-  try {
-    const response = await fetch(API_URL + '/users/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    });
-
-    if (!response.ok) {
-      throw new Error('Registration failed');
-    }
-
-    alert('Registration successful');
-  } catch (error) {
-    alert(error.message);
-  }
+  await sendApiRequest('POST', '/users/register', onSignupSuccess, signupData, onSignUpError);
 };
+
+function onSignupSuccess() {
+  redirectTo("/");
+}
+
+function onSignUpError(error) {
+  alert(error);
+}
+
 </script>
 
 <template>
-  <form @submit.prevent="register" id="registrationForm">
+  <form @submit.prevent="register" id="registrationForm" method="post">
     <div class="login-container">
       <div class="login-box">
         <div class="login-field-box">
@@ -76,7 +68,7 @@ const register = async () => {
             <input v-model="phoneNumber" class="login-prompt" type="text" id="phoneNumber" name="phoneNumber" placeholder="Enter your phone number" required autofocus/>
           </div>
 
-          <button class="standard-button" type="submit">Create user</button>
+          <button class="standard-button" type="submit" id="signup-button">Create user</button>
 
           <p>Already have an account?</p>
           <a class="standard-button" href="/login" type="submit">Log in here</a>
