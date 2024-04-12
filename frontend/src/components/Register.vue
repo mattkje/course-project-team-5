@@ -3,7 +3,6 @@
 
 import { ref } from 'vue';
 import { sendApiRequest } from '../js/requests.js';
-import { redirectTo } from '../js/navigation.js';
 
 
 const username = ref('');
@@ -52,7 +51,7 @@ function onSignUpError(error) {
           </div>
           <div class="login-text-field">
             <label for="password">Password*:</label>
-            <input v-model="password" class="login-prompt" type="text" id="password" name="password" placeholder="Enter a password" required autofocus/>
+            <input v-model="password" class="login-prompt" type="password" id="password" name="password" placeholder="Enter a password" required autofocus/>
           </div>
           <div class="login-text-field">
             <label for="firstName">First Name*:</label>
@@ -199,10 +198,11 @@ input:focus {
   border-width: 2px;
   border-radius: 2vh;
   text-align: center;
-  font-size: 0.6vw;
   display: flex;
   justify-content: center;
   align-items: center;
+  text-decoration: none;
+  font-size: 15px;
 
   &:hover {
     background-color: var(--base-2);
@@ -335,6 +335,11 @@ label {
   font-size: 25px;
 }
 
+.sign-up-confirmation p {
+  margin: 10px;
+  color: var(--vt-c-white);
+}
+
 .sign-up-confirmation .standard-button {
   width: 100px;
   display: flex;
@@ -342,7 +347,11 @@ label {
   align-items: center;
   margin-top: 2vh;
   font-size: 15px;
-  text-decoration: none;
+}
+
+p{
+  margin: 10px;
+  color: var(--dark-1);
 }
 
 

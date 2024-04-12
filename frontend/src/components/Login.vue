@@ -1,46 +1,25 @@
 <script setup>
-import { ref } from 'vue';
 
-const API_URL = 'http://your-api-url'; // Replace with your actual API URL
+import { ref } from 'vue';
+import {redirectTo} from "@/js/navigation";
+import {showFormError} from "@/js/tools";
+import {sendAuthenticationRequest} from "@/js/authentication";
 
 const username = ref('');
 const password = ref('');
 
 const login = async () => {
-  const formData = {
-    username: username.value,
-    password: password.value,
-  };
-
-  try {
-    const response = await fetch(API_URL + '/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    });
-
-    if (!response.ok) {
-      throw new Error('Login failed');
-    }
-
-    const data = await response.json();
-
-    localStorage.setItem('token', data.token);
-    localStorage.setItem('username', data.username);
-
-    alert('Login successful');
-    window.location.href = '/'; // Redirect to home page or dashboard
-  } catch (error) {
-    alert(error.message);
-  }
+  sendAuthenticationRequest(username.value, password.value, onLoginSuccess, showFormError);
 };
+
+function onLoginSuccess() {
+  redirectTo("/");
+}
 </script>
 
 <template>
 
-  <form @submit.prevent="login" id="loginForm">
+  <form @submit.prevent="login" id="loginForm" method="post">
     <div class="login-container">
       <div class="login-box">
         <div class="login-field-box">
@@ -67,6 +46,7 @@ const login = async () => {
             <input v-model="password" class="login-prompt" type="password" id="password" name="password"
                    placeholder="password" required/>
           </div>
+          <p id="result-message" class="hidden"></p>
           <button class="standard-button" type="submit">Login</button>
           <p>No account?</p>
           <a class="standard-button" href="/register" type="submit">Sign up here</a>
@@ -195,10 +175,11 @@ input:focus {
   border-width: 2px;
   border-radius: 2vh;
   text-align: center;
-  font-size: 0.6vw;
+  font-size: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
+  text-decoration: none;
 
   &:hover {
     background-color: var(--base-2);
@@ -320,6 +301,11 @@ label {
   height: auto;
   margin: auto;
   margin-bottom: 12vh;
+}
+
+p {
+  margin: 10px;
+  color: var(--dark-1);
 }
 
 </style>

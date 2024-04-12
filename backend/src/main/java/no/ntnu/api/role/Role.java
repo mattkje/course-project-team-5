@@ -15,7 +15,7 @@ import java.util.Set;
 /**
  * Entity class for a role.
  */
-@Entity
+@Entity(name = "roles")
 @Table(name = "roles")
 public class Role {
     @Id

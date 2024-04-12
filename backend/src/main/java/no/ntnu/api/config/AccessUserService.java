@@ -123,7 +123,7 @@ public class AccessUserService implements UserDetailsService {
    * @param password The plaintext password of the new user
    */
   public void createUser(String username, String password, String email, String firstName, String lastName, String phoneNumber) {
-    Role userRole = roleRepository.findByName("ROLE_USER");
+    Role userRole = roleRepository.findOneByName("ROLE_USER");
     if (userRole != null) {
       User user = new User(username, createHash(password), email, firstName, lastName, phoneNumber);
       user.addRole(userRole);

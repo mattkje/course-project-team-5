@@ -87,6 +87,7 @@ public class UserController {
         final UserDetails userDetails = userService.loadUserByUsername(
             authenticationRequest.getUsername());
         final String jwt = jwtUtil.generateToken(userDetails);
+        System.out.println("poop");
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
     }
 
