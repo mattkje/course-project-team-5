@@ -69,8 +69,8 @@
 body {
   font-family: Inter, sans-serif;
   background-color: black;
-  background-image: url(https://uploads-ssl.webflow.com/6408bea3de5aef58b7e197d4/6438c3059d443cd7a78762eb_stars-bg.png);
-  background-repeat: no-repeat;
+  background-image: url('starsTrans.png');
+  background-repeat: repeat;
   background-position: top;
   background-size: cover;
   margin: 0;

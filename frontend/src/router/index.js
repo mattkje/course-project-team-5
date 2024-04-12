@@ -9,6 +9,16 @@ const routes = [
         component: HomeView
     },
     {
+        path: '/community',
+        name: 'community',
+        component: () => import(/* webpackChunkName: "about" */ '../views/Community.vue')
+    },
+    {
+        path: '/pro',
+        name: 'pro',
+        component: () => import(/* webpackChunkName: "about" */ '../views/LearniversePro.vue')
+    },
+    {
         path: '/about',
         name: 'about',
         component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')

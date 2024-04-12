@@ -12,7 +12,7 @@
       <button id="scrollLeftButton">
         <img class="leftArrow" src="/arrow.svg" alt="Connect">
       </button>
-      <div class="featured">
+      <div id="featured" class="featured">
         <!--- Featured courses will be appended here --->
       </div>
       <button id="scrollRightButton">
@@ -405,6 +405,28 @@ function loadButtons() {
 </script>
 
 <style scoped>
+@media (max-width: 600px) {
+
+  #scrollLeftButton,
+  #scrollRightButton,
+  #scrollLeftButton-ds,
+  #scrollRightButton-ds,
+  #scrollLeftButton-dm,
+  #scrollRightButton-dm,
+  #scrollLeftButton-it,
+  #scrollRightButton-it,
+  #scrollLeftButton-lp,
+  #scrollRightButton-lp {
+    display: none;
+  }
+
+  #featured {
+    display: flow;
+    justify-content: center;
+    align-content: center;
+  }
+}
+
 
 hr {
   background: #ADADAD;
