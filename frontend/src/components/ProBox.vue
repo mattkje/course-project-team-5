@@ -1,7 +1,7 @@
 <template>
   <div class="pro-box">
     <img class="bend-bottom" src="/bend.svg" alt="Connect">
-    <img class="pro-icon" src="/pro.svg" alt="Connect">
+    <img id="pro-icon" class="pro-icon" src="/pro.svg" alt="Connect">
     <h2>Unlock Premium Features with Learniverse Pro</h2>
     <p>Get access to exclusive courses, personalized learning paths, and more with Learniverse Pro.</p>
     <button class="fancy-button" @click="toggleProInfo">Learn More</button>
@@ -36,6 +36,14 @@ export default {
 </script>
 
 <style scoped>
+@media (max-width: 600px) {
+  #pro-icon {
+    height: 100px;
+    width: 100px;
+    animation: orbit 5s infinite;
+  }
+}
+
 :root {
   font-family: 'Inter', sans-serif;
 }

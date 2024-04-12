@@ -325,6 +325,8 @@ function populateCourses(selector, filterFn) {
                   image.className = 'content-box-image';
                   contentBox.appendChild(image);
 
+
+
                   const descriptionBox = document.createElement('div');
                   descriptionBox.className = 'content-box-description';
                   contentBox.appendChild(descriptionBox);
@@ -337,13 +339,9 @@ function populateCourses(selector, filterFn) {
                   const hr = document.createElement('hr');
                   descriptionBox.appendChild(hr);
 
-                  const contentDescription = document.createElement('div');
-                  contentDescription.className = 'content-description';
-                  descriptionBox.appendChild(contentDescription);
-
                   const attributes = document.createElement('div');
                   attributes.className = 'content-box-attributes';
-                  contentDescription.appendChild(attributes);
+                  descriptionBox.appendChild(attributes);
 
                   // Create and append the category attribute
                   const categoryAttribute = document.createElement('div');
@@ -352,7 +350,7 @@ function populateCourses(selector, filterFn) {
 
                   const categoryIcon = document.createElement('img');
                   categoryIcon.className = 'content-box-icon';
-                  categoryIcon.src = '/category.svg'; // Replace with actual path
+                  categoryIcon.src = '/category.svg';
                   categoryAttribute.appendChild(categoryIcon);
 
                   const category = document.createElement('p');
@@ -373,9 +371,8 @@ function populateCourses(selector, filterFn) {
                   const providersElement = document.createElement('p');
                   providersElement.className = 'content-box-text';
 
+
                   const courseProviders = courseProvider.providers.filter(provider => provider.courseId === courseProvider.course.courseId);
-
-
 
                   if (Array.isArray(courseProviders) && courseProviders.length) {
                     providersElement.innerHTML = `${courseProviders.length}&nbsp;Providers`;
@@ -384,6 +381,8 @@ function populateCourses(selector, filterFn) {
                   }
 
                   providersAttribute.appendChild(providersElement);
+
+
 
                   const price = document.createElement('p');
                   price.className = 'content-button';
@@ -419,17 +418,31 @@ function populateCourses(selector, filterFn) {
 
                   const finalPrice = priceInDefaultCurrency * rate;
 
-                  if (currency === 'SUB') {
-                    price.textContent = symbol + finalPrice.toFixed(2) + "/month";
-                  } else {
-                    price.textContent = symbol + finalPrice.toFixed(2);
-                  }
-
                   const priceBox = document.createElement('div');
                   priceBox.className = 'price-box';
+
+
+                  if (currency === 'SUB') {
+                    const image2 = document.createElement('img');
+                    image2.className = 'content-box-image-banner';
+                    image2.src = '/proBanner.svg';
+                    priceBox.appendChild(image2);
+                    price.textContent = symbol + finalPrice.toFixed(2) + "/month";
+                  } else {
+                    const startsAt = document.createElement('p');
+                    startsAt.className = 'content-box-text';
+                    startsAt.textContent = 'Starts at';
+                    priceBox.appendChild(startsAt);
+                    price.textContent =symbol + finalPrice.toFixed(2);
+                  }
+
+
                   priceBox.appendChild(price);
 
-                  contentDescription.appendChild(priceBox);
+                  const hr2 = document.createElement('hr');
+                  descriptionBox.appendChild(hr2);
+
+                  descriptionBox.appendChild(priceBox);
 
                   document.querySelector(selector).appendChild(contentBox.cloneNode(true));
                 }
@@ -771,51 +784,7 @@ input:focus {
   margin: 400px auto 0 auto;
 }
 
-.search-box {
-  border: none;
-  padding: 40px 20px;
-  border-radius: 15px;
-  width: 70%;
-  align-content: center;
-  text-decoration: none;
-  display: flex;
-  margin: auto;
-}
 
-.content-box {
-  color: var(--dark-1);
-  border: none;
-  border-radius: 15px;
-  align-content: center;
-  text-decoration: none;
-  margin-left: 15px;
-  margin-right: 15px;
-  box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
-}
-
-.content-box-description {
-  color: var(--dark-1);
-  padding: 20px 0;
-  border-radius: 0 0 15px 15px;
-  width: 100%;
-
-}
-
-.content-box-text {
-  padding: 0 5px;
-}
-
-.content-box-image {
-  height: 250px;
-  object-fit: cover;
-  border-radius: 15px;
-}
-
-.content-price {
-  padding: 0 15px 0 0;
-  position: absolute;
-  right: 0;
-}
 
 .hbox {
   display: flex;
@@ -851,14 +820,6 @@ input:focus {
 
 .additional-info {
   display: none;
-}
-
-#carlBox:hover .additional-info,
-#mattBox:hover .additional-info
-,#alejandroBox:hover .additional-info
-,#liBox:hover .additional-info {
-  display: block;
-
 }
 
 
