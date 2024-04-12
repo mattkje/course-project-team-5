@@ -35,3 +35,6 @@ build/
 ### Environments ###
 .env
 *.env
+
+
+/OldStatic

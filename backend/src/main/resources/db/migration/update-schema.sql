@@ -63,7 +63,7 @@ CREATE TABLE providers
 CREATE TABLE roles
 (
     id   BIGINT AUTO_INCREMENT NOT NULL,
-    name VARCHAR(255) NULL,
+    name VARCHAR(255)          NULL,
     CONSTRAINT pk_roles PRIMARY KEY (id)
 );
 
@@ -76,16 +76,16 @@ CREATE TABLE user_roles
 
 CREATE TABLE users
 (
-    id      INT AUTO_INCREMENT NOT NULL,
-    username    VARCHAR(16) NULL,
-    email        VARCHAR(45) NULL,
-    password     VARCHAR(64) NULL,
-    first_name   VARCHAR(20) NULL,
-    last_name    VARCHAR(20) NULL,
-    active       BIT(1)      NOT NULL,
-    created_at   datetime    NULL,
-    updated_at   datetime    NULL,
-    phone_number VARCHAR(20) NULL,
+    id           INT AUTO_INCREMENT NOT NULL,
+    username     VARCHAR(16)        NULL,
+    email        VARCHAR(45)        NULL,
+    password     VARCHAR(64)        NULL,
+    first_name   VARCHAR(20)        NULL,
+    last_name    VARCHAR(20)        NULL,
+    active       BIT(1)             NOT NULL,
+    created_at   datetime           NULL,
+    updated_at   datetime           NULL,
+    phone_number VARCHAR(20)        NULL,
     CONSTRAINT pk_users PRIMARY KEY (id)
 );
 
@@ -103,17 +103,19 @@ ALTER TABLE user_roles
 
 INSERT INTO users (id, username, email, password, first_name, last_name, active, created_at, updated_at,
                    phone_number)
-VALUES (1, 'john_doe', 'john.doe@example.com', '$2a$10$v8zrek0TRlIUCME2Na10DeeiIBiHD1gpAeEU5m9FzIpw4C/YABf9O', 'John',
+VALUES (1, 'dave', 'dave@mail.com', '$2a$10$w3Ood9euoLlvQ6TO9br4QOAn5DEjW2wsT9VSDG5SDW067qq7FvFT2', 'Dave', 'Johnson',
+        true, '2024-02-12', '2024-02-12',
+        '234098434'),
+       (2, 'chuck', 'hideyograndma@mail.com', '$2a$10$HdWs3aJY7QsVzcvCXYKH3OldTopGfD5MA9eVY/8r8fZd/GdIm.QJ.', 'Chuck',
+        'Norris', true, '2024-02-12', '2024-02-12',
+        '123123442'),
+       (3, 'john_doe', 'john.doe@example.com', '$2a$10$v8zrek0TRlIUCME2Na10DeeiIBiHD1gpAeEU5m9FzIpw4C/YABf9O', 'John',
         'Doe', true, '2024-02-12', '2024-02-12',
-        '+1234567890'),
-       (2, 'jane_smith', 'jane.smith@example.com', 'smithpassword', 'Jane', 'Smith', true, '2024-02-12', '2024-02-12',
-        '+1987654321'),
-       (3, 'bob_johnson', 'bob.johnson@example.com', 'b0b!pass', 'Bob', 'Johnson', false, '2024-02-12', '2024-02-12',
-        '+1122334455'),
-       (4, 'emily_davis', 'emily.davis@example.com', 'davispass123', 'Emily', 'Davis', true, '2024-02-12', '2024-02-12',
-        '+1555666777');
+        '+1234567890');
 
-INSERT INTO courses (course_id, category, title, keywords, level, closest_course_session, course_size, hours_per_week,
+
+
+    INSERT INTO courses (course_id, category, title, keywords, level, closest_course_session, course_size, hours_per_week,
                      related_certifications, description, image)
 VALUES (1, 'Information Technology', 'Real-Time Programming in Java',
         '["Java", "real-time programming", "multi-threading", "programming"]', 'Expert', '03.06 - 28.06', 7.5, 40,
