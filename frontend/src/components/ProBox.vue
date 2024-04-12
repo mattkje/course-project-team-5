@@ -4,8 +4,8 @@
     <img class="pro-icon" src="/pro.svg" alt="Connect">
     <h2>Unlock Premium Features with Learniverse Pro</h2>
     <p>Get access to exclusive courses, personalized learning paths, and more with Learniverse Pro.</p>
-    <button class="fancy-button" id="showPro">Learn More</button>
-    <div class="pro-features" id="proInfoText">
+    <button class="fancy-button" @click="toggleProInfo">Learn More</button>
+    <div class="pro-features" id="proInfoText" :style="{ height: isProInfoVisible ? '300px' : '0px', opacity: isProInfoVisible ? '1' : '0' }">
       <h2>Perks</h2>
       <ul>
         <li>Access to exclusive courses</li>
@@ -14,7 +14,7 @@
       </ul>
       <div class="pro-pricing">
         <h2>Starting at $9.99/month</h2>
-        <button class="standard-button">Get Started</button>
+        <button class="standard-button">Sign up to Get Started</button>
       </div>
     </div>
     <img class="bend" src="/bend.svg" alt="Connect">
@@ -22,9 +22,19 @@
 </template>
 <script>
 export default {
-  name: 'ProBox'
-}
+  data() {
+    return {
+      isProInfoVisible: false,
+    };
+  },
+  methods: {
+    toggleProInfo() {
+      this.isProInfoVisible = !this.isProInfoVisible;
+    },
+  },
+};
 </script>
+
 <style scoped>
 :root {
   font-family: 'Inter', sans-serif;
@@ -44,7 +54,6 @@ img {
 
 
 ul {
-  list-style-type: none;
   margin: 0;
   padding: 0;
 }
@@ -100,6 +109,16 @@ ul {
 .pro-box h2 {
   font-weight: bold;
   color: white;
+}
+
+.pro-pricing {
+  min-height: 100px;
+  margin: 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
 
 @keyframes pulse {

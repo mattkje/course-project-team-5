@@ -166,9 +166,7 @@ function populateCourses(selector, filterFn) {
                   image.className = 'content-box-image';
                   contentBox.appendChild(image);
 
-                  const image2 = document.createElement('img');
-                  image2.className = 'content-box-image-banner';
-                  contentBox.appendChild(image2);
+
 
                   const descriptionBox = document.createElement('div');
                   descriptionBox.className = 'content-box-description';
@@ -182,13 +180,9 @@ function populateCourses(selector, filterFn) {
                   const hr = document.createElement('hr');
                   descriptionBox.appendChild(hr);
 
-                  const contentDescription = document.createElement('div');
-                  contentDescription.className = 'content-description';
-                  descriptionBox.appendChild(contentDescription);
-
                   const attributes = document.createElement('div');
                   attributes.className = 'content-box-attributes';
-                  contentDescription.appendChild(attributes);
+                  descriptionBox.appendChild(attributes);
 
                   // Create and append the category attribute
                   const categoryAttribute = document.createElement('div');
@@ -265,18 +259,31 @@ function populateCourses(selector, filterFn) {
 
                   const finalPrice = priceInDefaultCurrency * rate;
 
-                  if (currency === 'SUB') {
-                    image2.src = '/proBanner.svg';
-                    price.textContent = symbol + finalPrice.toFixed(2) + "/month";
-                  } else {
-                    price.textContent = symbol + finalPrice.toFixed(2);
-                  }
-
                   const priceBox = document.createElement('div');
                   priceBox.className = 'price-box';
+
+
+                  if (currency === 'SUB') {
+                    const image2 = document.createElement('img');
+                    image2.className = 'content-box-image-banner';
+                    image2.src = '/proBanner.svg';
+                    priceBox.appendChild(image2);
+                    price.textContent = symbol + finalPrice.toFixed(2) + "/month";
+                  } else {
+                    const startsAt = document.createElement('p');
+                    startsAt.className = 'content-box-text';
+                    startsAt.textContent = 'Starts at';
+                    priceBox.appendChild(startsAt);
+                    price.textContent =symbol + finalPrice.toFixed(2);
+                  }
+
+
                   priceBox.appendChild(price);
 
-                  contentDescription.appendChild(priceBox);
+                  const hr2 = document.createElement('hr');
+                  descriptionBox.appendChild(hr2);
+
+                  descriptionBox.appendChild(priceBox);
 
                   document.querySelector(selector).appendChild(contentBox.cloneNode(true));
                 }
@@ -339,17 +346,6 @@ function setDefaultCurrency() {
 }
 
 function loadButtons() {
-  document.getElementById('showPro').addEventListener('click', function() {
-    var proInfoText = document.getElementById('proInfoText');
-    if (proInfoText.style.height === '0px') {
-      proInfoText.style.height = '300px';
-      proInfoText.style.opacity = '1';
-    } else {
-      proInfoText.style.height = '0px';
-      proInfoText.style.opacity = '0';
-    }
-  });
-
   const scrollAmount = 332; // Amount of pixels to scroll
   const scrollDuration = 500; //Time to scroll
 
@@ -646,5 +642,7 @@ button {
   font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
+
+
 
 </style>
