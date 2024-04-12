@@ -1,5 +1,49 @@
 <script setup>
+import {getCurrentInstance, onMounted} from "vue";
+const { appContext } = getCurrentInstance();
+const API_URL = appContext.config.globalProperties.$apiAddress;
+onMounted(() => {
+  populateCourses();
+});
 
+function populateCourses() {
+  fetch(API_URL + '/community/courses')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(courses => {
+        const courseBlock = document.querySelector('.course-block');
+
+        // Clear the course block
+        courseBlock.innerHTML = '';
+
+        courses.forEach(course => {
+
+          // Create a new course card element
+          const courseCard = document.createElement('a');
+          courseCard.className = 'course-card';
+          courseCard.href = `/community/course/${course.courseId}`;
+
+          const imageUrl = course.image ? course.image : '/noImageCom.svg';
+          courseCard.innerHTML = `
+        <img src="${imageUrl}" alt="Course ${course.courseId}">
+        <div class="course-card-description">
+            <h3>${course.title}</h3>
+            <p>${course.description}</p>
+        </div>
+      `;
+
+          // Append the course card to the course block
+          courseBlock.appendChild(courseCard);
+        });
+      })
+      .catch(error => {
+        console.log('There was a problem with the fetch operation: ' + error.message);
+      });
+}
 </script>
 
 <template>
@@ -30,91 +74,7 @@
       </div>
     </div>
 
-    <div class="course-block">
-      <div class="course-card">
-        <img src="/desk.jpg" alt="Course 1">
-        <h3>Introduction to Web Development</h3>
-        <p>Learn the basics of web development and build your first website.</p>
-        <button class="standard-button">Enroll</button>
-      </div>
-      <div class="course-card">
-        <img src="/desk.jpg" alt="Course 2">
-        <h3>Introduction to Data Science</h3>
-        <p>Learn the basics of data science and analyze real-world data.</p>
-        <button class="standard-button">Enroll</button>
-      </div>
-      <div class="course-card">
-        <img src="/desk.jpg" alt="Course 3">
-        <h3>Introduction to Digital Marketing</h3>
-        <p>Learn the basics of digital marketing and grow your online presence.</p>
-        <button class="standard-button">Enroll</button>
-      </div>
-      <div class="course-card">
-        <img src="/desk.jpg" alt="Course 1">
-        <h3>Introduction to Web Development</h3>
-        <p>Learn the basics of web development and build your first website.</p>
-        <button class="standard-button">Enroll</button>
-      </div>
-      <div class="course-card">
-        <img src="/desk.jpg" alt="Course 1">
-        <h3>Introduction to Web Development</h3>
-        <p>Learn the basics of web development and build your first website.</p>
-        <button class="standard-button">Enroll</button>
-      </div>
-      <div class="course-card">
-        <img src="/desk.jpg" alt="Course 1">
-        <h3>Introduction to Web Development</h3>
-        <p>Learn the basics of web development and build your first website.</p>
-        <button class="standard-button">Enroll</button>
-      </div>
-      <div class="course-card">
-        <img src="/desk.jpg" alt="Course 1">
-        <h3>Introduction to Web Development</h3>
-        <p>Learn the basics of web development and build your first website.</p>
-        <button class="standard-button">Enroll</button>
-      </div>
-      <div class="course-card">
-        <img src="/desk.jpg" alt="Course 1">
-        <h3>Introduction to Web Development</h3>
-        <p>Learn the basics of web development and build your first website.</p>
-        <button class="standard-button">Enroll</button>
-      </div>
-      <div class="course-card">
-        <img src="/desk.jpg" alt="Course 1">
-        <h3>Introduction to Web Development</h3>
-        <p>Learn the basics of web development and build your first website.</p>
-        <button class="standard-button">Enroll</button>
-      </div>
-      <div class="course-card">
-        <img src="/desk.jpg" alt="Course 1">
-        <h3>Introduction to Web Development</h3>
-        <p>Learn the basics of web development and build your first website.</p>
-        <button class="standard-button">Enroll</button>
-      </div><div class="course-card">
-      <img src="/desk.jpg" alt="Course 1">
-      <h3>Introduction to Web Development</h3>
-      <p>Learn the basics of web development and build your first website.</p>
-      <button class="standard-button">Enroll</button>
-    </div>
-      <div class="course-card">
-        <img src="/desk.jpg" alt="Course 1">
-        <h3>Introduction to Web Development</h3>
-        <p>Learn the basics of web development and build your first website.</p>
-        <button class="standard-button">Enroll</button>
-      </div>
-      <div class="course-card">
-        <img src="/desk.jpg" alt="Course 1">
-        <h3>Introduction to Web Development</h3>
-        <p>Learn the basics of web development and build your first website.</p>
-        <button class="standard-button">Enroll</button>
-      </div><div class="course-card">
-      <img src="/desk.jpg" alt="Course 1">
-      <h3>Introduction to Web Development</h3>
-      <p>Learn the basics of web development and build your first website.</p>
-      <button class="standard-button">Enroll</button>
-    </div>
-
-
+    <div class="course-block" ref="courseBlock">
     </div>
     <div class="greeting"></div>
   </div>
@@ -233,50 +193,6 @@
   flex-wrap: wrap;
   margin: 0 auto;
   width: 70%;
-}
-
-.course-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 20px;
-  padding: 20px;
-  border-radius: 15px;
-  background-color: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 300px;
-}
-
-.course-card img {
-  width: 100%;
-  border-radius: 15px;
-}
-
-.course-card h3 {
-  font-size: 20px;
-  margin: 10px 0;
-}
-
-.course-card p {
-  color: #606060;
-  font-size: 16px;
-  margin: 10px 0;
-}
-
-.standard-button {
-  padding: 10px 20px;
-  margin: 10px 0;
-  border-radius: 5px;
-  border: solid 2px #584BEB;
-  background: #584BEB;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.standard-button:hover {
-  background: #6E67FC;
 }
 
 

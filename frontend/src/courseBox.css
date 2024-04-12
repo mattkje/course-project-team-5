@@ -120,3 +120,54 @@ hr {
     height: 2px;
     border: none;
 }
+
+.course-block {
+
+    .course-card {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin: 20px;
+        padding: 20px;
+        border-radius: 15px;
+        background-color: white;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        min-width: 600px;
+        min-height: 200px;
+        max-width: 600px;
+        max-height: 200px;
+        transition: transform 0.5s ease;
+        text-decoration: none;
+        &:hover {
+            transform: scale(1.05);
+        }
+    }
+
+    .course-card-description {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        margin: 10px;
+    }
+
+    .course-card img {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 15px;
+    }
+
+    .course-card h3 {
+        font-size: 20px;
+        margin: 10px 0;
+    }
+
+    .course-card p {
+        color: #606060;
+        font-size: 16px;
+        margin: 10px 0;
+    }
+
+}

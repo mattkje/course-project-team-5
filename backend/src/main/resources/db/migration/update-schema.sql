@@ -60,6 +60,15 @@ CREATE TABLE providers
     CONSTRAINT pk_providers PRIMARY KEY (provider_id)
 );
 
+CREATE TABLE community_courses (
+                                   id INT AUTO_INCREMENT,
+                                   title VARCHAR(255),
+                                   category VARCHAR(100),
+                                   description VARCHAR(6000),
+                                   image VARCHAR(255),
+                                   PRIMARY KEY (id)
+);
+
 CREATE TABLE roles
 (
     id   BIGINT AUTO_INCREMENT NOT NULL,
@@ -320,3 +329,11 @@ VALUES ('USD', 'United States Dollar', '$', 1),
 INSERT INTO roles (id, name)
 VALUES (1, 'ROLE_USER'),
        (2, 'ROLE_ADMIN');
+
+INSERT INTO community_courses (title, category, description, image)
+VALUES
+    ('Introduction to Python', 'Programming', 'This course will introduce the basics of Python programming language.', null),
+    ('Web Development with JavaScript', 'Web Development', 'This course covers the essential concepts and techniques for web development using JavaScript.', null),
+    ('Data Structures in Java', 'Data Structures', 'This course provides a comprehensive introduction to data structures using Java.', null),
+    ('Machine Learning with R', 'Machine Learning', 'This course covers the fundamental concepts of machine learning using R.', null),
+    ('Database Management with SQL', 'Database', 'This course provides a comprehensive introduction to SQL and database management.', 'https://s33046.pcdn.co/wp-content/uploads/2022/09/options-command.png');
