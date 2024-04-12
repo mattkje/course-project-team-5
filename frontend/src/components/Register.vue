@@ -1,4 +1,6 @@
 <script setup>
+
+
 import { ref } from 'vue';
 import { sendApiRequest } from '../js/requests.js';
 import { redirectTo } from '../js/navigation.js';
@@ -10,6 +12,7 @@ const firstName = ref('');
 const lastName = ref('');
 const email = ref('');
 const phoneNumber = ref('');
+const isUserCreated = ref(false);
 
 const register = async () => {
   const signupData = {
@@ -24,7 +27,7 @@ const register = async () => {
 };
 
 function onSignupSuccess() {
-  redirectTo("/");
+  isUserCreated.value = true;
 }
 
 function onSignUpError(error) {
@@ -34,7 +37,7 @@ function onSignUpError(error) {
 </script>
 
 <template>
-  <form @submit.prevent="register" id="registrationForm" method="post">
+  <form v-if="!isUserCreated" @submit.prevent="register" id="registrationForm" method="post">
     <div class="login-container">
       <div class="login-box">
         <div class="login-field-box">
@@ -77,6 +80,7 @@ function onSignUpError(error) {
       </div>
     </div>
   </form>
+  <div v-else class="sign-up-confirmation"><p>User created successfully!</p><router-link to="/login" class="standard-button">Log in</router-link></div>
 </template>
 
 <style scoped>
@@ -321,5 +325,25 @@ label {
   margin: auto;
   margin-bottom: 12vh;
 }
+
+.sign-up-confirmation {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  font-size: 25px;
+}
+
+.sign-up-confirmation .standard-button {
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2vh;
+  font-size: 15px;
+  text-decoration: none;
+}
+
 
 </style>
