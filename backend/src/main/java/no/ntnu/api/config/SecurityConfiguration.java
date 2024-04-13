@@ -15,6 +15,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 /**
  * Creates AuthenticationManager - set up authentication type.
  * The @EnableMethodSecurity is needed so that each endpoint can specify which role it requires
@@ -49,16 +51,15 @@ public class SecurityConfiguration {
    * @throws Exception When security configuration fails
    */
   @Bean
-  public SecurityFilterChain configureAuthorizationFilterChain(HttpSecurity http) throws Exception {
-    http.cors().and().csrf().disable()
-            .authorizeHttpRequests()
-            .requestMatchers("/api/users/login").permitAll()
-            .requestMatchers("/api/users/register").permitAll()
-            .requestMatchers("/api/courses").permitAll()
-            .anyRequest().authenticated()
-            .and().sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
+  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http
+            .cors(withDefaults())
+            .csrf(csrf -> csrf.disable())
+            .authorizeRequests(authorizeRequests -> authorizeRequests
+                    .requestMatchers("/api/users/login", "/api/users/register", "/api/courses").permitAll()
+                    .anyRequest().authenticated())
+            .sessionManagement(sessionManagement -> sessionManagement
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
     return http.build();
