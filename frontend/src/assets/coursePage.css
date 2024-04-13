@@ -20,7 +20,8 @@
     align-items: start;
     grid-gap: 20px;
 }
-.content-box-icon {
+
+.courseInfoElement .content-box-icon {
     width: 25px;
     height: 25px;
     margin: auto;
