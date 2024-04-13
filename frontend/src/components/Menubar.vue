@@ -1,5 +1,6 @@
 <script setup>
 import {getCurrentInstance, onMounted} from "vue";
+import {getAuthenticatedUser} from "@/js/authentication";
 const { appContext } = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
 
@@ -67,7 +68,8 @@ function setDefaultCurrency() {
           </router-link>
           <select class="fancy-button" id="currencySelect">
           </select>
-          <router-link to="/register" class="standard-button">Log in</router-link>
+          <router-link v-if="getAuthenticatedUser() === null" to="/register" class="standard-button">Log in</router-link>
+          <router-link to="/profile" v-else class="standard-button">Profile</router-link>
         </div>
       </div>
     </div>

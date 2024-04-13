@@ -31,15 +31,6 @@ public class UserController {
     @Autowired
     private AccessUserService userService;
 
-    /**
-     * Create a new user controller.
-     *
-     * @param userService The user service to use
-     */
-    @Autowired
-    public UserController(AccessUserService userService) {
-        this.userService = userService;
-    }
 
     /**
      * Get all users.
@@ -87,7 +78,6 @@ public class UserController {
         final UserDetails userDetails = userService.loadUserByUsername(
             authenticationRequest.getUsername());
         final String jwt = jwtUtil.generateToken(userDetails);
-        System.out.println("poop");
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
     }
 

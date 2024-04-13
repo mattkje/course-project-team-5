@@ -13,6 +13,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * Creates AuthenticationManager - set up authentication type.
@@ -49,14 +50,16 @@ public class SecurityConfiguration {
    */
   @Bean
   public SecurityFilterChain configureAuthorizationFilterChain(HttpSecurity http) throws Exception {
-    http
-        .csrf(AbstractHttpConfigurer::disable)
-        .cors(AbstractHttpConfigurer::disable)
-
-        // Permit all requests without authentication
-        .authorizeRequests((authorize) -> authorize.anyRequest().permitAll())
-        .sessionManagement((session) ->
-            session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+    http.cors().and().csrf().disable()
+            .authorizeHttpRequests()
+            .requestMatchers("/api/users/login").permitAll()
+            .requestMatchers("/api/users/register").permitAll()
+            .requestMatchers("/api/courses").permitAll()
+            .anyRequest().authenticated()
+            .and().sessionManagement()
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+            .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
     return http.build();
   }
