@@ -1,5 +1,47 @@
 <script setup>
+import {getCurrentInstance, onMounted} from "vue";
+const { appContext } = getCurrentInstance();
+const API_URL = appContext.config.globalProperties.$apiAddress;
 
+
+onMounted(() => {
+  currency();
+});
+
+
+function currency(){
+  document.getElementById('currencySelect').innerHTML = '';
+  fetch(API_URL + '/currency')
+      .then(response => response.json())
+      .then(currencies => {
+        const select = document.getElementById('currencySelect');
+        currencies.forEach(currency => {
+          const option = document.createElement('option');
+          option.value = currency.code;
+          option.text = currency.code + ' - ' + currency.symbol;
+          select.appendChild(option);
+        });
+
+        const defaultCurrency = setDefaultCurrency();
+        if (defaultCurrency) {
+          select.value = defaultCurrency;
+        }
+        document.getElementById('currencySelect').addEventListener('change', function() {
+          document.cookie = `defaultCurrency=${this.value}; path=/; max-age=31536000`;
+          location.reload();
+        });
+      })
+      .catch(error => console.error('Error:', error));
+
+}
+
+function setDefaultCurrency() {
+  const cookies = document.cookie.split('; ');
+  const defaultCurrencyCookie = cookies.find(row => row.startsWith('defaultCurrency='));
+  if (defaultCurrencyCookie) {
+    return defaultCurrencyCookie.split('=')[1];
+  }
+}
 </script>
 
 <template>
@@ -54,7 +96,7 @@
             <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linejoin="round" stroke-linecap="round"></path>
           </svg>
         </router-link>
-        <router-link to="/register" class="button">
+        <router-link to="/community" class="button">
           <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" stroke-width="0"
                fill="currentColor" stroke="currentColor" class="icon">
             <path
@@ -104,7 +146,7 @@
   #menubar {
     background-color: rgba(6, 6, 16, 0.9);
     backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   #desktop {
@@ -117,9 +159,6 @@
 }
 
 .menubar {
-  background-color: rgba(6, 6, 16, 0.9);
-  backdrop-filter: blur(5px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
   position: sticky;
   top: 0;
   width: 100%;

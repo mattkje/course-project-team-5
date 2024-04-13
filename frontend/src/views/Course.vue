@@ -784,6 +784,15 @@ input:focus {
   margin: 400px auto 0 auto;
 }
 
+.course-description-box h3{
+  font-size: 20px;
+  font-weight: bold;
+}
+
+#courseDescription {
+  color: #282828;
+}
+
 
 
 .hbox {

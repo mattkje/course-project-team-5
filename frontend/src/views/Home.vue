@@ -1,6 +1,6 @@
 <template>
 
-  <HeroSection msg="HeroSection"/>
+  <HeroSection/>
 
   <div class="course-section">
 
@@ -128,6 +128,9 @@ import HeroSection from "@/components/HeroSection.vue";
 
 import "@/courseBox.css"
 import {getCurrentInstance, onMounted} from 'vue';
+import Planets from "@/components/Planets.vue";
+import home from "@/views/Home.vue";
+
 
 const { appContext } = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
@@ -313,6 +316,7 @@ function checkIfItCourse(courseProvider) {
 
 
 function currency(){
+  document.getElementById('currencySelect').innerHTML = '';
   fetch(API_URL + '/currency')
       .then(response => response.json())
       .then(currencies => {
@@ -426,6 +430,7 @@ function loadButtons() {
     align-content: center;
   }
 }
+
 
 
 hr {

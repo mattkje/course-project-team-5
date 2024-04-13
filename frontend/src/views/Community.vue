@@ -44,10 +44,11 @@ function populateCourses() {
         console.log('There was a problem with the fetch operation: ' + error.message);
       });
 }
+
 </script>
 
 <template>
-  <div id="background" class="background">
+  <div id="background" class="background" >
     <div class="hero-container">
       <div class="hero-box">
         <img id="planet" class="planet1" src="/greenPlanet.svg" alt="Logo">
@@ -87,6 +88,13 @@ function populateCourses() {
     height: 120px;
     animation: ease-in-out pulse 5s infinite;
   }
+}
+
+.shrink-enter-active, .shrink-leave-active {
+  transition: height 0.5s;
+}
+.shrink-enter, .shrink-leave-to /* .shrink-leave-active in <2.1.8 */ {
+  height: 840px;
 }
 
 .background {
