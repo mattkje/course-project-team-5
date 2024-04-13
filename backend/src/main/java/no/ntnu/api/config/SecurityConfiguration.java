@@ -44,27 +44,30 @@ public class SecurityConfiguration {
     auth.userDetailsService(userDetailsService);
   }
 
-  /**
-   * This method will be called automatically by the framework to find the authentication to use.
-   *
-   * @param http HttpSecurity setting builder
-   * @throws Exception When security configuration fails
-   */
   @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+  public SecurityFilterChain apiSecurityFilterChain(HttpSecurity http) throws Exception {
     http
-            .cors(withDefaults())
-            .csrf(csrf -> csrf.disable())
-            .authorizeRequests(authorizeRequests -> authorizeRequests
-                    .requestMatchers("/api/users/login", "/api/users/register", "/api/courses").permitAll()
-                    .anyRequest().authenticated())
-            .sessionManagement(sessionManagement -> sessionManagement
-                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-
+        .securityMatchers((matchers) -> matchers.requestMatchers("/api/courses", "/api/courses/*"))
+        .authorizeHttpRequests((requests) -> requests.anyRequest().permitAll())
+        .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     return http.build();
   }
 
+  // For api
+  @Bean
+  public SecurityFilterChain loginSecurityFilterChain(HttpSecurity http) throws Exception {
+    http
+        .csrf(AbstractHttpConfigurer::disable)
+        .cors(AbstractHttpConfigurer::disable)
+        .securityMatchers((matchers) -> matchers.requestMatchers("/api/users/login", "/api/users/register"))
+        .authorizeHttpRequests((requests) -> requests.anyRequest().permitAll())
+        .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+    return http.build();
+  }
+
+
+
+  // For login
   @Bean
   public AuthenticationManager authenticationManager(AuthenticationConfiguration config)
       throws Exception {
