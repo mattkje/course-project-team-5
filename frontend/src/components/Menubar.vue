@@ -63,13 +63,15 @@ function setDefaultCurrency() {
         </div>
 
         <div class="right-content">
-          <router-link to="/cart" class="fancy-button">
-            <img class="cart" src="/cart.svg" alt="Cart">
-          </router-link>
           <select class="fancy-button" id="currencySelect">
           </select>
+          <router-link to="/cart" class="fancy-button-round">
+            <img class="cart" src="/cart.svg" alt="Cart">
+          </router-link>
           <router-link v-if="getAuthenticatedUser() === null" to="/register" class="standard-button">Log in</router-link>
-          <router-link to="/profile" v-else class="standard-button">Profile</router-link>
+          <router-link to="/profile" v-else class="fancy-button-round">
+            <img class="cart" src="/account.svg" alt="Cart">
+          </router-link>
         </div>
       </div>
     </div>
@@ -263,6 +265,28 @@ function setDefaultCurrency() {
 .fancy-button:hover {
   background-color: #262626;
   box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
+}
+
+.fancy-button-round {
+  color: #EAEAEA;
+  font-family: 'Inter', sans-serif;
+  font-weight: bold;
+  font-size: 14px;
+  padding: 10px;
+  border-radius: 50%;
+  text-decoration: none;
+  display: flex;
+  margin: 0 5px;
+  max-height: 40px;
+  min-height: 40px;
+  background: #0C0C0C;
+  border: 0.5px solid #252525;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    background-color: #262626;
+    box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
+  }
 }
 
 .standard-button {
