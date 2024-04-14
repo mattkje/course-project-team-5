@@ -32,6 +32,11 @@ function setCookie(cname, cvalue, exdays) {
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 
+function deleteCookie(cookieName) {
+    setCookie(cookieName, "", -1);
+}
+
 export { getCookie };
 export { setCookie };
 export { showFormError };
+export { deleteCookie };

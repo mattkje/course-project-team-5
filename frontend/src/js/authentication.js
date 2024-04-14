@@ -1,5 +1,6 @@
-import {getCookie, setCookie} from "@/js/tools";
+import {deleteCookie, getCookie, setCookie} from "@/js/tools";
 import {sendApiRequest} from "@/js/requests";
+import {redirectTo} from "@/js/navigation";
 
 function getAuthenticatedUser() {
     let user = null;
@@ -58,6 +59,18 @@ function parseJwt(token) {
     }).join(''));
 
     return JSON.parse(jsonPayload);
+}
+
+export function doLogout() {
+    console.log("Logging out...");
+    deleteAuthorizationCookies();
+    redirectTo("/");
+}
+
+function deleteAuthorizationCookies() {
+    deleteCookie("jwt");
+    deleteCookie("current_username");
+    deleteCookie("current_user_roles");
 }
 
 export {getAuthenticatedUser};

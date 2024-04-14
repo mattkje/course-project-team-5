@@ -3,6 +3,7 @@ import {getAuthenticatedUser} from "../js/authentication";
 import {sendApiRequest} from "@/js/requests";
 import {redirectTo} from "@/js/navigation";
 import {onMounted} from "vue";
+import {doLogout} from "@/js/authentication";
 
 onMounted(loadProfileData);
 
@@ -44,7 +45,12 @@ function showProfileData(profileData) {
         <p>Last name: </p><label for="lastName"></label>
         <p>Phone number:</p><label for="phoneNumber"></label>
       </div>
+      <div class="profile-buttons">
+        <button class="standard-button">Edit profile</button>
+        <button class="standard-button">Change password</button>
+        <button class="log-out" @click="doLogout">Log out</button>
     </div>
+  </div>
   </div>
 </template>
 
