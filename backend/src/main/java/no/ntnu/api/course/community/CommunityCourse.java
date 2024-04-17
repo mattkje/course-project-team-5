@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.util.Date;
 
 /**
  * Represents a community course in the database.
@@ -26,6 +27,8 @@ public class CommunityCourse {
     private String description;
     @Column(length = 6000)
     private String content;
+    @Column()
+    private Date postDate;
     @Column
     private String image;
 
@@ -88,5 +91,13 @@ public class CommunityCourse {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public Date getPostDate() {
+        return postDate;
+    }
+
+    public void setPostDate(Date postDate) {
+        this.postDate = postDate;
     }
 }

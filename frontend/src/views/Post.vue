@@ -15,9 +15,13 @@
       <div class="course">
         <div class="course-description-box">
           <h2 id="courseTitle"></h2>
-          <p id="postAuthor"></p>
+          <div class="author-and-time">
+            <p id="postAuthor"></p>
+            <p id="postDate"></p>
+          </div>
+
           <hr>
-          <h3>Course Description</h3>
+          <h3>Topic</h3>
           <p id="courseDescription"></p>
           <hr>
           <h3>Post</h3>
@@ -78,10 +82,12 @@ function populateCoursePage() {
         //Populating the similar courses box
         populatePosts('.featured');
 
+        const dateText = formatDate(data.postDate)
         //Populating the course page
         document.getElementById('courseCategoryLink').innerText = data.category;
         document.getElementById('courseTitleLink').innerText = data.title;
         document.getElementById('postAuthor').innerText = data.author;
+        document.getElementById('postDate').innerText = 'Posted: '+ dateText;
         document.getElementById('courseDescription').innerText = data.description;
         document.getElementById('postContent').innerText = data.content;
         document.getElementById('courseImage').src = data.image || '/noImageCom.svg';
@@ -107,25 +113,18 @@ function getOrdinalSuffix(day) {
   }
 }
 
-//Should format the date from DD.MM - DD.MM to "MMM DDth -> MMM DDth"
-function formatDate(closestCourseSession) {
-  let currentYear = new Date().getFullYear();
-  let dates = closestCourseSession.split(' - ');
-  let startDateComponents = dates[0].split('.');
-  let endDateComponents = dates[1].split('.');
+// Output: 2024-02-01
+function formatDate(dateString) {
+  const originalDate = new Date(dateString);
 
-  let startDate = new Date(`${startDateComponents[1]}/${startDateComponents[0]}/${currentYear}`);
-  let endDate = new Date(`${endDateComponents[1]}/${endDateComponents[0]}/${currentYear}`);
+  const year = originalDate.getFullYear();
 
-  let options = {month: 'short', day: 'numeric', timeZone: 'UTC'};
+  const month = originalDate.getMonth() + 1;
+  const day = originalDate.getDate();
 
-  let formattedStartDate = startDate.toLocaleString('en-US', options);
-  let formattedEndDate = endDate.toLocaleString('en-US', options);
+  const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
 
-  formattedStartDate = `${formattedStartDate.slice(0, -2)} ${getOrdinalSuffix(startDate.getDate())}`;
-  formattedEndDate = `${formattedEndDate.slice(0, -2)}${getOrdinalSuffix(endDate.getDate())}`;
-
-  return `${formattedStartDate} -> ${formattedEndDate}`;
+  return formattedDate;
 }
 
 function populatePosts() {
@@ -192,36 +191,6 @@ function populatePosts() {
 }
 
 
-let map;
-
-async function initMap(lat, lng) {
-
-  if (lat === null || lng === null) {
-    onlineCourse();
-  } else {
-
-    document.getElementById('map-container').style.display = "block";
-    const position = {lat: lat, lng: lng};
-
-    const {Map} = await google.maps.importLibrary("maps");
-    const {AdvancedMarkerElement} = await google.maps.importLibrary("marker");
-
-    // The map, centered at Uluru
-    map = new Map(document.getElementById("map"), {
-      zoom: 8,
-      center: position,
-      mapId: "DEMO_MAP_ID",
-    });
-
-    // The marker, positioned at Uluru
-    const marker = new AdvancedMarkerElement({
-      map: map,
-      position: position,
-      title: "Uluru",
-    });
-  }
-
-}
 
 function onlineCourse() {
   document.getElementById('map-container').style.display = "none";
@@ -513,6 +482,7 @@ input:focus {
   border: none;
   padding: 10px 20px;
   margin: 400px auto 0 auto;
+  width: 100%;
 }
 
 .course-description-box h3 {
@@ -520,10 +490,15 @@ input:focus {
   font-weight: bold;
 }
 
+.course-description-box hr {
+  width: 1400px;
+
+}
 
 #courseDescription,
 #postAuthor,
-#postContent {
+#postContent,
+#postDate{
   color: #282828;
 }
 
@@ -770,4 +745,8 @@ button {
   width: 90%;
 }
 
+.author-and-time{
+  display: flex;
+  justify-content: space-between;
+}
 </style>
