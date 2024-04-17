@@ -38,9 +38,8 @@
           </div>
           <hr>
           <div class="course-action-box">
-            <button id="enrollButton" class="enroll-button">
-              Buy now
-            </button>
+
+            <button id="enrollButton" class="enroll-button">Buy now</button>
             <button class="CartBtn">
                     <span class="IconContainer">
                         <img class="cart-icon-small" src="/cart-small.svg" alt="Cart">
@@ -72,6 +71,7 @@
 <script setup>
 import {getCurrentInstance, onMounted} from 'vue';
 import "@/assets/coursePage.css"
+import {isOfRoleUser} from "@/js/authentication";
 onMounted(() => {
   populateCoursePage();
   currency();
@@ -229,7 +229,13 @@ function populateCoursePage() {
                   locationText.innerText = 'Online';
                   document.getElementById('providerList').appendChild(providerElement);
                   providerElement.addEventListener('click', function() {
-                    document.getElementById('enrollButton').textContent = "Enroll for " + symbol + finalPrice.toFixed(2) + "/month";
+                    if (isOfRoleUser('ROLE_PRO')){
+                      document.getElementById('enrollButton').className = 'pro-enroll-button'
+                      document.getElementById('enrollButton').textContent = "Go to Course";
+                    } else {
+                      document.getElementById('enrollButton').textContent = "Enroll for " + symbol + finalPrice.toFixed(2) + "/month";
+                    }
+
                     initMap(provider.latitude, provider.longitude);
                   });
                 } else {
@@ -1055,6 +1061,23 @@ button {
 .enroll-button:active {
   transform: scale(0.95);
   transition-duration: .5s;
+}
+
+.pro-enroll-button {
+  font-family: 'Inter', sans-serif;
+  font-weight: bold;
+  color: white;
+  font-size: 1.04em;
+  background: #efb94f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70%;
+  height: 50px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all .5s;
+  margin-right: 10px;
 }
 
 .CartBtn {

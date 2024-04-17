@@ -18,10 +18,14 @@ public class CommunityCourse {
     private int id;
     @Column()
     private String title;
+    @Column()
+    private String author;
     @Column(length = 100)
     private String category;
-    @Column(length = 6000)
+    @Column(length = 100)
     private String description;
+    @Column(length = 6000)
+    private String content;
     @Column
     private String image;
 
@@ -68,5 +72,21 @@ public class CommunityCourse {
 
     public String getImage() {
         return image;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 }

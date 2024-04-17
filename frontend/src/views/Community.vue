@@ -1,6 +1,7 @@
 <script setup>
 import {getCurrentInstance, onMounted} from "vue";
-const { appContext } = getCurrentInstance();
+
+const {appContext} = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
 onMounted(() => {
   populateCourses();
@@ -25,13 +26,14 @@ function populateCourses() {
           // Create a new course card element
           const courseCard = document.createElement('a');
           courseCard.className = 'course-card';
-          courseCard.href = `/community/course/${course.courseId}`;
+          courseCard.href = `/community/post?id=${course.courseId}`;
 
           const imageUrl = course.image ? course.image : '/noImageCom.svg';
           courseCard.innerHTML = `
         <img src="${imageUrl}" alt="Course ${course.courseId}">
         <div class="course-card-description">
             <h3>${course.title}</h3>
+            <p>Posted By: ${course.author}</p>
             <p>${course.description}</p>
         </div>
       `;
@@ -48,7 +50,7 @@ function populateCourses() {
 </script>
 
 <template>
-  <div id="background" class="background" >
+  <div id="background" class="background">
     <div class="hero-container">
       <div class="hero-box">
         <img id="planet" class="planet1" src="/greenPlanet.svg" alt="Logo">
@@ -63,7 +65,7 @@ function populateCourses() {
       <h2>Community</h2>
 
     </div>
-    <p class="description" >Connect with other learners, share your knowledge, and grow together.</p>
+    <p class="description">Connect with other learners, share your knowledge, and grow together.</p>
 
 
     <div class="search-container">
@@ -93,7 +95,9 @@ function populateCourses() {
 .shrink-enter-active, .shrink-leave-active {
   transition: height 0.5s;
 }
-.shrink-enter, .shrink-leave-to /* .shrink-leave-active in <2.1.8 */ {
+
+.shrink-enter, .shrink-leave-to /* .shrink-leave-active in <2.1.8 */
+{
   height: 840px;
 }
 
@@ -121,7 +125,6 @@ function populateCourses() {
   justify-content: center;
   align-items: center;
 }
-
 
 
 .bend {
@@ -214,7 +217,7 @@ function populateCourses() {
     transform: translatex(-1000px) translateY(-100px) scale(1.2);
   }
   100% {
-    transform:  translatex(0) translateY(120px) scale(1.5);
+    transform: translatex(0) translateY(120px) scale(1.5);
   }
 }
 
@@ -236,6 +239,7 @@ function populateCourses() {
   }
   100% {
     opacity: 1;
-  }}
+  }
+}
 
 </style>

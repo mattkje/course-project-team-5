@@ -62,9 +62,11 @@ CREATE TABLE providers
 
 CREATE TABLE community_courses (
                                    id INT AUTO_INCREMENT,
+                                   author VARCHAR(20),
                                    title VARCHAR(255),
                                    category VARCHAR(100),
-                                   description VARCHAR(6000),
+                                   description VARCHAR(100),
+                                   content VARCHAR(6000),
                                    image VARCHAR(255),
                                    PRIMARY KEY (id)
 );
@@ -331,10 +333,10 @@ VALUES (1, 'ROLE_USER'),
        (2, 'ROLE_PRO'),
        (3, 'ROLE_ADMIN');
 
-INSERT INTO community_courses (title, category, description, image)
+INSERT INTO community_courses (title, author, category, description, content, image)
 VALUES
-    ('Introduction to Python', 'Programming', 'This course will introduce the basics of Python programming language.', null),
-    ('Web Development with JavaScript', 'Web Development', 'This course covers the essential concepts and techniques for web development using JavaScript.', null),
-    ('Data Structures in Java', 'Data Structures', 'This course provides a comprehensive introduction to data structures using Java.', null),
-    ('Machine Learning with R', 'Machine Learning', 'This course covers the fundamental concepts of machine learning using R.', null),
-    ('Database Management with SQL', 'Database', 'This course provides a comprehensive introduction to SQL and database management.', 'https://s33046.pcdn.co/wp-content/uploads/2022/09/options-command.png');
+    ('Introduction to Python', 'john_doe','Programming', 'This course will introduce the basics of Python programming language.','This is the course content', null),
+    ('Web Development with JavaScript', 'chucknorris21', 'Web Development', 'This course covers the essential concepts and techniques for web development using JavaScript.','This is the course content', null),
+    ('Data Structures in Java', 'woodpecker4', 'Data Structures', 'This course provides a comprehensive introduction to data structures using Java.','This is the course content', null),
+    ('Machine Learning with R', 'waltjohnson', 'Machine Learning', 'This course covers the fundamental concepts of machine learning using R.','This is the course content', null),
+    ('Database Management with SQL', 'john_doe', 'Database', 'This course provides a comprehensive introduction to SQL and database management.','This is the course content', 'https://s33046.pcdn.co/wp-content/uploads/2022/09/options-command.png');

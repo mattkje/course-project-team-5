@@ -258,7 +258,7 @@ function setDefaultCurrency() {
 
 .logo-bottom-pro {
   font-weight: 900;
-  color: #C99A63;
+  color: #efb94f;
 }
 
 .cart {
