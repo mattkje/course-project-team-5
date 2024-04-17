@@ -859,12 +859,9 @@ hr {
 }
 
 .courseLinkElement {
-  padding: 0 7px;
-  background-color: rgba(29, 28, 32, 0.8);
-  backdrop-filter: blur(5px);
-  border: 1px solid rgba(255,255,255,.08);
-  border-radius: 25px;
-  box-shadow: 0 2px 5px #000;
+  background-color: white;
+  padding: 9px 7px;
+  border-radius: 0 0 10px 0;
   z-index: 50;
   display: flex;
   flex-direction: row;
@@ -872,19 +869,19 @@ hr {
   justify-content: flex-start;
   margin-left: 100px;
   position: relative;
-  top: 7px;
+  right: 100px;
   width: min-content;
   white-space: nowrap;
 }
 
 .courseLinkElement p {
   font-weight: bold;
-  color: white;
+  color: #5d5d5d;
 }
 
 .courseLinkElement a {
   font-weight: bold;
-  color: white;
+  color: #5d5d5d;
   text-decoration: none;
 }
 

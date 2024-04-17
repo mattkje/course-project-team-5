@@ -328,7 +328,8 @@ VALUES ('USD', 'United States Dollar', '$', 1),
 
 INSERT INTO roles (id, name)
 VALUES (1, 'ROLE_USER'),
-       (2, 'ROLE_ADMIN');
+       (2, 'ROLE_PRO'),
+       (3, 'ROLE_ADMIN');
 
 INSERT INTO community_courses (title, category, description, image)
 VALUES

@@ -1,6 +1,8 @@
 <template>
 
-  <HeroSection/>
+  <!--- Show/hide hero section depending on user authenticated--->
+  <HeroSection v-if="getAuthenticatedUser() === null"/>
+  <WelcomeBack v-else />
 
   <div class="course-section">
 
@@ -23,7 +25,8 @@
     <div class="greeting"></div>
   </div>
 
-  <ProBox/>
+  <!--- Hide pro ad if user is already of type pro--->
+  <ProBox v-if="!isOfRoleUser('ROLE_PRO')"/>
 
   <div class="course-section">
 
@@ -63,7 +66,7 @@
 
     <div class="greeting"></div>
   </div>
-  <div class="pro-box">
+  <div class="pro-box" v-if="getAuthenticatedUser() === null">
     <img class="bend-bottom" src="/bend.svg" alt="Connect">
     <h2>Featured courses from</h2>
     <div class="greeting">
@@ -130,6 +133,8 @@ import "@/courseBox.css"
 import {getCurrentInstance, onMounted} from 'vue';
 import Planets from "@/components/Planets.vue";
 import home from "@/views/Home.vue";
+import {getAuthenticatedUser, isOfRoleUser} from "@/js/authentication";
+import WelcomeBack from "@/components/WelcomeBack.vue";
 
 
 const { appContext } = getCurrentInstance();

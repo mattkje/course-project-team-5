@@ -50,7 +50,7 @@ function setDefaultCurrency() {
     <div id="desktop" class="header">
       <div class="content">
         <div class="left-content">
-          <router-link to="/" class="header-button">
+          <router-link to="/" class="logo-button">
             <img id="logo" class="logo" src="/logo.svg" alt="Connect">
             <h4 class="logo-top">Learniverse&nbsp;</h4>
             <h4 class="logo-bottom">Connect</h4>
@@ -192,9 +192,25 @@ function setDefaultCurrency() {
   align-items: center;
 }
 
+.logo-button {
+  height: 70px;
+  font-size: 15px;
+  border: none;
+  padding: 10px 1%;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  margin-right: 3vw;
+  transition: all 0.3s ease-in-out;
+}
+
 .header-button {
   height: 70px;
-  color: white;
+  background: linear-gradient(180deg, #FFFFFF -0%, #9087EF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
   font-size: 15px;
   border: none;
   padding: 10px 1%;

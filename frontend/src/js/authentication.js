@@ -5,15 +5,21 @@ import {redirectTo} from "@/js/navigation";
 function getAuthenticatedUser() {
     let user = null;
     const username = getCookie("current_username");
-    const commaSeperatedRoles = getCookie("current_user_roles");
-    if(username && commaSeperatedRoles) {
-        const roles = commaSeperatedRoles.split(",");
+    const commaSeparatedRoles = getCookie("current_user_roles");
+    if(username && commaSeparatedRoles) {
+        const roles = commaSeparatedRoles.split(",");
         user = {
             "username": username,
             "roles": roles
         }
     }
     return user;
+}
+
+
+export function isOfRoleUser(role) {
+    const user = getAuthenticatedUser();
+    return user && user.roles.includes(role);
 }
 
 function sendAuthenticationRequest(username, password, successCallback, errorCallback) {
