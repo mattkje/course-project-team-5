@@ -1,6 +1,6 @@
 <script setup>
 import {getCurrentInstance, onMounted} from "vue";
-import {getAuthenticatedUser} from "@/js/authentication";
+import {getAuthenticatedUser, isOfRoleUser} from "@/js/authentication";
 const { appContext } = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
 
@@ -51,14 +51,16 @@ function setDefaultCurrency() {
       <div class="content">
         <div class="left-content">
           <router-link to="/" class="logo-button">
-            <img id="logo" class="logo" src="/logo.svg" alt="Connect">
+            <img id="logo" class="logo" src="/pro.svg" v-if="isOfRoleUser('ROLE_PRO')">
+            <img id="logo" class="logo" src="/logo.svg" v-else>
             <h4 class="logo-top">Learniverse&nbsp;</h4>
-            <h4 class="logo-bottom">Connect</h4>
+            <h4 class="logo-bottom-pro" v-if="isOfRoleUser('ROLE_PRO')">Pro</h4>
+            <h4 class="logo-bottom" v-else>Connect</h4>
           </router-link>
           <div id="menu-links" class="menu-links">
             <router-link to="/explore" class="header-button">Explore</router-link>
             <router-link to="/community" class="header-button">Community</router-link>
-            <router-link to="/pro" class="header-button">Learniverse&nbsp;Pro</router-link>
+            <router-link to="/pro" class="header-button" v-if="!isOfRoleUser('ROLE_PRO')">Learniverse&nbsp;Pro</router-link>
           </div>
         </div>
 
@@ -252,6 +254,11 @@ function setDefaultCurrency() {
 .logo-bottom {
   font-weight: 900;
   color: #584BEB;
+}
+
+.logo-bottom-pro {
+  font-weight: 900;
+  color: #C99A63;
 }
 
 .cart {
