@@ -16,11 +16,11 @@ function getAuthenticatedUser() {
     return user;
 }
 
-
 export function isOfRoleUser(role) {
     const user = getAuthenticatedUser();
     return user && user.roles.includes(role);
 }
+
 
 function sendAuthenticationRequest(username, password, successCallback, errorCallback) {
     const postData = {
