@@ -14,13 +14,16 @@
       </ul>
       <div class="pro-pricing">
         <h2>Starting at $9.99/month</h2>
-        <button class="standard-button">Sign up to Get Started</button>
+        <router-link to="/pro" v-if="isOfRoleUser('ROLE_USER')" class="standard-button">Sign up to Get Started</router-link>
+        <router-link to="/register" v-else class="standard-button">Sign up to Get Started</router-link>
       </div>
     </div>
     <img class="bend" src="/bend.svg" alt="Connect">
   </div>
 </template>
 <script>
+import {isOfRoleUser} from "@/js/authentication";
+
 export default {
   data() {
     return {
@@ -28,6 +31,7 @@ export default {
     };
   },
   methods: {
+    isOfRoleUser,
     toggleProInfo() {
       this.isProInfoVisible = !this.isProInfoVisible;
     },
