@@ -24,8 +24,7 @@
           <h3>Topic</h3>
           <p id="courseDescription"></p>
           <hr>
-          <h3>Post</h3>
-          <p id="postContent"></p>
+          <p class="post-content" id="postContent"></p>
         </div>
         <div class="course-description-box"/>
       </div>
@@ -47,6 +46,7 @@
 <script setup>
 import {getCurrentInstance, onMounted} from 'vue';
 import "@/assets/coursePage.css"
+import MarkdownIt from 'markdown-it';
 import {isOfRoleUser} from "@/js/authentication";
 
 onMounted(() => {
@@ -83,13 +83,18 @@ function populateCoursePage() {
         populatePosts('.featured');
 
         const dateText = formatDate(data.postDate)
+
+        const markdownText = data.content;
+        const md = new MarkdownIt();
+        const htmlContent = md.render(markdownText);
+
         //Populating the course page
         document.getElementById('courseCategoryLink').innerText = data.category;
         document.getElementById('courseTitleLink').innerText = data.title;
         document.getElementById('postAuthor').innerText = data.author;
         document.getElementById('postDate').innerText = 'Posted: '+ dateText;
         document.getElementById('courseDescription').innerText = data.description;
-        document.getElementById('postContent').innerText = data.content;
+        document.getElementById('postContent').innerHTML = htmlContent;
         document.getElementById('courseImage').src = data.image || '/noImageCom.svg';
         document.getElementById('courseTitle').innerText = data.title;
 
@@ -748,5 +753,9 @@ button {
 .author-and-time{
   display: flex;
   justify-content: space-between;
+}
+
+.post-content {
+  line-height: 30px;
 }
 </style>

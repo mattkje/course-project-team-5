@@ -72,6 +72,11 @@ footer h5 {
 }
 
 p {
-  color: var(--light-1);
+  color: #282828;
+}
+
+.post-content h3{
+  font-weight: bold;
+  margin: 20px 0 0 0;
 }
 

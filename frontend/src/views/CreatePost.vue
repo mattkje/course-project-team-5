@@ -55,7 +55,7 @@ export default {
       this.post.author = currentUser.username;
       this.post.postDate = new Date().toISOString();
 
-      
+
       fetch( 'http://localhost:8080/api/community/courses', { // Use environment variables for API_URL
         method: 'POST',
         headers: {
