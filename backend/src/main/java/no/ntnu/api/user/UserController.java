@@ -92,8 +92,8 @@ public class UserController {
     public ResponseEntity<?> getProfile(@PathVariable String username) throws InterruptedException {
         User sessionUser = userService.getSessionUser();
         if (sessionUser != null && sessionUser.getUsername().equals(username)) {
-            UserProfileDto profile = new UserProfileDto(sessionUser.getUsername(), sessionUser.getFirstName(),
-                    sessionUser.getLastName(), sessionUser.getEmail(), sessionUser.getPhoneNumber());
+            UserProfileDto profile = new UserProfileDto(sessionUser.getUsername(), sessionUser.getEmail(),
+                    sessionUser.getFirstName(), sessionUser.getLastName(), sessionUser.getPhoneNumber());
             Thread.sleep(2000); // Simulate sleep
             return new ResponseEntity<>(profile, HttpStatus.OK);
         } else if (sessionUser == null) {

@@ -70,7 +70,7 @@ function setDefaultCurrency() {
           <router-link to="/cart" class="fancy-button-round">
             <img class="cart" src="/cart.svg" alt="Cart">
           </router-link>
-          <router-link v-if="getAuthenticatedUser() === null" to="/register" class="standard-button">Log in</router-link>
+          <router-link v-if="getAuthenticatedUser() === null" to="/login" class="standard-button">Log in</router-link>
           <router-link to="/profile" v-else class="fancy-button-round">
             <img class="cart" src="/account.svg" alt="Cart">
           </router-link>
