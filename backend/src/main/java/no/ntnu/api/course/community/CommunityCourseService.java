@@ -1,6 +1,7 @@
 package no.ntnu.api.course.community;
 
 import java.util.Collection;
+import no.ntnu.api.course.Course;
 import no.ntnu.api.course.CourseWithProvidersAndKeywords;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,11 +42,11 @@ public class CommunityCourseService {
     /**
      * Posts a new course into the API, the course cannot be null.
      *
-     * @param course The course to be added into the database
+     * @param post The course to be added into the database
      */
-  public void postCourse(CommunityCourse course) {
-    if (course != null) {
-      courseRepository.save(course);
+  public void postCourse(CommunityCourse post) {
+    if (post != null) {
+      courseRepository.save(post);
     }
   }
 
@@ -56,4 +57,29 @@ public class CommunityCourseService {
   public CommunityCourse getCourse(int id) {
     return courseRepository.findById((long) id).orElse(null);
   }
+
+  /**
+   * Updates an existing course in the database.
+   * @param id The ID of the course to update.
+   * @param updatedCourse The updated course object.
+   * @return true if the update was successful, false otherwise.
+   */
+  public boolean updateCourse(int id, CommunityCourse updatedCourse) {
+    CommunityCourse existingCourse = courseRepository.findById((long) id).orElse(null);
+    if (existingCourse != null) {
+
+      existingCourse.setTitle(updatedCourse.getTitle());
+      existingCourse.setCategory(updatedCourse.getCategory());
+      existingCourse.setDescription(updatedCourse.getDescription());
+      existingCourse.setContent(updatedCourse.getContent());
+      existingCourse.setImage(updatedCourse.getImage());
+
+      courseRepository.save(existingCourse);
+      return true;
+    } else {
+      return false; // Course with given id not found
+    }
+  }
+
+
 }

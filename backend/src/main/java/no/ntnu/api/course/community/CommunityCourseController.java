@@ -2,6 +2,8 @@ package no.ntnu.api.course.community;
 
 import java.util.Collection;
 import java.util.Objects;
+import no.ntnu.api.course.Course;
+import no.ntnu.api.provider.CourseProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -48,4 +51,19 @@ public class CommunityCourseController {
         return communityCourseService.getAllCourses();
     }
 
+    /**
+     * Creates a new course.
+     *
+     * @param post The post to create.
+     * @return ResponseEntity indicating success or failure.
+     */
+    @PostMapping("/api/community/courses")
+    public ResponseEntity<CommunityCourse> postCourse(@RequestBody CommunityCourse post) {
+        if(post == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }else {
+            communityCourseService.postCourse(post);
+            return ResponseEntity.status(HttpStatus.CREATED).body(post);
+        }
+    }
 }

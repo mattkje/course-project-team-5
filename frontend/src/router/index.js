@@ -34,6 +34,11 @@ const routes = [
         component: () => import(/* webpackChunkName: "about" */ '../views/Post.vue')
     },
     {
+        path: '/community/create',
+        name: 'community create',
+        component: () => import(/* webpackChunkName: "about" */ '../views/CreatePost.vue')
+    },
+    {
         path: '/explore',
         name: 'explore',
         component: Explore

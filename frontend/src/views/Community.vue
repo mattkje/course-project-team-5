@@ -67,6 +67,9 @@ function populateCourses() {
     </div>
     <p class="description">Connect with other learners, share your knowledge, and grow together.</p>
 
+    <div class="options-box">
+      <router-link to="/community/create" class="fancy-button">Create Post</router-link>
+    </div>
 
     <div class="search-container">
 
@@ -197,6 +200,12 @@ function populateCourses() {
   font-size: 16px;
 }
 
+.options-box {
+  display: flex;
+  justify-content: right;
+  margin: 0 385px
+}
+
 .course-block {
   display: flex;
   justify-content: center;
@@ -240,6 +249,28 @@ function populateCourses() {
   100% {
     opacity: 1;
   }
+}
+
+
+.fancy-button {
+  color: #EAEAEA;
+  font-family: 'Inter', sans-serif;
+  font-weight: bold;
+  font-size: 14px;
+  padding: 10px;
+  border-radius: 10px;
+  text-decoration: none;
+  display: flex;
+  max-height: 40px;
+  min-height: 40px;
+  background: #0C0C0C;
+  border: 0.5px solid #252525;
+  transition: all 0.3s ease-in-out;
+}
+
+.fancy-button:hover {
+  background-color: #262626;
+  box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
 }
 
 </style>
