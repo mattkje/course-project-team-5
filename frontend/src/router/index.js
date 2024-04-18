@@ -31,12 +31,14 @@ const routes = [
     {
         path: '/community/post',
         name: 'community post',
-        component: () => import(/* webpackChunkName: "about" */ '../views/Post.vue')
+        component: () => import(/* webpackChunkName: "about" */ '../views/Post.vue'),
+        meta: { requiresAuth: true }
     },
     {
         path: '/community/create',
         name: 'community create',
-        component: () => import(/* webpackChunkName: "about" */ '../views/CreatePost.vue')
+        component: () => import(/* webpackChunkName: "about" */ '../views/CreatePost.vue'),
+        meta: { requiresAuth: true }
     },
     {
         path: '/explore',
@@ -69,5 +71,6 @@ const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
     routes
 })
+
 
 export default router
