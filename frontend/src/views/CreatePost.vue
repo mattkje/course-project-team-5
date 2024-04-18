@@ -1,5 +1,13 @@
 <template>
   <div class="course-section">
+    <div class="post-form">
+      <p>Please ensure that your post adheres to our guidelines.</p>
+      <a href="#">Guidelines</a>
+      <p>If you're unsure about any aspect of our guidelines, please take a moment to review them. We appreciate your cooperation in maintaining a positive and constructive community.</p>
+    </div>
+
+
+
     <form @submit.prevent="createPost" class="post-form">
       <div class="form-group">
         <label for="title">Title:</label>
@@ -121,8 +129,8 @@ export default {
 }
 
 .post-form {
-  max-width: 1300px;
-  margin: auto;
+  max-width: 900px;
+  margin: auto auto 50px auto;
   padding: 20px;
   background-color: #f9f9f9;
   border-radius: 5px;
