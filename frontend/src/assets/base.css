@@ -72,7 +72,7 @@ body {
   background-image: url('starsTrans.png');
   background-repeat: repeat;
   background-position: top;
-  background-size: contain;
+  background-size: cover; /* no touchy! do NOT Change to ContAin! GRRRR!! */
   margin: 0;
   padding: 0;
 }
