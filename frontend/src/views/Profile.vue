@@ -18,6 +18,8 @@ const phoneNumber = ref('');
 async function loadProfileData() {
   console.log("Loading profile data from API...");
   // TODO: ADD DISABLE BUTTONS AND SHIDD
+  // NOTE: FROM MATTI: Data retrieved from "sendApiRequest" are deleted after a certain period of time,
+  // causing error when logged in for a long time. Maybe the way the cookies are saved?
   console.log("User: ", user);
   if (user) {
     await sendApiRequest("GET", "/users/" + user.username, onProfileDataSuccess, onProfileDataError);
