@@ -2,11 +2,11 @@
   <div class="course-section">
     <div class="post-form">
       <p>Please ensure that your post adheres to our guidelines.</p>
-      <a href="#">Guidelines</a>
+      <button class="guideline-button" @click="toggleGuidelinesModal">Guidelines</button>
       <p>If you're unsure about any aspect of our guidelines, please take a moment to review them. We appreciate your cooperation in maintaining a positive and constructive community.</p>
     </div>
 
-
+    <guidelines class="post-form" v-if="showGuidelinesModal" @close="showGuidelinesModal = false" />
 
     <form @submit.prevent="createPost" class="post-form">
       <div class="form-group">
@@ -45,10 +45,14 @@
 <script>
 import { getAuthenticatedUser } from '@/js/authentication'; // Assuming the correct path
 import { getCurrentInstance } from "vue";
+import Guidelines from "@/components/Guidelines.vue";
+
 
 export default {
+  components: {Guidelines},
   data() {
     return {
+      showGuidelinesModal: false,
       post: {
         title: '',
         author: '',
@@ -74,6 +78,9 @@ export default {
       }
       textarea.focus();
       textarea.setSelectionRange(startPos + text.length, endPos + text.length);
+    },
+    toggleGuidelinesModal() {
+      this.showGuidelinesModal = !this.showGuidelinesModal;
     },
     createPost() {
       const currentUser = getAuthenticatedUser();
@@ -193,4 +200,14 @@ button[type="submit"]:hover {
   background-color: #e0e0e0;
 }
 
+.guideline-button{
+  padding: 0;
+  color: var(--base-1);
+  background: none;
+  border: none;
+
+  &:hover {
+    color: var(--base-2);
+  }
+}
 </style>
