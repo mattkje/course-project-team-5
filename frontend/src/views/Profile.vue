@@ -10,12 +10,10 @@ onMounted(loadProfileData);
 const loading = ref(true);
 const user = getAuthenticatedUser();
 const username = ref('');
-const password = ref('');
 const firstName = ref('');
 const lastName = ref('');
 const email = ref('');
 const phoneNumber = ref('');
-let editIsPressed = ref(false);
 
 async function loadProfileData() {
   console.log("Loading profile data from API...");
@@ -23,11 +21,6 @@ async function loadProfileData() {
   console.log("User: ", user);
   if (user) {
     await sendApiRequest("GET", "/users/" + user.username, onProfileDataSuccess, onProfileDataError);
-    document.getElementById("username").innerText = username.value;
-    document.getElementById("firstName").innerText = firstName.value;
-    document.getElementById("lastName").innerText = lastName.value;
-    document.getElementById("email").innerText = email.value;
-    document.getElementById("phoneNumber").innerText = phoneNumber.value;
   } else {
     redirectTo("/no-access");
   }
@@ -35,11 +28,11 @@ async function loadProfileData() {
 
 function onProfileDataSuccess(data) {
   console.log("Profile data loaded: ", data);
-  username.value = data.username;
-  firstName.value = data.firstName;
-  lastName.value = data.lastName;
-  email.value = data.email;
-  phoneNumber.value = data.phoneNumber;
+  document.getElementById("username").innerText = data.username;
+  document.getElementById("firstName").innerText = firstName.value = data.firstName;
+  document.getElementById("lastName").innerText = lastName.value = data.lastName;
+  document.getElementById("email").innerText = email.value = data.email;
+  document.getElementById("phoneNumber").innerText = phoneNumber.value = data.phoneNumber;
   loading.value = false;
 }
 
@@ -47,22 +40,17 @@ function onProfileDataError(error) {
   console.error("Error loading profile data: ", error);
   redirectTo("/no-access");
 }
-
-function editProfile() {
-  console.log("Editing profile...");
-  editIsPressed.value = true;
-}
 </script>
 
 <template>
   <div class="background">
     <div class="profile-box" id="profileInformation">
-      <div v-if="loading" class="three-body">
+      <div v-show="loading" class="three-body">
         <div class="three-body__dot"></div>
         <div class="three-body__dot"></div>
         <div class="three-body__dot"></div>
       </div>
-      <div v-if="!loading">
+      <div v-show="!loading">
         <h1>Account</h1>
         <div class="profile-information">
           <p>Username: <label for="username" id="username"></label></p>
@@ -72,7 +60,7 @@ function editProfile() {
           <p>Phone number: <label for="phoneNumber" id="phoneNumber"></label></p>
         </div>
       </div>
-      <div v-if="!loading" class="profile-buttons">
+      <div v-show="!loading" class="profile-buttons">
         <button class="standard-button">Change password</button>
         <button class="log-out" @click="doLogout">Log out</button>
     </div>
@@ -215,6 +203,4 @@ function editProfile() {
     opacity: 0.8;
   }
 }
-
-
 </style>
