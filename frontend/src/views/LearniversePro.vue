@@ -20,12 +20,14 @@
     </div>
     <p class="description" >Get access to exclusive courses, personalized learning paths, and more with Learniverse Pro.</p>
 
+    <br>
+    <br><br>
+    <br>
+    <br>
+    <br>
+    <br><br><br><br><br><br><br><br><br>
 
 
-    <div class="course-block">
-
-    </div>
-    <div class="greeting"></div>
   </div>
 </template>
 

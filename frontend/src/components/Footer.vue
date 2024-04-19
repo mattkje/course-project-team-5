@@ -3,7 +3,6 @@
 </script>
 
 <template>
-  <img class="bend-bottom" src="/bend.svg" alt="Connect">
   <footer>
     <div class="footer-content">
       <div class="footer-section">
@@ -35,10 +34,10 @@
 
 footer {
   font-family: 'Inter', sans-serif;
-  background: linear-gradient(180deg, rgba(21, 16, 82, 0.14) 100%, rgba(158, 150, 255, 0.14) 10%);
+  background: rgb(16, 16, 23);
   color: #EAEAEA;
   text-align: center;
-  padding: 0 20px;
+  padding: 50px 20px;
   margin: 0;
 }
 
