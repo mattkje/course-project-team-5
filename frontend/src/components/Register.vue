@@ -47,27 +47,27 @@ function onSignUpError(error) {
           </router-link>
           <div class="login-text-field">
             <label for="username">Username*:</label>
-            <input v-model="username" class="login-prompt" type="text" id="username" name="username" placeholder="Enter a username" required autofocus/>
+            <input v-model="username" class="login-prompt" type="text" id="username" name="username" placeholder="Enter a username" maxlength="16" required autofocus/>
           </div>
           <div class="login-text-field">
             <label for="password">Password*:</label>
-            <input v-model="password" class="login-prompt" type="password" id="password" name="password" placeholder="Enter a password" required autofocus/>
+            <input v-model="password" class="login-prompt" type="password" id="password" name="password" placeholder="Enter a password" maxlength="64" required autofocus/>
           </div>
           <div class="login-text-field">
             <label for="firstName">First Name*:</label>
-            <input v-model="firstName" class="login-prompt" type="text" id="firstName" name="firstName" placeholder="Enter your first name" required autofocus/>
+            <input v-model="firstName" class="login-prompt" type="text" id="firstName" name="firstName" placeholder="Enter your first name" maxlength="20" x required autofocus/>
           </div>
           <div class="login-text-field">
             <label for="lastName">Last Name*:</label>
-            <input v-model="lastName" class="login-prompt" type="text" id="lastName" name="lastName" placeholder="Enter your last name" required autofocus/>
+            <input v-model="lastName" class="login-prompt" type="text" id="lastName" name="lastName" placeholder="Enter your last name" maxlength="20" required autofocus/>
           </div>
           <div class="login-text-field">
             <label for="email">Email*:</label>
-            <input v-model="email" class="login-prompt" type="text" id="email" name="email" placeholder="Enter your email" required autofocus/>
+            <input v-model="email" class="login-prompt" type="text" id="email" name="email" placeholder="Enter your email" maxlength="45" required autofocus/>
           </div>
           <div class="login-text-field">
             <label for="phoneNumber">Phone Number:</label>
-            <input v-model="phoneNumber" class="login-prompt" type="text" id="phoneNumber" name="phoneNumber" placeholder="Enter your phone number" required autofocus/>
+            <input v-model="phoneNumber" class="login-prompt" type="text" id="phoneNumber" name="phoneNumber" placeholder="Enter your phone number" maxlength="20" required autofocus/>
           </div>
 
           <button class="standard-button" type="submit" id="signup-button">Create user</button>

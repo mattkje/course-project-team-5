@@ -9,11 +9,6 @@ import {doLogout} from "@/js/authentication";
 onMounted(loadProfileData);
 const loading = ref(true);
 const user = getAuthenticatedUser();
-const username = ref('');
-const firstName = ref('');
-const lastName = ref('');
-const email = ref('');
-const phoneNumber = ref('');
 
 async function loadProfileData() {
   console.log("Loading profile data from API...");
@@ -28,10 +23,10 @@ async function loadProfileData() {
 function onProfileDataSuccess(data) {
   console.log("Profile data loaded: ", data);
   document.getElementById("username").innerText = data.username;
-  document.getElementById("firstName").innerText = firstName.value = data.firstName;
-  document.getElementById("lastName").innerText = lastName.value = data.lastName;
-  document.getElementById("email").innerText = email.value = data.email;
-  document.getElementById("phoneNumber").innerText = phoneNumber.value = data.phoneNumber;
+  document.getElementById("firstName").innerText = data.firstName;
+  document.getElementById("lastName").innerText = data.lastName;
+  document.getElementById("email").innerText = data.email;
+  document.getElementById("phoneNumber").innerText = data.phoneNumber;
   loading.value = false;
 }
 

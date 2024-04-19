@@ -3,7 +3,6 @@ import { ref } from 'vue';
 import {redirectTo} from "@/js/navigation";
 import {showFormError} from "@/js/tools";
 import {sendAuthenticationRequest} from "@/js/authentication";
-import {sendApiRequest} from "@/js/requests";
 
 const username = ref('');
 const password = ref('');
@@ -13,16 +12,8 @@ const login = async () => {
 };
 
 function onLoginSuccess() {
-  sendApiRequest("GET", "/users/" + username.value, onUserDataSuccess, onUserDataError);
+  console.log("Login successful");
   redirectTo("/");
-}
-
-function onUserDataSuccess(data) {
-  console.log("User data loaded: ", data);
-}
-
-function onUserDataError(error) {
-  console.error("Error loading user data: ", error);
 }
 </script>
 
