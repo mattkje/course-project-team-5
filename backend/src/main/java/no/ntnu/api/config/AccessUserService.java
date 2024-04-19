@@ -1,11 +1,11 @@
 package no.ntnu.api.config;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
-import no.ntnu.api.user.User;
-import no.ntnu.api.user.UserProfileDto;
-import no.ntnu.api.user.UserRepository;
+import no.ntnu.api.course.Course;
+import no.ntnu.api.user.*;
 import no.ntnu.api.role.Role;
 import no.ntnu.api.role.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +29,8 @@ public class AccessUserService implements UserDetailsService {
   UserRepository userRepository;
   @Autowired
   RoleRepository roleRepository;
+  @Autowired
+  UserCoursesRepository userCoursesRepository;
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -45,11 +47,13 @@ public class AccessUserService implements UserDetailsService {
    *
    * @return User object or null if no user has logged in
    */
-  public User getSessionUser() {
+  public UserWithCourses getSessionUser() {
     SecurityContext securityContext = SecurityContextHolder.getContext();
     Authentication authentication = securityContext.getAuthentication();
     String username = authentication.getName();
-    return userRepository.findByUsername(username).orElse(null);
+    List<UserCourses> courses = getCourses(username);
+    User user = userRepository.findByUsername(username).get();
+    return new UserWithCourses(user, courses);
   }
 
   /**
@@ -141,12 +145,22 @@ public class AccessUserService implements UserDetailsService {
     return BCrypt.hashpw(password, BCrypt.gensalt());
   }
 
-  public boolean updateProfile(User sessionUser, UserProfileDto profileData) {
-    sessionUser.setFirstName(profileData.getFirstName());
-    sessionUser.setLastName(profileData.getLastName());
-    sessionUser.setEmail(profileData.getEmail());
-    sessionUser.setPhoneNumber(profileData.getPhoneNumber());
-    userRepository.save(sessionUser);
+  public boolean updateProfile(UserWithCourses sessionUser, UserProfileDto profileData) {
+    sessionUser.user().setFirstName(profileData.getFirstName());
+    sessionUser.user().setLastName(profileData.getLastName());
+    sessionUser.user().setEmail(profileData.getEmail());
+    sessionUser.user().setPhoneNumber(profileData.getPhoneNumber());
+    userRepository.save(sessionUser.user());
     return true;
+  }
+
+  public List<UserCourses> getCourses(String username) {
+    List<UserCourses> courses = new ArrayList<>();
+    for (UserCourses userCourse : userCoursesRepository.findAll()) {
+      if (userCourse.getUserId() == userRepository.findByUsername(username).get().getUserId()) {
+        courses.add(userCourse);
+      }
+    }
+    return courses;
   }
 }

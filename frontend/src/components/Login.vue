@@ -118,11 +118,13 @@ ul {
   font-size: 2vw;
   padding-left: 5px;
   color: var(--dark-1);
+  padding-bottom: 1vw;
 }
 
 .logo-bottom {
   font-size: 2vw;
   color: var(--base-1);
+  padding-bottom: 1vw;
 }
 
 
@@ -161,8 +163,8 @@ input:focus {
 .logo {
   width: 3vw;
   height: 3vw;
-  padding-left: 3vw;
   margin: auto;
+  padding-bottom: 1vw;
 }
 
 .standard-button {

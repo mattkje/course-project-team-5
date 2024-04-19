@@ -101,6 +101,14 @@ CREATE TABLE users
     CONSTRAINT pk_users PRIMARY KEY (id)
 );
 
+CREATE TABLE user_courses
+(
+    user_course_id INT AUTO_INCREMENT NOT NULL,
+    user_id  INT NOT NULL,
+    course_id INT NOT NULL,
+    CONSTRAINT pk_user_courses PRIMARY KEY (user_course_id)
+);
+
 ALTER TABLE course_keywords
     ADD CONSTRAINT FK_COURSE_KEYWORDS_ON_KEYWORD FOREIGN KEY (keyword_id) REFERENCES keywords (keyword_id);
 
@@ -112,6 +120,9 @@ ALTER TABLE user_roles
 
 ALTER TABLE user_roles
     ADD CONSTRAINT fk_userol_on_user FOREIGN KEY (user_id) REFERENCES users (id);
+
+ALTER TABLE user_courses
+    ADD CONSTRAINT fk_userc_on_course FOREIGN KEY (course_id) REFERENCES courses (course_id);
 
 INSERT INTO users (id, username, email, password, first_name, last_name, active, created_at, updated_at,
                    phone_number)
@@ -341,3 +352,13 @@ VALUES
     ('Data Structures in Java', 'woodpecker4', 'Data Structures', 'This course provides a comprehensive introduction to data structures using Java.','This is the course content','2024-03-16',  null),
     ('Machine Learning with R', 'waltjohnson', 'Machine Learning', 'This course covers the fundamental concepts of machine learning using R.','This is the course content','2024-03-24',  null),
     ('Database Management with SQL', 'john_doe', 'Database', 'This course provides a comprehensive introduction to SQL and database management.','This is the course content','2024-04-07',  'https://s33046.pcdn.co/wp-content/uploads/2022/09/options-command.png');
+
+INSERT INTO user_courses (user_id, course_id)
+VALUES (1, 1),
+       (1, 2),
+       (1, 3),
+       (1, 4),
+       (1, 5),
+       (2, 1),
+       (2, 3),
+       (3, 4);

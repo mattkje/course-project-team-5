@@ -86,20 +86,13 @@ public class UserController {
      *
      * @param username The username of the user
      * @return The profile of the user
-     * @throws InterruptedException
      */
     @GetMapping("/{username}")
-    public ResponseEntity<?> getProfile(@PathVariable String username) throws InterruptedException {
-        User sessionUser = userService.getSessionUser();
-        if (sessionUser != null && sessionUser.getUsername().equals(username)) {
-            UserProfileDto profile = new UserProfileDto(sessionUser.getUsername(), sessionUser.getEmail(),
-                    sessionUser.getFirstName(), sessionUser.getLastName(), sessionUser.getPhoneNumber());
-            Thread.sleep(2000); // Simulate sleep
-            return new ResponseEntity<>(profile, HttpStatus.OK);
-        } else if (sessionUser == null) {
-            return new ResponseEntity<>("Profile data accessible only to authenticated users", HttpStatus.UNAUTHORIZED);
+    public ResponseEntity<?> getProfile(@PathVariable String username) {
+        if(userService.getSessionUser() != null || userService.getSessionUser().user().getUsername().equals(username)) {
+            return ResponseEntity.status(HttpStatus.OK).body(userService.getSessionUser());
         } else {
-            return new ResponseEntity<>("Profile data for other users not accessible!", HttpStatus.FORBIDDEN);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 
@@ -114,9 +107,9 @@ public class UserController {
     @PutMapping("/{username}")
     public ResponseEntity<String> updateProfile(@PathVariable String username, @RequestBody UserProfileDto profileData)
             throws InterruptedException {
-        User sessionUser = userService.getSessionUser();
+        UserWithCourses sessionUser = userService.getSessionUser();
         ResponseEntity<String> response;
-        if (sessionUser != null && sessionUser.getUsername().equals(username)) {
+        if (sessionUser != null && sessionUser.user().getUsername().equals(username)) {
             if (profileData != null) {
                 if(userService.updateProfile(sessionUser, profileData)) {
                     Thread.sleep(2000); // Simulate long operation

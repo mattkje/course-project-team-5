@@ -1,5 +1,6 @@
 package no.ntnu.api.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
@@ -12,6 +13,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import no.ntnu.api.course.Course;
 import no.ntnu.api.role.Role;
 
 import java.util.Date;
@@ -65,6 +67,14 @@ public class User {
 
     private boolean active = true;
 
+    @JsonIgnore
+    @JsonManagedReference
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_courses",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "course_id")
+    )
+    private Set<Course> courses = new LinkedHashSet<>();
 
     @JsonManagedReference
     @ManyToMany(fetch = FetchType.EAGER)
@@ -272,4 +282,15 @@ public class User {
         roles.add(role);
     }
 
+    public void setCourses(Set<Course> courses) {
+        this.courses = courses;
+    }
+
+    public Set<Course> getCourses() {
+        return courses;
+    }
+
+    public void addCourse(Course course) {
+        courses.add(course);
+    }
 }

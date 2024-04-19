@@ -54,6 +54,16 @@ function onProfileDataError(error) {
           <p>Phone number: <label for="phoneNumber" id="phoneNumber"></label></p>
         </div>
       </div>
+      <div v-show="!loading">
+        <h1>Your courses</h1>
+        <div class="profile-information">
+          <table class="course-list">
+            <tbody>
+              <p>You do not have any courses yet.</p>
+            </tbody>
+          </table>
+        </div>
+      </div>
       <div v-show="!loading" class="profile-buttons">
         <button class="standard-button">Change password</button>
         <button class="log-out" @click="doLogout">Log out</button>
@@ -196,5 +206,9 @@ function onProfileDataError(error) {
     transform: translateY(66%) scale(0.65);
     opacity: 0.8;
   }
+}
+
+.course-list{
+
 }
 </style>
