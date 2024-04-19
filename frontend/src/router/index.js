@@ -64,6 +64,11 @@ const routes = [
         path: '/no-access',
         name: 'NoAccess',
         component: () => import('@/components/NoAccess.vue')
+    },
+    {
+        path: '/login-failure',
+        name: 'LoginFailure',
+        component: () => import('@/components/LoginFailure.vue')
     }
 ]
 

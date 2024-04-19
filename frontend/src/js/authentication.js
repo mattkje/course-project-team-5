@@ -33,8 +33,8 @@ function sendAuthenticationRequest(username, password, successCallback, errorCal
             setCookie("jwt", jwtResponse.jwt);
             const userData = parseJwtUser(jwtResponse.jwt);
             if (userData) {
-                setCookie("current_username", userData.username);
-                setCookie("current_user_roles", userData.roles.join(","));
+                setCookie("current_username", userData.username, 30);
+                setCookie("current_user_roles", userData.roles.join(","), 30);
             }
             successCallback();
         },

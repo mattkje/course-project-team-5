@@ -1,3 +1,5 @@
+import {redirectTo} from "@/js/navigation";
+
 const API_BASE_URL = `http://localhost:8080/api`;
 import { getCookie } from "../js/tools.js";
 
@@ -17,6 +19,8 @@ async function sendApiRequest(method, url, callback, requestBody, errorCallback)
                 responseJson = JSON.parse(responseText);
             }
             callback(responseJson);
+        } else if (response.status === 500) {
+            redirectTo("/login-failure");
         } else if (errorCallback) {
             errorCallback(responseText);
         }

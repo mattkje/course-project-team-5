@@ -4,8 +4,8 @@
 
 <template>
   <div class="center">
-    <p>You don't have access to this page!</p>
-    <router-link to="/" class="standard-button">Back to main page</router-link>
+    <p>There was an error fetching your user data. Try logging in</p>
+    <router-link to="/login" class="standard-button">Log in</router-link>
   </div>
 </template>
 
