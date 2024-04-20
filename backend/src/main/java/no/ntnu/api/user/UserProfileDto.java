@@ -5,17 +5,19 @@ package no.ntnu.api.user;
  */
 public class UserProfileDto {
     private String username;
+    private String password;
     private String firstName;
     private String lastName;
     private String email;
     private String phoneNumber;
 
-    public UserProfileDto(String username, String email, String firstName, String lastName, String phoneNumber) {
+    public UserProfileDto(String username, String email, String firstName, String lastName, String phoneNumber, String password) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.password = password;
     }
 
     public String getUsername() {
@@ -56,5 +58,13 @@ public class UserProfileDto {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getPassword() {
+        return this.password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

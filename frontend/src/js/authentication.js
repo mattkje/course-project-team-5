@@ -30,7 +30,7 @@ function sendAuthenticationRequest(username, password, successCallback, errorCal
     sendApiRequest(
         "POST", "/users/login",
         function (jwtResponse) {
-            setCookie("jwt", jwtResponse.jwt);
+            setCookie("jwt", jwtResponse.jwt, 30);
             const userData = parseJwtUser(jwtResponse.jwt);
             if (userData) {
                 setCookie("current_username", userData.username, 30);

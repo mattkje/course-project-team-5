@@ -23,11 +23,11 @@ async function loadProfileData() {
 
 function onProfileDataSuccess(data) {
   console.log("Profile data loaded: ", data);
-  document.getElementById("username").innerText = data.username;
-  document.getElementById("firstName").innerText = data.firstName;
-  document.getElementById("lastName").innerText = data.lastName;
-  document.getElementById("email").innerText = data.email;
-  document.getElementById("phoneNumber").innerText = data.phoneNumber;
+  document.getElementById("username").innerText = data.user.username;
+  document.getElementById("firstName").innerText = data.user.firstName;
+  document.getElementById("lastName").innerText = data.user.lastName;
+  document.getElementById("email").innerText = data.user.email;
+  document.getElementById("phoneNumber").innerText = data.user.phoneNumber;
   loading.value = false;
 }
 
