@@ -1,4 +1,14 @@
 <template>
+  <div class="search-container">
+
+    <div class="search-bar">
+      <label for="myTextBox"></label>
+      <input class="search-prompt" type="text" id="myTextBox" name="myTextBox"
+             placeholder="Search for courses to boost your skills" v-model="searchQuery" @input="searchCourses">
+      <img class="search-icon" src="/search.png" alt="Connect">
+    </div>
+  </div>
+
   <div class="filter-container">
     <div class="range-container">
 
@@ -146,17 +156,192 @@
 
     </div>
     <div class="course-container">
-
     </div>
   </div>
 </template>
 
 <script setup>
 import {getCurrentInstance, onMounted, ref} from "vue";
-
+import {currency, setDefaultCurrency} from "@/js/currency";
 
 const {appContext} = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
+const searchQuery = ref('');
+
+onMounted(() => {
+  populateCourses('.course-container');
+  currency(API_URL);
+});
+
+function searchCourses() {
+  populateCourses('.course-container');
+}
+
+function populateCourses(selector) {
+  document.querySelector(selector).innerHTML = '';
+  const defaultCurrency = setDefaultCurrency() || 'USD';
+  fetch(API_URL + '/courses')
+      .then(response => response.json())
+      .then(data => {
+        fetch(API_URL + '/currency')
+            .then(response => response.json())
+            .then(currencies => {
+              data.forEach(courseProvider => {
+                if (courseProvider.course.title.toLowerCase().includes(searchQuery.value.toLowerCase()) || courseProvider.course.category.toLowerCase().includes(searchQuery.value.toLowerCase())) {
+                  const contentBox = document.createElement('a');
+                  contentBox.href = `/courses?id=${courseProvider.course.courseId}`;
+                  contentBox.className = 'content-box';
+
+                  const image = document.createElement('img');
+                  image.src = courseProvider.course.image || '/noImage.svg';
+                  image.alt = 'Course image';
+                  image.className = 'content-box-image';
+                  contentBox.appendChild(image);
+
+
+                  const descriptionBox = document.createElement('div');
+                  descriptionBox.className = 'content-box-description';
+                  contentBox.appendChild(descriptionBox);
+
+                  const title = document.createElement('h2');
+                  title.className = 'content-box-title';
+                  title.textContent = courseProvider.course.title;
+                  descriptionBox.appendChild(title);
+
+                  const hr = document.createElement('hr');
+                  descriptionBox.appendChild(hr);
+
+                  const attributes = document.createElement('div');
+                  attributes.className = 'content-box-attributes';
+                  descriptionBox.appendChild(attributes);
+
+                  // Create and append the category attribute
+                  const categoryAttribute = document.createElement('div');
+                  categoryAttribute.className = 'content-box-attribute';
+                  attributes.appendChild(categoryAttribute);
+
+                  const categoryIcon = document.createElement('img');
+                  categoryIcon.className = 'content-box-icon';
+                  categoryIcon.src = '/category.svg';
+                  categoryAttribute.appendChild(categoryIcon);
+
+                  const category = document.createElement('p');
+                  category.className = 'content-box-text';
+                  category.textContent = courseProvider.course.category;
+                  categoryAttribute.appendChild(category);
+
+                  // Create and append the providers attribute
+                  const providersAttribute = document.createElement('div');
+                  providersAttribute.className = 'content-box-attribute';
+                  attributes.appendChild(providersAttribute);
+
+                  const providersIcon = document.createElement('img');
+                  providersIcon.className = 'content-box-icon';
+                  providersIcon.src = '/providers.svg';
+                  providersAttribute.appendChild(providersIcon);
+
+                  const providersElement = document.createElement('p');
+                  providersElement.className = 'content-box-text';
+
+
+                  const courseProviders = courseProvider.providers.filter(provider => provider.courseId === courseProvider.course.courseId);
+
+                  if (Array.isArray(courseProviders) && courseProviders.length) {
+                    providersElement.innerHTML = `${courseProviders.length}&nbsp;Providers`;
+                  } else {
+                    providersElement.innerHTML = 'No&nbsp;Providers';
+                  }
+
+                  providersAttribute.appendChild(providersElement);
+
+
+                  const price = document.createElement('p');
+                  price.className = 'content-button';
+
+
+                  const lowestPriceProvider = courseProviders.reduce((prev, curr) => {
+                    return (prev.price < curr.price) ? prev : curr;
+                  });
+
+                  const currency = lowestPriceProvider.currency;
+                  const priceInCurrency = lowestPriceProvider.price;
+
+
+                  let symbol = '';
+                  let rate = 1;
+
+                  for (let i = 0; i < currencies.length; i++) {
+                    if (currencies[i].code === currency) {
+                      rate = currencies[i].rate;
+                      break;
+                    }
+                  }
+
+                  const priceInDefaultCurrency = priceInCurrency / rate;
+
+                  for (let i = 0; i < currencies.length; i++) {
+                    if (currencies[i].code === defaultCurrency) {
+                      symbol = currencies[i].symbol;
+                      rate = currencies[i].rate;
+                      break;
+                    }
+                  }
+
+                  const finalPrice = priceInDefaultCurrency * rate;
+
+                  const priceBox = document.createElement('div');
+                  priceBox.className = 'price-box';
+
+
+                  if (currency === 'SUB') {
+                    const image2 = document.createElement('img');
+                    image2.className = 'content-box-image-banner';
+                    image2.src = '/proBanner.svg';
+                    priceBox.appendChild(image2);
+                    price.textContent = symbol + finalPrice.toFixed(2) + "/month";
+                  } else {
+                    const startsAt = document.createElement('p');
+                    startsAt.className = 'content-box-text';
+                    startsAt.textContent = 'Starts at';
+                    priceBox.appendChild(startsAt);
+                    price.textContent = symbol + finalPrice.toFixed(2);
+                  }
+
+
+                  priceBox.appendChild(price);
+
+                  const hr2 = document.createElement('hr');
+                  descriptionBox.appendChild(hr2);
+
+                  descriptionBox.appendChild(priceBox);
+
+                  document.querySelector(selector).appendChild(contentBox.cloneNode(true));
+                }
+              })
+            })
+            .catch(error => console.error('Error:', error));
+      })
+      .catch(error => console.error('Error:', error));
+}
+
+
+function checkIfProCourse(courseProvider) {
+  return courseProvider.providers.some(provider => provider.name === "Learniverse");
+}
+
+function checkIfDmCourse(courseProvider) {
+  return courseProvider.course.category === "Digital Marketing";
+}
+
+function checkIfDsCourse(courseProvider) {
+  return courseProvider.course.category === "Data Science and Analytics";
+}
+
+function checkIfItCourse(courseProvider) {
+  return courseProvider.course.category === "Information Technology";
+}
+
+
 const isCategoryVisible = ref(false);
 const isPriceVisible = ref(false);
 const isDateVisible = ref(false);
@@ -262,14 +447,16 @@ function initiateComponents() {
 
 .filter-container {
   padding: 0;
+  width: 90%;
   display: flex;
   flex-direction: row;
-  align-content: space-between;
-  justify-content: center;
+  align-content: center;
+  justify-content: space-between;
   margin: auto;
 }
 
 .range-container {
+  width: 20%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -281,15 +468,16 @@ function initiateComponents() {
 .course-container {
   background-color: white;
   border-radius: 10px;
-  width: 900px;
-  height: 600px;
-  padding: 20px;
-  display: flex;
-  flex-direction: row;
-  align-content: flex-start;
-  justify-content: center;
+  padding: 5px;
+  min-width: 1360px;
+  min-height: 800px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  overflow-x: visible;
   margin: 30px;
 }
+
 
 .course-card img {
   width: 100%;
@@ -418,7 +606,7 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .price-ranger {
-  width: 400px;
+  width: 300px;
   background-color: white;
   padding: 10px 20px;
   margin: 10px 0 0 0;
@@ -462,7 +650,44 @@ input[type="range"]::-moz-range-thumb {
   font-size: 15px;
 }
 
-.cbx {
 
+.search-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10vh; /* Adjust as needed */
+}
+
+.search-bar {
+  box-sizing: border-box;
+  width: 60%;
+  border: 3px solid #606060;
+  border-radius: 20px;
+  position: relative; /* Make it a positioning context for the absolute position of the button */
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  left: 30px;
+  transform: translateY(-50%);
+  width: 30px;
+  height: 30px;
+  margin: auto;
+  filter: invert(50%);
+}
+
+
+.search-prompt {
+  color: var(--dark-1);
+  background: none;
+  width: 100%;
+  text-decoration: none;
+  padding: 20px 20px 20px 100px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 15px;
+  font-size: 16px;
 }
 </style>

@@ -46,6 +46,7 @@ function populateCourses() {
       });
 }
 
+//For searching through posts
 function searchPosts() {
   populateCourses();
 
@@ -94,8 +95,8 @@ function searchPosts() {
     <div class="search-container">
 
       <div class="search-bar">
-        <label for="myTextBox"></label><input class="search-prompt" type="text" id="myTextBox" name="myTextBox"
-                                              placeholder="Search for community posts" v-model="searchQuery" @input="searchPosts">
+        <label for="myTextBox"></label>
+        <input class="search-prompt" type="text" id="myTextBox" name="myTextBox" placeholder="Search for community posts" v-model="searchQuery" @input="searchPosts">
         <img class="search-icon" src="/search.png" alt="Connect">
       </div>
     </div>

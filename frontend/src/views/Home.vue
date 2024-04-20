@@ -134,6 +134,7 @@ import {getCurrentInstance, onMounted} from 'vue';
 import Planets from "@/components/Planets.vue";
 import home from "@/views/Home.vue";
 import {getAuthenticatedUser, isOfRoleUser} from "@/js/authentication";
+import {currency, setDefaultCurrency} from "@/js/currency";
 import WelcomeBack from "@/components/WelcomeBack.vue";
 
 
@@ -147,7 +148,7 @@ onMounted(() => {
   populateCourses('.digital-marketing', checkIfDmCourse);
   populateCourses('.data-Science', checkIfDsCourse);
   populateCourses('.information-technologies', checkIfItCourse);
-  currency();
+  currency(API_URL);
   loadButtons();
 });
 
@@ -319,40 +320,6 @@ function checkIfItCourse(courseProvider) {
   return courseProvider.course.category === "Information Technology";
 }
 
-
-function currency(){
-  document.getElementById('currencySelect').innerHTML = '';
-  fetch(API_URL + '/currency')
-      .then(response => response.json())
-      .then(currencies => {
-        const select = document.getElementById('currencySelect');
-        currencies.forEach(currency => {
-          const option = document.createElement('option');
-          option.value = currency.code;
-          option.text = currency.code + ' - ' + currency.symbol;
-          select.appendChild(option);
-        });
-
-        const defaultCurrency = setDefaultCurrency();
-        if (defaultCurrency) {
-          select.value = defaultCurrency;
-        }
-        document.getElementById('currencySelect').addEventListener('change', function() {
-          document.cookie = `defaultCurrency=${this.value}; path=/; max-age=31536000`;
-          location.reload();
-        });
-      })
-      .catch(error => console.error('Error:', error));
-
-}
-
-function setDefaultCurrency() {
-  const cookies = document.cookie.split('; ');
-  const defaultCurrencyCookie = cookies.find(row => row.startsWith('defaultCurrency='));
-  if (defaultCurrencyCookie) {
-    return defaultCurrencyCookie.split('=')[1];
-  }
-}
 
 function loadButtons() {
   const scrollAmount = 332; // Amount of pixels to scroll

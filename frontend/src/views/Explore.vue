@@ -17,25 +17,17 @@
     <p class="description">Explore our library</p>
 
 
-    <div class="search-container">
-
-      <div class="search-bar">
-        <label for="myTextBox"></label><input class="search-prompt" type="text" id="myTextBox" name="myTextBox"
-                                              placeholder="Search for courses to boost your skills">
-        <img class="search-icon" src="/search.png" alt="Connect">
-      </div>
-    </div>
 
     <SearchFilter/>
   </div>
 </template>
 
 <script setup>
-import {getCurrentInstance, onMounted, ref} from "vue";
+
 import SearchFilter from "@/components/SearchFilter.vue";
 
-const {appContext} = getCurrentInstance();
-const API_URL = appContext.config.globalProperties.$apiAddress;
+import {ref} from "vue";
+
 
 
 
@@ -98,45 +90,6 @@ const API_URL = appContext.config.globalProperties.$apiAddress;
   margin: 0;
 }
 
-.search-container {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 10vh; /* Adjust as needed */
-}
-
-.search-bar {
-  box-sizing: border-box;
-  width: 60%;
-  border: 3px solid #606060;
-  border-radius: 20px;
-  position: relative; /* Make it a positioning context for the absolute position of the button */
-}
-
-.search-icon {
-  position: absolute;
-  top: 50%;
-  left: 30px;
-  transform: translateY(-50%);
-  width: 30px;
-  height: 30px;
-  margin: auto;
-  filter: invert(50%);
-}
-
-
-.search-prompt {
-  color: var(--dark-1);
-  background: none;
-  width: 100%;
-  text-decoration: none;
-  padding: 20px 20px 20px 100px;
-  margin-right: 10px;
-  border: none;
-  border-radius: 15px;
-  font-size: 16px;
-}
 
 .filter-container {
   padding: 0;
