@@ -11,18 +11,23 @@ const firstName = ref('');
 const lastName = ref('');
 const email = ref('');
 const phoneNumber = ref('');
+const repeatPassword = ref('');
 const isUserCreated = ref(false);
 
 const register = async () => {
-  const signupData = {
-    "username": username.value,
-    "password": password.value,
-    "email": email.value,
-    "firstName": firstName.value,
-    "lastName": lastName.value,
-    "phoneNumber": phoneNumber.value
-  };
-  await sendApiRequest('POST', '/users/register', onSignupSuccess, signupData, onSignUpError);
+  if(repeatPassword.value === password.value) {
+    const signupData = {
+      "username": username.value,
+      "password": password.value,
+      "email": email.value,
+      "firstName": firstName.value,
+      "lastName": lastName.value,
+      "phoneNumber": phoneNumber.value
+    };
+    await sendApiRequest('POST', '/users/register', onSignupSuccess, signupData, onSignUpError);
+  } else {
+    alert("The password must match!")
+  }
 };
 
 function onSignupSuccess() {
@@ -52,6 +57,10 @@ function onSignUpError(error) {
           <div class="login-text-field">
             <label for="password">Password*:</label>
             <input v-model="password" class="login-prompt" type="password" id="password" name="password" placeholder="Enter a password" maxlength="64" required autofocus/>
+          </div>
+          <div class="login-text-field">
+            <label for="repeatPassword">Repeat password*:</label>
+            <input v-model="repeatPassword" class="login-prompt" type="password" id="repeatPassword" name="repeatPassword" placeholder="Repeat the password" maxlength="64" required autofocus>
           </div>
           <div class="login-text-field">
             <label for="firstName">First Name*:</label>
