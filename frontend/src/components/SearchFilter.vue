@@ -325,22 +325,6 @@ function populateCourses(selector) {
 }
 
 
-function checkIfProCourse(courseProvider) {
-  return courseProvider.providers.some(provider => provider.name === "Learniverse");
-}
-
-function checkIfDmCourse(courseProvider) {
-  return courseProvider.course.category === "Digital Marketing";
-}
-
-function checkIfDsCourse(courseProvider) {
-  return courseProvider.course.category === "Data Science and Analytics";
-}
-
-function checkIfItCourse(courseProvider) {
-  return courseProvider.course.category === "Information Technology";
-}
-
 
 const isCategoryVisible = ref(false);
 const isPriceVisible = ref(false);
