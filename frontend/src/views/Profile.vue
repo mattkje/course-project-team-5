@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import {getAuthenticatedUser} from "../js/authentication";
+import {getAuthenticatedUser} from "@/js/authentication";
 import {sendApiRequest} from "@/js/requests";
 import {redirectTo} from "@/js/navigation";
 import {onMounted} from "vue";
@@ -9,6 +9,7 @@ import {doLogout} from "@/js/authentication";
 onMounted(loadProfileData);
 const loading = ref(true);
 const user = getAuthenticatedUser();
+
 
 async function loadProfileData() {
   console.log("Loading profile data from API...");

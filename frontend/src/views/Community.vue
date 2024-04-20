@@ -1,8 +1,10 @@
 <script setup>
-import {getCurrentInstance, onMounted} from "vue";
+import { getCurrentInstance, onMounted, ref } from "vue";
 
-const {appContext} = getCurrentInstance();
+const { appContext } = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
+const searchQuery = ref('');
+
 onMounted(() => {
   populateCourses();
 });
@@ -17,34 +19,52 @@ function populateCourses() {
       })
       .then(courses => {
         const courseBlock = document.querySelector('.course-block');
-
         // Clear the course block
         courseBlock.innerHTML = '';
-
         courses.forEach(course => {
-
-          // Create a new course card element
-          const courseCard = document.createElement('a');
-          courseCard.className = 'course-card';
-          courseCard.href = `/community/post?id=${course.courseId}`;
-
-          const imageUrl = course.image ? course.image : '/noImageCom.svg';
-          courseCard.innerHTML = `
-        <img src="${imageUrl}" alt="Course ${course.courseId}">
-        <div class="course-card-description">
-            <h3>${course.title}</h3>
-            <p>Posted By: ${course.author}</p>
-            <p>${course.description}</p>
-        </div>
-      `;
-
-          // Append the course card to the course block
-          courseBlock.appendChild(courseCard);
+          if (course.title.toLowerCase().includes(searchQuery.value.toLowerCase())) {
+            // Create a new course card element
+            const courseCard = document.createElement('a');
+            courseCard.className = 'course-card';
+            courseCard.href = `/community/post?id=${course.courseId}`;
+            const imageUrl = course.image ? course.image : '/noImageCom.svg';
+            courseCard.innerHTML = `
+                        <img src="${imageUrl}" alt="Course ${course.courseId}">
+                        <div class="course-card-description">
+                            <h3>${course.title}</h3>
+                            <p>Posted By: ${course.author}</p>
+                            <p>${course.description}</p>
+                        </div>
+                    `;
+            // Append the course card to the course block
+            courseBlock.appendChild(courseCard);
+          }
         });
       })
       .catch(error => {
         console.log('There was a problem with the fetch operation: ' + error.message);
       });
+}
+
+function searchPosts() {
+  populateCourses();
+
+  const divElement = document.querySelector('.course-block');
+
+  if (!divElement.innerHTML.trim()) {
+    if (!document.querySelector('.no-courses-message')) {
+      const noCourses = document.createElement('h2');
+      noCourses.innerText = 'No courses matching prompt';
+      noCourses.classList.add('no-courses-message');
+      const courseSection = document.querySelector('.course-section');
+      courseSection.append(noCourses);
+    }
+  } else {
+    const existingMessage = document.querySelector('.no-courses-message');
+    if (existingMessage) {
+      existingMessage.remove();
+    }
+  }
 }
 
 </script>
@@ -75,7 +95,7 @@ function populateCourses() {
 
       <div class="search-bar">
         <label for="myTextBox"></label><input class="search-prompt" type="text" id="myTextBox" name="myTextBox"
-                                              placeholder="Search for courses to boost your skills">
+                                              placeholder="Search for community posts" v-model="searchQuery" @input="searchPosts">
         <img class="search-icon" src="/search.png" alt="Connect">
       </div>
     </div>
@@ -85,6 +105,7 @@ function populateCourses() {
     <div class="greeting"></div>
   </div>
 </template>
+
 
 <style scoped>
 @media (max-width: 600px) {
@@ -190,9 +211,9 @@ function populateCourses() {
 
 
 .search-prompt {
-  color: var(--light-1);
+  color: var(--dark-1);
   background: none;
-  width: 60%;
+  width: 100%;
   padding: 20px 20px 20px 100px;
   margin-right: 10px;
   border: none;

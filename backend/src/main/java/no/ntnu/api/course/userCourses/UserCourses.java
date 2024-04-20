@@ -1,4 +1,4 @@
-package no.ntnu.api.user;
+package no.ntnu.api.course.userCourses;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

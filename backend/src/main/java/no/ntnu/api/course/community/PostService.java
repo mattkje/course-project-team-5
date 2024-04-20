@@ -1,8 +1,6 @@
 package no.ntnu.api.course.community;
 
 import java.util.Collection;
-import no.ntnu.api.course.Course;
-import no.ntnu.api.course.CourseWithProvidersAndKeywords;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,16 +8,16 @@ import org.springframework.stereotype.Service;
  * Service class for the Course entity.
  */
 @Service
-public class CommunityCourseService {
+public class PostService {
 
-  private final CommunityCourseRepository courseRepository;
+  private final PostRepository courseRepository;
 
   /**
    * Constructor for the CourseService class.
    * @param courseRepository The repository for the Course entity.
    */
   @Autowired
-  public CommunityCourseService(CommunityCourseRepository courseRepository) {
+  public PostService(PostRepository courseRepository) {
     this.courseRepository = courseRepository;
   }
 
@@ -30,8 +28,8 @@ public class CommunityCourseService {
    * @param courseId id representing a course. All id's are different.
    * @return course with matching id or a NOT FOUND response.
    */
-  public CommunityCourse getCourseInfo(Integer courseId) {
-    for (CommunityCourse course : courseRepository.findAll()) {
+  public Post getCourseInfo(Integer courseId) {
+    for (Post course : courseRepository.findAll()) {
       if (courseId == course.getCourseId()) {
         return course;
       }
@@ -44,17 +42,17 @@ public class CommunityCourseService {
      *
      * @param post The course to be added into the database
      */
-  public void postCourse(CommunityCourse post) {
+  public void postCourse(Post post) {
     if (post != null) {
       courseRepository.save(post);
     }
   }
 
-  public Collection<CommunityCourse> getAllCourses() {
+  public Collection<Post> getAllCourses() {
     return courseRepository.findAll();
   }
 
-  public CommunityCourse getCourse(int id) {
+  public Post getCourse(int id) {
     return courseRepository.findById((long) id).orElse(null);
   }
 
@@ -64,8 +62,8 @@ public class CommunityCourseService {
    * @param updatedCourse The updated course object.
    * @return true if the update was successful, false otherwise.
    */
-  public boolean updateCourse(int id, CommunityCourse updatedCourse) {
-    CommunityCourse existingCourse = courseRepository.findById((long) id).orElse(null);
+  public boolean updateCourse(int id, Post updatedCourse) {
+    Post existingCourse = courseRepository.findById((long) id).orElse(null);
     if (existingCourse != null) {
 
       existingCourse.setTitle(updatedCourse.getTitle());

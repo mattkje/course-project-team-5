@@ -11,6 +11,7 @@
 
 <style scoped>
 .center {
+  background-color: var(--light-1);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,6 +20,6 @@
 }
 
 p, router-link{
-  color: white;
+  color: #151515;
 }
 </style>

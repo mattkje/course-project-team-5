@@ -1,27 +1,22 @@
 package no.ntnu.api.course.community;
 
 import java.util.Collection;
-import java.util.Objects;
-import no.ntnu.api.course.Course;
-import no.ntnu.api.provider.CourseProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class CommunityCourseController {
+public class PostController {
 
-    private final CommunityCourseService communityCourseService;
+    private final PostService communityCourseService;
 
     @Autowired
-    public CommunityCourseController(CommunityCourseService courseService) {
+    public PostController(PostService courseService) {
         this.communityCourseService = courseService;
     }
 
@@ -33,7 +28,7 @@ public class CommunityCourseController {
      * @return a Http response either containing the course with matching id or a NOT FOUND response.
      */
     @GetMapping("/api/community/courses/{id}")
-    public ResponseEntity<CommunityCourse> getCourse(@PathVariable int id) {
+    public ResponseEntity<Post> getCourse(@PathVariable int id) {
         if(communityCourseService.getCourseInfo(id) == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         } else {
@@ -47,7 +42,7 @@ public class CommunityCourseController {
      */
 
     @GetMapping("/api/community/courses")
-    public Collection<CommunityCourse> getCourses() {
+    public Collection<Post> getCourses() {
         return communityCourseService.getAllCourses();
     }
 
@@ -58,7 +53,7 @@ public class CommunityCourseController {
      * @return ResponseEntity indicating success or failure.
      */
     @PostMapping("/api/community/courses")
-    public ResponseEntity<CommunityCourse> postCourse(@RequestBody CommunityCourse post) {
+    public ResponseEntity<Post> postCourse(@RequestBody Post post) {
         if(post == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }else {

@@ -4,10 +4,11 @@ package no.ntnu.api.config;
 import java.util.ArrayList;
 import java.util.List;
 
-import no.ntnu.api.course.Course;
 import no.ntnu.api.user.*;
 import no.ntnu.api.role.Role;
 import no.ntnu.api.role.RoleRepository;
+import no.ntnu.api.course.userCourses.UserCourses;
+import no.ntnu.api.course.userCourses.UserCoursesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;

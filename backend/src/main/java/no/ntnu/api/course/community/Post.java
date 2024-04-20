@@ -13,7 +13,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "community_courses")
-public class CommunityCourse {
+public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -32,7 +32,7 @@ public class CommunityCourse {
     @Column
     private String image;
 
-    public CommunityCourse() { // This constructor is empty due to the use of the @Entity annotation
+    public Post() { // This constructor is empty due to the use of the @Entity annotation
 
     }
 
