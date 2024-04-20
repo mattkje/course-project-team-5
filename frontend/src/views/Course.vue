@@ -43,15 +43,18 @@
         </div>
       </div>
       <div class="course-description-box">
-        <h3>Course Description</h3>
+        <h3>Description</h3>
         <p id="courseKeywords"></p>
         <p id="courseDescription"></p>
       </div>
     </div>
-    <div id="map-container" class="map-container" style="display: none">
-      <h3>Course Location</h3>
-      <div id="map" ></div>
-    </div>
+    <div class="course-description-box">
+      <h3>Location</h3>
+      <p id="notShowingLocationText">Please select a provider to show location</p>
+      <div id="map-container" class="map-container" style="display: none">
+        <div id="map" ></div>
+      </div>
+  </div>
 
 
     <div v-show="!loading"class="greeting">
@@ -70,6 +73,7 @@
 import {getCurrentInstance, onMounted, ref} from 'vue';
 import "@/assets/coursePage.css"
 import {isOfRoleUser} from "@/js/authentication";
+import MarkdownIt from "markdown-it";
 const loading = ref(true);
 
 onMounted(() => {
@@ -114,9 +118,14 @@ function populateCoursePage() {
               populateCourses('.featured');
 
               //Populating the course page
+              const markdownText = data.course.description;
+              const md = new MarkdownIt();
+              const htmlContent = md.render(markdownText);
+
+
               document.getElementById('courseCategoryLink').innerText = data.course.category;
               document.getElementById('courseTitleLink').innerText = data.course.title;
-              document.getElementById('courseDescription').innerText = data.course.description;
+              document.getElementById('courseDescription').innerHTML = htmlContent
               document.getElementById('courseImage').src = data.course.image || '/noImage.svg';
               document.getElementById('courseTitle').innerText = data.course.title;
 
@@ -243,6 +252,7 @@ function populateCoursePage() {
                   document.getElementById('providerList').appendChild(providerElement);
                   providerElement.addEventListener('click', function() {
                     document.getElementById('enrollButton').textContent = "Buy for " + symbol + finalPrice.toFixed(2);
+                    document.getElementById('notShowingLocationText').innerText = 'Showing location for provider ' + provider.name
                     initMap(provider.latitude, provider.longitude);
                   });
                 }
@@ -469,6 +479,7 @@ async function initMap(lat, lng) {
   } else {
 
     document.getElementById('map-container').style.display = "block";
+
     const position = { lat: lat, lng: lng };
 
     const { Map } = await google.maps.importLibrary("maps");
@@ -493,6 +504,7 @@ async function initMap(lat, lng) {
 
 function onlineCourse() {
   document.getElementById('map-container').style.display = "none";
+  document.getElementById('notShowingLocationText').innerText = "This provider does not offer an on-site course";
 }
 
 function currency() {
@@ -736,10 +748,10 @@ input:focus {
 }
 
 .course-image {
-  border-radius: 20px;
+  border-radius: 20px 0 0 20px;
   background-color: #3c3c3c;
   height: auto;
-  width: 600px;
+  width: 700px;
   object-fit: cover;
   margin: 0;
   box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
@@ -756,22 +768,24 @@ input:focus {
 
 .course-info {
   background-color: white;
-  border-radius: 20px;
-  padding: 10px 20px;
-  width: 500px;
+  border-radius: 0 20px 20px 0;
+  padding: 20px;
+  width: 600px;
   height: max-content;
-  margin-left: 30px;
   box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
 }
 
 .course-description-box {
+  background-color: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-content: center;
   width: 1300px;
   margin: 50px auto;
-  padding: 10px 20px;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
 }
 
 .course-description-box h3{
@@ -983,17 +997,17 @@ hr {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding-top: 20px;
   align-items: center;
-  width: 1400px;
+  width: 100%;
   margin: auto;
-  border-radius: 30px;
+  border-radius: 20px;
 }
 #map {
   height: 400px;
-  width: 1400px;
+  max-width: 1400px;
   object-fit: cover;
   border-radius: 15px;
-  box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
   transition: transform 0.5s ease;
 }
 

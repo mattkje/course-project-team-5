@@ -51,7 +51,6 @@ function onLoginSuccess() {
           <p>No account?</p>
           <a class="standard-button" href="/register" type="submit">Sign up here</a>
         </div>
-        <img class="login-image" src="/login.svg" alt="Connect">
       </div>
     </div>
 
@@ -115,44 +114,30 @@ ul {
 
 .logo-top {
   font-weight: 900;
-  font-size: 2vw;
+  font-size: 37px;
   padding-left: 5px;
   color: var(--dark-1);
-  padding-bottom: 1vw;
 }
 
 .logo-bottom {
-  font-size: 2vw;
+  font-size: 37px;
   color: var(--base-1);
-  padding-bottom: 1vw;
 }
+
 
 
 .header-button {
   color: var(--dark-1);
   font-size: 20px;
-  border: none;
   padding: 0;
   text-decoration: none;
   display: flex;
+  justify-content: center;
   align-items: center;
-  margin: auto;
-}
 
-.header-button:hover {
-  opacity: 60%;
-}
-
-.header-button .text {
-  font-size: 0;
-  width: 0;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.header-button:hover .text {
-  font-size: medium;
-  opacity: 1;
+  &:hover {
+    opacity: 60%;
+  }
 }
 
 
@@ -161,21 +146,20 @@ input:focus {
 }
 
 .logo {
-  width: 3vw;
-  height: 3vw;
+  width: 60px;
+  height: 60px;
   margin: auto;
-  padding-bottom: 1vw;
+
 }
 
 .standard-button {
-  width: 17vw;
-  height: 1vh;
+  width: 100%;
+  height: 40px;
   background: var(--base-1);
   color: var(--light-1);
   font-weight: bold;
-  padding: 2vh;
-  border-width: 2px;
-  border-radius: 2vh;
+  padding: 20px;
+  border-radius: 10px;
   text-align: center;
   font-size: 15px;
   display: flex;
@@ -189,44 +173,6 @@ input:focus {
   }
 }
 
-footer {
-  background-color: var(--dark-2);
-  color: var(--light-1);
-  text-align: center;
-  padding: 20px;
-  margin: 0;
-}
-
-footer a {
-  color: var(--light-1);
-  text-decoration: none;
-  display: block;
-  margin: 5px 0;
-}
-
-footer a:hover {
-  text-decoration: underline;
-}
-
-footer .logo {
-  width: 40px;
-  height: 40px;
-  padding-left: 20px;
-  transform:translateY(-3px);
-}
-
-footer .logo-top {
-  font-size: 20px;
-  font-weight: bold;
-  padding-left: 10px;
-  color: var(--light-1);
-}
-
-footer .logo-bottom {
-  font-size: 20px;
-  font-weight: bold;
-}
-
 
 
 /* LOGIN PAGE */
@@ -234,44 +180,44 @@ footer .logo-bottom {
 
 
 .login-container {
+  background: linear-gradient(180deg, rgba(21, 16, 82, 0.14) 0%, rgba(158, 150, 255, 0.14) 100%);
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 800px;
   margin-bottom: 0;
 }
 
 
 .login-box {
-  width: 50%;
-  height: 70%;
-  background-color: #FFFFFF;
+  height: min-content;
+  background-color: var(--light-1);
   display: flex;
   align-items: center;
-  padding: 3vw;
-  border-radius: 2vh;
+  padding: 30px;
+  border-radius: 20px;
   box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
 }
 
 .login-box h1 {
-  margin-bottom: 2vh;
+  margin-bottom: 20px;
 }
 
 .login-field-box {
   align-items: center;
-  margin-bottom: 1vh;
+  margin-bottom: 10px;
 }
 
 .login-prompt {
   color: var(--dark-3);
-  width: 15vw;
-  height: 1vh;
+  width: 100%;
+  height: 40px;
   background: none;
-  padding: 2vh;
-  border: 0.15vw solid var(--dark-3);
-  border-radius: 2vh;
-  font-size: 0.6vw;
-  margin: 1vh 0 1vh 0;
+  padding: 20px;
+  border: 2px solid var(--dark-3);
+  border-radius: 10px;
+  font-size: 12px;
+  margin: 10px 0;
 }
 
 .alert-failed {

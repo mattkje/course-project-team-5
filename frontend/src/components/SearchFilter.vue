@@ -435,7 +435,7 @@ function initiateComponents() {
   display: flex;
   flex-direction: row;
   align-content: center;
-  justify-content: space-between;
+  justify-content: center;
   margin: auto;
 }
 
