@@ -128,4 +128,21 @@ public class UserController {
         return response;
     }
 
+    @PutMapping("/{username}/change-password")
+    public ResponseEntity<?> changePassword(@PathVariable String username, String password) {
+        UserWithCourses sessionUser = userService.getSessionUser();
+        if (sessionUser != null && sessionUser.user().getUsername().equals(username)) {
+            if(password != null) {
+                sessionUser.user().setPassword(password);
+                return new ResponseEntity<>("Password updated!", HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("Password not supplied", HttpStatus.BAD_REQUEST);
+            }
+        } else if (sessionUser == null){
+            return new ResponseEntity<>("Profile data accessible only to authenticated users", HttpStatus.UNAUTHORIZED);
+        } else {
+            return new ResponseEntity<>("Profile data for other users not accessible!", HttpStatus.FORBIDDEN);
+        }
+    }
+
 }
