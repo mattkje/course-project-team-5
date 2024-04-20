@@ -155,6 +155,11 @@ public class AccessUserService implements UserDetailsService {
     return true;
   }
 
+  public void changePassword(UserWithCourses sessionUser, String password) {
+    sessionUser.user().setPassword(createHash(password));
+    userRepository.save(sessionUser.user());
+  }
+
   public List<UserCourses> getCourses(String username) {
     List<UserCourses> courses = new ArrayList<>();
     for (UserCourses userCourse : userCoursesRepository.findAll()) {
@@ -163,5 +168,13 @@ public class AccessUserService implements UserDetailsService {
       }
     }
     return courses;
+  }
+
+  public void deleteUser(String username) {
+    for(User user : userRepository.findAll()) {
+      if(user.getUsername().equals(username)) {
+        userRepository.delete(user);
+      }
+    }
   }
 }

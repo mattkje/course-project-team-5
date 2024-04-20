@@ -1,9 +1,6 @@
 package no.ntnu.api.user;
 
-import no.ntnu.api.config.AccessUserService;
-import no.ntnu.api.config.AuthenticationRequest;
-import no.ntnu.api.config.AuthenticationResponse;
-import no.ntnu.api.config.JwtUtil;
+import no.ntnu.api.config.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -129,11 +126,11 @@ public class UserController {
     }
 
     @PutMapping("/{username}/change-password")
-    public ResponseEntity<?> changePassword(@PathVariable String username, String password) {
+    public ResponseEntity<?> changePassword(@PathVariable String username, @RequestBody ChangePasswordRequest details) {
         UserWithCourses sessionUser = userService.getSessionUser();
         if (sessionUser != null && sessionUser.user().getUsername().equals(username)) {
-            if(password != null) {
-                sessionUser.user().setPassword(password);
+            if(details.getNewPassword() != null) {
+                userService.changePassword(sessionUser, details.getNewPassword());
                 return new ResponseEntity<>("Password updated!", HttpStatus.OK);
             } else {
                 return new ResponseEntity<>("Password not supplied", HttpStatus.BAD_REQUEST);
@@ -142,6 +139,17 @@ public class UserController {
             return new ResponseEntity<>("Profile data accessible only to authenticated users", HttpStatus.UNAUTHORIZED);
         } else {
             return new ResponseEntity<>("Profile data for other users not accessible!", HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @DeleteMapping("/{username}")
+    public ResponseEntity<?> deleteUser(@PathVariable String username) {
+        UserWithCourses sessionUser = userService.getSessionUser();
+        if(sessionUser != null && sessionUser.user().getUsername().equals(username)) {
+            userService.deleteUser(username);
+            return ResponseEntity.status(HttpStatus.OK).body("User successfully deleted");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Only accessible to authorized users");
         }
     }
 
