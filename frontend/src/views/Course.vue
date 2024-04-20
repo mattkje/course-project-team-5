@@ -2,24 +2,17 @@
 
 <template>
   <div class="course-page-background">
-    <div class="providerList">
+    <div v-show="!loading" class="courseLinkElement">
+      <a href="/">Courses</a>
+      <p>&nbsp;->&nbsp;</p>
+      <a href="#" id="courseCategoryLink"></a>
+      <p>&nbsp;->&nbsp;</p>
+      <a href="#" id="courseTitleLink"></a>
+    </div>
+    <div v-show="!loading" class="providerList">
       <div class="course-image-box">
         <img id="courseImage" class="course-image" alt="Course Image">
         <div class="course-image-blur"></div>
-      </div>
-      <div class="courseLinkElement">
-        <a href="/">Courses</a>
-        <p>&nbsp;->&nbsp;</p>
-        <a href="#" id="courseCategoryLink"></a>
-        <p>&nbsp;->&nbsp;</p>
-        <a href="#" id="courseTitleLink"></a>
-      </div>
-      <div class="course">
-        <div class="course-description-box">
-          <h3>Course Description</h3>
-          <p id="courseKeywords"></p>
-          <p id="courseDescription"></p>
-        </div>
         <div class="course-info">
           <h2 id="courseTitle"></h2>
           <hr>
@@ -49,6 +42,11 @@
           </div>
         </div>
       </div>
+      <div class="course-description-box">
+        <h3>Course Description</h3>
+        <p id="courseKeywords"></p>
+        <p id="courseDescription"></p>
+      </div>
     </div>
     <div id="map-container" class="map-container" style="display: none">
       <h3>Course Location</h3>
@@ -56,22 +54,24 @@
     </div>
 
 
-    <div class="greeting">
+    <div v-show="!loading"class="greeting">
       <h2>Similar Courses</h2>
     </div>
 
-    <div class="featured">
+    <div v-show="!loading" class="featured">
       <!--- Featured courses will be appended here --->
     </div>
-    <div class="greeting">
+    <div v-show="!loading" class="greeting">
     </div>
   </div>
 </template>
 
 <script setup>
-import {getCurrentInstance, onMounted} from 'vue';
+import {getCurrentInstance, onMounted, ref} from 'vue';
 import "@/assets/coursePage.css"
 import {isOfRoleUser} from "@/js/authentication";
+const loading = ref(true);
+
 onMounted(() => {
   populateCoursePage();
   currency();
@@ -264,6 +264,7 @@ function populateCoursePage() {
               if (`${data.course.hoursPerWeek}` === "null") {
                 courseHoursElement.style.display = "none";
               }
+              loading.value = false;
             })
             .catch(error => console.error('Error:', error));
       })
@@ -541,7 +542,6 @@ function setDefaultCurrency() {
   padding: 0;
 }
 
-
 img {
   margin: auto;
   padding: 0;
@@ -736,57 +736,42 @@ input:focus {
 }
 
 .course-image {
+  border-radius: 20px;
   background-color: #3c3c3c;
-  position: absolute;
-  height: 600px;
-  width: 100%;
+  height: auto;
+  width: 600px;
   object-fit: cover;
   margin: 0;
+  box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
 }
 
-.course-image-blur {
-  position: relative;
-  height: 600px;
-  padding: 0;
-  width: 100%;
-  margin: 0;
-  background: linear-gradient(to top, rgba(15, 16, 19, 0.68) 0%, transparent 20%);
-}
 
 .course-image-box {
-  position: absolute;
-  height: 600px;
-  width: 100%;
-  margin: 0;
-}
-
-.course {
-  padding: 10px 20px;
-  width: 1400px;
+  display: flex;
   align-content: center;
   justify-content: center;
-  text-decoration: none;
-  display: flex;
-  margin: 200px auto 0 auto;
-  height: min-content;
+  width: 100%;
+  margin: 0;
 }
 
 .course-info {
-  position: relative;
+  background-color: white;
+  border-radius: 20px;
   padding: 10px 20px;
-  background-color: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(5px);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 27px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
-  width: 400px;
-  height: min-content;
+  width: 500px;
+  height: max-content;
+  margin-left: 30px;
+  box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
 }
 
 .course-description-box {
-  border: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  width: 1300px;
+  margin: 50px auto;
   padding: 10px 20px;
-  margin: 400px auto 0 auto;
 }
 
 .course-description-box h3{
@@ -865,17 +850,12 @@ hr {
 }
 
 .courseLinkElement {
-  background-color: white;
-  padding: 9px 7px;
-  border-radius: 0 0 10px 0;
-  z-index: 50;
+  padding: 30px 7px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
   margin-left: 100px;
-  position: relative;
-  right: 100px;
   width: min-content;
   white-space: nowrap;
 }

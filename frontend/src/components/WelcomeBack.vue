@@ -3,14 +3,6 @@
 import {onMounted, ref} from "vue";
 
 
-onMounted(() => {
-  showGreeting()
-});
-
-
-function showGreeting() {
-  document.getElementById("part1").innerText = "Welcome Back!";
-}
 
 
 </script>
@@ -20,7 +12,7 @@ function showGreeting() {
   <div id="background" class="background">
     <div class="hero-container">
       <div class="hero-box">
-        <h1 id="part1" class="hero-text">.</h1>
+        <img id="planet" class="planet1" src="/logo.svg" alt="Logo">
       </div>
     </div>
     <img class="bend" src="/bend.svg">
@@ -36,7 +28,7 @@ function showGreeting() {
 
 .background {
   top: 0;
-  height: 450px;
+  height: 500px;
   background: linear-gradient(180deg, rgba(21, 16, 82, 0.14) 0%, rgba(158, 150, 255, 0.14) 100%);
   display: flex;
   justify-content: space-between;
@@ -45,6 +37,11 @@ function showGreeting() {
   width: 100%;
   margin: 0;
 
+}
+
+.planet1 {
+  height: 150px;
+  animation: ease-out slideIn 1s forwards, ease-out pulse 5s infinite 1s;
 }
 
 .hero-container {
@@ -71,10 +68,29 @@ function showGreeting() {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   color: transparent;
-  margin-top: 200px;
   animation: ease-in-out fadeIn 1s;
 }
 
+@keyframes slideIn {
+  0% {
+    transform: translatex(-1000px) translateY(-100px) scale(1.2);
+  }
+  100% {
+    transform: translatex(0) translateY(120px) scale(1.5);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: translatex(0) translateY(120px) scale(1.5);
+  }
+  50% {
+    transform: translatex(0) translateY(120px) scale(1.7);
+  }
+  100% {
+    transform: translatex(0) translateY(120px) scale(1.5);
+  }
+}
 
 @keyframes fadeIn {
   0% {

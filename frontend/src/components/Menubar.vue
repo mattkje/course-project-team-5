@@ -51,16 +51,20 @@ function setDefaultCurrency() {
       <div class="content">
         <div class="left-content">
           <router-link to="/" class="logo-button">
-            <img id="logo" class="logo" src="/pro.svg" v-if="isOfRoleUser('ROLE_PRO')">
-            <img id="logo" class="logo" src="/logo.svg" v-else>
+            <img id="logo" class="logo" src="/logo.svg">
             <h4 class="logo-top">Learniverse&nbsp;</h4>
-            <h4 class="logo-bottom-pro" v-if="isOfRoleUser('ROLE_PRO')">Pro</h4>
-            <h4 class="logo-bottom" v-else>Connect</h4>
+            <h4 class="logo-bottom">Connect</h4>
           </router-link>
-          <div id="menu-links" class="menu-links">
+          <div id="menu-links" class="menu-links" v-if="isOfRoleUser('ROLE_ADMIN')">
+            <router-link to="/admin" class="header-button" v-if="isOfRoleUser('ROLE_ADMIN')">Manage</router-link>
             <router-link to="/explore" class="header-button">Explore</router-link>
             <router-link to="/community" class="header-button">Community</router-link>
-            <router-link to="/pro" class="header-button" v-if="!isOfRoleUser('ROLE_PRO')">Learniverse&nbsp;Pro</router-link>
+          </div>
+          <div id="menu-links" class="menu-links" v-else>
+            <router-link to="/admin" class="header-button" v-if="isOfRoleUser('ROLE_ADMIN')">Manage</router-link>
+            <router-link to="/explore" class="header-button">Explore</router-link>
+            <router-link to="/community" class="header-button">Community</router-link>
+            <router-link to="/pro" class="header-button" v-if="!isOfRoleUser('ROLE_PRO') && !isOfRoleUser('ROLE_ADMIN')">Learniverse&nbsp;Pro</router-link>
           </div>
         </div>
 

@@ -14,8 +14,15 @@
       <button id="scrollLeftButton">
         <img class="leftArrow" src="/arrow.svg" alt="Connect">
       </button>
-      <div id="featured" class="featured">
+      <div v-show="!loading" id="featured" class="featured">
         <!--- Featured courses will be appended here --->
+      </div>
+      <div v-show="loading" class="featured">
+        <div  class="three-body">
+          <div class="three-body__dot"></div>
+          <div class="three-body__dot"></div>
+          <div class="three-body__dot"></div>
+        </div>
       </div>
       <button id="scrollRightButton">
         <img class="rightArrow" src="/arrow.svg" alt="Connect">
@@ -38,8 +45,15 @@
       <button id="scrollLeftButton-ds">
         <img class="leftArrow" src="/arrow.svg" alt="Connect">
       </button>
-      <div class="data-Science">
-        <!--- Data Science courses will be appended here --->
+      <div v-show="!loading" class="data-Science">
+
+      </div>
+      <div v-show="loading" class="data-Science">
+        <div  class="three-body">
+          <div class="three-body__dot"></div>
+          <div class="three-body__dot"></div>
+          <div class="three-body__dot"></div>
+        </div>
       </div>
       <button id="scrollRightButton-ds">
         <img class="rightArrow" src="/arrow.svg" alt="Connect">
@@ -55,8 +69,15 @@
       <button id="scrollLeftButton-dm">
         <img class="leftArrow" src="/arrow.svg" alt="Connect">
       </button>
-      <div class="digital-marketing">
-        <!--- DM courses will be appended here --->
+      <div v-show="!loading" class="digital-marketing">
+
+      </div>
+      <div v-show="loading" class="digital-marketing">
+        <div  class="three-body">
+          <div class="three-body__dot"></div>
+          <div class="three-body__dot"></div>
+          <div class="three-body__dot"></div>
+        </div>
       </div>
       <button id="scrollRightButton-dm">
         <img class="rightArrow" src="/arrow.svg" alt="Connect">
@@ -95,8 +116,15 @@
       <button id="scrollLeftButton-it">
         <img class="leftArrow" src="/arrow.svg" alt="Connect">
       </button>
-      <div class="information-technologies">
-        <!--- IT courses will be appended here --->
+      <div v-show="!loading" class="information-technologies">
+
+      </div>
+      <div v-show="loading" class="information-technologies">
+        <div  class="three-body">
+          <div class="three-body__dot"></div>
+          <div class="three-body__dot"></div>
+          <div class="three-body__dot"></div>
+        </div>
       </div>
       <button id="scrollRightButton-it">
         <img class="rightArrow" src="/arrow.svg" alt="Connect">
@@ -111,8 +139,15 @@
       <button id="scrollLeftButton-lp">
         <img class="leftArrow" src="/arrow.svg" alt="Connect">
       </button>
-      <div class="learniverse-pro">
-        <!--- LP courses will be appended here --->
+      <div v-show="!loading" class="learniverse-pro">
+
+      </div>
+      <div v-show="loading" class="learniverse-pro">
+        <div  class="three-body">
+          <div class="three-body__dot"></div>
+          <div class="three-body__dot"></div>
+          <div class="three-body__dot"></div>
+        </div>
       </div>
       <button id="scrollRightButton-lp">
         <img class="rightArrow" src="/arrow.svg" alt="Connect">
@@ -128,11 +163,9 @@
 <script setup>
 import ProBox from "@/components/ProBox.vue";
 import HeroSection from "@/components/HeroSection.vue";
-
+const loading = ref(true);
 import "@/courseBox.css"
-import {getCurrentInstance, onMounted} from 'vue';
-import Planets from "@/components/Planets.vue";
-import home from "@/views/Home.vue";
+import {getCurrentInstance, onMounted, ref} from 'vue';
 import {getAuthenticatedUser, isOfRoleUser} from "@/js/authentication";
 import {currency, setDefaultCurrency} from "@/js/currency";
 import WelcomeBack from "@/components/WelcomeBack.vue";
@@ -297,6 +330,7 @@ function populateCourses(selector, filterFn) {
                   document.querySelector(selector).appendChild(contentBox.cloneNode(true));
                 }
               });
+              loading.value = false;
             })
             .catch(error => console.error('Error:', error));
       })
@@ -494,6 +528,7 @@ ul {
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 40px;
   width: 100%;
+  min-height: 550px;
   padding: 50px 30px;
   margin: 30px 0;
   display: flex;
@@ -643,5 +678,107 @@ button {
 }
 
 
+.three-body {
+  --uib-size: 35px;
+  --uib-speed: 0.8s;
+  --uib-color: #5D3FD3;
+  position: relative;
+  display: inline-block;
+  height: var(--uib-size);
+  width: var(--uib-size);
+  animation: spin78236 calc(var(--uib-speed) * 2.5) infinite linear;
+}
+
+.three-body__dot {
+  position: absolute;
+  height: 100%;
+  width: 30%;
+}
+
+.three-body__dot:after {
+  content: '';
+  position: absolute;
+  height: 0%;
+  width: 100%;
+  padding-bottom: 100%;
+  background-color: var(--uib-color);
+  border-radius: 50%;
+}
+
+.three-body__dot:nth-child(1) {
+  bottom: 5%;
+  left: 0;
+  transform: rotate(60deg);
+  transform-origin: 50% 85%;
+}
+
+.three-body__dot:nth-child(1)::after {
+  bottom: 0;
+  left: 0;
+  animation: wobble1 var(--uib-speed) infinite ease-in-out;
+  animation-delay: calc(var(--uib-speed) * -0.3);
+}
+
+.three-body__dot:nth-child(2) {
+  bottom: 5%;
+  right: 0;
+  transform: rotate(-60deg);
+  transform-origin: 50% 85%;
+}
+
+.three-body__dot:nth-child(2)::after {
+  bottom: 0;
+  left: 0;
+  animation: wobble1 var(--uib-speed) infinite
+  calc(var(--uib-speed) * -0.15) ease-in-out;
+}
+
+.three-body__dot:nth-child(3) {
+  bottom: -5%;
+  left: 0;
+  transform: translateX(116.666%);
+}
+
+.three-body__dot:nth-child(3)::after {
+  top: 0;
+  left: 0;
+  animation: wobble2 var(--uib-speed) infinite ease-in-out;
+}
+
+@keyframes spin78236 {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes wobble1 {
+  0%,
+  100% {
+    transform: translateY(0%) scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: translateY(-66%) scale(0.65);
+    opacity: 0.8;
+  }
+}
+
+@keyframes wobble2 {
+  0%,
+  100% {
+    transform: translateY(0%) scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: translateY(66%) scale(0.65);
+    opacity: 0.8;
+  }
+}
 
 </style>
