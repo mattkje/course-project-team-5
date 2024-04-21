@@ -2,6 +2,7 @@ import {redirectTo} from "@/js/navigation";
 
 const API_BASE_URL = `http://localhost:8080/api`;
 import { getCookie } from "../js/tools.js";
+import {doLogout} from "@/js/authentication";
 
 async function sendApiRequest(method, url, callback, requestBody, errorCallback) {
     let parameters = { method: method, headers: constructRequestHeaders(method)};
@@ -21,6 +22,7 @@ async function sendApiRequest(method, url, callback, requestBody, errorCallback)
             callback(responseJson);
         } else if (response.status === 500) {
             redirectTo("/login-failure");
+            doLogout();
         } else if (errorCallback) {
             errorCallback(responseText);
         }

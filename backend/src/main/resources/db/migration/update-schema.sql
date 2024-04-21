@@ -124,16 +124,19 @@ ALTER TABLE user_roles
 ALTER TABLE user_courses
     ADD CONSTRAINT fk_userc_on_course FOREIGN KEY (course_id) REFERENCES courses (course_id);
 
--- HVA ER PASSORDENE PÅ BRUKERNE???
 INSERT INTO users (id, username, email, password, first_name, last_name, active, created_at, updated_at,
                    phone_number)
-VALUES (1, 'dave', 'dave@mail.com', '$2a$10$w3Ood9euoLlvQ6TO9br4QOAn5DEjW2wsT9VSDG5SDW067qq7FvFT2', 'Dave', 'Johnson',
+VALUES
+    -- PASSWORD: Dave2002
+    (1, 'dave', 'dave@mail.com', '$2a$10$eizgqz56BxeRy2Bt7bYCbOMIyrUlFE0Rz8oSoMFILqd4mQcTXLGfi', 'Dave', 'Johnson',
         true, '2024-02-12', '2024-02-12',
         '234098434'),
-       (2, 'chuck', 'hideyograndma@mail.com', '$2a$10$HdWs3aJY7QsVzcvCXYKH3OldTopGfD5MA9eVY/8r8fZd/GdIm.QJ.', 'Chuck',
+    -- PASSWORD: Nunchucks
+       (2, 'chuck', 'hideyograndma@mail.com', '$2a$10$2f1AbpqP36WOiR1h9nHR9e.BZRhwRSQR7FD2sXDZk5orPd.IO2u2m', 'Chuck',
         'Norris', true, '2024-02-12', '2024-02-12',
         '123123442'),
-       (3, 'john_doe', 'john.doe@example.com', '$2a$10$v8zrek0TRlIUCME2Na10DeeiIBiHD1gpAeEU5m9FzIpw4C/YABf9O', 'John',
+    -- PASSWORD: JoeBiden
+       (3, 'john_doe', 'john.doe@example.com', '$2a$10$sCuzU/RymH5ZJrGUFxEf5uT4zSJEpr/J4oDSRrrQi5SrFXjNy.Zsq', 'John',
         'Doe', true, '2024-02-12', '2024-02-12',
         '+1234567890');
 
@@ -366,6 +369,9 @@ VALUES (1, 1),
        (3, 4);
 
 INSERT INTO user_roles (role_id, user_id)
-VALUES (3, 1),
+VALUES (1, 1),
        (3, 2),
-       (3, 3);
+       (1, 2),
+       (2, 2),
+       (1, 3),
+       (2, 3);
