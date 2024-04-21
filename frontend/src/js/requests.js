@@ -19,11 +19,13 @@ async function sendApiRequest(method, url, callback, requestBody, errorCallback)
             if (responseText) {
                 responseJson = JSON.parse(responseText);
             }
+            console.log("Status code is 200, calling callback function");
             callback(responseJson);
         } else if (response.status === 500) {
             redirectTo("/login-failure");
             doLogout();
         } else if (errorCallback) {
+            console.log("Status code is not 200, calling errorCallback function");
             errorCallback(responseText);
         }
     } catch (error) {

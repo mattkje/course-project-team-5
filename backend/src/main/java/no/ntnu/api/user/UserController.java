@@ -130,8 +130,8 @@ public class UserController {
         UserWithCourses sessionUser = userService.getSessionUser();
         if (sessionUser != null && sessionUser.user().getUsername().equals(username)) {
             if(details.getNewPassword() != null) {
-                userService.changePassword(sessionUser, details.getNewPassword());
-                return new ResponseEntity<>("Password updated!", HttpStatus.OK);
+                userService.changePassword(sessionUser, details.getOldPassword(), details.getNewPassword());
+                return new ResponseEntity<>("", HttpStatus.OK);
             } else {
                 return new ResponseEntity<>("Password not supplied", HttpStatus.BAD_REQUEST);
             }

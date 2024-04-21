@@ -1,18 +1,15 @@
 package no.ntnu.api.config;
 
 public class ChangePasswordRequest {
-    private String username;
     private String oldPassword;
     private String newPassword;
 
-    public ChangePasswordRequest(String username, String oldPassword, String newPassword) {
-        this.username = username;
-        this.oldPassword = oldPassword;
-        this.newPassword = newPassword;
+    public ChangePasswordRequest() {
     }
 
-    public String getUsername() {
-        return username;
+    public ChangePasswordRequest(String oldPassword, String newPassword) {
+        this.oldPassword = oldPassword;
+        this.newPassword = newPassword;
     }
 
     public String getOldPassword() {
@@ -21,10 +18,6 @@ public class ChangePasswordRequest {
 
     public void setOldPassword(String password) {
         this.oldPassword = password;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getNewPassword() {

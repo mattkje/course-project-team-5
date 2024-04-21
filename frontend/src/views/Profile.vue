@@ -9,6 +9,7 @@ import {doLogout} from "@/js/authentication";
 onMounted(loadProfileData);
 const loading = ref(true);
 const user = getAuthenticatedUser();
+const changePassword = ref(false);
 
 
 async function loadProfileData() {
@@ -35,11 +36,47 @@ function onProfileDataError(error) {
   console.error("Error loading profile data: ", error);
   redirectTo("/no-access");
 }
+
+function newPassword() {
+  changePassword.value = true;
+}
+
+function changePasswordRequest() {
+  const oldPassword = document.getElementById("currentPassword").value;
+  const newPassword = document.getElementById("newPassword").value;
+  const confirmPassword = document.getElementById("confirmPassword").value;
+
+  if (newPassword !== confirmPassword) {
+    alert("New password and confirm password do not match.");
+    return;
+  } else if (newPassword.length < 8) {
+    alert("Password must be at least 8 characters long.");
+    return;
+  }
+
+  const data = {
+    oldPassword: oldPassword,
+    newPassword: newPassword
+  };
+
+  sendApiRequest("PUT", "/users/" + user.username + "/change-password", onChangePasswordSuccess, data, onChangePasswordError);
+}
+
+function onChangePasswordSuccess(data) {
+  console.log("Password changed: ", data);
+  alert("Password changed successfully.");
+  changePassword.value = false;
+}
+
+function onChangePasswordError(error) {
+  console.error("Error changing password: ", error);
+  alert("Error changing password. Please try again.");
+}
 </script>
 
 <template>
   <div class="background">
-    <div class="profile-box" id="profileInformation">
+    <div class="profile-box" id="profileInformation" v-show="!changePassword">
       <div v-show="loading" class="three-body">
         <div class="three-body__dot"></div>
         <div class="three-body__dot"></div>
@@ -66,11 +103,26 @@ function onProfileDataError(error) {
         </div>
       </div>
       <div v-show="!loading" class="profile-buttons">
-        <button class="standard-button">Change password</button>
+        <button class="standard-button" @click="newPassword">Change password</button>
         <button class="log-out" @click="doLogout">Log out</button>
     </div>
   </div>
+    <div class="profile-box" id="changePassword" v-show="changePassword">
+      <h1>Change password</h1>
+      <div class="profile-information">
+        <label for="currentPassword">Current password:</label>
+        <input type="password" id="currentPassword" maxlength="64">
+        <label for="newPassword">New password:</label>
+        <input type="password" id="newPassword" maxlength="64">
+        <label for="confirmPassword">Confirm new password:</label>
+        <input type="password" id="confirmPassword" maxlength="64">
+      </div>
+      <div class="profile-buttons">
+        <button class="standard-button" @click="changePasswordRequest">Save</button>
+        <button class="standard-button" @click="changePassword = false">Cancel</button>
+      </div>
     </div>
+  </div>
 </template>
 
 <style scoped>

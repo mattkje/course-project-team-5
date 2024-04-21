@@ -155,9 +155,15 @@ public class AccessUserService implements UserDetailsService {
     return true;
   }
 
-  public void changePassword(UserWithCourses sessionUser, String password) {
-    sessionUser.user().setPassword(createHash(password));
-    userRepository.save(sessionUser.user());
+  public void changePassword(UserWithCourses sessionUser, String oldPassword, String newPassword) {
+    String currentPasswordHash = sessionUser.user().getPassword();
+
+    if (BCrypt.checkpw(oldPassword, currentPasswordHash)) {
+      sessionUser.user().setPassword(createHash(newPassword));
+      userRepository.save(sessionUser.user());
+    } else {
+      throw new IllegalArgumentException("Old password is incorrect");
+    }
   }
 
   public List<UserCourses> getCourses(String username) {
