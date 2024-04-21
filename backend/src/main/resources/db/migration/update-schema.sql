@@ -124,6 +124,7 @@ ALTER TABLE user_roles
 ALTER TABLE user_courses
     ADD CONSTRAINT fk_userc_on_course FOREIGN KEY (course_id) REFERENCES courses (course_id);
 
+-- HVA ER PASSORDENE PÅ BRUKERNE???
 INSERT INTO users (id, username, email, password, first_name, last_name, active, created_at, updated_at,
                    phone_number)
 VALUES (1, 'dave', 'dave@mail.com', '$2a$10$w3Ood9euoLlvQ6TO9br4QOAn5DEjW2wsT9VSDG5SDW067qq7FvFT2', 'Dave', 'Johnson',
@@ -363,3 +364,8 @@ VALUES (1, 1),
        (2, 1),
        (2, 3),
        (3, 4);
+
+INSERT INTO user_roles (role_id, user_id)
+VALUES (3, 1),
+       (3, 2),
+       (3, 3);
