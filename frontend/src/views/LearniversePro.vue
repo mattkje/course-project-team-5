@@ -42,7 +42,7 @@
 
 .background {
   top: 0;
-  height: 500px;
+  height: 400px;
   background: linear-gradient(180deg, rgba(21, 16, 82, 0.14) 0%, rgba(158, 150, 255, 0.14) 100%);
   display: flex;
   justify-content: space-between;

@@ -486,7 +486,7 @@ function initiateComponents() {
 }
 
 .wrapper {
-  width: 400px;
+  width: 300px;
   background: white;
   border-radius: 10px;
   padding: 0 20px;
