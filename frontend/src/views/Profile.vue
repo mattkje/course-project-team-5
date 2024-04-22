@@ -29,6 +29,9 @@ function onProfileDataSuccess(data) {
   document.getElementById("lastName").innerText = data.user.lastName;
   document.getElementById("email").innerText = data.user.email;
   document.getElementById("phoneNumber").innerText = data.user.phoneNumber;
+  if(data.courses.length > 0) {
+    addCourses(data);
+  }
   loading.value = false;
 }
 
@@ -39,6 +42,7 @@ function onProfileDataError(error) {
 
 function newPassword() {
   changePassword.value = true;
+  window.scroll(0,0);
 }
 
 function changePasswordRequest() {
@@ -72,6 +76,25 @@ function onChangePasswordError(error) {
   console.error("Error changing password: ", error);
   alert("Error changing password. Please try again.");
 }
+
+function addCourses(data) {
+  document.getElementById("no-course").remove();
+  const courseList = document.createElement("table");
+  courseList.classList.add("course-list");
+  const courseBody = document.createElement("tbody");
+  courseList.appendChild(courseBody);
+  for (let i = 0; i < data.courses.length; i++) {
+    const course = data.courses[i];
+    const row = document.createElement("tr");
+    const courseName = document.createElement("td");
+    courseName.innerText = course.course.title;
+    row.appendChild(courseName);
+    courseBody.appendChild(row);
+    const line = document.createElement("hr");
+    courseBody.appendChild(line);
+  }
+  document.getElementById("courses").appendChild(courseList);
+}
 </script>
 
 <template>
@@ -94,12 +117,8 @@ function onChangePasswordError(error) {
       </div>
       <div v-show="!loading">
         <h1>Your courses</h1>
-        <div class="profile-information">
-          <table class="course-list">
-            <tbody>
-              <p>You do not have any courses yet.</p>
-            </tbody>
-          </table>
+        <div class="course-information" id="courses">
+          <p id="no-course">You do not have any courses yet.</p>
         </div>
       </div>
       <div v-show="!loading" class="profile-buttons">
@@ -140,9 +159,10 @@ function onChangePasswordError(error) {
   align-content: center;
   padding: 100px;
   width: 60%;
-  height: 700px;
+  height: 850px;
   background-color: white;
   border-radius: 20px;
+  overflow: hidden;
 }
 
 .profile-information {
@@ -169,5 +189,27 @@ function onChangePasswordError(error) {
 
 #currentPassword {
   margin-bottom: 30px;
+}
+
+.courses tr:nth-child(odd){
+  background-color: #fff;
+}
+
+.courses tr:nth-child(even){
+  background-color: lightgrey;
+}
+
+.course-information {
+  background-color: #f1f1f1;
+  border-radius: 20px;
+  padding: 20px;
+  display: grid;
+  width: 100%;
+  margin: 50px 0;
+  line-height: 50px;
+  grid-template-rows: auto;
+  justify-content: space-between;
+  overflow: auto;
+  max-height: 200px;
 }
 </style>
