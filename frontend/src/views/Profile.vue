@@ -111,11 +111,11 @@ function onChangePasswordError(error) {
       <h1>Change password</h1>
       <div class="profile-information">
         <label for="currentPassword">Current password:</label>
-        <input type="password" id="currentPassword" maxlength="64">
+        <input class="passwordField" type="password" id="currentPassword" maxlength="64">
         <label for="newPassword">New password:</label>
-        <input type="password" id="newPassword" maxlength="64">
+        <input class="passwordField" type="password" id="newPassword" maxlength="64">
         <label for="confirmPassword">Confirm new password:</label>
-        <input type="password" id="confirmPassword" maxlength="64">
+        <input class="passwordField" type="password" id="confirmPassword" maxlength="64">
       </div>
       <div class="profile-buttons">
         <button class="standard-button" @click="changePasswordRequest">Save</button>
@@ -158,7 +158,16 @@ function onChangePasswordError(error) {
   justify-content: space-between;
 }
 
-.course-list{
+.passwordField {
+  width: 100%;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid var(--base-1);
+  padding: 10px;
+  margin: 10px 0;
+}
 
+#currentPassword {
+  margin-bottom: 30px;
 }
 </style>

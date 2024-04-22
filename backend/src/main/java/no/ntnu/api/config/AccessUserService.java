@@ -159,6 +159,9 @@ public class AccessUserService implements UserDetailsService {
     String currentPasswordHash = sessionUser.user().getPassword();
 
     if (BCrypt.checkpw(oldPassword, currentPasswordHash)) {
+      if(newPassword.length() < 8) {
+        throw new IllegalArgumentException("Password must be at least 8 characters long");
+      }
       sessionUser.user().setPassword(createHash(newPassword));
       userRepository.save(sessionUser.user());
     } else {
