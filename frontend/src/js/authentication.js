@@ -30,12 +30,12 @@ function sendAuthenticationRequest(username, password, successCallback, errorCal
     sendApiRequest(
         "POST", "/users/login",
         function (jwtResponse) {
-            setCookie("jwt", jwtResponse.jwt, 30);
+            setCookie("jwt", jwtResponse.jwt, 1);
             setCookie("refresh_token", jwtResponse.refreshToken);
             const userData = parseJwtUser(jwtResponse.jwt);
             if (userData) {
-                setCookie("current_username", userData.username, 30);
-                setCookie("current_user_roles", userData.roles.join(","), 30);
+                setCookie("current_username", userData.username, 720);
+                setCookie("current_user_roles", userData.roles.join(","), 720);
             }
             successCallback();
         },
