@@ -83,5 +83,12 @@ public class JwtUtil {
     return extractExpiration(token).before(new Date());
   }
 
-
+  public String refreshToken(String refreshToken, UserDetails userDetails) {
+    final String username = extractUsername(refreshToken);
+    if (username.equals(userDetails.getUsername()) && !isTokenExpired(refreshToken)) {
+      return generateToken(userDetails);
+    } else {
+      throw new RuntimeException("Invalid refresh token");
+    }
+  }
 }

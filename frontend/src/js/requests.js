@@ -1,7 +1,7 @@
 import {redirectTo} from "@/js/navigation";
 
 const API_BASE_URL = `http://localhost:8080/api`;
-import { getCookie } from "../js/tools.js";
+import {getCookie, setCookie} from "../js/tools.js";
 import {doLogout} from "@/js/authentication";
 
 async function sendApiRequest(method, url, callback, requestBody, errorCallback) {
@@ -49,4 +49,21 @@ function constructRequestHeaders(method) {
     return headers;
 }
 
+function sendTokenRefreshRequest(successCallback, errorCallback) {
+    const refreshToken = getCookie("refresh_token");
+    if (!refreshToken) {
+        errorCallback("No refresh token found");
+        return;
+    }
+
+    sendApiRequest("POST", "/users/refresh-token", function (jwtResponse) {
+        setCookie("jwt", jwtResponse.jwt);
+        successCallback();
+    },
+        {refreshToken: refreshToken},
+        errorCallback
+    );
+}
+
 export { sendApiRequest };
+export { sendTokenRefreshRequest };

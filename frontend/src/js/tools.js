@@ -1,3 +1,5 @@
+import {parseJwt} from "@/js/authentication";
+
 function getCookie(cname) {
     let name = cname + "=";
     let decodedCookie = decodeURIComponent(document.cookie);
@@ -36,7 +38,16 @@ function deleteCookie(cookieName) {
     setCookie(cookieName, "", -1);
 }
 
+function isTokenAboutToExpire(jwt) {
+    const jwtObject = parseJwt(jwt);
+    const currentTime = Math.floor(Date.now() / 1000);
+    const expTime = jwtObject.exp;
+    const timeLeft = expTime - currentTime;
+    return timeLeft < 300;
+}
+
 export { getCookie };
 export { setCookie };
 export { showFormError };
 export { deleteCookie };
+export { isTokenAboutToExpire };

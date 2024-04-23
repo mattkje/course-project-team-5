@@ -153,4 +153,19 @@ public class UserController {
         }
     }
 
+    @PostMapping("/refresh-token")
+    public ResponseEntity<?> refreshToken(@RequestBody TokenRefreshRequest tokenRefreshRequest) {
+        try {
+            String refreshToken = tokenRefreshRequest.getRefreshToken();
+            UserDetails userDetails = userService.loadUserByUsername(jwtUtil.extractUsername(refreshToken));
+            if (jwtUtil.validateToken(refreshToken, userDetails)) {
+                String newJwtToken = jwtUtil.refreshToken(refreshToken, userDetails);
+                return ResponseEntity.ok(new AuthenticationResponse(newJwtToken));
+            } else {
+                return new ResponseEntity<>("Invalid refresh token", HttpStatus.UNAUTHORIZED);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>("Failed to refresh token", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

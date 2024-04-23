@@ -30,7 +30,8 @@ function sendAuthenticationRequest(username, password, successCallback, errorCal
     sendApiRequest(
         "POST", "/users/login",
         function (jwtResponse) {
-            setCookie("jwt", jwtResponse.jwt, 30);
+            setCookie("jwt", jwtResponse.jwt);
+            setCookie("refresh_token", jwtResponse.refreshToken);
             const userData = parseJwtUser(jwtResponse.jwt);
             if (userData) {
                 setCookie("current_username", userData.username, 30);
@@ -77,7 +78,9 @@ function deleteAuthorizationCookies() {
     deleteCookie("jwt");
     deleteCookie("current_username");
     deleteCookie("current_user_roles");
+    deleteCookie("refresh_token");
 }
 
 export {getAuthenticatedUser};
 export {sendAuthenticationRequest};
+export {parseJwt};

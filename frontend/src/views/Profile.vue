@@ -1,10 +1,11 @@
 <script setup>
 import { ref } from 'vue';
 import {getAuthenticatedUser} from "@/js/authentication";
-import {sendApiRequest} from "@/js/requests";
+import {sendApiRequest, sendTokenRefreshRequest} from "@/js/requests";
 import {redirectTo} from "@/js/navigation";
 import {onMounted} from "vue";
 import {doLogout} from "@/js/authentication";
+import {getCookie, isTokenAboutToExpire} from "@/js/tools";
 
 onMounted(loadProfileData);
 const loading = ref(true);
@@ -15,11 +16,27 @@ const changePassword = ref(false);
 async function loadProfileData() {
   console.log("Loading profile data from API...");
   console.log("User: ", user);
+  console.log(user.password);
   if (user) {
-    await sendApiRequest("GET", "/users/" + user.username, onProfileDataSuccess, onProfileDataError);
+    const jwt = getCookie("jwt");
+    if (jwt && isTokenAboutToExpire(jwt)) {
+      sendTokenRefreshRequest(onTokenRefreshSuccess, onTokenRefreshError);
+    } else {
+      await sendApiRequest("GET", "/users/" + user.username, onProfileDataSuccess, onProfileDataError);
+    }
   } else {
-    redirectTo("/no-access");
+    //redirectTo("/no-access");
   }
+}
+
+function onTokenRefreshSuccess() {
+  console.log("Token has been refreshed.");
+  sendApiRequest("GET", "/users/" + user.username, onProfileDataSuccess, onProfileDataError);
+}
+
+function onTokenRefreshError(error) {
+  console.error("Error refreshing token: ", error);
+  //redirectTo("/no-access");
 }
 
 function onProfileDataSuccess(data) {
