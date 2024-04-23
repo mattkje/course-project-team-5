@@ -78,7 +78,6 @@ const loading = ref(true);
 
 onMounted(() => {
   populateCoursePage();
-  currency();
 });
 
 const { appContext } = getCurrentInstance();
