@@ -19,6 +19,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.Optional;
 
 /**
@@ -51,9 +52,26 @@ public class AccessUserService implements UserDetailsService {
   public UserWithCourses getSessionUser() {
     SecurityContext securityContext = SecurityContextHolder.getContext();
     Authentication authentication = securityContext.getAuthentication();
+
+    if (authentication == null) {
+      return null;
+    }
+
     String username = authentication.getName();
-    List<UserCourses> courses = getCourses(username);
-    User user = userRepository.findByUsername(username).get();
+    Optional<User> userOptional = userRepository.findByUsername(username);
+
+    if (userOptional.isEmpty()) {
+      return null;
+    }
+
+    User user = userOptional.get();
+    List<UserCourses> courses;
+
+    try {
+      courses = getCourses(username);
+    } catch (Exception e) {
+      return null;
+    }
     return new UserWithCourses(user, courses);
   }
 

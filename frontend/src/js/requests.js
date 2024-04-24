@@ -23,7 +23,7 @@ async function sendApiRequest(method, url, callback, requestBody, errorCallback)
             callback(responseJson);
         } else if (response.status === 500) {
             redirectTo("/login-failure");
-            doLogout();
+            //doLogout();
         } else if (errorCallback) {
             console.log("Status code is not 200, calling errorCallback function");
             errorCallback(responseText);
@@ -64,6 +64,26 @@ function sendTokenRefreshRequest(successCallback, errorCallback) {
         errorCallback
     );
 }
+
+function refreshToken() {
+    const refreshToken = getCookie("refresh_token");
+    if (!refreshToken) {
+        console.log("No refresh token found");
+        return;
+    }
+
+    sendApiRequest("POST", "/users/refresh-token", function (jwtResponse) {
+        setCookie("jwt", jwtResponse.jwt, 1);
+    },
+        {refreshToken: refreshToken},
+        function (error) {
+            console.log("Error refreshing token: " + error);
+        }).catch((error) => {
+            console.error("Error: ", error);
+    });
+}
+
+setInterval(refreshToken, 15 * 60 * 1000);
 
 export { sendApiRequest };
 export { sendTokenRefreshRequest };
