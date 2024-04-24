@@ -71,7 +71,6 @@ function parseJwt(token) {
 export function doLogout() {
     console.log("Logging out...");
     deleteAuthorizationCookies();
-    redirectTo("/");
 }
 
 function deleteAuthorizationCookies() {

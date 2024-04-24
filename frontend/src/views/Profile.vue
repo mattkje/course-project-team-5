@@ -112,6 +112,16 @@ function addCourses(data) {
   }
   document.getElementById("courses").appendChild(courseList);
 }
+
+function doLogoutToHome() {
+  doLogout();
+  redirectTo("/");
+}
+
+function cancelChangePassword() {
+  changePassword.value = false;
+  window.scroll(0,0);
+}
 </script>
 
 <template>
@@ -140,7 +150,7 @@ function addCourses(data) {
       </div>
       <div v-show="!loading" class="profile-buttons">
         <button class="standard-button" @click="newPassword">Change password</button>
-        <button class="log-out" @click="doLogout">Log out</button>
+        <button class="log-out" @click="doLogoutToHome">Log out</button>
     </div>
   </div>
     <div class="profile-box" id="changePassword" v-show="changePassword">
@@ -155,7 +165,7 @@ function addCourses(data) {
       </div>
       <div class="profile-buttons">
         <button class="standard-button" @click="changePasswordRequest">Save</button>
-        <button class="standard-button" @click="changePassword = false">Cancel</button>
+        <button class="standard-button" @click="cancelChangePassword">Cancel</button>
       </div>
     </div>
   </div>
