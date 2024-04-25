@@ -123,6 +123,13 @@ ul {
   color: white;
 }
 
+.pro-box p {
+  color: white;
+  font-size: 15px;
+  margin: 0;
+  padding: 0;
+}
+
 .pro-pricing {
   min-height: 100px;
   margin: 20px;
