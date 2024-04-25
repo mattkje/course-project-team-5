@@ -1,7 +1,7 @@
 import {getAuthenticatedUser} from "@/js/authentication";
 
 //biggie biggie biggie, cant you see... never hard code these ip's in
-const BASE_URL = 'https://10.22.165.115';
+const BASE_URL = 'https://localhost';
 
 function redirectTo(frontendUrl) {
     window.location = BASE_URL + frontendUrl;
