@@ -12,7 +12,7 @@ import java.util.function.Function;
 
 /**
  * Utility class for handling JWT tokens.
- * Code from https://youtu.be/X80nJ5T7YpE
+ * Code adapted from https://youtu.be/X80nJ5T7YpE
  */
 @Component
 public class JwtUtil {
