@@ -183,9 +183,10 @@ function searchPosts() {
 .search-bar {
   box-sizing: border-box;
   width: 60%;
-  border: 3px solid #606060;
+  background-color: var(--light-1);
   border-radius: 20px;
   position: relative; /* Make it a positioning context for the absolute position of the button */
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
 }
 
 .search-icon {
