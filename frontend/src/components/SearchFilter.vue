@@ -9,7 +9,7 @@
     </div>
   </div>
 
-  <div class="active-filter-container">
+  <div class="active-filter-container" id="active-filter-container">
 
     </div>
   <div class="filter-container">
@@ -27,20 +27,20 @@
         }">
         <div class="category-list">
           <div class="checkbox-wrapper">
-            <label class="cbx" for="morning">Information Technologies</label>
-            <input class="inp-cbx" id="morning" type="checkbox">
+            <label class="cbx" for="itBox">Information Technologies</label>
+            <input class="inp-cbx" id="itBox" type="checkbox" v-model="isItChecked" @change="onCheckboxChange">
           </div>
           <div class="checkbox-wrapper">
-            <label class="cbx" for="morning">Digital Marketing</label>
-            <input class="inp-cbx" id="morning" type="checkbox" v-model="isCheckboxChecked" @change="onCheckboxChange">
+            <label class="cbx" for="dmBox">Digital Marketing</label>
+            <input class="inp-cbx" id="dmBox" type="checkbox" v-model="isDmChecked" @change="onCheckboxChange">
           </div>
           <div class="checkbox-wrapper">
-            <label class="cbx" for="morning">Business and Entrepreneurship</label>
-            <input class="inp-cbx" id="morning" type="checkbox">
+            <label class="cbx" for="beBox">Business and Entrepreneurship</label>
+            <input class="inp-cbx" id="beBox" type="checkbox" v-model="isBeChecked" @change="onCheckboxChange">
           </div>
           <div class="checkbox-wrapper">
-            <label class="cbx" for="morning">Data Science and Analytics</label>
-            <input class="inp-cbx" id="morning" type="checkbox">
+            <label class="cbx" for="dsBox">Data Science and Analytics</label>
+            <input class="inp-cbx" id="dsBox" type="checkbox" v-model="isDsChecked" @change="onCheckboxChange">
           </div>
         </div>
       </div>
@@ -412,33 +412,50 @@ function initiateComponents() {
   });
 }
 
-let isCheckboxChecked = ref(false);
 
-function onCheckboxChange() {
-  if (isCheckboxChecked.value) {
-    // Create container div
-    let container = document.createElement('div');
-    container.id = 'categoryComponent';
+function onCheckboxChange(event) {
+    const checkboxId = event.target.id;
+    const isChecked = event.target.checked;
 
-    // Create category text span
-    let categoryText = document.createElement('span');
-    categoryText.id = 'categoryText';
-    categoryText.textContent = 'Category: ';
+    if (isChecked){
+      localStorage.setItem(checkboxId, 'false');
 
-    // Create label name span
-    let labelSpan = document.createElement('span');
-    labelSpan.id = 'labelName';
-    labelSpan.textContent = labelName;
+      // Select the label element inside .checkbox-wrapper
+      let label = document.querySelector(`label[for="${checkboxId}"]`);
 
-    // Create remove button
-    let removeButton = document.createElement('button');
-    removeButton.id = 'removeButton';
-    removeButton.textContent = 'x';
-    removeButton.onclick = function() {
-      container.parentNode.removeChild(container);
-    };
-  }
+      // Get the text content of the label
+      let labelName = label.textContent;
+
+      // Create container div
+      let container = document.createElement('div');
+      container.id = checkboxId + "container";
+
+      // Create label name span
+      let labelSpan = document.createElement('span');
+      labelSpan.id = 'labelName';
+      labelSpan.textContent = labelName;
+
+      // Create remove button
+      let removeButton = document.createElement('button');
+      removeButton.id = 'removeButton';
+      removeButton.textContent = 'x';
+      removeButton.onclick = function() {
+        container.parentNode.removeChild(container);
+        document.getElementById(checkboxId).checked = false;
+      };
+
+      container.appendChild(labelSpan);
+      container.appendChild(removeButton);
+
+      let activeFilterContainer = document.getElementById('active-filter-container');
+      activeFilterContainer.appendChild(container);
+    } else {
+      localStorage.setItem(checkboxId, 'true');
+      let activeFilterContainer = document.getElementById('active-filter-container');
+      activeFilterContainer.removeChild(document.getElementById(checkboxId + "container"));
+    }
 }
+
 </script>
 
 <style scoped>
@@ -690,6 +707,7 @@ input[type="range"]::-moz-range-thumb {
   justify-content: center;
   margin: auto;
   flex-wrap: nowrap;
+  margin: 30px;
 }
 
 .search-container {
