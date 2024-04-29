@@ -24,7 +24,6 @@
 <script setup>
 
 import SearchFilter from "@/components/SearchFilter.vue";
-
 import {ref} from "vue";
 
 

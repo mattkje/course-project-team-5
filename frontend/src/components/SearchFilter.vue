@@ -87,7 +87,8 @@
           zIndex: isDateVisible ? '0' : -100,
           'border-radius': isDateVisible ? '0 0 10px 10px' : '10px'
         }">
-
+        <span>Start date - End Date</span>
+        <input id="datepicker" type ="text" placeholder="Now - Forever"/>
       </div>
 
       <button class="price-ranger" @click="toggleShowProvider" :style="{
@@ -156,9 +157,11 @@
   </div>
 </template>
 
+
 <script setup>
 import {getCurrentInstance, onMounted, ref} from "vue";
 import {currency, setDefaultCurrency} from "@/js/currency";
+import Litepicker from 'litepicker';
 
 const {appContext} = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
@@ -452,6 +455,30 @@ function onCheckboxChange(event) {
     }
 }
 
+
+let picker;
+document.addEventListener('DOMContentLoaded', function() {
+  picker = new Litepicker({
+    element: document.getElementById('datepicker'),
+    format: "DD MMM",
+    minDate: new Date() - 1,
+    useResetBtn: false,
+    buttonText: {
+      apply: 'Done',
+      reset: 'Reset'
+    },
+    TooltipText: {
+      one: 'day',
+      other: 'days'
+    },
+    mobileFriendly: true,
+    numberOfMonths: 2,
+    numberOfColumns: 2,
+    singleMode: false,
+    moduleNavKeyboard: true,
+    moduleRanges:false
+  });
+});
 </script>
 
 <style scoped>
@@ -747,4 +774,5 @@ input[type="range"]::-moz-range-thumb {
   border-radius: 15px;
   font-size: 16px;
 }
+
 </style>
