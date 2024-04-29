@@ -11,9 +11,10 @@
   <div class="course-section">
 
     <div class="title">
-      <h2>Explore</h2>
+      <h1>Explore</h1>
+      <p class="description">Explore our library</p>
     </div>
-    <p class="description">Explore our library</p>
+
 
 
 
@@ -68,20 +69,16 @@ import {ref} from "vue";
 .title {
   border: none;
   border-radius: 15px;
-  width: 70%;
-  justify-content: center;
-  align-content: center;
+  width: 60%;
+  justify-content: left;
   text-decoration: none;
-  display: flex;
   margin: 0 auto;
 }
 
 .description {
   color: #282828;
   font-size: 20px;
-  text-align: center;
   margin: 0 auto;
-  width: 70%;
 }
 
 .course-section {

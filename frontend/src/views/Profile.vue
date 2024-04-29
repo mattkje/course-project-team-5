@@ -9,6 +9,9 @@
     <img class="bend" src="/bend.svg">
   </div>
   <div class="profile-background">
+    <div class="title">
+      <h1>Account</h1>
+    </div>
     <div class="profile-box" id="profileInformation" v-show="!changePassword">
       <div v-show="loading" class="three-body">
         <div class="three-body__dot"></div>
@@ -16,7 +19,6 @@
         <div class="three-body__dot"></div>
       </div>
       <div v-show="!loading">
-        <h1>Account</h1>
         <div class="profile-information">
           <p>Username: <label for="username" id="username"></label></p>
           <p>Email: <label for="email" id="email"></label></p>
@@ -215,21 +217,17 @@ function cancelChangePassword() {
 
 
 .profile-background{
-  display: flex;
   background-color: var(--light-1);
-  justify-content: center;
   margin: 0;
 }
 
 .profile-box {
-  margin: auto;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: left;
   align-content: center;
-  padding: 100px;
   width: 60%;
-  height: 1050px;
   border-radius: 20px;
   overflow: hidden;
 }
@@ -326,5 +324,14 @@ function cancelChangePassword() {
   100% {
     transform: translatex(0) translateY(120px) scale(1.5);
   }
+}
+
+.title {
+  border: none;
+  border-radius: 15px;
+  width: 60%;
+  justify-content: left;
+  text-decoration: none;
+  margin: 0 auto;
 }
 </style>
