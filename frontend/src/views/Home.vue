@@ -7,7 +7,7 @@
   <div class="course-section">
 
     <div class="greeting">
-      <h2>Our Top Picks</h2>
+      <h1>Our Top Picks</h1>
     </div>
 
     <div class="content-container">
@@ -38,7 +38,7 @@
   <div class="course-section">
 
     <div class="greeting">
-      <h2>Explore Our Data Science Courses</h2>
+      <h1>Explore Our Data Science Courses</h1>
     </div>
 
     <div class="content-container">
@@ -62,7 +62,7 @@
 
 
     <div class="greeting">
-      <h2>Dive into the World of Digital Marketing</h2>
+      <h1>Dive into the World of Digital Marketing</h1>
     </div>
 
     <div class="content-container">
@@ -109,7 +109,7 @@
   </div>
   <div class="course-section">
     <div class="greeting">
-      <h2>Uncover the World of Information Technologies</h2>
+      <h1>Uncover the World of Information Technologies</h1>
     </div>
 
     <div class="content-container">
@@ -132,7 +132,7 @@
     </div>
 
     <div class="greeting">
-      <h2>Access exclusive courses with Learniverse Pro</h2>
+      <h1>Access exclusive courses with Learniverse Pro</h1>
     </div>
 
     <div class="content-container">
@@ -516,7 +516,7 @@ ul {
 }
 
 .course-section {
-  background-color: #EAEAEA;
+  background-color: #f1f0fd;
   margin: 0;
 }
 
@@ -526,7 +526,7 @@ ul {
 .information-technologies,
 .learniverse-pro {
   justify-content: space-between;
-  background: white;
+  background: #f8f8ff;
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 40px;
   width: 100%;
@@ -617,12 +617,16 @@ input:focus {
 .greeting {
   border: none;
   border-radius: 15px;
-  width: 70%;
-  justify-content: center;
+  width: 60%;
+  justify-content: flex-start;
   align-content: center;
   text-decoration: none;
   display: flex;
   margin: 0 auto;
+}
+
+.pro-text {
+  color: white;
 }
 
 .content-container {

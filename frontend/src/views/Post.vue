@@ -241,7 +241,7 @@ function setDefaultCurrency() {
 
 .course-page-background {
   font-family: Inter, sans-serif;
-  background-color: #eaeaea;
+  background-color: var(--light-3);
   color: #090909;
   margin: 0;
   padding: 0;
@@ -573,7 +573,7 @@ hr {
 }
 
 .courseLinkElement {
-  background-color: white;
+  background-color: var(--light-1);
   padding: 9px 7px;
   border-radius: 0 0 10px 0;
   z-index: 50;

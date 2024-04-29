@@ -82,7 +82,7 @@ import {ref} from "vue";
 }
 
 .course-section {
-  background-color: #EAEAEA;
+  background-color: var(--light-3);
   margin: 0;
 }
 

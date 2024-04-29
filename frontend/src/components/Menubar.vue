@@ -74,14 +74,13 @@ function setDefaultCurrency() {
           <router-link to="/cart" class="fancy-button-round">
             <img class="cart" src="/cart.svg" alt="Cart">
           </router-link>
-          <router-link v-if="getAuthenticatedUser() === null" to="/login" class="standard-button">Log in</router-link>
+          <router-link v-if="getAuthenticatedUser() === null" to="/login" class="fancy-button">Log&nbsp;in</router-link>
           <router-link to="/profile" v-else class="fancy-button-round">
             <img class="cart" src="/account.svg" alt="Cart">
           </router-link>
         </div>
       </div>
     </div>
-
     <div id="mobile">
       <div class="header">
         <div class="content-mobile">
@@ -133,7 +132,7 @@ function setDefaultCurrency() {
 <style scoped>
 @media (max-width: 600px) {
   #menubar {
-    background-color: rgb(0, 0, 0);
+    background-color: #614fff;
     backdrop-filter: none;
     border: none;
   }
@@ -154,9 +153,10 @@ function setDefaultCurrency() {
 
 @media (min-width: 600px) {
   #menubar {
-    background-color: rgba(6, 6, 16, 0.9);
+    background: linear-gradient(180deg, #f8f8ff -0%, #f1f0fd 100%);
     backdrop-filter: blur(5px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
   }
 
   #desktop {
@@ -212,12 +212,13 @@ function setDefaultCurrency() {
 
 .header-button {
   height: 70px;
-  background: linear-gradient(180deg, #FFFFFF -0%, #9087EF 100%);
+  background: linear-gradient(180deg, #000000 -0%, #9087EF 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   color: transparent;
   font-size: 15px;
+  font-weight: bold;
   border: none;
   padding: 10px 1%;
   text-decoration: none;
@@ -253,6 +254,7 @@ function setDefaultCurrency() {
 .logo-top {
   font-weight: 900;
   padding-left: 5px;
+  color: #3a3a3a;
 }
 
 .logo-bottom {
@@ -273,7 +275,7 @@ function setDefaultCurrency() {
 }
 
 .fancy-button {
-  color: #EAEAEA;
+  color: #352f5e;
   font-family: 'Inter', sans-serif;
   font-weight: bold;
   font-size: 14px;
@@ -284,13 +286,13 @@ function setDefaultCurrency() {
   margin: 0 5px;
   max-height: 40px;
   min-height: 40px;
-  background: #0C0C0C;
-  border: 0.5px solid #252525;
+  background: var(--light-1);
+  border: 0.5px solid #ffffff;
   transition: all 0.3s ease-in-out;
 }
 
 .fancy-button:hover {
-  background-color: #262626;
+  background-color: var(--light-3);
   box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
 }
 
@@ -306,12 +308,12 @@ function setDefaultCurrency() {
   margin: 0 5px;
   max-height: 40px;
   min-height: 40px;
-  background: #0C0C0C;
-  border: 0.5px solid #252525;
+  background: var(--light-1);
+  border: 0.5px solid #ffffff;
   transition: all 0.3s ease-in-out;
 
   &:hover {
-    background-color: #262626;
+    background-color: var(--light-3);
     box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
   }
 }

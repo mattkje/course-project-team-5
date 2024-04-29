@@ -131,7 +131,7 @@ export default {
 
 <style scoped>
 .course-section {
-  background-color: #EAEAEA;
+  background-color: var(--light-3);
   padding: 50px 0;
 }
 

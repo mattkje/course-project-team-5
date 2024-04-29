@@ -14,7 +14,7 @@
         <img id="courseImage" class="course-image" alt="Course Image">
         <div class="course-image-blur"></div>
         <div class="course-info">
-          <h2 id="courseTitle"></h2>
+          <h1 id="courseTitle"></h1>
           <hr>
           <h3>Providers</h3>
           <div class="content-hbox" id="providerList">
@@ -134,6 +134,7 @@ function populateCoursePage() {
 
               const sizeText = document.createElement('p');
               sizeText.innerText += `${data.course.courseSize}` + " ECTS Credits";
+              sizeText.style.color ='#6c6c6c'
 
               const courseSizeElement = document.getElementById('courseSize');
               courseSizeElement.appendChild(sizeIcon);
@@ -147,6 +148,7 @@ function populateCoursePage() {
               const durationText = document.createElement('p');
               const rawDate = `${data.course.closestCourseSession}`;
               durationText.innerText += formatDate(rawDate);
+              durationText.style.color ='#6c6c6c'
 
               const courseDurationElement = document.getElementById('closestCourseSession');
               courseDurationElement.appendChild(durationIcon);
@@ -159,6 +161,7 @@ function populateCoursePage() {
 
               const hoursText = document.createElement('p');
               hoursText.innerText += `${data.course.hoursPerWeek}` + " h/w";
+              hoursText.style.color ='#6c6c6c'
 
               const courseHoursElement = document.getElementById('hoursPerWeek');
               courseHoursElement.appendChild(hoursIcon);
@@ -171,6 +174,7 @@ function populateCoursePage() {
 
               const certificationText = document.createElement('p');
               certificationText.innerText += `${data.course.relatedCertifications}`;
+              certificationText.style.color ='#6c6c6c'
 
               const courseCertElement = document.getElementById('relatedCertifications');
               courseCertElement.appendChild(certificationIcon);
@@ -183,6 +187,7 @@ function populateCoursePage() {
 
               const difficultyText = document.createElement('p');
               difficultyText.innerText += `${data.course.level}`;
+              difficultyText.style.color ='#6c6c6c'
 
               const courseDifficultyElement = document.getElementById('difficulty');
               courseDifficultyElement.appendChild(difficultyIcon);
@@ -195,6 +200,7 @@ function populateCoursePage() {
 
               const locationText = document.createElement('p');
               locationText.innerText += "On-site";
+              locationText.style.color ='#6c6c6c'
 
               const locationElement = document.getElementById('location');
               locationElement.appendChild(locationIcon);
@@ -547,7 +553,7 @@ function setDefaultCurrency() {
 
 .course-page-background {
   font-family: Inter, sans-serif;
-  background-color: #eaeaea;
+  background-color: var(--light-3);
   color: #090909;
   margin: 0;
   padding: 0;
@@ -569,7 +575,13 @@ ul {
   padding: 0;
 }
 
+h1 {
+  font-size: 30px;
+}
 
+h3 {
+  font-weight: bold;
+}
 
 /* Header  */
 
@@ -766,7 +778,7 @@ input:focus {
 }
 
 .course-info {
-  background-color: white;
+  background-color: var(--light-1);
   border-radius: 0 20px 20px 0;
   padding: 20px;
   width: 600px;
@@ -775,7 +787,7 @@ input:focus {
 }
 
 .course-description-box {
-  background-color: white;
+  background-color: var(--light-1);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -845,7 +857,7 @@ input:focus {
 hr {
   border: 0;
   height: 3px;
-  background:  #282828;
+  background:  #6c6c6c;
   margin: 20px 0;
 }
 
@@ -859,7 +871,7 @@ hr {
 
 .courseInfoElement p {
   font-weight: bold;
-  color: #282828;
+  color: #575757;
 }
 
 .courseLinkElement {

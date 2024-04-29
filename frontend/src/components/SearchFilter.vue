@@ -492,7 +492,7 @@ function onCheckboxChange(event) {
 
 
 .course-container {
-  background-color: white;
+  background-color: var(--light-1);
   border-radius: 10px;
   padding: 5px;
 
@@ -541,7 +541,7 @@ function onCheckboxChange(event) {
 
 .wrapper {
   max-width: 300px;
-  background: white;
+  background: var(--light-1);
   border-radius: 10px;
   padding: 0 20px;
 
@@ -649,7 +649,7 @@ input[type="range"]::-moz-range-thumb {
 
 .price-ranger {
   max-width: 300px;
-  background-color: white;
+  background-color: var(--light-1);
   padding: 5px 10px;
   margin: 10px 0 0 0;
   border-radius: 10px;
