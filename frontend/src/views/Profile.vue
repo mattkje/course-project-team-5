@@ -25,7 +25,7 @@ async function loadProfileData() {
       await sendApiRequest("GET", "/users/" + user.username, onProfileDataSuccess, onProfileDataError);
     }
   } else {
-    //redirectTo("/no-access");
+    redirectTo("/no-access");
   }
 }
 
@@ -36,7 +36,7 @@ function onTokenRefreshSuccess() {
 
 function onTokenRefreshError(error) {
   console.error("Error refreshing token: ", error);
-  //redirectTo("/no-access");
+  redirectTo("/no-access");
 }
 
 function onProfileDataSuccess(data) {
@@ -48,6 +48,9 @@ function onProfileDataSuccess(data) {
   document.getElementById("phoneNumber").innerText = data.user.phoneNumber;
   if(data.courses.length > 0) {
     addCourses(data);
+  } else {
+    const profileInfo = document.getElementById("profileInformation");
+    profileInfo.style.maxHeight = "800px";
   }
   loading.value = false;
 }
@@ -99,18 +102,34 @@ function addCourses(data) {
   const courseList = document.createElement("table");
   courseList.classList.add("course-list");
   const courseBody = document.createElement("tbody");
+  courseBody.classList.add("course-block");
   courseList.appendChild(courseBody);
   for (let i = 0; i < data.courses.length; i++) {
     const course = data.courses[i];
     const row = document.createElement("tr");
-    const courseName = document.createElement("td");
+    const courseName = document.createElement("p");
+    const courseImg = document.createElement("img");
+    courseImg.classList.add("course-image");
+    row.classList.add("course-card");
     courseName.innerText = course.course.title;
+    courseName.style.paddingLeft = "20px";
+    courseImg.src = course.course.image || '/noImageCom.svg';
+    row.appendChild(courseImg);
     row.appendChild(courseName);
+    editCourseCard(row, course);
     courseBody.appendChild(row);
     const line = document.createElement("hr");
     courseBody.appendChild(line);
   }
   document.getElementById("courses").appendChild(courseList);
+}
+
+function editCourseCard(object, course) {
+  object.style.minWidth = "500px";
+  object.style.minHeight = "50px";
+  object.onclick = function() {
+    redirectTo("/courses/?id=" + course.course.courseId);
+  };
 }
 
 function doLogoutToHome() {
@@ -186,7 +205,7 @@ function cancelChangePassword() {
   align-content: center;
   padding: 100px;
   width: 60%;
-  height: 850px;
+  height: 1050px;
   background-color: white;
   border-radius: 20px;
   overflow: hidden;
@@ -237,6 +256,7 @@ function cancelChangePassword() {
   grid-template-rows: auto;
   justify-content: space-between;
   overflow: auto;
-  max-height: 200px;
+  max-height: 400px;
+  min-height: 100px;
 }
 </style>
