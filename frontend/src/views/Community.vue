@@ -82,16 +82,13 @@ function searchPosts() {
   </div>
   <div class="course-section">
 
-    <div class="title">
-      <h2>Community</h2>
-
-    </div>
-    <p class="description">Connect with other learners, share your knowledge, and grow together.</p>
-
-    <div class="options-box">
+    <div class="community-title-container">
+      <div class="title">
+        <h1>Community</h1>
+        <p class="description">Connect with other learners, share your knowledge, and grow together.</p>
+      </div>
       <router-link to="/community/create" class="fancy-button">Create Post</router-link>
     </div>
-
     <div class="search-container">
 
       <div class="search-bar">
@@ -161,25 +158,17 @@ function searchPosts() {
 
 .title {
   border: none;
-  border-radius: 15px;
-  width: 70%;
-  justify-content: center;
-  align-content: center;
   text-decoration: none;
-  display: flex;
-  margin: 0 auto;
 }
 
 .description {
   color: #282828;
   font-size: 20px;
-  text-align: center;
   margin: 0 auto;
-  width: 70%;
 }
 
 .course-section {
-  background-color: #EAEAEA;
+  background-color: var(--light-3);
   margin: 0;
 }
 
@@ -222,11 +211,6 @@ function searchPosts() {
   font-size: 16px;
 }
 
-.options-box {
-  display: flex;
-  justify-content: right;
-  margin: 0 385px
-}
 
 .course-block {
   display: flex;
@@ -293,6 +277,14 @@ function searchPosts() {
 .fancy-button:hover {
   background-color: #262626;
   box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
+}
+
+
+.community-title-container {
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+  width: 60%;
 }
 
 </style>

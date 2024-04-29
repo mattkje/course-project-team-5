@@ -6,7 +6,7 @@
     min-width: 270px;
     max-width: 270px;
     height: 390px;
-    background-color: rgba(255, 255, 255);
+    background-color: #f8f8ff;
     backdrop-filter: blur(5px);
     border: 1px solid rgba(0, 0, 0, 0.08);
     border-radius: 20px;
@@ -132,7 +132,7 @@ hr {
         margin: 20px;
         padding: 20px;
         border-radius: 15px;
-        background-color: white;
+        background-color: var(--light-1);
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         min-width: 600px;
         min-height: 200px;
@@ -173,3 +173,4 @@ hr {
     }
 
 }
+
