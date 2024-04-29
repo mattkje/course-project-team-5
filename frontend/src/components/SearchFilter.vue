@@ -56,26 +56,23 @@
           zIndex: isPriceVisible ? '0' : -100,
           'border-radius': isPriceVisible ? '0 0 10px 10px' : '10px'
         }">
-        <header>
-          <h2>Price Range</h2>
-        </header>
         <div class="price-input">
           <div class="field">
             <span>Min</span>
-            <input type="number" class="input-min" value="2500">
+            <input type="number" class="input-min" value="0">
           </div>
           <div class="separator">-</div>
           <div class="field">
             <span>Max</span>
-            <input type="number" class="input-max" value="7500">
+            <input type="number" class="input-max" value="10000">
           </div>
         </div>
         <div class="slider">
           <div class="progress"></div>
         </div>
         <div class="range-input">
-          <input type="range" class="range-min" min="0" max="10000" value="2500" step="100">
-          <input type="range" class="range-max" min="0" max="10000" value="7500" step="100">
+          <input type="range" class="range-min" min="0" max="10000" value="0" step="100">
+          <input type="range" class="range-max" min="0" max="10000" value="10000" step="100">
         </div>
       </div>
 
@@ -560,13 +557,16 @@ header h2 {
   width: 100%;
   display: flex;
   margin: 30px 0 35px;
+  justify-content: center;
 }
 
 .price-input .field {
   display: flex;
+  flex-wrap: wrap;
   width: 100%;
   height: 45px;
   align-items: center;
+  justify-content: center;
 }
 
 .field input {
@@ -592,6 +592,7 @@ input[type="number"]::-webkit-inner-spin-button {
   font-size: 19px;
   align-items: center;
   justify-content: center;
+  align-self: flex-end;
 }
 
 .slider {
@@ -603,8 +604,8 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .slider .progress {
   height: 100%;
-  left: 25%;
-  right: 25%;
+  left: 0%;
+  right: 0%;
   position: absolute;
   border-radius: 5px;
   background: #584BEB;
