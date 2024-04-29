@@ -1,3 +1,59 @@
+<template>
+  <div id="background" class="background">
+    <div class="hero-container">
+      <div class="hero-box">
+        <img id="planet" class="planet1" src="/profilePlanet.svg" alt="Logo">
+
+      </div>
+    </div>
+    <img class="bend" src="/bend.svg">
+  </div>
+  <div class="profile-background">
+    <div class="profile-box" id="profileInformation" v-show="!changePassword">
+      <div v-show="loading" class="three-body">
+        <div class="three-body__dot"></div>
+        <div class="three-body__dot"></div>
+        <div class="three-body__dot"></div>
+      </div>
+      <div v-show="!loading">
+        <h1>Account</h1>
+        <div class="profile-information">
+          <p>Username: <label for="username" id="username"></label></p>
+          <p>Email: <label for="email" id="email"></label></p>
+          <p>First name: <label for="firstName" id="firstName"></label></p>
+          <p>Last name: <label for="lastName" id="lastName"></label></p>
+          <p>Phone number: <label for="phoneNumber" id="phoneNumber"></label></p>
+        </div>
+      </div>
+      <div v-show="!loading">
+        <h1>Your courses</h1>
+        <div class="course-information" id="courses">
+          <p id="no-course">You do not have any courses yet.</p>
+        </div>
+      </div>
+      <div v-show="!loading" class="profile-buttons">
+        <button class="standard-button" @click="newPassword">Change password</button>
+        <button class="log-out" @click="doLogoutToHome">Log out</button>
+    </div>
+  </div>
+    <div class="profile-box" id="changePassword" v-show="changePassword">
+      <h1>Change password</h1>
+      <div class="profile-information">
+        <label for="currentPassword">Current password:</label>
+        <input class="passwordField" type="password" id="currentPassword" maxlength="64">
+        <label for="newPassword">New password:</label>
+        <input class="passwordField" type="password" id="newPassword" maxlength="64">
+        <label for="confirmPassword">Confirm new password:</label>
+        <input class="passwordField" type="password" id="confirmPassword" maxlength="64">
+      </div>
+      <div class="profile-buttons">
+        <button class="standard-button" @click="changePasswordRequest">Save</button>
+        <button class="standard-button" @click="cancelChangePassword">Cancel</button>
+      </div>
+    </div>
+  </div>
+</template>
+
 <script setup>
 import { ref } from 'vue';
 import {getAuthenticatedUser} from "@/js/authentication";
@@ -143,62 +199,30 @@ function cancelChangePassword() {
 }
 </script>
 
-<template>
-  <div class="background">
-    <div class="profile-box" id="profileInformation" v-show="!changePassword">
-      <div v-show="loading" class="three-body">
-        <div class="three-body__dot"></div>
-        <div class="three-body__dot"></div>
-        <div class="three-body__dot"></div>
-      </div>
-      <div v-show="!loading">
-        <h1>Account</h1>
-        <div class="profile-information">
-          <p>Username: <label for="username" id="username"></label></p>
-          <p>Email: <label for="email" id="email"></label></p>
-          <p>First name: <label for="firstName" id="firstName"></label></p>
-          <p>Last name: <label for="lastName" id="lastName"></label></p>
-          <p>Phone number: <label for="phoneNumber" id="phoneNumber"></label></p>
-        </div>
-      </div>
-      <div v-show="!loading">
-        <h1>Your courses</h1>
-        <div class="course-information" id="courses">
-          <p id="no-course">You do not have any courses yet.</p>
-        </div>
-      </div>
-      <div v-show="!loading" class="profile-buttons">
-        <button class="standard-button" @click="newPassword">Change password</button>
-        <button class="log-out" @click="doLogoutToHome">Log out</button>
-    </div>
-  </div>
-    <div class="profile-box" id="changePassword" v-show="changePassword">
-      <h1>Change password</h1>
-      <div class="profile-information">
-        <label for="currentPassword">Current password:</label>
-        <input class="passwordField" type="password" id="currentPassword" maxlength="64">
-        <label for="newPassword">New password:</label>
-        <input class="passwordField" type="password" id="newPassword" maxlength="64">
-        <label for="confirmPassword">Confirm new password:</label>
-        <input class="passwordField" type="password" id="confirmPassword" maxlength="64">
-      </div>
-      <div class="profile-buttons">
-        <button class="standard-button" @click="changePasswordRequest">Save</button>
-        <button class="standard-button" @click="cancelChangePassword">Cancel</button>
-      </div>
-    </div>
-  </div>
-</template>
-
 <style scoped>
-.background{
+.background {
+  top: 0;
+  height: 400px;
+  background: linear-gradient(180deg, rgba(21, 16, 82, 0.14) 0%, rgba(158, 150, 255, 0.14) 100%);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  margin: 0;
+
+}
+
+
+.profile-background{
   display: flex;
   background-color: var(--light-1);
   justify-content: center;
+  margin: 0;
 }
 
 .profile-box {
-  margin: 60px auto;
+  margin: auto;
   display: flex;
   flex-direction: column;
   justify-content: left;
@@ -206,13 +230,12 @@ function cancelChangePassword() {
   padding: 100px;
   width: 60%;
   height: 1050px;
-  background-color: white;
   border-radius: 20px;
   overflow: hidden;
 }
 
 .profile-information {
-  background-color: #f1f1f1;
+  background-color: #ffffff;
   border-radius: 20px;
   padding: 20px;
   display: grid;
@@ -246,7 +269,7 @@ function cancelChangePassword() {
 }
 
 .course-information {
-  background-color: #f1f1f1;
+  background-color: #ffffff;
   border-radius: 20px;
   padding: 20px;
   display: grid;
@@ -258,5 +281,50 @@ function cancelChangePassword() {
   overflow: auto;
   max-height: 400px;
   min-height: 100px;
+}
+
+.hero-container {
+  display: flex;
+  justify-content: center;
+}
+
+.hero-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.bend {
+  width: 100%;
+  transform: scaleX(1.01) translateY(2px);
+  margin: 0;
+  padding: 0;
+}
+
+.planet1 {
+  height: 150px;
+  animation: ease-out slideIn 1s forwards, ease-out pulse 5s infinite 1s;
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translatex(-1000px) translateY(-100px) scale(1.2);
+  }
+  100% {
+    transform: translatex(0) translateY(120px) scale(1.5);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: translatex(0) translateY(120px) scale(1.5);
+  }
+  50% {
+    transform: translatex(0) translateY(120px) scale(1.7);
+  }
+  100% {
+    transform: translatex(0) translateY(120px) scale(1.5);
+  }
 }
 </style>
