@@ -80,15 +80,14 @@
           'border-radius': isDateVisible ? '10px 10px 0 0' : '10px'
         }">Date
       </button>
+
       <div class="wrapper" id="dateContainer" :style="{
           height: isDateVisible ? '200px' : '0px',
           opacity: isDateVisible ? '1' : '0',
           zIndex: isDateVisible ? '0' : -100,
           'border-radius': isDateVisible ? '0 0 10px 10px' : '10px'
         }">
-        <header>
-          <h2>Date</h2>
-        </header>
+
       </div>
 
       <button class="price-ranger" @click="toggleShowProvider" :style="{
@@ -495,7 +494,6 @@ function onCheckboxChange(event) {
   background-color: white;
   border-radius: 10px;
   padding: 5px;
-
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 10px;
@@ -700,15 +698,14 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .active-filter-container {
-  padding: 0;
+  margin-bottom: 30px;
+  margin-left: 10%;
   width: 90%;
   display: flex;
   flex-direction: row;
   align-content: center;
-  justify-content: center;
-  margin: auto;
+  justify-content: left;
   flex-wrap: nowrap;
-  margin: 30px;
 }
 
 .search-container {
