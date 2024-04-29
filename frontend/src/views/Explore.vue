@@ -12,7 +12,6 @@
 
     <div class="title">
       <h2>Explore</h2>
-
     </div>
     <p class="description">Explore our library</p>
 

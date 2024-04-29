@@ -9,6 +9,9 @@
     </div>
   </div>
 
+  <div class="active-filter-container">
+
+    </div>
   <div class="filter-container">
     <div class="range-container">
 
@@ -22,24 +25,21 @@
           zIndex: isCategoryVisible ? '0' : -100,
           'border-radius': isCategoryVisible ? '0 0 10px 10px' : '10px'
         }">
-        <header>
-          <h2>Category</h2>
-        </header>
         <div class="category-list">
           <div class="checkbox-wrapper">
-            <label class="cbx" for="morning">Category 1</label>
+            <label class="cbx" for="morning">Information Technologies</label>
             <input class="inp-cbx" id="morning" type="checkbox">
           </div>
           <div class="checkbox-wrapper">
-            <label class="cbx" for="morning">Category 2</label>
+            <label class="cbx" for="morning">Digital Marketing</label>
+            <input class="inp-cbx" id="morning" type="checkbox" v-model="isCheckboxChecked" @change="onCheckboxChange">
+          </div>
+          <div class="checkbox-wrapper">
+            <label class="cbx" for="morning">Business and Entrepreneurship</label>
             <input class="inp-cbx" id="morning" type="checkbox">
           </div>
           <div class="checkbox-wrapper">
-            <label class="cbx" for="morning">Category 3</label>
-            <input class="inp-cbx" id="morning" type="checkbox">
-          </div>
-          <div class="checkbox-wrapper">
-            <label class="cbx" for="morning">Category 4</label>
+            <label class="cbx" for="morning">Data Science and Analytics</label>
             <input class="inp-cbx" id="morning" type="checkbox">
           </div>
         </div>
@@ -412,6 +412,33 @@ function initiateComponents() {
   });
 }
 
+let isCheckboxChecked = ref(false);
+
+function onCheckboxChange() {
+  if (isCheckboxChecked.value) {
+    // Create container div
+    let container = document.createElement('div');
+    container.id = 'categoryComponent';
+
+    // Create category text span
+    let categoryText = document.createElement('span');
+    categoryText.id = 'categoryText';
+    categoryText.textContent = 'Category: ';
+
+    // Create label name span
+    let labelSpan = document.createElement('span');
+    labelSpan.id = 'labelName';
+    labelSpan.textContent = labelName;
+
+    // Create remove button
+    let removeButton = document.createElement('button');
+    removeButton.id = 'removeButton';
+    removeButton.textContent = 'x';
+    removeButton.onclick = function() {
+      container.parentNode.removeChild(container);
+    };
+  }
+}
 </script>
 
 <style scoped>
@@ -437,15 +464,16 @@ function initiateComponents() {
   align-content: center;
   justify-content: center;
   margin: auto;
+  flex-wrap: nowrap;
 }
 
 .range-container {
-  width: 20%;
+  margin-top: 20px;
+  max-width: 20%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-content: center;
-  margin: 20px;
 }
 
 
@@ -453,8 +481,7 @@ function initiateComponents() {
   background-color: white;
   border-radius: 10px;
   padding: 5px;
-  min-width: 1360px;
-  min-height: 800px;
+
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 10px;
@@ -462,6 +489,19 @@ function initiateComponents() {
   margin: 30px;
 }
 
+
+@media (max-width: 1400px) {
+  .course-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+
+@media (max-width: 1000px) {
+  .course-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
 
 .course-card img {
   width: 100%;
@@ -486,7 +526,7 @@ function initiateComponents() {
 }
 
 .wrapper {
-  width: 300px;
+  max-width: 300px;
   background: white;
   border-radius: 10px;
   padding: 0 20px;
@@ -590,9 +630,9 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .price-ranger {
-  width: 300px;
+  max-width: 300px;
   background-color: white;
-  padding: 10px 20px;
+  padding: 5px 10px;
   margin: 10px 0 0 0;
   border-radius: 10px;
   border: none;
@@ -618,6 +658,7 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .category-list {
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
 }
@@ -627,13 +668,29 @@ input[type="range"]::-moz-range-thumb {
   flex-direction: row;
   align-content: flex-start;
   justify-content: space-between;
+  justify-items: center;
+  gap: 5px;
 }
 
+/*Todo: Make the categories dymanic based on the amount of categories available */
 .inp-cbx {
   font-family: 'Inter', sans-serif;
-  font-size: 15px;
+  font-size: 20px;
+  min-height: 20px;
+  min-width: 20px;
+  background-color: #eee;;
 }
 
+.active-filter-container {
+  padding: 0;
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
+  margin: auto;
+  flex-wrap: nowrap;
+}
 
 .search-container {
   position: relative;

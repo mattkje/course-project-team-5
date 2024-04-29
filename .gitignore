@@ -38,3 +38,4 @@ build/
 
 
 /OldStatic
+backend/src/main/resources/application.properties
