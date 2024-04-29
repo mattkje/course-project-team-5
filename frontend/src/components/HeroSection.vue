@@ -41,7 +41,7 @@
 
 .background {
   top: 0;
-  height: 800px;
+  height: min-content;
   background: linear-gradient(180deg, rgba(21, 16, 82, 0.14) 0%, rgba(158, 150, 255, 0.14) 100%);
   display: flex;
   justify-content: space-between;
@@ -100,6 +100,7 @@
 
 .bend {
   width: 100%;
+  transform: scaleX(1.01) translateY(2px);
   margin: 0;
   padding: 0;
 

@@ -83,6 +83,7 @@ ul {
 
 .bend {
   width: 100%;
+  transform: scaleX(1.01) translateY(2px);
   margin: 0;
   padding: 0;
 
@@ -90,6 +91,7 @@ ul {
 
 .bend-bottom {
   rotate: 180deg;
+  transform: scaleX(1.01) translateY(2px);
   width: 100%;
   margin: 0;
   padding: 0;
