@@ -9,55 +9,60 @@
     <img class="bend" src="/bend.svg">
   </div>
   <div class="profile-background">
-    <div class="title">
-      <h1>Account</h1>
+    <div class="profile-bar">
+      <!-- Add a profile bar here -->
     </div>
-    <div class="profile-box" id="profileInformation" v-show="!changePassword">
-      <div v-show="loading" class="three-body">
-        <div class="three-body__dot"></div>
-        <div class="three-body__dot"></div>
-        <div class="three-body__dot"></div>
+
+    <div class="profile-display">
+      <div class="title" v-show="!changePassword">
+        <h1>Account Details</h1>
+        <p>Manage your profile</p>
       </div>
-      <div v-show="!loading">
+      <div class="profile-box" id="profileInformation" v-show="!changePassword">
+        <div v-show="loading" class="three-body">
+          <div class="three-body__dot"></div>
+          <div class="three-body__dot"></div>
+          <div class="three-body__dot"></div>
+        </div>
+          <div class="profile-information" v-show="!loading">
+            <p>Username: <label for="username" id="username"></label></p>
+            <p>Email: <label for="email" id="email"></label></p>
+            <p>First name: <label for="firstName" id="firstName"></label></p>
+            <p>Last name: <label for="lastName" id="lastName"></label></p>
+            <p>Phone number: <label for="phoneNumber" id="phoneNumber"></label></p>
+          </div>
+        <div v-show="!loading">
+          <h1>Your courses</h1>
+          <div class="course-information" id="courses">
+            <p id="no-course">You do not have any courses yet.</p>
+          </div>
+        </div>
+        <div v-show="!loading" class="profile-buttons">
+          <button class="standard-button" @click="newPassword">Change password</button>
+          <button class="log-out" @click="doLogoutToHome">Log out</button>
+        </div>
+      </div>
+      <div class="profile-box" id="changePassword" v-show="changePassword">
+        <h1>Change password</h1>
         <div class="profile-information">
-          <p>Username: <label for="username" id="username"></label></p>
-          <p>Email: <label for="email" id="email"></label></p>
-          <p>First name: <label for="firstName" id="firstName"></label></p>
-          <p>Last name: <label for="lastName" id="lastName"></label></p>
-          <p>Phone number: <label for="phoneNumber" id="phoneNumber"></label></p>
+          <label for="currentPassword">Current password:</label>
+          <input class="passwordField" type="password" id="currentPassword" maxlength="64">
+          <label for="newPassword">New password:</label>
+          <input class="passwordField" type="password" id="newPassword" maxlength="64">
+          <label for="confirmPassword">Confirm new password:</label>
+          <input class="passwordField" type="password" id="confirmPassword" maxlength="64">
         </div>
-      </div>
-      <div v-show="!loading">
-        <h1>Your courses</h1>
-        <div class="course-information" id="courses">
-          <p id="no-course">You do not have any courses yet.</p>
+        <div class="profile-buttons">
+          <button class="standard-button" @click="changePasswordRequest">Save</button>
+          <button class="standard-button" @click="cancelChangePassword">Cancel</button>
         </div>
-      </div>
-      <div v-show="!loading" class="profile-buttons">
-        <button class="standard-button" @click="newPassword">Change password</button>
-        <button class="log-out" @click="doLogoutToHome">Log out</button>
-    </div>
-  </div>
-    <div class="profile-box" id="changePassword" v-show="changePassword">
-      <h1>Change password</h1>
-      <div class="profile-information">
-        <label for="currentPassword">Current password:</label>
-        <input class="passwordField" type="password" id="currentPassword" maxlength="64">
-        <label for="newPassword">New password:</label>
-        <input class="passwordField" type="password" id="newPassword" maxlength="64">
-        <label for="confirmPassword">Confirm new password:</label>
-        <input class="passwordField" type="password" id="confirmPassword" maxlength="64">
-      </div>
-      <div class="profile-buttons">
-        <button class="standard-button" @click="changePasswordRequest">Save</button>
-        <button class="standard-button" @click="cancelChangePassword">Cancel</button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import {ref} from 'vue';
 import {getAuthenticatedUser} from "@/js/authentication";
 import {sendApiRequest, sendTokenRefreshRequest} from "@/js/requests";
 import {redirectTo} from "@/js/navigation";
@@ -104,7 +109,7 @@ function onProfileDataSuccess(data) {
   document.getElementById("lastName").innerText = data.user.lastName;
   document.getElementById("email").innerText = data.user.email;
   document.getElementById("phoneNumber").innerText = data.user.phoneNumber;
-  if(data.courses.length > 0) {
+  if (data.courses.length > 0) {
     addCourses(data);
   } else {
     const profileInfo = document.getElementById("profileInformation");
@@ -120,7 +125,6 @@ function onProfileDataError(error) {
 
 function newPassword() {
   changePassword.value = true;
-  window.scroll(0,0);
 }
 
 function changePasswordRequest() {
@@ -185,7 +189,7 @@ function addCourses(data) {
 function editCourseCard(object, course) {
   object.style.minWidth = "500px";
   object.style.minHeight = "50px";
-  object.onclick = function() {
+  object.onclick = function () {
     redirectTo("/courses/?id=" + course.course.courseId);
   };
 }
@@ -197,7 +201,7 @@ function doLogoutToHome() {
 
 function cancelChangePassword() {
   changePassword.value = false;
-  window.scroll(0,0);
+  window.scroll(0, 0);
 }
 </script>
 
@@ -216,9 +220,10 @@ function cancelChangePassword() {
 }
 
 
-.profile-background{
+.profile-background {
   background-color: var(--light-1);
   margin: 0;
+  padding-top: 50px;
 }
 
 .profile-box {
@@ -230,6 +235,7 @@ function cancelChangePassword() {
   width: 60%;
   border-radius: 20px;
   overflow: hidden;
+  padding-bottom: 20px;
 }
 
 .profile-information {
@@ -258,11 +264,11 @@ function cancelChangePassword() {
   margin-bottom: 30px;
 }
 
-.courses tr:nth-child(odd){
+.courses tr:nth-child(odd) {
   background-color: #fff;
 }
 
-.courses tr:nth-child(even){
+.courses tr:nth-child(even) {
   background-color: lightgrey;
 }
 
@@ -333,5 +339,12 @@ function cancelChangePassword() {
   justify-content: left;
   text-decoration: none;
   margin: 0 auto;
+}
+
+.title p {
+  color: var(--dark-3);
+  font-size: 1.3em;
+  margin: 0;
+  padding: 0;
 }
 </style>
