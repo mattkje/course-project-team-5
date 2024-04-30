@@ -274,27 +274,6 @@ function setDefaultCurrency() {
   padding: 0;
 }
 
-.fancy-button {
-  color: #352f5e;
-  font-family: 'Inter', sans-serif;
-  font-weight: bold;
-  font-size: 14px;
-  padding: 10px;
-  border-radius: 10px;
-  text-decoration: none;
-  display: flex;
-  margin: 0 5px;
-  max-height: 40px;
-  min-height: 40px;
-  background: var(--light-1);
-  border: 0.5px solid #ffffff;
-  transition: all 0.3s ease-in-out;
-}
-
-.fancy-button:hover {
-  background-color: var(--light-3);
-  box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
-}
 
 .fancy-button-round {
   color: #EAEAEA;
