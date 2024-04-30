@@ -10,8 +10,8 @@
   </div>
 
   <div class="active-filter-container" id="active-filter-container">
-
-    </div>
+    <button id="mobile-filter">Filter</button>
+  </div>
   <div class="filter-container">
     <div class="range-container">
 
@@ -51,7 +51,7 @@
         }">Price
       </button>
       <div class="wrapper" id="priceText" :style="{
-          height: isPriceVisible ? '200px' : '0px',
+          height: isPriceVisible ? '150px' : '0px',
           opacity: isPriceVisible ? '1' : '0',
           zIndex: isPriceVisible ? '0' : -100,
           'border-radius': isPriceVisible ? '0 0 10px 10px' : '10px'
@@ -82,13 +82,13 @@
       </button>
 
       <div class="wrapper" id="dateContainer" :style="{
-          height: isDateVisible ? '200px' : '0px',
+          height: isDateVisible ? '50px' : '0px',
           opacity: isDateVisible ? '1' : '0',
           zIndex: isDateVisible ? '0' : -100,
           'border-radius': isDateVisible ? '0 0 10px 10px' : '10px'
         }">
         <span>Start date - End Date</span>
-        <input id="datepicker" type ="text" placeholder="Now - Forever"/>
+        <input id="datepicker" type="text" placeholder="Now - Forever"/>
       </div>
 
       <button class="price-ranger" @click="toggleShowProvider" :style="{
@@ -111,7 +111,7 @@
         }">Difficulty
       </button>
       <div class="wrapper" id="difficultyContainer" :style="{
-          height: isDifficultyVisible ? '200px' : '0px',
+          height: isDifficultyVisible ? '150px' : '0px',
           opacity: isDifficultyVisible ? '1' : '0',
           zIndex: isDifficultyVisible ? '0' : -100,
           'border-radius': isDifficultyVisible ? '0 0 10px 10px' : '10px'
@@ -152,7 +152,9 @@
       </div>
 
     </div>
-    <div class="course-container">
+    <div class="flexible-grid-container">
+      <div class="flexible-grid" id="courseContainer">
+    </div>
     </div>
   </div>
 </template>
@@ -166,15 +168,17 @@ import Litepicker from 'litepicker';
 const {appContext} = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
 const searchQuery = ref('');
+const isItChecked = ref(false);
+const isDmChecked = ref(false);
+const isBeChecked = ref(false);
+const isDsChecked = ref(false);
+
 
 onMounted(() => {
-  populateCourses('.course-container');
+  populateCourses('.flexible-grid');
   currency(API_URL);
 });
 
-function searchCourses() {
-  populateCourses('.course-container');
-}
 
 function populateCourses(selector) {
   document.querySelector(selector).innerHTML = '';
@@ -186,7 +190,8 @@ function populateCourses(selector) {
             .then(response => response.json())
             .then(currencies => {
               data.forEach(courseProvider => {
-                if (courseProvider.course.title.toLowerCase().includes(searchQuery.value.toLowerCase()) || courseProvider.course.category.toLowerCase().includes(searchQuery.value.toLowerCase())) {
+                if (courseProvider.course.title.toLowerCase().includes(searchQuery.value.toLowerCase()) || courseProvider.course.category.toLowerCase().includes(searchQuery.value.toLowerCase())
+                    || (isItChecked.value && courseProvider.course.category.toLowerCase() === 'information technologies')) {
                   const contentBox = document.createElement('a');
                   contentBox.href = `/courses?id=${courseProvider.course.courseId}`;
                   contentBox.className = 'content-box';
@@ -323,6 +328,20 @@ function populateCourses(selector) {
       .catch(error => console.error('Error:', error));
 }
 
+function searchCourses() {
+  let courseContainer = document.querySelector('#courseContainer');
+  let children = courseContainer.children;
+
+  for(let i = 0; i < children.length; i++) {
+    let child = children[i];
+
+    if (!child.querySelector('.content-box-title').textContent.toLowerCase().includes(searchQuery.value.toLowerCase())) {
+      child.style.display = 'none';
+    } else {
+      child.style.display = 'block';
+    }
+  }
+}
 
 
 const isCategoryVisible = ref(false);
@@ -413,51 +432,62 @@ function initiateComponents() {
 
 
 function onCheckboxChange(event) {
-    const checkboxId = event.target.id;
-    const isChecked = event.target.checked;
+  const checkboxId = event.target.id;
+  const isChecked = event.target.checked;
 
-    if (isChecked){
-      localStorage.setItem(checkboxId, 'false');
+  if (isChecked) {
+    localStorage.setItem(checkboxId, 'false');
 
-      // Select the label element inside .checkbox-wrapper
-      let label = document.querySelector(`label[for="${checkboxId}"]`);
-
-      // Get the text content of the label
-      let labelName = label.textContent;
-
-      // Create container div
-      let container = document.createElement('div');
-      container.id = checkboxId + "container";
-
-      // Create label name span
-      let labelSpan = document.createElement('span');
-      labelSpan.id = 'labelName';
-      labelSpan.textContent = labelName;
-
-      // Create remove button
-      let removeButton = document.createElement('button');
-      removeButton.id = 'removeButton';
-      removeButton.textContent = 'x';
-      removeButton.onclick = function() {
-        container.parentNode.removeChild(container);
-        document.getElementById(checkboxId).checked = false;
-      };
-
-      container.appendChild(labelSpan);
-      container.appendChild(removeButton);
-
-      let activeFilterContainer = document.getElementById('active-filter-container');
-      activeFilterContainer.appendChild(container);
-    } else {
-      localStorage.setItem(checkboxId, 'true');
-      let activeFilterContainer = document.getElementById('active-filter-container');
-      activeFilterContainer.removeChild(document.getElementById(checkboxId + "container"));
+if (checkboxId === 'itBox') {
+      isItChecked.value = !isItChecked.value;
+      console.log(isItChecked.value);
+    } else if (checkboxId === 'dmBox') {
+      isDmChecked.value = true;
+    } else if (checkboxId === 'beBox') {
+      isBeChecked.value = true;
+    } else if (checkboxId === 'dsBox') {
+      isDsChecked.value = true;
     }
+    // Select the label element inside .checkbox-wrapper
+    let label = document.querySelector(`label[for="${checkboxId}"]`);
+
+    // Get the text content of the label
+    let labelName = label.textContent;
+
+    // Create container div
+    let container = document.createElement('div');
+    container.id = checkboxId + "container";
+
+    // Create label name span
+    let labelSpan = document.createElement('span');
+    labelSpan.id = 'labelName';
+    labelSpan.textContent = labelName;
+
+    // Create remove button
+    let removeButton = document.createElement('button');
+    removeButton.id = 'removeButton';
+    removeButton.textContent = 'x';
+    removeButton.onclick = function () {
+      container.parentNode.removeChild(container);
+      document.getElementById(checkboxId).checked = false;
+    };
+
+    container.appendChild(labelSpan);
+    container.appendChild(removeButton);
+
+    let activeFilterContainer = document.getElementById('active-filter-container');
+    activeFilterContainer.appendChild(container);
+  } else {
+    localStorage.setItem(checkboxId, 'true');
+    let activeFilterContainer = document.getElementById('active-filter-container');
+    activeFilterContainer.removeChild(document.getElementById(checkboxId + "container"));
+  }
+
 }
 
 
 let picker;
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   picker = new Litepicker({
     element: document.getElementById('datepicker'),
     format: "DD MMM",
@@ -476,7 +506,7 @@ document.addEventListener('DOMContentLoaded', function() {
     numberOfColumns: 2,
     singleMode: false,
     moduleNavKeyboard: true,
-    moduleRanges:false
+    moduleRanges: false
   });
 });
 </script>
@@ -507,6 +537,8 @@ document.addEventListener('DOMContentLoaded', function() {
   flex-wrap: nowrap;
 }
 
+
+
 .range-container {
   margin-top: 20px;
   max-width: 20%;
@@ -516,30 +548,29 @@ document.addEventListener('DOMContentLoaded', function() {
   align-content: center;
 }
 
+.flexible-grid-container {
+  background-color: var(--light-1);
+  border-radius: 10px;
+  display: flex;
+  justify-content: flex-start;
+  margin: 30px;
+  padding: 5px;
+  min-height: 90%;
+  min-width: 90%;
+}
 
-.course-container {
+.flexible-grid {
   background-color: var(--light-1);
   border-radius: 10px;
   padding: 5px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-  overflow-x: visible;
+  display: flex;
+  flex-wrap: wrap;
   margin: 30px;
+  justify-content: space-around;
 }
 
-
-@media (max-width: 1400px) {
-  .course-container {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-
-@media (max-width: 1000px) {
-  .course-container {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.flexible-grid > * {
+  flex: 1;
 }
 
 .course-card img {
@@ -569,7 +600,24 @@ document.addEventListener('DOMContentLoaded', function() {
   background: var(--light-1);
   border-radius: 10px;
   padding: 0 20px;
+}
 
+#mobile-filter {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .filter-container {
+    flex-direction: column;
+  }
+
+.range-container {
+    display: none;
+  }
+
+#mobile-filter {
+    display: flex;
+  }
 }
 
 header h2 {
@@ -713,6 +761,7 @@ input[type="range"]::-moz-range-thumb {
   justify-content: space-between;
   justify-items: center;
   gap: 5px;
+
 }
 
 /*Todo: Make the categories dymanic based on the amount of categories available */
@@ -774,5 +823,13 @@ input[type="range"]::-moz-range-thumb {
   border-radius: 15px;
   font-size: 16px;
 }
+
+#dateContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-content: center;
+}
+
 
 </style>

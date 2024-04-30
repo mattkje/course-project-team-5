@@ -69,7 +69,8 @@ import {ref} from "vue";
   border: none;
   border-radius: 15px;
   width: 60%;
-  justify-content: left;
+  justify-content: center;
+  align-items: center;
   text-decoration: none;
   margin: 0 auto;
 }
@@ -104,7 +105,7 @@ import {ref} from "vue";
 }
 
 
-.course-container {
+.flexible-grid {
   background-color: white;
   border-radius: 10px;
   width: 900px;
