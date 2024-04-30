@@ -33,9 +33,12 @@
           <p id="no-course">You do not have any courses yet.</p>
         </div>
       </div>
-      <div v-show="!loading" class="profile-buttons">
-        <button class="standard-button" @click="newPassword">Change password</button>
-        <button class="log-out" @click="doLogoutToHome">Log out</button>
+      <div v-show="!loading">
+        <h1>Options</h1>
+        <div class="course-options">
+          <button class="fancy-button" @click="newPassword">Change password</button>
+          <button class="fancy-button" @click="doLogoutToHome">Log out</button>
+        </div>
     </div>
   </div>
     <div class="profile-box" id="changePassword" v-show="changePassword">
@@ -217,7 +220,7 @@ function cancelChangePassword() {
 
 
 .profile-background{
-  background-color: var(--light-1);
+  background-color: var(--light-3);
   margin: 0;
 }
 
@@ -228,12 +231,11 @@ function cancelChangePassword() {
   justify-content: left;
   align-content: center;
   width: 60%;
-  border-radius: 20px;
   overflow: hidden;
 }
 
 .profile-information {
-  background-color: #ffffff;
+  background-color: var(--light-1);
   border-radius: 20px;
   padding: 20px;
   display: grid;
@@ -267,7 +269,7 @@ function cancelChangePassword() {
 }
 
 .course-information {
-  background-color: #ffffff;
+  background-color: var(--light-1);
   border-radius: 20px;
   padding: 20px;
   display: grid;
@@ -276,6 +278,21 @@ function cancelChangePassword() {
   line-height: 50px;
   grid-template-rows: auto;
   justify-content: space-between;
+  overflow: auto;
+  max-height: 400px;
+  min-height: 100px;
+}
+
+.course-options {
+  background-color: var(--light-1);
+  border-radius: 20px;
+  padding: 20px;
+  display: grid;
+  flex-direction: column;
+  width: 100%;
+  margin: 50px 0;
+  line-height: 50px;
+  justify-content: right;
   overflow: auto;
   max-height: 400px;
   min-height: 100px;
