@@ -774,14 +774,15 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .active-filter-container {
-  margin-bottom: 30px;
-  margin-left: 10%;
+
   width: 90%;
   display: flex;
   flex-direction: row;
   align-content: center;
   justify-content: left;
   flex-wrap: nowrap;
+  margin: auto auto 30px auto;
+
 }
 
 .search-container {
@@ -795,9 +796,10 @@ input[type="range"]::-moz-range-thumb {
 .search-bar {
   box-sizing: border-box;
   width: 60%;
-  border: 3px solid #606060;
+  background-color: var(--light-1);
   border-radius: 20px;
   position: relative; /* Make it a positioning context for the absolute position of the button */
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
 }
 
 .search-icon {

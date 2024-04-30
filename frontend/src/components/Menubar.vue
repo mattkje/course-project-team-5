@@ -254,7 +254,7 @@ function setDefaultCurrency() {
 .logo-top {
   font-weight: 900;
   padding-left: 5px;
-  color: #3a3a3a;
+  color: #3c3c54;
 }
 
 .logo-bottom {
