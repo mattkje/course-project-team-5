@@ -517,6 +517,7 @@ ul {
 
 .course-section {
   background-color: #f1f0fd;
+  transform: translateZ(-50px);
   margin: 0;
 }
 

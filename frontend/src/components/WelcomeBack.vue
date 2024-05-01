@@ -28,7 +28,7 @@ import {onMounted, ref} from "vue";
 
 .background {
   top: 0;
-  height: 400px;
+  height: min-content;
   background: linear-gradient(180deg, rgba(21, 16, 82, 0.14) 0%, rgba(158, 150, 255, 0.14) 100%);
   display: flex;
   justify-content: space-between;
@@ -40,7 +40,8 @@ import {onMounted, ref} from "vue";
 }
 
 .planet1 {
-  height: 150px;
+  height: 15vh;
+  transform: translateZ(-200px);
   animation: ease-out slideIn 1s forwards, ease-out pulse 5s infinite 1s;
 }
 
@@ -102,6 +103,7 @@ import {onMounted, ref} from "vue";
 
 .bend {
   width: 100%;
+  transform: scaleX(1.01) translateY(2px) translateZ(-100px);
   margin: 0;
   padding: 0;
 

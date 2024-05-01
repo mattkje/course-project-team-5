@@ -14,9 +14,12 @@
     </div>
 
     <div class="profile-display">
-      <div class="title" v-show="!changePassword">
-        <h1>Account Details</h1>
-        <p>Manage your profile</p>
+      <div class="navigation-bar">
+        <p>General</p>
+        <button class="nav-button"><img class="nav-icon" src="/settingsaccount.svg">Account Details</button>
+        <button class="nav-button"><img class="nav-icon" src="/settingscourses.svg">My Courses</button>
+        <button class="nav-button"><img class="nav-icon"src="/settingswallet.svg">Subscription</button>
+
       </div>
       <div class="profile-box" id="profileInformation" v-show="!changePassword">
         <div v-show="loading" class="three-body">
@@ -24,12 +27,29 @@
           <div class="three-body__dot"></div>
           <div class="three-body__dot"></div>
         </div>
+        <div class="title" v-show="!changePassword">
+          <h1>Account Details</h1>
+          <p>Manage your profile</p>
+        </div>
         <div class="profile-information" v-show="!loading">
-          <p>Username: <label for="username" id="username"></label></p>
-          <p>Email: <label for="email" id="email"></label></p>
-          <p>First name: <label for="firstName" id="firstName"></label></p>
-          <p>Last name: <label for="lastName" id="lastName"></label></p>
-          <p>Phone number: <label for="phoneNumber" id="phoneNumber"></label></p>
+          <div class="profile-item">
+            <p>Username</p>
+            <label for="username" id="username"></label>
+          </div>
+          <div class="profile-item">
+            <p>Email</p>
+            <label for="email" id="email"></label>
+          </div>
+          <div class="profile-item">
+            <p>First name</p>
+            <label for="firstName" id="firstName"></label>
+          </div>
+          <div class="profile-item"><p>Last name</p>
+            <label for="lastName" id="lastName"></label></div>
+          <div class="profile-item">
+            <p>Phone number</p>
+            <label for="phoneNumber" id="phoneNumber"></label>
+          </div>
         </div>
         <div v-show="!loading">
           <h1>Options</h1>
@@ -205,7 +225,7 @@ function cancelChangePassword() {
 <style scoped>
 .background {
   top: 0;
-  height: 400px;
+  height: min-content;
   background: linear-gradient(180deg, rgba(21, 16, 82, 0.14) 0%, rgba(158, 150, 255, 0.14) 100%);
   display: flex;
   justify-content: space-between;
@@ -217,12 +237,15 @@ function cancelChangePassword() {
 }
 
 .profile-background {
-  background-color: var(--light-1);
+  background-color: var(--light-3);
   margin: 0;
   padding-top: 50px;
 }
 
 .profile-box {
+  background-color: var(--light-1);
+  padding: 30px;
+  border-radius: 30px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -230,7 +253,7 @@ function cancelChangePassword() {
   align-content: center;
   width: 60%;
   overflow: hidden;
-  padding-bottom: 20px;
+  box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
 }
 
 .profile-information {
@@ -345,7 +368,8 @@ function cancelChangePassword() {
 .title {
   border: none;
   border-radius: 15px;
-  width: 60%;
+  width: 100%;
+  text-align: left;
   justify-content: left;
   text-decoration: none;
   margin: 0 auto;
@@ -356,5 +380,70 @@ function cancelChangePassword() {
   font-size: 1.3em;
   margin: 0;
   padding: 0;
+}
+
+.profile-display {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.navigation-bar {
+  display: flex;
+  flex-direction: column;
+}
+
+.navigation-bar p {
+  font-weight: bold;
+  color: var(--light-2);
+  font-size: 17px;
+  margin-left: 70px;
+}
+
+.nav-button {
+  color: var(--dark-3);
+  background: none;
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+  font-size: 23px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  text-decoration: none;
+  align-items: center;
+  display: flex;
+  border: none;
+  margin-bottom: 5px;
+  margin-left: 50px;
+  width: 450px;
+  max-height: 50px;
+  min-height: 50px;
+  transition: all 0.3s ease-in-out;
+}
+
+.nav-icon {
+  width: 23px;
+  height: 23px;
+  margin-right: 13px;
+}
+
+.nav-button:hover {
+  background: var(--light-1);
+}
+
+.nav-button:focus {
+  background: #e0e1e4;
+}
+
+.profile-item {
+  width: 400px;
+}
+
+.profile-item label {
+  padding: 5px 20px;
+  display: inline-block;
+  border-radius: 5px;
+  color: var(--dark-3);
+  border: 2px solid var(--light-2);
+  width: 100%;
 }
 </style>
