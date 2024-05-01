@@ -2,7 +2,7 @@
   <div id="background" class="background">
     <div class="hero-container">
       <div class="hero-box">
-        <img id="planet" class="planet1" src="/profilePlanet.svg" alt="Logo">
+        <img id="planet" class="planet1" src="/settingsPlanet.svg" alt="Logo">
 
       </div>
     </div>
@@ -19,56 +19,11 @@
         <button class="nav-button"><img class="nav-icon" src="/settingsaccount.svg">Account Details</button>
         <button class="nav-button"><img class="nav-icon" src="/settingscourses.svg">My Courses</button>
         <button class="nav-button"><img class="nav-icon"src="/settingswallet.svg">Subscription</button>
-
       </div>
-      <div class="profile-box" id="profileInformation" v-show="!changePassword">
-        <div v-show="loading" class="three-body">
-          <div class="three-body__dot"></div>
-          <div class="three-body__dot"></div>
-          <div class="three-body__dot"></div>
-        </div>
-        <div class="title" v-show="!changePassword">
-          <h1>Account Details</h1>
-          <p>Manage your profile</p>
-        </div>
-        <div class="profile-information" v-show="!loading">
-          <div class="profile-item">
-            <p>Username</p>
-            <label for="username" id="username"></label>
-          </div>
-          <div class="profile-item">
-            <p>Email</p>
-            <label for="email" id="email"></label>
-          </div>
-          <div class="profile-item">
-            <p>First name</p>
-            <label for="firstName" id="firstName"></label>
-          </div>
-          <div class="profile-item"><p>Last name</p>
-            <label for="lastName" id="lastName"></label></div>
-          <div class="profile-item">
-            <p>Phone number</p>
-            <label for="phoneNumber" id="phoneNumber"></label>
-          </div>
-        </div>
-        <div v-show="!loading">
-          <h1>Options</h1>
-          <div class="course-options">
-            <button class="fancy-button" @click="newPassword">Change password</button>
-            <button class="fancy-button" @click="doLogoutToHome">Log out</button>
-          </div>
-        </div>
-      </div>
+      <AccoundDetails v-show="!loading"/>
+      <MyCoursesProfilePage/>
       <div class="profile-box" id="changePassword" v-show="changePassword">
-        <h1>Change password</h1>
-        <div class="profile-information">
-          <label for="currentPassword">Current password:</label>
-          <input class="passwordField" type="password" id="currentPassword" maxlength="64">
-          <label for="newPassword">New password:</label>
-          <input class="passwordField" type="password" id="newPassword" maxlength="64">
-          <label for="confirmPassword">Confirm new password:</label>
-          <input class="passwordField" type="password" id="confirmPassword" maxlength="64">
-        </div>
+        <PasswordChange/>
         <div class="profile-buttons">
           <button class="standard-button" @click="changePasswordRequest">Save</button>
           <button class="standard-button" @click="cancelChangePassword">Cancel</button>
@@ -79,13 +34,14 @@
 </template>
 
 <script setup>
-import {ref} from 'vue';
-import {getAuthenticatedUser} from "@/js/authentication";
+import {onMounted, ref} from 'vue';
+import {doLogout, getAuthenticatedUser} from "@/js/authentication";
 import {sendApiRequest, sendTokenRefreshRequest} from "@/js/requests";
 import {redirectTo} from "@/js/navigation";
-import {onMounted} from "vue";
-import {doLogout} from "@/js/authentication";
 import {getCookie, isTokenAboutToExpire} from "@/js/tools";
+import PasswordChange from "@/components/PasswordChange.vue";
+import AccoundDetails from "@/components/AccoundDetails.vue";
+import MyCoursesProfilePage from "@/components/MyCoursesProfilePage.vue";
 
 onMounted(loadProfileData);
 const loading = ref(true);
@@ -256,28 +212,6 @@ function cancelChangePassword() {
   box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
 }
 
-.profile-information {
-  background-color: var(--light-1);
-  border-radius: 20px;
-  padding: 20px;
-  display: grid;
-  width: 100%;
-  grid-template-columns: repeat(2, 1fr);
-  margin: 50px 0;
-  line-height: 50px;
-  grid-template-rows: auto;
-  justify-content: space-between;
-}
-
-.passwordField {
-  width: 100%;
-  height: 40px;
-  border-radius: 10px;
-  border: 1px solid var(--base-1);
-  padding: 10px;
-  margin: 10px 0;
-}
-
 #currentPassword {
   margin-bottom: 30px;
 }
@@ -300,21 +234,6 @@ function cancelChangePassword() {
   line-height: 50px;
   grid-template-rows: auto;
   justify-content: space-between;
-  overflow: auto;
-  max-height: 400px;
-  min-height: 100px;
-}
-
-.course-options {
-  background-color: var(--light-1);
-  border-radius: 20px;
-  padding: 20px;
-  display: grid;
-  flex-direction: column;
-  width: 100%;
-  margin: 50px 0;
-  line-height: 50px;
-  justify-content: right;
   overflow: auto;
   max-height: 400px;
   min-height: 100px;
@@ -365,16 +284,6 @@ function cancelChangePassword() {
   }
 }
 
-.title {
-  border: none;
-  border-radius: 15px;
-  width: 100%;
-  text-align: left;
-  justify-content: left;
-  text-decoration: none;
-  margin: 0 auto;
-}
-
 .title p {
   color: var(--dark-3);
   font-size: 1.3em;
@@ -386,6 +295,7 @@ function cancelChangePassword() {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  padding: 0 0 50px 0;
 }
 
 .navigation-bar {
@@ -431,16 +341,12 @@ function cancelChangePassword() {
 }
 
 .nav-button:focus {
-  background: #e0e1e4;
-}
-
-.profile-item {
-  width: 400px;
+  background: var(--light-1);
 }
 
 .profile-item label {
   padding: 5px 20px;
-  display: inline-block;
+  display: flex;
   border-radius: 5px;
   color: var(--dark-3);
   border: 2px solid var(--light-2);
