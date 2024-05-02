@@ -1,5 +1,8 @@
 <script setup>
 import { getCurrentInstance, onMounted, ref } from "vue";
+import {getAuthenticatedUser} from "@/js/authentication";
+import createPost from "@/views/CreatePost.vue";
+import router from "@/router";
 
 const { appContext } = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
@@ -66,6 +69,16 @@ function searchPosts() {
       existingMessage.remove();
     }
   }
+
+}
+
+function authenticatePost(){
+  const currentUser = getAuthenticatedUser();
+  if (!currentUser) {
+    router.push('/register');
+    return;
+  }
+  router.push('/community/createPost');
 }
 
 </script>
@@ -87,7 +100,7 @@ function searchPosts() {
         <h1>Community</h1>
         <p class="description">Connect with other learners, share your knowledge, and grow together.</p>
       </div>
-      <router-link to="/community/create" class="fancy-button">Create Post</router-link>
+      <button class="fancy-button" @click="authenticatePost">Create Post</button>
     </div>
     <div class="search-container">
 
