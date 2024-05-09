@@ -19,8 +19,6 @@ public class Course {
     private String title;
     @Column(length = 100)
     private String category;
-    @Column()
-    private String keywords;
     @Column(length = 50)
     private String level;
     @Column(name = "closest_course_session")
@@ -58,10 +56,6 @@ public class Course {
         this.category = category;
     }
 
-    public void setKeywords(String keywords) {
-        this.keywords = keywords;
-    }
-
     public void setLevel(String level) {
         this.level = level;
     }
@@ -96,10 +90,6 @@ public class Course {
 
     public String getCategory() {
         return category;
-    }
-
-    public String getKeywords() {
-        return keywords;
     }
 
     public String getLevel() {
