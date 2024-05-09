@@ -23,7 +23,7 @@ async function sendApiRequest(method, url, callback, requestBody, errorCallback)
             callback(responseJson);
         } else if (response.status === 500) {
             redirectTo("/login-failure");
-            //doLogout();
+            doLogout();
         } else if (errorCallback) {
             console.log("Status code is not 200, calling errorCallback function");
             errorCallback(responseText);

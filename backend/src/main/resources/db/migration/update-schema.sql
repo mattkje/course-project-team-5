@@ -112,6 +112,7 @@ ALTER TABLE course_keywords
     ADD CONSTRAINT FK_COURSE_KEYWORDS_ON_KEYWORD FOREIGN KEY (keyword_id) REFERENCES keywords (keyword_id);
 
 ALTER TABLE course_providers
+    ADD CONSTRAINT FK_COURSE_PROVIDERS_ON_COURSE FOREIGN KEY (course_id) REFERENCES courses (course_id),
     ADD CONSTRAINT FK_COURSE_PROVIDERS_ON_PROVIDER FOREIGN KEY (provider_id) REFERENCES providers (provider_id);
 
 ALTER TABLE user_roles

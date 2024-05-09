@@ -10,23 +10,24 @@
   </div>
   <div class="profile-background">
     <div class="profile-bar">
-      <!-- Add a profile bar here -->
+
     </div>
 
     <div class="profile-display">
       <div class="navigation-bar">
         <p>General</p>
-        <button class="nav-button"><img class="nav-icon" src="/settingsaccount.svg">Account Details</button>
-        <button class="nav-button"><img class="nav-icon" src="/settingscourses.svg">My Courses</button>
-        <button class="nav-button"><img class="nav-icon"src="/settingswallet.svg">Subscription</button>
+        <button class="nav-button" @click="accountDetails()"><img class="nav-icon" src="/settingsaccount.svg">Account Details</button>
+        <button class="nav-button" @click="myCourses()"><img class="nav-icon" src="/settingscourses.svg">My Courses</button>
+        <button class="nav-button" @click="subscription()"><img class="nav-icon"src="/settingswallet.svg">Subscription</button>
       </div>
-      <AccoundDetails v-show="!loading"/>
+      <AccoundDetails v-show="navigate === 'accountDetails' && !loading && !changePassword" @newPassword="newPassword()"
+                      @doLogoutToHome="doLogoutToHome()"/>
       <MyCoursesProfilePage/>
       <div class="profile-box" id="changePassword" v-show="changePassword">
         <PasswordChange/>
         <div class="profile-buttons">
-          <button class="standard-button" @click="changePasswordRequest">Save</button>
-          <button class="standard-button" @click="cancelChangePassword">Cancel</button>
+          <button class="fancy-button" @click="changePasswordRequest">Save</button>
+          <button class="fancy-button" @click="cancelChangePassword">Cancel</button>
         </div>
       </div>
     </div>
@@ -47,9 +48,10 @@ onMounted(loadProfileData);
 const loading = ref(true);
 const user = getAuthenticatedUser();
 const changePassword = ref(false);
-
+let navigate = ref("accountDetails");
 
 async function loadProfileData() {
+  document.querySelector('.nav-button').style.background = 'var(--light-1)';
   console.log("Loading profile data from API...");
   console.log("User: ", user);
   console.log(user.password);
@@ -68,6 +70,30 @@ async function loadProfileData() {
 function onTokenRefreshSuccess() {
   console.log("Token has been refreshed.");
   sendApiRequest("GET", "/users/" + user.username, onProfileDataSuccess, onProfileDataError);
+}
+
+function subscription() {
+  const buttons = document.querySelectorAll('.nav-button');
+  buttons[0].style.background = 'none';
+  buttons[1].style.background = 'none';
+  buttons[2].style.background = 'var(--light-1)';
+  navigate.value = "subscription";
+}
+
+function accountDetails() {
+  const buttons = document.querySelectorAll('.nav-button');
+  buttons[0].style.background = 'var(--light-1)';
+  buttons[1].style.background = 'none';
+  buttons[2].style.background = 'none';
+  navigate.value = "accountDetails";
+}
+
+function myCourses() {
+  const buttons = document.querySelectorAll('.nav-button');
+  buttons[0].style.background = 'none';
+  buttons[1].style.background = 'var(--light-1)';
+  buttons[2].style.background = 'none';
+  navigate.value = "myCourses";
 }
 
 function onTokenRefreshError(error) {
@@ -202,12 +228,12 @@ function cancelChangePassword() {
   background-color: var(--light-1);
   padding: 30px;
   border-radius: 30px;
-  margin: 0 auto;
+  margin: 10px;
   display: flex;
   flex-direction: column;
   justify-content: left;
   align-content: center;
-  width: 60%;
+  width: 100%;
   overflow: hidden;
   box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
 }
@@ -327,7 +353,7 @@ function cancelChangePassword() {
   width: 450px;
   max-height: 50px;
   min-height: 50px;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.15s ease-in-out;
 }
 
 .nav-icon {
@@ -338,9 +364,15 @@ function cancelChangePassword() {
 
 .nav-button:hover {
   background: var(--light-1);
+  cursor: pointer;
 }
 
 .nav-button:focus {
+  background: var(--light-1);
+  outline: none;
+}
+
+.nav-button:active {
   background: var(--light-1);
 }
 
@@ -351,5 +383,13 @@ function cancelChangePassword() {
   color: var(--dark-3);
   border: 2px solid var(--light-2);
   width: 100%;
+}
+
+.fancy-button {
+  background-color: var(--light-3);
+}
+
+.fancy-button:hover {
+  cursor: pointer;
 }
 </style>

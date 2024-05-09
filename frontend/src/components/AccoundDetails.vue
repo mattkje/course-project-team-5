@@ -29,19 +29,25 @@
         <label for="phoneNumber" id="phoneNumber"></label>
       </div>
     </div>
-    <div v-show="!loading">
-      <h1>Options</h1>
-      <div class="course-options">
-        <button class="fancy-button" @click="newPassword">Change password</button>
-        <button class="fancy-button" @click="doLogoutToHome">Log out</button>
-      </div>
+    <hr>
+    <div class="course-options">
+      <button class="fancy-button" @click="newPassword">Change password</button>
+      <button class="fancy-button" @click="doLogoutToHome">Log out</button>
     </div>
   </div>
 </template>
 <script>
-export default {
-  name: 'AccoundDetails'
-}
+import {defineComponent} from "vue";
+
+export default defineComponent({
+  name: 'AccoundDetails',
+  setup(_, context) {
+    return {
+      newPassword: () => context.emit("newPassword"),
+      doLogoutToHome: () => context.emit("doLogoutToHome"),
+    };
+  },
+});
 </script>
 <style scoped>
 
@@ -66,7 +72,7 @@ export default {
   display: grid;
   width: 100%;
   grid-template-columns: repeat(2, 1fr);
-  margin: 50px 0;
+  margin: 20px 0;
   line-height: 50px;
   grid-template-rows: auto;
   justify-content: space-between;
@@ -83,13 +89,12 @@ export default {
 .course-options {
   background-color: var(--light-1);
   border-radius: 20px;
-  padding: 20px;
   display: grid;
   flex-direction: column;
   width: 100%;
-  margin: 50px 0;
   line-height: 50px;
-  justify-content: right;
+  margin: 30px 0;
+  justify-content: left;
   overflow: auto;
   max-height: 400px;
   min-height: 100px;
@@ -151,5 +156,13 @@ export default {
   color: var(--dark-3);
   border: 2px solid var(--light-2);
   width: 100%;
+}
+
+.fancy-button {
+  background-color: var(--light-3);
+}
+
+.fancy-button:hover {
+  cursor: pointer;
 }
 </style>
