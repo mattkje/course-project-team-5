@@ -22,7 +22,20 @@
       </div>
       <AccoundDetails v-show="navigate === 'accountDetails' && !loading && !changePassword" @newPassword="newPassword()"
                       @doLogoutToHome="doLogoutToHome()"/>
-      <MyCoursesProfilePage/>
+      <div class="profile-box" id="profileInformation" v-show="navigate === 'myCourses' && !loading">
+        <div v-show="loading" class="three-body">
+          <div class="three-body__dot"></div>
+          <div class="three-body__dot"></div>
+          <div class="three-body__dot"></div>
+        </div>
+        <div class="title">
+          <h1>My Courses</h1>
+          <p>Manage your courses</p>
+        </div>
+        <table class="course-table">
+          <p>You have no courses</p>
+        </table>
+      </div>
       <div class="profile-box" id="changePassword" v-show="changePassword">
         <PasswordChange/>
         <div class="profile-buttons">
@@ -42,7 +55,6 @@ import {redirectTo} from "@/js/navigation";
 import {getCookie, isTokenAboutToExpire} from "@/js/tools";
 import PasswordChange from "@/components/PasswordChange.vue";
 import AccoundDetails from "@/components/AccoundDetails.vue";
-import MyCoursesProfilePage from "@/components/MyCoursesProfilePage.vue";
 
 onMounted(loadProfileData);
 const loading = ref(true);
@@ -51,6 +63,7 @@ const changePassword = ref(false);
 let navigate = ref("accountDetails");
 
 async function loadProfileData() {
+  navigate.value = "accountDetails";
   document.querySelector('.nav-button').style.background = 'var(--light-1)';
   console.log("Loading profile data from API...");
   console.log("User: ", user);
@@ -108,6 +121,7 @@ function onProfileDataSuccess(data) {
   document.getElementById("lastName").innerText = data.user.lastName;
   document.getElementById("email").innerText = data.user.email;
   document.getElementById("phoneNumber").innerText = data.user.phoneNumber;
+  console.log("test")
   if (data.courses.length > 0) {
     addCourses(data);
   } else {
@@ -159,19 +173,19 @@ function onChangePasswordError(error) {
 }
 
 function addCourses(data) {
-  document.getElementById("no-course").remove();
-  const courseList = document.createElement("table");
-  courseList.classList.add("course-list");
+  const courseList = document.getElementsByClassName("course-table")[0];
+  courseList.children[0].remove();
   const courseBody = document.createElement("tbody");
   courseBody.classList.add("course-block");
   courseList.appendChild(courseBody);
-  for (let i = 0; i < data.courses.length; i++) {
-    const course = data.courses[i];
+  for (const element of data.courses) {
+    const course = element;
     const row = document.createElement("tr");
     const courseName = document.createElement("p");
     const courseImg = document.createElement("img");
     courseImg.classList.add("course-image");
     row.classList.add("course-card");
+    row.style.cursor = "pointer";
     courseName.innerText = course.course.title;
     courseName.style.paddingLeft = "20px";
     courseImg.src = course.course.image || '/noImageCom.svg';
@@ -180,9 +194,10 @@ function addCourses(data) {
     editCourseCard(row, course);
     courseBody.appendChild(row);
     const line = document.createElement("hr");
+    line.style.maxWidth = "600px";
+    line.style.margin = "20px";
     courseBody.appendChild(line);
   }
-  document.getElementById("courses").appendChild(courseList);
 }
 
 function editCourseCard(object, course) {
@@ -233,7 +248,7 @@ function cancelChangePassword() {
   flex-direction: column;
   justify-content: left;
   align-content: center;
-  width: 100%;
+  width: 60%;
   overflow: hidden;
   box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
 }
@@ -391,5 +406,9 @@ function cancelChangePassword() {
 
 .fancy-button:hover {
   cursor: pointer;
+}
+
+.course-table {
+  margin: 20px 0;
 }
 </style>
