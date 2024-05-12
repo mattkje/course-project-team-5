@@ -67,7 +67,6 @@ async function loadProfileData() {
   document.querySelector('.nav-button').style.background = 'var(--light-1)';
   console.log("Loading profile data from API...");
   console.log("User: ", user);
-  console.log(user.password);
   if (user) {
     const jwt = getCookie("jwt");
     if (jwt && isTokenAboutToExpire(jwt)) {
