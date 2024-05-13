@@ -33,7 +33,7 @@
   </div>
 
   <!--- Hide pro ad if user is already of type pro--->
-  <ProBox v-if="!isOfRoleUser('ROLE_PRO')"/>
+  <ProBox v-if="!hasRole('ROLE_PRO')"/>
 
   <div class="course-section">
 
@@ -166,7 +166,7 @@ import HeroSection from "@/components/HeroSection.vue";
 const loading = ref(true);
 import "@/courseBox.css"
 import {getCurrentInstance, onMounted, ref} from 'vue';
-import {getAuthenticatedUser, isOfRoleUser} from "@/js/authentication";
+import {getAuthenticatedUser, hasRole} from "@/js/authentication";
 import {currency, setDefaultCurrency} from "@/js/currency";
 import WelcomeBack from "@/components/WelcomeBack.vue";
 

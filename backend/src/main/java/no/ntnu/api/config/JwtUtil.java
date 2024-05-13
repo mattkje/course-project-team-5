@@ -31,7 +31,7 @@ public class JwtUtil {
    */
   public String generateToken(UserDetails userDetails) {
     final long TIME_NOW = System.currentTimeMillis();
-    final long MILLISECONDS_AN_HOUR = 60 * 60 * 1000;
+    final long MILLISECONDS_AN_HOUR = 60 * 60 * 1000 * 24;
     final long TIME_AFTER_ONE_HOUR = TIME_NOW + MILLISECONDS_AN_HOUR;
 
     return Jwts.builder()

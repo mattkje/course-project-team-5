@@ -66,6 +66,11 @@ const routes = [
         component: () => import('@/components/NoAccess.vue')
     },
     {
+        path: '/admin',
+        name: 'admin',
+        component: () => import(/* webpackChunkName: "about" */ '../views/Admin.vue')
+    },
+    {
         path: '/login-failure',
         name: 'LoginFailure',
         component: () => import('@/components/LoginFailure.vue')

@@ -1,6 +1,6 @@
 <script setup>
 import {getCurrentInstance, onMounted} from "vue";
-import {getAuthenticatedUser, isOfRoleUser} from "@/js/authentication";
+import {getAuthenticatedUser, hasRole} from "@/js/authentication";
 const { appContext } = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
 
@@ -55,16 +55,16 @@ function setDefaultCurrency() {
             <h4 class="logo-top">Learniverse&nbsp;</h4>
             <h4 class="logo-bottom">Connect</h4>
           </router-link>
-          <div id="menu-links" class="menu-links" v-if="isOfRoleUser('ROLE_ADMIN')">
-            <router-link to="/admin" class="header-button" v-if="isOfRoleUser('ROLE_ADMIN')">Manage</router-link>
+          <div id="menu-links" class="menu-links" v-if="hasRole('ROLE_ADMIN')">
+            <router-link to="/admin" class="header-button" v-if="hasRole('ROLE_ADMIN')">Manage</router-link>
             <router-link to="/explore" class="header-button">Explore</router-link>
             <router-link to="/community" class="header-button">Community</router-link>
           </div>
           <div id="menu-links" class="menu-links" v-else>
-            <router-link to="/admin" class="header-button" v-if="isOfRoleUser('ROLE_ADMIN')">Manage</router-link>
+            <router-link to="/admin" class="header-button" v-if="hasRole('ROLE_ADMIN')">Manage</router-link>
             <router-link to="/explore" class="header-button">Explore</router-link>
             <router-link to="/community" class="header-button">Community</router-link>
-            <router-link to="/pro" class="header-button" v-if="!isOfRoleUser('ROLE_PRO') && !isOfRoleUser('ROLE_ADMIN')">Learniverse&nbsp;Pro</router-link>
+            <router-link to="/pro" class="header-button" v-if="!hasRole('ROLE_PRO') && !hasRole('ROLE_ADMIN')">Learniverse&nbsp;Pro</router-link>
           </div>
         </div>
 

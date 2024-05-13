@@ -9,6 +9,7 @@
       <h1>Account Details</h1>
       <p>Manage your profile</p>
     </div>
+    <hr>
     <div class="profile-information" v-show="!loading">
       <div class="profile-item">
         <p>Username</p>
@@ -53,7 +54,7 @@ export default defineComponent({
 
 .profile-box {
   background-color: var(--light-1);
-  padding: 30px;
+  padding: 30px 0 30px 30px;
   border-radius: 30px;
   margin: auto;
   display: flex;
@@ -68,13 +69,14 @@ export default defineComponent({
 .profile-information {
   background-color: var(--light-1);
   border-radius: 20px;
-  padding: 20px;
+  padding: 0 0 0 20px;
   display: grid;
   width: 100%;
   grid-template-columns: repeat(2, 1fr);
-  margin: 20px 0;
+  margin-bottom: 20px;
   line-height: 50px;
   grid-template-rows: auto;
+  grid-column-gap: 10px;
   justify-content: space-between;
 }
 
@@ -164,5 +166,14 @@ export default defineComponent({
 
 .fancy-button:hover {
   cursor: pointer;
+}
+
+hr {
+  max-width: 100%;
+  margin: 20px;
+}
+
+.title{
+  margin-bottom: 20px;
 }
 </style>

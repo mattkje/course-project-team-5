@@ -47,7 +47,7 @@
 import {getCurrentInstance, onMounted} from 'vue';
 import "@/assets/coursePage.css"
 import MarkdownIt from 'markdown-it';
-import {isOfRoleUser} from "@/js/authentication";
+import {hasRole} from "@/js/authentication";
 
 onMounted(() => {
   populateCoursePage();

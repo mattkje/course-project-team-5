@@ -4,22 +4,23 @@
 
 <template>
   <div class="center">
-    <p>There was an error fetching your user data. Try logging in</p>
-    <router-link to="/login" class="standard-button">Log in</router-link>
+    <img class="center-illustration" src="/fetchingerror.svg"/>
+    <h1>There was an error fetching your user data. Try logging in</h1>
+    <router-link to="/login" class="fancy-button">Log in</router-link>
   </div>
 </template>
 
 <style scoped>
 .center {
-  background-color: var(--light-1);
+  background-color: var(--light-3);
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 50vh;
+  height: 100vh;
   flex-direction: column;
 }
 
-p, router-link{
-  color: #151515;
+.center-illustration {
+  width: 30%;
 }
 </style>

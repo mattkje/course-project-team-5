@@ -22,7 +22,7 @@
   </div>
 </template>
 <script>
-import {isOfRoleUser} from "@/js/authentication";
+import {hasRole} from "@/js/authentication";
 
 export default {
   data() {
@@ -31,7 +31,7 @@ export default {
     };
   },
   methods: {
-    isOfRoleUser,
+    isOfRoleUser: hasRole,
     toggleProInfo() {
       this.isProInfoVisible = !this.isProInfoVisible;
     },

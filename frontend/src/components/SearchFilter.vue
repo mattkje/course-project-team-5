@@ -816,9 +816,10 @@ input[type="range"]::-moz-range-thumb {
   margin: 10px 0 0 0;
   border-radius: 10px;
   border: none;
-  color: black;
+  color: var(--dark-3);
+  font-family: Inter, sans-serif;
   font-size: 18px;
-  font-weight: 500;
+  font-weight: bold;
   cursor: pointer;
   transition: background 0.3s;
 

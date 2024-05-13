@@ -4,21 +4,23 @@
 
 <template>
   <div class="center">
-    <p>You don't have access to this page!</p>
-    <router-link to="/" class="standard-button">Back to main page</router-link>
+    <img class="center-illustration" src="/unauthorized.svg"/>
+    <h1>You don't have access to this page!</h1>
+    <router-link to="/" class="fancy-button">Back to main page</router-link>
   </div>
 </template>
 
 <style scoped>
 .center {
+  background-color: var(--light-3);
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 50vh;
+  height: 100vh;
   flex-direction: column;
 }
 
-p, router-link{
-  color: white;
+.center-illustration {
+  width: 30%;
 }
 </style>

@@ -1,21 +1,21 @@
 <script setup>
 
 import {onMounted, ref} from "vue";
+import {getAuthenticatedUser} from "@/js/authentication";
 
+onMounted(putUsername)
 
-
+function putUsername() {
+  const username = getAuthenticatedUser().username;
+  document.querySelector('span').innerText = username;
+}
 
 </script>
 
 <template>
 
   <div id="background" class="background">
-    <div class="hero-container">
-      <div class="hero-box">
-        <img id="planet" class="planet1" src="/logo.svg" alt="Logo">
-      </div>
-    </div>
-    <img class="bend" src="/bend.svg">
+    <h1>Welcome Back <span></span></h1>
   </div>
 
   <div class="content">
@@ -26,10 +26,14 @@ import {onMounted, ref} from "vue";
 
 <style scoped>
 
+span {
+  font-weight: 900;
+}
+
 .background {
   top: 0;
   height: min-content;
-  background: linear-gradient(180deg, rgba(21, 16, 82, 0.14) 0%, rgba(158, 150, 255, 0.14) 100%);
+  background-color: var(--light-3);
   display: flex;
   justify-content: space-between;
   align-items: center;

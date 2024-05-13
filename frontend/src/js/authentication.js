@@ -16,11 +16,14 @@ function getAuthenticatedUser() {
     return user;
 }
 
-export function isOfRoleUser(role) {
+export function hasRole(role) {
     const user = getAuthenticatedUser();
     return user && user.roles.includes(role);
 }
 
+export function isAuthorized() {
+    return (hasRole('ROLE_USER') || hasRole('ROLE_PRO') || hasRole('ROLE_ADMIN'));
+}
 
 function sendAuthenticationRequest(username, password, successCallback, errorCallback) {
     const postData = {
@@ -30,7 +33,7 @@ function sendAuthenticationRequest(username, password, successCallback, errorCal
     sendApiRequest(
         "POST", "/users/login",
         function (jwtResponse) {
-            setCookie("jwt", jwtResponse.jwt, 1);
+            setCookie("jwt", jwtResponse.jwt, 24);
             setCookie("refresh_token", jwtResponse.refreshToken);
             const userData = parseJwtUser(jwtResponse.jwt);
             if (userData) {

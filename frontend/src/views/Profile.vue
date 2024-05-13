@@ -1,12 +1,6 @@
 <template>
   <div id="background" class="background">
-    <div class="hero-container">
-      <div class="hero-box">
-        <img id="planet" class="planet1" src="/settingsPlanet.svg" alt="Logo">
-
-      </div>
-    </div>
-    <img class="bend" src="/bend.svg">
+    <img class="planet" src="/settingsPlanet.svg">
   </div>
   <div class="profile-background">
     <div class="profile-bar">
@@ -20,7 +14,7 @@
         <button class="nav-button" @click="myCourses()"><img class="nav-icon" src="/settingscourses.svg">My Courses</button>
         <button class="nav-button" @click="subscription()"><img class="nav-icon"src="/settingswallet.svg">Subscription</button>
       </div>
-      <AccoundDetails v-show="navigate === 'accountDetails' && !loading && !changePassword" @newPassword="newPassword()"
+      <AccountDetails v-show="navigate === 'accountDetails' && !loading && !changePassword" @newPassword="newPassword()"
                       @doLogoutToHome="doLogoutToHome()"/>
       <div class="profile-box" id="profileInformation" v-show="navigate === 'myCourses' && !loading">
         <div v-show="loading" class="three-body">
@@ -28,13 +22,33 @@
           <div class="three-body__dot"></div>
           <div class="three-body__dot"></div>
         </div>
-        <div class="title">
+        <div class="title" v-show="!loading">
           <h1>My Courses</h1>
           <p>Manage your courses</p>
         </div>
         <table class="course-table">
           <p>You have no courses</p>
         </table>
+      </div>
+      <div class ="profile-box" id="profileInformation" v-show="navigate === 'subscription' && !loading">
+        <div v-show="loading" class="three-body">
+          <div class="three-body__dot"></div>
+          <div class="three-body__dot"></div>
+          <div class="three-body__dot"></div>
+        </div>
+        <div class="title" v-show="!loading">
+          <h1>Subscription</h1>
+          <p>Manage your subscription</p>
+          <div class="subscription-box" v-show="!loading && !hasRole('ROLE_PRO')">
+            <p>You do not have a Learniverse Pro subscription.</p>
+            <button class="fancy-button" @click="redirectTo('/subscription')">Get Learniverse Pro</button>
+          </div>
+          <div class="subscription-box-pro" v-show="!loading && hasRole('ROLE_PRO')">
+            <p>You have a Learniverse Pro subscription<br>Your subscription ends ___</p>
+            <button class="fancy-button" @click="redirectTo('/pro')">Learniverse Pro</button>
+            <button class="fancy-button">End your subscription</button>
+          </div>
+        </div>
       </div>
       <div class="profile-box" id="changePassword" v-show="changePassword">
         <PasswordChange/>
@@ -49,12 +63,12 @@
 
 <script setup>
 import {onMounted, ref} from 'vue';
-import {doLogout, getAuthenticatedUser} from "@/js/authentication";
+import {doLogout, getAuthenticatedUser, hasRole} from "@/js/authentication";
 import {sendApiRequest, sendTokenRefreshRequest} from "@/js/requests";
 import {redirectTo} from "@/js/navigation";
 import {getCookie, isTokenAboutToExpire} from "@/js/tools";
 import PasswordChange from "@/components/PasswordChange.vue";
-import AccoundDetails from "@/components/AccoundDetails.vue";
+import AccountDetails from "@/components/AccountDetails.vue";
 
 onMounted(loadProfileData);
 const loading = ref(true);
@@ -176,6 +190,10 @@ function addCourses(data) {
   courseList.children[0].remove();
   const courseBody = document.createElement("tbody");
   courseBody.classList.add("course-block");
+  const line = document.createElement("hr");
+  line.style.maxWidth = "600px";
+  line.style.margin = "20px";
+  courseBody.appendChild(line);
   courseList.appendChild(courseBody);
   for (const element of data.courses) {
     const course = element;
@@ -240,9 +258,9 @@ function cancelChangePassword() {
 
 .profile-box {
   background-color: var(--light-1);
-  padding: 30px;
+  padding: 30px 0 30px 20px;
   border-radius: 30px;
-  margin: 10px;
+  margin: 10px 0 10px 10px;
   display: flex;
   flex-direction: column;
   justify-content: left;
@@ -298,29 +316,21 @@ function cancelChangePassword() {
   padding: 0;
 }
 
-.planet1 {
-  height: 150px;
-  animation: ease-out slideIn 1s forwards, ease-out pulse 5s infinite 1s;
+.planet {
+  height: 300px;
+  animation: ease-out pulse 5s infinite;
 }
 
-@keyframes slideIn {
-  0% {
-    transform: translatex(-1000px) translateY(-100px) scale(1.2);
-  }
-  100% {
-    transform: translatex(0) translateY(120px) scale(1.5);
-  }
-}
 
 @keyframes pulse {
   0% {
-    transform: translatex(0) translateY(120px) scale(1.5);
+    transform: scale(0.5);
   }
   50% {
-    transform: translatex(0) translateY(120px) scale(1.7);
+    transform: scale(0.6);
   }
   100% {
-    transform: translatex(0) translateY(120px) scale(1.5);
+    transform: scale(0.5);
   }
 }
 
@@ -409,5 +419,32 @@ function cancelChangePassword() {
 
 .course-table {
   margin: 20px 0;
+}
+
+.subscription-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding-top: 40px;
+}
+
+.subscription-box-pro {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0 0 20px;
+  align-items: start;
+  gap: 10px;
+}
+
+.subscription-box-pro p {
+  font-size: 16px;
+  color: var(--dark-1);
+}
+
+hr {
+  max-width: 100%;
+  margin: 20px;
 }
 </style>
