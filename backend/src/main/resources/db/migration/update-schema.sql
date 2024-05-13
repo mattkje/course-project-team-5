@@ -128,20 +128,20 @@ INSERT INTO users (id, username, email, password, first_name, last_name, active,
 VALUES
     -- PASSWORD: Dave2002
     (1, 'dave', 'dave@mail.com', '$2a$10$eizgqz56BxeRy2Bt7bYCbOMIyrUlFE0Rz8oSoMFILqd4mQcTXLGfi', 'Dave', 'Johnson',
-        true, '2024-02-12', '2024-02-12',
-        '234098434'),
+     true, '2024-02-12', '2024-02-12',
+     '234098434'),
     -- PASSWORD: Nunchucks
-       (2, 'chuck', 'hideyograndma@mail.com', '$2a$10$2f1AbpqP36WOiR1h9nHR9e.BZRhwRSQR7FD2sXDZk5orPd.IO2u2m', 'Chuck',
-        'Norris', true, '2024-02-12', '2024-02-12',
-        '123123442'),
+    (2, 'chuck', 'hideyograndma@mail.com', '$2a$10$2f1AbpqP36WOiR1h9nHR9e.BZRhwRSQR7FD2sXDZk5orPd.IO2u2m', 'Chuck',
+     'Norris', true, '2024-02-12', '2024-02-12',
+     '123123442'),
     -- PASSWORD: JoeBiden
-       (3, 'john_doe', 'john.doe@example.com', '$2a$10$sCuzU/RymH5ZJrGUFxEf5uT4zSJEpr/J4oDSRrrQi5SrFXjNy.Zsq', 'John',
-        'Doe', true, '2024-02-12', '2024-02-12',
-        '+1234567890');
+    (3, 'john_doe', 'john.doe@example.com', '$2a$10$sCuzU/RymH5ZJrGUFxEf5uT4zSJEpr/J4oDSRrrQi5SrFXjNy.Zsq', 'John',
+     'Doe', true, '2024-02-12', '2024-02-12',
+     '+1234567890');
 
 
 
-    INSERT INTO courses (course_id, category, title, level, closest_course_session, course_size, hours_per_week,
+INSERT INTO courses (course_id, category, title, level, closest_course_session, course_size, hours_per_week,
                      related_certifications, description, image)
 VALUES (1, 'Information Technology', 'Real-Time Programming in Java', 'Expert', '03.06 - 28.06', 7.5, 40,
         'Java SE 17 Programmer Professional',

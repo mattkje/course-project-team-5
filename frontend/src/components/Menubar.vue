@@ -1,8 +1,19 @@
 <script setup>
 import {getCurrentInstance, onMounted} from "vue";
 import {getAuthenticatedUser, hasRole} from "@/js/authentication";
+import {computed} from "vue";
+import {useStore} from "vuex";
+
 const { appContext } = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
+
+const store = useStore();
+
+const cartItemCount = computed(() => store.getters.cartItemCount);
+
+
+const integertest = 0;
+
 
 
 onMounted(() => {
@@ -73,6 +84,7 @@ function setDefaultCurrency() {
           </select>
           <router-link to="/cart" class="fancy-button-round">
             <img class="cart" src="/cart.svg" alt="Cart">
+            <span class="cart-count" v-if="integertest > 0">{{ integertest }}</span>
           </router-link>
           <router-link v-if="getAuthenticatedUser() === null" to="/login" class="fancy-button">Log&nbsp;in</router-link>
           <router-link to="/profile" v-else class="fancy-button-round">
@@ -272,6 +284,15 @@ function setDefaultCurrency() {
   height: 20px;
   margin: 0;
   padding: 0;
+}
+
+.cart-count {
+
+  padding: 2px 2px;
+  background-color: #ff0000;
+  color: #ffffff;
+  border-radius: 50%;
+  font-weight: bold;
 }
 
 

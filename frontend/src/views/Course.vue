@@ -33,7 +33,7 @@
           <div class="course-action-box">
 
             <button id="enrollButton" class="enroll-button">Buy now</button>
-            <button class="CartBtn">
+            <button v-on:click="addCourseToCart()" class="CartBtn">
                     <span class="IconContainer">
                         <img class="cart-icon-small" src="/cart-small.svg" alt="Cart">
                     </span>
@@ -74,11 +74,28 @@ import {getCurrentInstance, onMounted, ref} from 'vue';
 import "@/assets/coursePage.css"
 import {hasRole} from "@/js/authentication";
 import MarkdownIt from "markdown-it";
+import {useStore} from 'vuex';
 const loading = ref(true);
+
+
+const store = useStore();
+
+function addCourseToCart() {
+  const urlParams = new URLSearchParams(window.location.search)
+  const id = urlParams.get('id');
+  console.log(id);
+  //store.commit("addCourseID", id);
+}
+
+
 
 onMounted(() => {
   populateCoursePage();
 });
+
+
+
+
 
 const { appContext } = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
