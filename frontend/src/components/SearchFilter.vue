@@ -27,7 +27,7 @@
         }">
         <div class="category-list">
           <div class="checkbox-wrapper">
-            <label class="cbx" for="itBox">Information Technologies</label>
+            <label class="cbx" for="itBox">Information Technology</label>
             <input class="inp-cbx" id="itBox" type="checkbox" v-model="isItChecked" @change="onCheckboxChange">
           </div>
           <div class="checkbox-wrapper">
@@ -191,7 +191,7 @@ function populateCourses(selector) {
             .then(currencies => {
               data.forEach(courseProvider => {
                 if (courseProvider.course.title.toLowerCase().includes(searchQuery.value.toLowerCase()) || courseProvider.course.category.toLowerCase().includes(searchQuery.value.toLowerCase())
-                    || (isItChecked.value && courseProvider.course.category.toLowerCase() === 'information technologies')) {
+                    ) {
                   const contentBox = document.createElement('a');
                   contentBox.href = `/courses?id=${courseProvider.course.courseId}`;
                   contentBox.className = 'content-box';
@@ -439,7 +439,7 @@ function onCheckboxChange(event) {
     localStorage.setItem(checkboxId, 'false');
 
 if (checkboxId === 'itBox') {
-      isItChecked.value = !isItChecked.value;
+      isItChecked.value = isItChecked.value;
       console.log(isItChecked.value);
     } else if (checkboxId === 'dmBox') {
       isDmChecked.value = true;
@@ -477,12 +477,33 @@ if (checkboxId === 'itBox') {
 
     let activeFilterContainer = document.getElementById('active-filter-container');
     activeFilterContainer.appendChild(container);
+
+    categorizeCourses(labelName);
+
   } else {
     localStorage.setItem(checkboxId, 'true');
     let activeFilterContainer = document.getElementById('active-filter-container');
     activeFilterContainer.removeChild(document.getElementById(checkboxId + "container"));
+
+    categorizeCourses("");
   }
 
+}
+
+function categorizeCourses(category) {
+  let courseContainer = document.querySelector('#courseContainer');
+  let children = courseContainer.children;
+
+  for(let i = 0; i < children.length; i++) {
+    let child = children[i];
+    let childCategory = child.querySelector('.content-box-text').textContent.toLowerCase();
+
+    if (!childCategory.includes(category.toLowerCase())) {
+      child.style.display = 'none';
+    } else {
+      child.style.display = 'block';
+    }
+  }
 }
 
 
