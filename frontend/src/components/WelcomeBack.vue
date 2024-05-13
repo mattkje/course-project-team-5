@@ -1,9 +1,13 @@
 <script setup>
 
 import {onMounted, ref} from "vue";
+import {getAuthenticatedUser} from "@/js/authentication";
 
+onMounted(getUsername)
 
-
+function getUsername() {
+  getAuthenticatedUser().username
+}
 
 </script>
 

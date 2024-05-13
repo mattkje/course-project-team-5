@@ -33,7 +33,7 @@ function sendAuthenticationRequest(username, password, successCallback, errorCal
     sendApiRequest(
         "POST", "/users/login",
         function (jwtResponse) {
-            setCookie("jwt", jwtResponse.jwt, 1);
+            setCookie("jwt", jwtResponse.jwt, 24);
             setCookie("refresh_token", jwtResponse.refreshToken);
             const userData = parseJwtUser(jwtResponse.jwt);
             if (userData) {
