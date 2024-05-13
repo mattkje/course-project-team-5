@@ -72,7 +72,7 @@
 <script setup>
 import {getCurrentInstance, onMounted, ref} from 'vue';
 import "@/assets/coursePage.css"
-import {isOfRoleUser} from "@/js/authentication";
+import {hasRole} from "@/js/authentication";
 import MarkdownIt from "markdown-it";
 const loading = ref(true);
 
@@ -243,7 +243,7 @@ function populateCoursePage() {
                   locationText.innerText = 'Online';
                   document.getElementById('providerList').appendChild(providerElement);
                   providerElement.addEventListener('click', function() {
-                    if (isOfRoleUser('ROLE_PRO')){
+                    if (hasRole('ROLE_PRO')){
                       document.getElementById('enrollButton').className = 'pro-enroll-button'
                       document.getElementById('enrollButton').textContent = "Go to Course";
                     } else {

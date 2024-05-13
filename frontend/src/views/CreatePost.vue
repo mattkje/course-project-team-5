@@ -43,13 +43,19 @@
 </template>
 
 <script>
-import { getAuthenticatedUser } from '@/js/authentication'; // Assuming the correct path
-import { getCurrentInstance } from "vue";
+import {getAuthenticatedUser, hasRole, isAuthorized} from '@/js/authentication'; // Assuming the correct path
 import Guidelines from "@/components/Guidelines.vue";
+import router from "@/router";
 
 
 export default {
   components: {Guidelines},
+  mounted() {
+    const currentUser = getAuthenticatedUser();
+    if (!currentUser) {
+      router.push('/register');
+    }
+  },
   data() {
     return {
       showGuidelinesModal: false,

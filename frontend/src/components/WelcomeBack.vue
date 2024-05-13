@@ -10,12 +10,7 @@ import {onMounted, ref} from "vue";
 <template>
 
   <div id="background" class="background">
-    <div class="hero-container">
-      <div class="hero-box">
-        <img id="planet" class="planet1" src="/logo.svg" alt="Logo">
-      </div>
-    </div>
-    <img class="bend" src="/bend.svg">
+    <h1>Welcome Back User!</h1>
   </div>
 
   <div class="content">
@@ -29,7 +24,7 @@ import {onMounted, ref} from "vue";
 .background {
   top: 0;
   height: min-content;
-  background: linear-gradient(180deg, rgba(21, 16, 82, 0.14) 0%, rgba(158, 150, 255, 0.14) 100%);
+  background-color: var(--light-3);
   display: flex;
   justify-content: space-between;
   align-items: center;

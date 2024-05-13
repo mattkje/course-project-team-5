@@ -78,7 +78,7 @@ function authenticatePost(){
     router.push('/register');
     return;
   }
-  router.push('/community/createPost');
+  router.push('/community/create');
 }
 
 </script>
