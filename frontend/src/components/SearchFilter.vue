@@ -154,7 +154,7 @@
     </div>
     <div class="flexible-grid-container">
       <div class="flexible-grid" id="courseContainer">
-    </div>
+      </div>
     </div>
   </div>
 </template>
@@ -164,7 +164,7 @@
 import {getCurrentInstance, onMounted, ref} from "vue";
 import {currency, setDefaultCurrency} from "@/js/currency";
 import Litepicker from 'litepicker';
-import {watch } from 'vue';
+import {watch} from 'vue';
 
 const {appContext} = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
@@ -182,6 +182,7 @@ const maxRangeValue = ref(10000);
 let courseContainer;
 let children;
 let historicalChildren = new Map();
+let selectedCategories = [];
 
 onMounted(() => {
   courseContainer = document.querySelector('#courseContainer');
@@ -202,7 +203,7 @@ function populateCourses(selector) {
             .then(currencies => {
               data.forEach(courseProvider => {
                 if (courseProvider.course.title.toLowerCase().includes(searchQuery.value.toLowerCase()) || courseProvider.course.category.toLowerCase().includes(searchQuery.value.toLowerCase())
-                    ) {
+                ) {
                   const contentBox = document.createElement('a');
                   contentBox.href = `/courses?id=${courseProvider.course.courseId}`;
                   contentBox.className = 'content-box';
@@ -340,15 +341,14 @@ function populateCourses(selector) {
 }
 
 function searchCourses() {
-  let childrenArray = Array.from(children);
-  for(let i = 0; i < childrenArray.length; i++) {
-    let child = childrenArray[i];
+  for (let i = 0; i < children.length; i++) {
+    let child = children[i];
     let childTitle = child.querySelector('.content-box-title').textContent.toLowerCase();
 
     if (!childTitle.includes(searchQuery.value.toLowerCase())) {
-      if (!historicalChildren.has(child)) {
-        historicalChildren.set(child, 1);
-      }
+        let count = historicalChildren.get(child);
+        historicalChildren.set(child, count + 1);
+        console.log("count" + count)
     } else {
       if (historicalChildren.has(child) && historicalChildren.get(child) > 0) {
         let count = historicalChildren.get(child);
@@ -357,15 +357,18 @@ function searchCourses() {
           historicalChildren.delete(child);
         }
       }
+    }
+
+    console.log("real children: " + children.length)
+    console.log("dead children: " + historicalChildren.size)
+
+
   }
 
-  console.log("real children: " + children.length)
-  console.log("dead children: " + historicalChildren.size)
+  filterStatus()
+}
 
-
-} filterStatus() }
-
-function filterStatus(){
+function filterStatus() {
   for (let i = 0; i < children.length; i++) {
     if (historicalChildren.has(children[i])) {
       children[i].style.display = 'none';
@@ -469,16 +472,6 @@ function onCheckboxChange(event) {
   if (isChecked) {
     localStorage.setItem(checkboxId, 'false');
 
-if (checkboxId === 'itBox') {
-      isItChecked.value = isItChecked.value;
-      console.log(isItChecked.value);
-    } else if (checkboxId === 'dmBox') {
-      isDmChecked.value = true;
-    } else if (checkboxId === 'beBox') {
-      isBeChecked.value = true;
-    } else if (checkboxId === 'dsBox') {
-      isDsChecked.value = true;
-    }
     // Select the label element inside .checkbox-wrapper
     let label = document.querySelector(`label[for="${checkboxId}"]`);
 
@@ -516,28 +509,69 @@ if (checkboxId === 'itBox') {
     let activeFilterContainer = document.getElementById('active-filter-container');
     activeFilterContainer.removeChild(document.getElementById(checkboxId + "container"));
 
-    categorizeCourses("");
+    let label = document.querySelector(`label[for="${checkboxId}"]`);
+
+    categorizeCourses(label.textContent);
   }
 
 }
 
 function categorizeCourses(category) {
-  for(let i = 0; i < children.length; i++) {
-    let child = children[i];
-    let childCategory = child.querySelector('.content-box-text').textContent.toLowerCase();
+  for (let child of children) {
+    let childCategory = child.querySelector('.content-box-text').textContent;
+    let categoryMatch = childCategory === category;
+    let childInHistory = historicalChildren.has(child);
 
-    if (!childCategory.includes(category.toLowerCase())) {
-      courseContainer.removeChild(child);
+    if (selectedCategories.length === 0 && !categoryMatch) {
+      updateHistoricalChildren(child, true);
+    } else if (selectedCategories.length > 1 && selectedCategories.includes(category) && categoryMatch) {
+      updateHistoricalChildren(child, true );
+    } else if (selectedCategories.length > 0 && !selectedCategories.includes(category) && categoryMatch && childInHistory) {
+      updateHistoricalChildren(child, false );
+    } else if (selectedCategories.length === 1 && selectedCategories.includes(category) && categoryMatch) {
+      updateHistoricalChildren(child, false);
+      console.log("check 1")
     }
   }
 
-  for (let i = 0; i < historicalChildren.length; i++) {
-    let child = historicalChildren[i];
-    let childCategory = child.querySelector('.content-box-text').textContent.toLowerCase();
+  // End of process, update selected categories
+  if (selectedCategories.includes(category)) {
+    const index = selectedCategories.indexOf(category);
+    if (index > -1) {
+      selectedCategories.splice(index, 1);
+    }
+  } else {
+    selectedCategories.push(category);
+  }
 
-    if (childCategory.includes(category.toLowerCase())) {
-      courseContainer.appendChild(child);
-      historicalChildren.splice(i, 1);
+  filterStatus();
+}
+
+function updateHistoricalChildren(child, add) {
+  if (add) {
+    if (historicalChildren.has(child)) {
+      let count = historicalChildren.get(child);
+      historicalChildren.set(child, count + 1);
+    } else {
+      historicalChildren.set(child, 1);
+    }
+  } else {
+    if (historicalChildren.has(child)) {
+      let count = historicalChildren.get(child);
+      historicalChildren.set(child, count - 1);
+      console.log("count" + count)
+      if (count - 1 < 1) {
+        historicalChildren.delete(child);
+      }
+    } else {
+      historicalChildren.forEach((count, child) => {
+        count -= 1;
+        if (count < 1) {
+          historicalChildren.delete(child);
+        } else {
+          historicalChildren.set(child, count);
+        }
+      });
     }
   }
 }
@@ -568,7 +602,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function filterPrices(value) {
-  for(let i = 0; i < children.length; i++) {
+  for (let i = 0; i < children.length; i++) {
     let child = children[i];
     let childPrice = child.querySelector('.price').textContent;
     let price = parseFloat(childPrice.split(' ')[0]);
@@ -625,7 +659,6 @@ watch(maxRangeValue, (newVal) => {
   margin: auto;
   flex-wrap: nowrap;
 }
-
 
 
 .range-container {
@@ -700,11 +733,11 @@ watch(maxRangeValue, (newVal) => {
     flex-direction: column;
   }
 
-.range-container {
+  .range-container {
     display: none;
   }
 
-#mobile-filter {
+  #mobile-filter {
     display: flex;
   }
 }
