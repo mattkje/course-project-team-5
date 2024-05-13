@@ -181,7 +181,8 @@ const maxRangeValue = ref(10000);
 
 let courseContainer;
 let children;
-let historicalChildren = new Map();
+let searchedChildren = new Map();
+let categoryFilter = new Map();
 let selectedCategories = [];
 
 onMounted(() => {
@@ -341,39 +342,27 @@ function populateCourses(selector) {
 }
 
 function searchCourses() {
-  for (let i = 0; i < children.length; i++) {
-    let child = children[i];
+  for (let child of children) {
     let childTitle = child.querySelector('.content-box-title').textContent.toLowerCase();
-
     if (!childTitle.includes(searchQuery.value.toLowerCase())) {
-        let count = historicalChildren.get(child);
-        historicalChildren.set(child, count + 1);
-        console.log("count" + count)
-    } else {
-      if (historicalChildren.has(child) && historicalChildren.get(child) > 0) {
-        let count = historicalChildren.get(child);
-        historicalChildren.set(child, count - 1);
-        if (count - 1 < 1) {
-          historicalChildren.delete(child);
-        }
-      }
+      searchedChildren.set(child, 1);
+    } else if (searchedChildren.has(child)) {
+      searchedChildren.delete(child);
     }
-
-    console.log("real children: " + children.length)
-    console.log("dead children: " + historicalChildren.size)
-
-
   }
-
-  filterStatus()
+  filterStatus();
 }
 
 function filterStatus() {
   for (let i = 0; i < children.length; i++) {
-    if (historicalChildren.has(children[i])) {
+    if (searchedChildren.has(children[i]) ) {
       children[i].style.display = 'none';
     } else {
-      children[i].style.display = 'block';
+      if (categoryFilter.has(children[i])) {
+        children[i].style.display = 'none';
+      } else {
+        children[i].style.display = 'block';
+      }
     }
   }
 }
@@ -520,17 +509,16 @@ function categorizeCourses(category) {
   for (let child of children) {
     let childCategory = child.querySelector('.content-box-text').textContent;
     let categoryMatch = childCategory === category;
-    let childInHistory = historicalChildren.has(child);
+    let childInHistory = categoryFilter.has(child);
 
     if (selectedCategories.length === 0 && !categoryMatch) {
-      updateHistoricalChildren(child, true);
+      updateCategoryFilter(child, true);
     } else if (selectedCategories.length > 1 && selectedCategories.includes(category) && categoryMatch) {
-      updateHistoricalChildren(child, true );
+      updateCategoryFilter(child, true );
     } else if (selectedCategories.length > 0 && !selectedCategories.includes(category) && categoryMatch && childInHistory) {
-      updateHistoricalChildren(child, false );
+      updateCategoryFilter(child, false );
     } else if (selectedCategories.length === 1 && selectedCategories.includes(category) && categoryMatch) {
-      updateHistoricalChildren(child, false);
-      console.log("check 1")
+      updateCategoryFilter(child, false);
     }
   }
 
@@ -547,34 +535,36 @@ function categorizeCourses(category) {
   filterStatus();
 }
 
-function updateHistoricalChildren(child, add) {
+function updateCategoryFilter(child, add) {
   if (add) {
-    if (historicalChildren.has(child)) {
-      let count = historicalChildren.get(child);
-      historicalChildren.set(child, count + 1);
+    if (categoryFilter.has(child)) {
+      let count = categoryFilter.get(child);
+      categoryFilter.set(child, count + 1);
     } else {
-      historicalChildren.set(child, 1);
+      categoryFilter.set(child, 1);
     }
   } else {
-    if (historicalChildren.has(child)) {
-      let count = historicalChildren.get(child);
-      historicalChildren.set(child, count - 1);
+    if (categoryFilter.has(child)) {
+      let count = categoryFilter.get(child);
+      categoryFilter.set(child, count - 1);
       console.log("count" + count)
       if (count - 1 < 1) {
-        historicalChildren.delete(child);
+        categoryFilter.delete(child);
       }
     } else {
-      historicalChildren.forEach((count, child) => {
+      categoryFilter.forEach((count, child) => {
         count -= 1;
         if (count < 1) {
-          historicalChildren.delete(child);
+          categoryFilter.delete(child);
         } else {
-          historicalChildren.set(child, count);
+          categoryFilter.set(child, count);
         }
       });
     }
   }
 }
+
+
 
 
 let picker;
