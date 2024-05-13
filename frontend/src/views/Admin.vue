@@ -50,13 +50,7 @@ function courseManage() {
 
 <template>
   <div id="background" class="background">
-    <div class="hero-container">
-      <div class="hero-box">
-        <img id="planet" class="planet1" src="/settingsPlanet.svg" alt="Logo">
-
-      </div>
-    </div>
-    <img class="bend" src="/bend.svg">
+    <img class="planet" src="/whiteMoon.png">
   </div>
   <div class="profile-background">
     <div class="profile-bar">
@@ -156,29 +150,21 @@ function courseManage() {
   padding: 0;
 }
 
-.planet1 {
-  height: 150px;
-  animation: ease-out slideIn 1s forwards, ease-out pulse 5s infinite 1s;
+.planet {
+  height: 300px;
+  animation: ease-out pulse 5s infinite;
 }
 
-@keyframes slideIn {
-  0% {
-    transform: translatex(-1000px) translateY(-100px) scale(1.2);
-  }
-  100% {
-    transform: translatex(0) translateY(120px) scale(1.5);
-  }
-}
 
 @keyframes pulse {
   0% {
-    transform: translatex(0) translateY(120px) scale(1.5);
+    transform: scale(0.5);
   }
   50% {
-    transform: translatex(0) translateY(120px) scale(1.7);
+    transform: scale(0.6);
   }
   100% {
-    transform: translatex(0) translateY(120px) scale(1.5);
+    transform: scale(0.5);
   }
 }
 
