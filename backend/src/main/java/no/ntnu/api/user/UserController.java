@@ -1,6 +1,7 @@
 package no.ntnu.api.user;
 
 import no.ntnu.api.config.*;
+import no.ntnu.api.role.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -145,9 +146,29 @@ public class UserController {
     @DeleteMapping("/{username}")
     public ResponseEntity<?> deleteUser(@PathVariable String username) {
         UserWithCourses sessionUser = userService.getSessionUser();
-        if(sessionUser != null && sessionUser.user().getUsername().equals(username)) {
+        if((sessionUser != null && sessionUser.user().getUsername().equals(username)) || userService.isAdmin()) {
             userService.deleteUser(username);
             return ResponseEntity.status(HttpStatus.OK).body("User successfully deleted");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Only accessible to authorized users");
+        }
+    }
+
+    @PutMapping("/{username}/add-role")
+    public ResponseEntity<?> addRole(@PathVariable String username, @RequestBody Role role) {
+        if(userService.isAdmin()) {
+            userService.addRole(username, role);
+            return ResponseEntity.status(HttpStatus.OK).body("Role successfully added");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Only accessible to authorized users");
+        }
+    }
+
+    @PutMapping("/{username}/delete-role")
+    public ResponseEntity<?> deleteRole(@PathVariable String username, @RequestBody Role role) {
+        if(userService.isAdmin()) {
+            userService.deleteRole(username, role);
+            return ResponseEntity.status(HttpStatus.OK).body("Role successfully deleted");
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Only accessible to authorized users");
         }

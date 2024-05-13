@@ -3,10 +3,11 @@
 import {onMounted, ref} from "vue";
 import {getAuthenticatedUser} from "@/js/authentication";
 
-onMounted(getUsername)
+onMounted(putUsername)
 
-function getUsername() {
-  getAuthenticatedUser().username
+function putUsername() {
+  const username = getAuthenticatedUser().username;
+  document.querySelector('span').innerText = username;
 }
 
 </script>
@@ -14,7 +15,7 @@ function getUsername() {
 <template>
 
   <div id="background" class="background">
-    <h1>Welcome Back User!</h1>
+    <h1>Welcome Back <span></span></h1>
   </div>
 
   <div class="content">
@@ -24,6 +25,10 @@ function getUsername() {
 </template>
 
 <style scoped>
+
+span {
+  font-weight: 900;
+}
 
 .background {
   top: 0;

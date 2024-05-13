@@ -112,7 +112,6 @@ ALTER TABLE course_keywords
     ADD CONSTRAINT FK_COURSE_KEYWORDS_ON_KEYWORD FOREIGN KEY (keyword_id) REFERENCES keywords (keyword_id);
 
 ALTER TABLE course_providers
-    ADD CONSTRAINT FK_COURSE_PROVIDERS_ON_COURSE FOREIGN KEY (course_id) REFERENCES courses (course_id),
     ADD CONSTRAINT FK_COURSE_PROVIDERS_ON_PROVIDER FOREIGN KEY (provider_id) REFERENCES providers (provider_id);
 
 ALTER TABLE user_roles
@@ -312,16 +311,13 @@ VALUES (14, 13, 9.99, 'SUB');
 
 -- Extra courses
 
-INSERT INTO courses (course_id, category, title, keywords, level, closest_course_session, course_size, hours_per_week,
+INSERT INTO courses (course_id, category, title, level, closest_course_session, course_size, hours_per_week,
                      related_certifications, description, image)
-VALUES (19, 'Digital Marketing', 'Advanced SEO Techniques',
-        '["SEO", "digital marketing", "keyword research", "link building"]', 'Advanced', '01.07 - 30.07', 4, 20,
+VALUES (19, 'Digital Marketing', 'Advanced SEO Techniques', 'Advanced', '01.07 - 30.07', 4, 20,
         'Google Analytics Individual Qualification',
         'This course covers advanced SEO techniques including keyword research, link building, and technical SEO. Students will learn how to optimize their websites for search engines and improve their website''s ranking on search engine results pages.',
         null),
-       (20, 'Digital Marketing', 'Social Media Marketing Strategies',
-        '["social media", "digital marketing", "content creation", "analytics"]', 'Intermediate', '01.08 - 30.08', 3,
-        15,
+       (20, 'Digital Marketing', 'Social Media Marketing Strategies', 'Intermediate', '01.08 - 30.08', 3, 15,
         'Hootsuite Social Marketing Certification',
         'This course covers the essential concepts and techniques for social media marketing. Students will learn how to create engaging content, use analytics to measure success, and develop a comprehensive social media marketing strategy.',
         null);

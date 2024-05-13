@@ -204,4 +204,34 @@ public class AccessUserService implements UserDetailsService {
       }
     }
   }
+
+  public boolean isAdmin() {
+    UserWithCourses sessionUser = getSessionUser();
+    if (sessionUser != null) {
+      for (Role role : sessionUser.user().getRoles()) {
+        if (role.getName().equals("ROLE_ADMIN")) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  public void addRole(String username, Role role) {
+    Optional<User> userOptional = userRepository.findByUsername(username);
+    if (userOptional.isPresent()) {
+      User user = userRepository.findByUsername(username).get();
+      user.addRole(role);
+      userRepository.save(user);
+    }
+  }
+
+  public void deleteRole(String username, Role role) {
+    Optional<User> userOptional = userRepository.findByUsername(username);
+    if (userOptional.isPresent()) {
+      User user = userRepository.findByUsername(username).get();
+      user.getRoles().remove(role);
+      userRepository.save(user);
+    }
+  }
 }

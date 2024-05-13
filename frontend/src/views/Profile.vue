@@ -14,7 +14,7 @@
         <button class="nav-button" @click="myCourses()"><img class="nav-icon" src="/settingscourses.svg">My Courses</button>
         <button class="nav-button" @click="subscription()"><img class="nav-icon"src="/settingswallet.svg">Subscription</button>
       </div>
-      <AccoundDetails v-show="navigate === 'accountDetails' && !loading && !changePassword" @newPassword="newPassword()"
+      <AccountDetails v-show="navigate === 'accountDetails' && !loading && !changePassword" @newPassword="newPassword()"
                       @doLogoutToHome="doLogoutToHome()"/>
       <div class="profile-box" id="profileInformation" v-show="navigate === 'myCourses' && !loading">
         <div v-show="loading" class="three-body">
@@ -68,7 +68,7 @@ import {sendApiRequest, sendTokenRefreshRequest} from "@/js/requests";
 import {redirectTo} from "@/js/navigation";
 import {getCookie, isTokenAboutToExpire} from "@/js/tools";
 import PasswordChange from "@/components/PasswordChange.vue";
-import AccoundDetails from "@/components/AccoundDetails.vue";
+import AccountDetails from "@/components/AccountDetails.vue";
 
 onMounted(loadProfileData);
 const loading = ref(true);
