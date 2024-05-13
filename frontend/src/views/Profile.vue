@@ -41,12 +41,12 @@
           <p>Manage your subscription</p>
           <div class="subscription-box" v-show="!loading && !hasRole('ROLE_PRO')">
             <p>You do not have a Learniverse Pro subscription.</p>
-            <button class="fancy-button" @click="redirectTo('/subscription')">Get Learniverse Pro</button>
+            <Subscription/>
           </div>
           <div class="subscription-box-pro" v-show="!loading && hasRole('ROLE_PRO')">
             <p>You have a Learniverse Pro subscription<br>Your subscription ends ___</p>
-            <button class="fancy-button" @click="redirectTo('/pro')">Learniverse Pro</button>
-            <button class="fancy-button">End your subscription</button>
+            <<button class="fancy-button" @click="redirectTo('/pro')">Learniverse Pro</button>
+            <button class="fancy-button">End your subscription</button>>
           </div>
         </div>
       </div>
@@ -69,6 +69,7 @@ import {redirectTo} from "@/js/navigation";
 import {getCookie, isTokenAboutToExpire} from "@/js/tools";
 import PasswordChange from "@/components/PasswordChange.vue";
 import AccountDetails from "@/components/AccountDetails.vue";
+import Subscription from "@/components/Subscription.vue";
 
 onMounted(loadProfileData);
 const loading = ref(true);
@@ -426,7 +427,7 @@ function cancelChangePassword() {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 0;
   padding-top: 40px;
 }
 

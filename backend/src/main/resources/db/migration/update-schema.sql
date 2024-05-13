@@ -192,11 +192,7 @@ VALUES (1, 'Information Technology', 'Real-Time Programming in Java', 'Expert', 
        (12, 'Data Science and Analytics', 'Databricks fundamentals', 'Beginner',
         '19.08 - 30.08', 2, 10, 'Databricks Practitioner',
         'Embark on your data journey with our beginner-level online course, Databricks Fundamentals. Designed for individuals new to the world of big data and analytics, this course offers a comprehensive introduction to the essential concepts of Databricks, a leading unified analytics platform. Led by experienced instructors, youll navigate through the fundamentals of data exploration, data engineering, and collaborative data science using Databricks. No prior experience with big data technologies is required, making this course an ideal starting point for beginners eager to harness the power of Databricks for streamlined data processing and analysis. By the end of the course, youll have a solid foundation in using Databricks to uncover insights from large datasets, setting you on a path towards mastering the intricacies of modern data analytics. Join us and demystify the fundamentals of Databricks in this accessible and empowering course.',
-        'https://www.databricks.com/sites/default/files/2023-11/databricks-og-universal.png'),
-       (13, 'Data Science and Analytics', 'Håkon Sex Course', 'Beginner',
-        '19.08 - 30.08', 2, 10, 'Certified gay',
-        'Håkon will show you his willy and such...',
-        'https://github.com/mattkje/Paths/blob/e79ddbafb1992dec6dea7ca006c37754a7ae0cdc/Data/currentGpaths/Your%20Baby.png?raw=true');
+        'https://www.databricks.com/sites/default/files/2023-11/databricks-og-universal.png');
 
 INSERT INTO providers (provider_id, name)
 VALUES (1, 'NTNU'),

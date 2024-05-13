@@ -1,27 +1,14 @@
 <script setup>
 
+import NewComponent from "@/components/Subscription.vue";
 </script>
 
 <template>
   <div id="background" class="background">
     <img class="planet" src="/pro.svg">
+    <h2>Learniverse Pro</h2>
   </div>
-  <div class="course-section">
-    <div class="title">
-      <h2>Learniverse Pro</h2>
-
-    </div>
-    <p class="description" >Get access to exclusive courses, personalized learning paths, and more with Learniverse Pro.</p>
-
-    <br>
-    <br><br>
-    <br>
-    <br>
-    <br>
-    <br><br><br><br><br><br><br><br><br>
-
-
-  </div>
+  <NewComponent/>
 </template>
 
 <style scoped>
@@ -42,7 +29,14 @@
   flex-direction: column;
   width: 100%;
   margin: 0;
+}
 
+.background h2 {
+  color: whitesmoke;
+  font-size: 40px;
+  margin: 0;
+  padding-bottom: 30px;
+  animation: ease-in-out fadeIn 1.5s;
 }
 
 .hero-container {
@@ -208,5 +202,17 @@
   100% {
     opacity: 1;
   }}
+
+.learniverse-membership h3 {
+  padding: 16px 56px;
+  font-size: 1.5rem;
+  text-align: left;
+  font-weight: 500;
+  background-color: hsla(0, 0%, 45.1%, 0.2);
+}
+
+.purchase-button span {
+  font-weight: 700;
+}
 
 </style>
