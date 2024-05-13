@@ -1,12 +1,6 @@
 <template>
   <div id="background" class="background">
-    <div class="hero-container">
-      <div class="hero-box">
-        <img id="planet" class="planet1" src="/bluePlanet.svg" alt="Logo">
-
-      </div>
-    </div>
-    <img class="bend" src="/bend.svg">
+    <img class="planet" src="/bluePlanet.svg">
   </div>
   <div class="course-section">
 
@@ -82,6 +76,7 @@ import {ref} from "vue";
 }
 
 .course-section {
+  padding-top: 20px;
   background-color: var(--light-3);
   margin: 0;
 }
@@ -156,31 +151,24 @@ import {ref} from "vue";
   margin: 10px 0;
 }
 
-.planet1 {
-  height: 150px;
-  animation: ease-out slideIn 1s forwards, ease-out pulse 5s infinite 1s;
+.planet {
+  height: 300px;
+  animation: ease-out pulse 5s infinite;
 }
 
-@keyframes slideIn {
-  0% {
-    transform: translatex(-1000px) translateY(-100px) scale(1.2);
-  }
-  100% {
-    transform: translatex(0) translateY(120px) scale(1.5);
-  }
-}
 
 @keyframes pulse {
   0% {
-    transform: translatex(0) translateY(120px) scale(1.5);
+    transform: scale(0.5);
   }
   50% {
-    transform: translatex(0) translateY(120px) scale(1.7);
+    transform: scale(0.6);
   }
   100% {
-    transform: translatex(0) translateY(120px) scale(1.5);
+    transform: scale(0.5);
   }
 }
+
 
 @keyframes fadeIn {
   0% {
