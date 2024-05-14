@@ -33,7 +33,7 @@
           <div class="course-action-box">
 
             <button id="enrollButton" class="enroll-button">Buy now</button>
-            <button v-on:click="addCourseToCart()" class="CartBtn">
+            <button v-on:click="addCourseToCart()" class="CartBtn" :class="{ 'button-disabled': !selectedProvider }">
                     <span class="IconContainer">
                         <img class="cart-icon-small" src="/cart-small.svg" alt="Cart">
                     </span>
@@ -75,7 +75,10 @@ import "@/assets/coursePage.css"
 import {hasRole} from "@/js/authentication";
 import MarkdownIt from "markdown-it";
 import {useStore} from 'vuex';
+import myStore from '@/js/store.js';
 const loading = ref(true);
+
+
 
 
 const store = useStore();
@@ -84,7 +87,9 @@ function addCourseToCart() {
   const urlParams = new URLSearchParams(window.location.search)
   const id = urlParams.get('id');
   console.log(id);
-  //store.commit("addCourseID", id);
+  myStore.commit("addCourseID", id);
+  console.log(myStore.state.cart);
+  console.log(myStore.state.cart.length);
 }
 
 
@@ -276,6 +281,26 @@ function populateCoursePage() {
                     document.getElementById('enrollButton').textContent = "Buy for " + symbol + finalPrice.toFixed(2);
                     document.getElementById('notShowingLocationText').innerText = 'Showing location for provider ' + provider.name
                     initMap(provider.latitude, provider.longitude);
+
+                    const buyButton = document.getElementById('enrollButton');
+                    Object.assign(buyButton.style, {
+                      fontFamily: 'Inter, sans-serif',
+                      fontWeight: 'bold',
+                      color: 'white',
+                      backgroundColor: '#584BEB',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: '70%',
+                      height: '50px',
+                      borderRadius: '12px',
+                      cursor: 'pointer',
+                      transition: 'all .5s',
+                      marginRight: '10px',
+                    });
+
+
+
                   });
                 }
 
@@ -584,7 +609,13 @@ img {
 button {
   background-color: transparent;
   border-color: transparent;
+  cursor: not-allowed;
 }
+
+.button-disabled {
+   background-color: grey;
+   cursor: not-allowed;
+ }
 
 ul {
   list-style-type: none;
@@ -1063,7 +1094,8 @@ button {
   font-weight: bold;
   color: white;
   font-size: 1.04em;
-  background: #584BEB;
+  //background: #584BEB;
+  background-color: grey;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1073,6 +1105,7 @@ button {
   cursor: pointer;
   transition: all .5s;
   margin-right: 10px;
+  cursor: not-allowed;
 }
 
 .enroll-button:hover {

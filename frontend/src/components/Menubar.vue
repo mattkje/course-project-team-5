@@ -4,15 +4,21 @@ import {getAuthenticatedUser, hasRole, isAuthorized} from "@/js/authentication";
 import {computed} from "vue";
 import {useStore} from "vuex";
 
+import myStore from '@/js/store.js';
+
 const { appContext } = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
 
-const store = useStore();
 
-const cartItemCount = computed(() => store.getters.cartItemCount);
+const store = useStore();
+const cartItemCount = computed(() => myStore.getters.cartItemCount);
+
+
+
 
 
 const integertest = 0;
+
 
 
 
