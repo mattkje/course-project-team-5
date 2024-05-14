@@ -14,7 +14,7 @@
                   </div>
                 </div>
                 <div class="ind-membership-purchase-button">
-                  <button class="purchase-button">
+                  <button class="purchase-button" @click="add1MonthSubscription">
                     <span>Purchase Now</span>
                   </button>
                 </div>
@@ -27,7 +27,7 @@
                   </div>
                 </div>
                 <div class="ind-membership-purchase-button">
-                  <button class="purchase-button">
+                  <button class="purchase-button" @click="add3MonthsSubscription">
                     <span>Purchase Now</span>
                   </button>
                 </div>
@@ -47,7 +47,7 @@
                   </div>
                 </div>
                 <div class="ind-membership-purchase-button">
-                  <button class="purchase-button">
+                  <button class="purchase-button" @click="add12MonthsSubscription">
                     <span>Purchase Now</span>
                   </button>
                 </div>
@@ -67,8 +67,41 @@
   </div>
 </template>
 <script>
+import {sendApiRequest} from "@/js/requests";
+import {addRole, doLogout, getAuthenticatedUser, sendAuthenticationRequest} from "@/js/authentication";
+import {setCookie} from "@/js/tools";
+
 export default {
-  name: 'Subscription'
+  name: 'Subscription',
+  methods: {
+    add1MonthSubscription,
+    add3MonthsSubscription,
+    add12MonthsSubscription,
+    success,
+    error
+  }
+}
+
+function add1MonthSubscription() {
+  sendApiRequest('PUT', '/users/purchase-pro/1-month', success, error)
+}
+
+function add3MonthsSubscription() {
+  sendApiRequest('PUT', '/users/purchase-pro/3-months', success, error)
+}
+
+function add12MonthsSubscription() {
+  sendApiRequest('PUT', '/users/purchase-pro/12-months', success, error)
+}
+
+function success() {
+  addRole("ROLE_PRO");
+  alert('Subscription purchased successfully!');
+  window.location.reload();
+}
+
+function error() {
+  alert('An error occurred while purchasing the subscription. Please try again later.');
 }
 </script>
 <style scoped>

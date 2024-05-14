@@ -5,12 +5,14 @@ import no.ntnu.api.role.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -192,6 +194,27 @@ public class UserController {
             }
         } catch (Exception e) {
             return new ResponseEntity<>("Failed to refresh token", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/purchase-pro/{subscriptionType}")
+    public ResponseEntity<?> purchasePro(@PathVariable String subscriptionType) {
+        UserWithCourses sessionUser = userService.getSessionUser();
+        if (sessionUser != null) {
+            userService.purchasePro(sessionUser.user(), subscriptionType);
+            return new ResponseEntity<>("", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Profile data accessible only to authenticated users", HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    @Scheduled(cron = "0 0 0 * * ?")
+    public void checkExpiredSubscriptions() {
+        LocalDate now = LocalDate.now();
+        List<User> usersWithExpiredSubscriptions = userService.findBySubscriptionEndDateBefore(now);
+        for (User user : usersWithExpiredSubscriptions) {
+            userService.deleteProRole(user.getUsername());
+            userService.removeExpiration(user);
         }
     }
 }

@@ -21,6 +21,25 @@ export function hasRole(role) {
     return user && user.roles.includes(role);
 }
 
+export function addRole(role) {
+    const user = getAuthenticatedUser();
+    if (user) {
+        user.roles.push(role);
+        setCookie("current_user_roles", user.roles.join(","));
+    }
+}
+
+export function removeRole(role) {
+    const user = getAuthenticatedUser();
+    if (user) {
+        const index = user.roles.indexOf(role);
+        if (index > -1) {
+            user.roles.splice(index, 1);
+            setCookie("current_user_roles", user.roles.join(","));
+        }
+    }
+}
+
 export function isAuthorized() {
     return (hasRole('ROLE_USER') || hasRole('ROLE_PRO') || hasRole('ROLE_ADMIN'));
 }

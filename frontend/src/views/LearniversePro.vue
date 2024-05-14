@@ -1,6 +1,6 @@
 <script setup>
 
-import NewComponent from "@/components/Subscription.vue";
+import Subscription from "@/components/Subscription.vue";
 </script>
 
 <template>
@@ -8,7 +8,7 @@ import NewComponent from "@/components/Subscription.vue";
     <img class="planet" src="/pro.svg">
     <h2>Learniverse Pro</h2>
   </div>
-  <NewComponent/>
+  <Subscription/>
 </template>
 
 <style scoped>

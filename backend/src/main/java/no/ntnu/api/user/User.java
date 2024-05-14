@@ -16,6 +16,7 @@ import jakarta.persistence.Table;
 import no.ntnu.api.course.Course;
 import no.ntnu.api.role.Role;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -96,6 +97,10 @@ public class User {
     @Schema(description = "The phone number of the user")
     @Column(name = "phone_number", length = 20)
     private String phoneNumber;
+
+    @Schema(description = "When the user's subscription expires")
+    @Column(name = "subscription_expire")
+    private LocalDate subscriptionExpire;
 
     //This is needed for JPA
     public User() {
@@ -292,5 +297,13 @@ public class User {
 
     public void addCourse(Course course) {
         courses.add(course);
+    }
+
+    public LocalDate getSubscriptionExpire() {
+        return subscriptionExpire;
+    }
+
+    public void setSubscriptionExpire(LocalDate subscriptionExpire) {
+        this.subscriptionExpire = subscriptionExpire;
     }
 }
