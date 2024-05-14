@@ -3,6 +3,7 @@ package no.ntnu.api.course;
 import java.util.Objects;
 
 import no.ntnu.api.provider.CourseProvider;
+import no.ntnu.api.provider.Provider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,6 +46,11 @@ public class CourseController {
     @GetMapping("/api/courses")
     public Collection<CourseWithProvidersAndKeywords> getCourses() {
         return courseService.getAllCourses();
+    }
+
+    @GetMapping("/api/providers")
+    public Collection<Provider> getProviders() {
+        return courseService.getAllProviders();
     }
 
     /**
