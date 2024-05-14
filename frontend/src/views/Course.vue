@@ -283,6 +283,7 @@ function populateCoursePage() {
                     initMap(provider.latitude, provider.longitude);
 
                     const buyButton = document.getElementById('enrollButton');
+                    //This is just a temporary solution to make the button work as it should
                     Object.assign(buyButton.style, {
                       fontFamily: 'Inter, sans-serif',
                       fontWeight: 'bold',
