@@ -3,7 +3,8 @@
 </script>
 
 <template>
-<img class="about-us-pic" src="/desk.jpg">
+  <div class="about-us-container">
+  <img class="about-us-pic" src="/desk.jpg">
   <div class="greeting">
     <h2>About Us</h2>
   </div>
@@ -15,7 +16,7 @@
       bounds, and our platform is designed to empower individuals like you to embark on a journey of lifelong
       learning. As a marketplace, we bring together a diverse array of courses from passionate and expert
       third-party providers, ensuring that you have access to a comprehensive range of subjects and skills to
-      fuel your personal and professional growth.
+      fuel your personal and professional growth. <br><br>
       Our commitment to quality is unwavering, and we meticulously curate our course offerings to guarantee
       a premium learning experience. Whether you're a budding entrepreneur looking to master the
       intricacies of business strategy or someone seeking to delve into the realms of creative arts, Learniverse
@@ -23,7 +24,7 @@
       connect with top-notch instructors, and explore a rich tapestry of knowledge that awaits you. At
       Learniverse, we envision a world where learning is not just a destination but a continuous, enriching
       journey, and we invite you to be a part of this transformative experience. Embrace the future of
-      education with Learniverse Connect - where knowledge meets opportunity.
+      education with Learniverse Connect - where knowledge meets opportunity. <br><br>
       At Learniverse Connect, we pride ourselves on offering courses that not only equip you with valuable
       knowledge and skills but also pave the way for tangible recognition through certifications. Upon
       successfully completing any course on our platform, you gain the opportunity to take the corresponding
@@ -33,7 +34,7 @@
       course, we ensure a hassle-free refund, underscoring our commitment to your success and confidence
       in the quality of our educational offerings. Your journey with Learniverse is not just about learning; it's
       about achieving and celebrating your milestones with the assurance that your investment in education is
-      backed by our unwavering support.
+      backed by our unwavering support. <br><br>
       While our courses predominantly take place in the virtual realm, we take pride in providing a unique
       blend of online learning and real-time engagement. Each course is facilitated by a dedicated physical
       instructor who not only guides you through *the material but also ensures an interactive and dynamic
@@ -43,6 +44,7 @@
       commitment to your convenience is paramount, and the courses are strategically repeated several times
       a year, offering ample opportunities for you to participate and thrive in your learning pursuits.
     </p>
+  </div>
   </div>
 </template>
 <style scoped>
@@ -63,5 +65,14 @@
   .about-us-pic {
     width: 100%;
     height: 600px;
+  }
+
+  .about-us-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 20px;
+    margin: 0 auto;
+    max-width: 1182px;
   }
 </style>

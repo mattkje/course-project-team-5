@@ -2,14 +2,21 @@
 
 import {onMounted, ref} from "vue";
 import {getAuthenticatedUser} from "@/js/authentication";
+import {sendApiRequest} from "@/js/requests";
 
 onMounted(putUsername)
 
 function putUsername() {
-  const username = getAuthenticatedUser().username;
-  document.querySelector('span').innerText = username;
+  sendApiRequest('GET', '/users/' + getAuthenticatedUser().username, success, error)
 }
 
+function success(data) {
+  document.querySelector('span').innerText = data.user.firstName
+}
+
+function error() {
+  console.log('error')
+}
 </script>
 
 <template>
