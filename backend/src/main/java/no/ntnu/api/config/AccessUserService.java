@@ -1,6 +1,7 @@
 package no.ntnu.api.config;
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -231,6 +232,50 @@ public class AccessUserService implements UserDetailsService {
     if (userOptional.isPresent()) {
       User user = userRepository.findByUsername(username).get();
       user.getRoles().remove(role);
+      userRepository.save(user);
+    }
+  }
+
+  public void purchasePro(User user, String subscriptionType) {
+    LocalDate today = LocalDate.now();
+    LocalDate endDate;
+
+    if(subscriptionType.equals("1-month")) {
+      endDate = today.plusMonths(1);
+    } else if(subscriptionType.equals("3-months")) {
+      endDate = today.plusMonths(3);
+    } else if(subscriptionType.equals("12-months")) {
+      endDate = today.plusMonths(12);
+    } else {
+      throw new IllegalArgumentException("Invalid subscription type");
+    }
+
+    user.addRole(roleRepository.findOneByName("ROLE_PRO"));
+    user.setSubscriptionExpire(endDate);
+    userRepository.save(user);
+  }
+
+  public List<User> findBySubscriptionEndDateBefore(LocalDate now) {
+    List<User> users = new ArrayList<>();
+    for(User user : userRepository.findAll()) {
+      if(user.getSubscriptionExpire().isBefore(now)) {
+        users.add(user);
+      }
+    }
+    return users;
+  }
+
+
+  public void removeExpiration(User user) {
+    user.setSubscriptionExpire(null);
+    userRepository.save(user);
+  }
+
+  public void deleteProRole(String username) {
+    Optional<User> userOptional = userRepository.findByUsername(username);
+    if (userOptional.isPresent()) {
+      User user = userRepository.findByUsername(username).get();
+      user.getRoles().remove(roleRepository.findOneByName("ROLE_PRO"));
       userRepository.save(user);
     }
   }

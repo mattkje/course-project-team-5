@@ -44,9 +44,9 @@
             <Subscription/>
           </div>
           <div class="subscription-box-pro" v-show="!loading && hasRole('ROLE_PRO')">
-            <p>You have a Learniverse Pro subscription<br>Your subscription ends ___</p>
-            <<button class="fancy-button" @click="redirectTo('/pro')">Learniverse Pro</button>
-            <button class="fancy-button">End your subscription</button>>
+            <p>You have a Learniverse Pro subscription<br>Your subscription ends <span></span></p>
+            <button class="fancy-button" @click="redirectTo('/pro')">Learniverse Pro</button>
+            <button class="fancy-button" @click="endSubscription">End your subscription</button>
           </div>
         </div>
       </div>
@@ -63,7 +63,7 @@
 
 <script setup>
 import {onMounted, ref} from 'vue';
-import {doLogout, getAuthenticatedUser, hasRole} from "@/js/authentication";
+import {doLogout, getAuthenticatedUser, hasRole, removeRole} from "@/js/authentication";
 import {sendApiRequest, sendTokenRefreshRequest} from "@/js/requests";
 import {redirectTo} from "@/js/navigation";
 import {getCookie, isTokenAboutToExpire} from "@/js/tools";
@@ -135,6 +135,7 @@ function onProfileDataSuccess(data) {
   document.getElementById("lastName").innerText = data.user.lastName;
   document.getElementById("email").innerText = data.user.email;
   document.getElementById("phoneNumber").innerText = data.user.phoneNumber;
+  document.querySelector('.subscription-box-pro p span').innerText = data.user.subscriptionExpire;
   console.log("test")
   if (data.courses.length > 0) {
     addCourses(data);
@@ -184,6 +185,12 @@ function onChangePasswordSuccess(data) {
 function onChangePasswordError(error) {
   console.error("Error changing password: ", error);
   alert("Error changing password. Please try again.");
+}
+
+function endSubscription() {
+  removeRole('ROLE_PRO');
+  alert('You have successfully ended you subscription');
+  redirectTo('/profile');
 }
 
 function addCourses(data) {

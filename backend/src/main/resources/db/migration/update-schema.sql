@@ -87,16 +87,17 @@ CREATE TABLE IF NOT EXISTS user_roles
 
 CREATE TABLE IF NOT EXISTS users
 (
-    id           INT AUTO_INCREMENT NOT NULL,
-    username     VARCHAR(16)        NULL,
-    email        VARCHAR(45)        NULL,
-    password     VARCHAR(64)        NULL,
-    first_name   VARCHAR(20)        NULL,
-    last_name    VARCHAR(20)        NULL,
-    active       BIT(1)             NOT NULL,
-    created_at   datetime           NULL,
-    updated_at   datetime           NULL,
-    phone_number VARCHAR(20)        NULL,
+    id              INT AUTO_INCREMENT NOT NULL,
+    username        VARCHAR(16)        NULL,
+    email           VARCHAR(45)        NULL,
+    password        VARCHAR(64)        NULL,
+    first_name      VARCHAR(20)        NULL,
+    last_name       VARCHAR(20)        NULL,
+    active          BIT(1)             NOT NULL,
+    created_at      datetime           NULL,
+    updated_at      datetime           NULL,
+    phone_number    VARCHAR(20)        NULL,
+    subscription_expire date           NULL,
     CONSTRAINT pk_users PRIMARY KEY (id)
 );
 
@@ -124,24 +125,23 @@ ALTER TABLE user_courses
     ADD CONSTRAINT fk_userc_on_course FOREIGN KEY (course_id) REFERENCES courses (course_id);
 
 INSERT INTO users (id, username, email, password, first_name, last_name, active, created_at, updated_at,
-                   phone_number)
+                   phone_number, subscription_expire)
 VALUES
     -- PASSWORD: Dave2002
     (1, 'dave', 'dave@mail.com', '$2a$10$eizgqz56BxeRy2Bt7bYCbOMIyrUlFE0Rz8oSoMFILqd4mQcTXLGfi', 'Dave', 'Johnson',
      true, '2024-02-12', '2024-02-12',
-     '234098434'),
+     '234098434', null),
     -- PASSWORD: Nunchucks
     (2, 'chuck', 'hideyograndma@mail.com', '$2a$10$2f1AbpqP36WOiR1h9nHR9e.BZRhwRSQR7FD2sXDZk5orPd.IO2u2m', 'Chuck',
      'Norris', true, '2024-02-12', '2024-02-12',
-     '123123442'),
+     '123123442', null),
     -- PASSWORD: JoeBiden
     (3, 'john_doe', 'john.doe@example.com', '$2a$10$sCuzU/RymH5ZJrGUFxEf5uT4zSJEpr/J4oDSRrrQi5SrFXjNy.Zsq', 'John',
-     'Doe', true, '2024-02-12', '2024-02-12',
-     '+1234567890'),
+     'Doe', true, '2024-02-12', '2024-02-12', '+1234567890', null),
     -- PASSWORD: Anne12345
     (4, 'anne', 'annedavies@mail.com', '$2a$10$SUyIHgfa3qPARl4l2/WzhOa08gm5bJ7/RlZGlphIxC7ZJVsO/q9pm', 'Anne',
      'Davies', true, '2024-02-12', '2024-02-12',
-     '123123442');
+     '123123442', null);
 
 
 
