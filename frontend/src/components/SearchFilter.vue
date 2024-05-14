@@ -136,22 +136,6 @@
           </div>
         </header>
       </div>
-
-      <button class="price-ranger" @click="toggleShowDuration" :style="{
-          'border-radius': isDurationVisible ? '10px 10px 0 0' : '10px'
-        }">Duration
-      </button>
-      <div class="wrapper" id="durationContainer" :style="{
-          height: isDurationVisible ? '200px' : '0px',
-          opacity: isDurationVisible ? '1' : '0',
-          zIndex: isDurationVisible ? '0' : -100,
-          'border-radius': isDurationVisible ? '0 0 10px 10px' : '10px'
-        }">
-        <header>
-          <h2>Duration</h2>
-        </header>
-      </div>
-
       <button class="price-ranger" @click="toggleShowCredit" :style="{
           'border-radius': isCreditVisible ? '10px 10px 0 0' : '10px'
         }">Credit
@@ -163,7 +147,13 @@
           'border-radius': isCreditVisible ? '0 0 10px 10px' : '10px'
         }">
         <header>
-          <h2>Credit</h2>
+          <div class="slider-container">
+            <input type="range" min="0" max="5" class="slider" id="creditSlider" v-model="creditValue" @change="onCreditBoxChange" >
+            <div style="display: flex; justify-content: space-between;">
+              <p>Minimum Credit</p>
+              <p >{{ creditValue }}</p>
+            </div>
+          </div>
         </header>
       </div>
 
@@ -189,6 +179,10 @@ const isItChecked = ref(false);
 const isDmChecked = ref(false);
 const isBeChecked = ref(false);
 const isDsChecked = ref(false);
+const creditValue = ref(0);
+const isBeginnerChecked = ref(false);
+const isIntermediateChecked = ref(false);
+const isExpertChecked = ref(false);
 
 const minValue = ref(0);
 const maxValue = ref(10000);
@@ -202,9 +196,11 @@ let categoryFilter = new Map();
 let dateFilter = new Map();
 let providerFilter = new Map();
 let difficultyFilter = new Map();
+let creditFilter = new Map();
 let selectedCategories = [];
 let selectedProviders = [];
 let selectedDifficulties = [];
+let selectedCredits = [];
 
 onMounted(() => {
   courseContainer = document.querySelector('#courseContainer');
@@ -402,6 +398,13 @@ function populateCourses(selector) {
                   difficultyText.style.display = 'none';
                   contentBox.appendChild(difficultyText);
 
+                  // Importing credit as hidden to be able to access it´s value
+                  const creditText = document.createElement('p');
+                  creditText.className = 'content-box-credit';
+                  creditText.innerText += courseProvider.course.courseSize;
+                  creditText.style.display = 'none';
+                  contentBox.appendChild(creditText);
+
                   const hr2 = document.createElement('hr');
                   descriptionBox.appendChild(hr2);
 
@@ -476,13 +479,16 @@ function filterStatus() {
           if (difficultyFilter.has(children[i])) {
             children[i].style.display = 'none';
           } else {
+            if (creditFilter.has(children[i])) {
+              children[i].style.display = 'none';
+            } else {
             children[i].style.display = 'block';
           }
         }
       }
     }
   }
-}
+}}
 
 const isCategoryVisible = ref(false);
 const isPriceVisible = ref(false);
@@ -638,6 +644,7 @@ function onCheckboxChange(event) {
     labelSpan.id = 'labelName';
     labelSpan.textContent = labelName;
 
+
     // Create remove button
     let removeButton = document.createElement('button');
     removeButton.id = 'removeButton';
@@ -690,19 +697,23 @@ function categorizeCourses(category) {
 function updateFilterMap(child, add, filterMap) {
   if (add) {
     if (filterMap.has(child)) {
+      console.log("Has child but add")
       let count = filterMap.get(child);
       filterMap.set(child, count + 1);
     } else {
+      console.log("Does not have child but add")
       filterMap.set(child, 1);
     }
   } else {
     if (filterMap.has(child)) {
+      console.log("Has child but remove")
       let count = filterMap.get(child);
       filterMap.set(child, count - 1);
       if (count - 1 < 1) {
         filterMap.delete(child);
       }
     } else {
+      console.log("Does not have child but remove")
       filterMap.forEach((count, child) => {
         count -= 1;
         if (count < 1) {
@@ -765,11 +776,7 @@ function sortByDifficulty(difficulty) {
     let difficultyMatch = childDifficulty === difficulty;
     let childInHistory = difficultyFilter.has(child);
 
-    console.log("difficulty: " + difficulty)
-    console.log("childDifficulty: " + childDifficulty)
-    console.log("difficultyMatch: " + difficultyMatch)
-
-    if (selectedDifficulties.length === 0 && !difficultyMatch) {
+    if (selectedDifficulties.length ===  0 && !difficultyMatch) {
       updateFilterMap(child, true, difficultyFilter);
     } else if (selectedDifficulties.length > 1 && selectedDifficulties.includes(difficulty) && difficultyMatch) {
       updateFilterMap(child, true, difficultyFilter);
@@ -787,6 +794,56 @@ function onDifficultyBoxChange(event) {
   sortByDifficulty(onCheckboxChange(event));
 }
 
+function sortByCredit(credit) {
+  for (let child of children) {
+    let childCredit = child.querySelector('.content-box-credit').textContent;
+    let creditMatch = childCredit >= credit;
+
+    if (!creditMatch){
+      creditFilter.set(child, 1);
+    } else {
+      creditFilter.delete(child);
+    }
+  }
+  console.log("dead children " + creditFilter.size)
+  updateSelection(credit, selectedCredits);
+}
+
+function onCreditBoxChange(event) {
+  sortByCredit(onSliderChange(event));
+}
+
+function onSliderChange(event) {
+  const sliderId = event.target.id;
+  const sliderValue = event.target.value;
+
+  localStorage.setItem(sliderId, sliderValue);
+
+  // Get the text content of the label
+  let labelName = "Minimum Credit";
+
+  // Create container div
+  let container = document.createElement('div');
+  container.id = sliderId + "container";
+
+  // Create label name span
+  let labelSpan = document.createElement('span');
+  labelSpan.id = 'labelName';
+  labelSpan.textContent = labelName;
+
+  // Create value span
+  let valueSpan = document.createElement('span');
+  valueSpan.id = 'sliderValue';
+  valueSpan.textContent = sliderValue;
+
+  container.appendChild(labelSpan);
+  container.appendChild(valueSpan);
+
+  let activeFilterContainer = document.getElementById('active-filter-container');
+  activeFilterContainer.appendChild(container);
+
+  return sliderValue;
+}
 
 </script>
 
@@ -1110,6 +1167,19 @@ input[type="range"]::-moz-range-thumb {
   flex-direction: column;
   justify-content: left;
   align-content: center;
+}
+
+#creditSlider {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 100%;
+  height: 10px;
+  border-radius: 5px;
+  background: #dde5ff;
+  outline: none;
+  opacity: 0.7;
+  transition: opacity .2s;
+  -webkit-transition: .2s;
 }
 
 
