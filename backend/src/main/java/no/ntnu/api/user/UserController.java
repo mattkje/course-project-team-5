@@ -146,6 +146,11 @@ public class UserController {
     @DeleteMapping("/{username}")
     public ResponseEntity<?> deleteUser(@PathVariable String username) {
         UserWithCourses sessionUser = userService.getSessionUser();
+        for(User user : userService.getAllUsers()) {
+            if(!user.getUsername().equals(username)) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+            }
+        }
         if((sessionUser != null && sessionUser.user().getUsername().equals(username)) || userService.isAdmin()) {
             userService.deleteUser(username);
             return ResponseEntity.status(HttpStatus.OK).body("User successfully deleted");

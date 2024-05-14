@@ -1,6 +1,6 @@
 <script setup>
 import {getCurrentInstance, onMounted} from "vue";
-import {getAuthenticatedUser, hasRole} from "@/js/authentication";
+import {getAuthenticatedUser, hasRole, isAuthorized} from "@/js/authentication";
 import {computed} from "vue";
 import {useStore} from "vuex";
 
@@ -82,7 +82,7 @@ function setDefaultCurrency() {
         <div class="right-content">
           <select class="fancy-button" id="currencySelect">
           </select>
-          <router-link to="/cart" class="fancy-button-round">
+          <router-link to="/cart" class="fancy-button-round" v-show="isAuthorized()">
             <img class="cart" src="/cart.svg" alt="Cart">
             <span class="cart-count" v-if="integertest > 0">{{ integertest }}</span>
           </router-link>

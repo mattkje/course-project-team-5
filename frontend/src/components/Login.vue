@@ -3,9 +3,11 @@ import { ref } from 'vue';
 import {redirectTo} from "@/js/navigation";
 import {showFormError} from "@/js/tools";
 import {sendAuthenticationRequest} from "@/js/authentication";
+import Register from "@/components/Register.vue";
 
 const username = ref('');
 const password = ref('');
+let compo = ref('login');
 
 const login = async () => {
   sendAuthenticationRequest(username.value, password.value, onLoginSuccess, showFormError);
@@ -15,13 +17,21 @@ function onLoginSuccess() {
   console.log("Login successful");
   redirectTo("/");
 }
+
+function changeCompo() {
+  if(compo.value === 'login') {
+    compo.value = 'register';
+  } else {
+    compo.value = 'login';
+  }
+}
 </script>
 
 <template>
 
   <form @submit.prevent="login" id="loginForm" method="post">
     <div class="login-container">
-      <div class="login-box">
+      <div class="login-box" v-show="compo === 'login'">
         <div class="login-field-box">
           <a href="/" class="header-button">
             <img class="logo" src="/logo.svg" alt="Connect">
@@ -49,9 +59,10 @@ function onLoginSuccess() {
           <p id="result-message" class="hidden"></p>
           <button class="standard-button" type="submit">Login</button>
           <p>No account?</p>
-          <a class="standard-button" href="/register" type="submit">Sign up here</a>
+          <a class="standard-button" @click="changeCompo" type="submit">Sign up here</a>
         </div>
       </div>
+      <register @change-compo="changeCompo" v-show="compo === 'register'"/>
     </div>
 
 
@@ -161,6 +172,7 @@ input:focus {
   &:hover {
     background-color: var(--light-3);
     box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
+    cursor: pointer;
   }
 }
 

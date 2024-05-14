@@ -82,7 +82,7 @@ function onSignUpError(error) {
           <button class="standard-button" type="submit" id="signup-button">Create user</button>
 
           <p>Already have an account?</p>
-          <a class="standard-button" href="/login" type="submit">Log in here</a>
+          <a class="standard-button" @click="$emit('change-compo')" type="submit">Log in here</a>
         </div>
       </div>
     </div>

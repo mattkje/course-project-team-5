@@ -233,7 +233,6 @@ function doLogoutToHome() {
 
 function cancelChangePassword() {
   changePassword.value = false;
-  window.scroll(0, 0);
 }
 </script>
 
