@@ -28,19 +28,19 @@
         <div class="category-list">
           <div class="checkbox-wrapper">
             <label class="cbx" for="itBox">Information Technology</label>
-            <input class="inp-cbx" id="itBox" type="checkbox" v-model="isItChecked" @change="onCheckboxChange">
+            <input class="inp-cbx" id="itBox" type="checkbox" v-model="isItChecked" @change="onCategoryBoxChange">
           </div>
           <div class="checkbox-wrapper">
             <label class="cbx" for="dmBox">Digital Marketing</label>
-            <input class="inp-cbx" id="dmBox" type="checkbox" v-model="isDmChecked" @change="onCheckboxChange">
+            <input class="inp-cbx" id="dmBox" type="checkbox" v-model="isDmChecked" @change="onCategoryBoxChange">
           </div>
           <div class="checkbox-wrapper">
             <label class="cbx" for="beBox">Business and Entrepreneurship</label>
-            <input class="inp-cbx" id="beBox" type="checkbox" v-model="isBeChecked" @change="onCheckboxChange">
+            <input class="inp-cbx" id="beBox" type="checkbox" v-model="isBeChecked" @change="onCategoryBoxChange">
           </div>
           <div class="checkbox-wrapper">
             <label class="cbx" for="dsBox">Data Science and Analytics</label>
-            <input class="inp-cbx" id="dsBox" type="checkbox" v-model="isDsChecked" @change="onCheckboxChange">
+            <input class="inp-cbx" id="dsBox" type="checkbox" v-model="isDsChecked" @change="onCategoryBoxChange">
           </div>
         </div>
       </div>
@@ -102,7 +102,7 @@
           'border-radius': isProviderVisible ? '0 0 10px 10px' : '10px'
         }">
         <header>
-          <h2>Provider</h2>
+          <div id="providerList"></div>
         </header>
       </div>
 
@@ -183,13 +183,45 @@ let courseContainer;
 let children;
 let searchedChildren = new Map();
 let categoryFilter = new Map();
+let dateFilter = new Map();
+let providerFilter = new Map();
 let selectedCategories = [];
+let selectedProviders = [];
 
 onMounted(() => {
   courseContainer = document.querySelector('#courseContainer');
   children = courseContainer.children;
   populateCourses('.flexible-grid');
+  populateProviders();
   currency(API_URL);
+
+  let picker;
+  document.addEventListener('DOMContentLoaded', function () {
+    picker = new Litepicker({
+      element: document.getElementById('datepicker'),
+      format: "DD MMM",
+      minDate: new Date() - 1,
+      useResetBtn: false,
+      buttonText: {
+        apply: 'Done',
+        reset: 'Reset'
+      },
+      TooltipText: {
+        one: 'day',
+        other: 'days'
+      },
+      mobileFriendly: true,
+      numberOfMonths: 2,
+      numberOfColumns: 2,
+      singleMode: false,
+      moduleNavKeyboard: true,
+      moduleRanges: false,
+    });
+    picker.on('hide', function(startDate, endDate) {
+      console.log(startDate, endDate)
+      sortByDate(startDate, endDate);
+    });
+  });
 });
 
 
@@ -263,6 +295,8 @@ function populateCourses(selector) {
 
                   const courseProviders = courseProvider.providers.filter(provider => provider.courseId === courseProvider.course.courseId);
 
+
+
                   if (Array.isArray(courseProviders) && courseProviders.length) {
                     providersElement.innerHTML = `${courseProviders.length}&nbsp;Providers`;
                   } else {
@@ -327,6 +361,25 @@ function populateCourses(selector) {
 
                   priceBox.appendChild(price);
 
+                  // importing date as hidden to be able to access it´s value
+                  const durationText = document.createElement('p');
+                  const rawDate = `${courseProvider.course.closestCourseSession}`;
+                  durationText.innerText += rawDate;
+                  durationText.style.display = 'none';
+                  contentBox.appendChild(durationText);
+
+
+
+
+                  // importing provider name as hidden to be able to access it´s value
+                  const providerNameText = document.createElement('p');
+                  providerNameText.className = 'provider-name';
+                  courseProviders.forEach(provider => {
+                    providerNameText.innerText += provider.name + " ";
+                  });
+                  providerNameText.style.display = 'none';
+                  contentBox.appendChild(providerNameText);
+
                   const hr2 = document.createElement('hr');
                   descriptionBox.appendChild(hr2);
 
@@ -337,6 +390,40 @@ function populateCourses(selector) {
               })
             })
             .catch(error => console.error('Error:', error));
+      })
+      .catch(error => console.error('Error:', error));
+}
+
+let isProviderChecked = ref({}); // Initialize as an empty object
+
+function populateProviders() {
+  fetch(API_URL + '/providers')
+      .then(response => response.json())
+      .then(data => {
+        const providerList = document.getElementById('providerList');
+        data.forEach(provider => {
+          const checkboxWrapper = document.createElement('div');
+          checkboxWrapper.className = 'checkbox-wrapper';
+
+          const label = document.createElement('label');
+          label.className = 'cbx';
+          label.setAttribute('for', `provider${provider.id}`);
+          label.textContent = provider.name;
+          checkboxWrapper.appendChild(label);
+
+          const checkbox = document.createElement('input');
+          checkbox.className = 'inp-cbx';
+          checkbox.id = `provider${provider.id}`;
+          checkbox.type = 'checkbox';
+          checkbox.setAttribute('v-model', `isProviderChecked['${provider.name}']`);
+          checkbox.addEventListener('change', onProviderCheckboxChange);
+          checkboxWrapper.appendChild(checkbox);
+
+          providerList.appendChild(checkboxWrapper);
+
+          // Initialize the checkbox state for this provider
+          isProviderChecked.value[provider.name] = false;
+        });
       })
       .catch(error => console.error('Error:', error));
 }
@@ -361,7 +448,11 @@ function filterStatus() {
       if (categoryFilter.has(children[i])) {
         children[i].style.display = 'none';
       } else {
-        children[i].style.display = 'block';
+        if (providerFilter.has(children[i])) {
+          children[i].style.display = 'none';
+        } else {
+          children[i].style.display = 'block';
+        }
       }
     }
   }
@@ -454,6 +545,48 @@ function initiateComponents() {
 }
 
 
+function onCategoryBoxChange(event){
+  categorizeCourses(onCheckboxChange(event));
+}
+
+function updateSelection(filter, selectedList) {
+  // End of process, update selected categories
+  if (selectedList.includes(filter)) {
+    const index = selectedList.indexOf(filter);
+    if (index > -1) {
+      selectedList.splice(index, 1);
+    }
+  } else {
+    selectedList.push(filter);
+  }
+
+  console.log(selectedList.length);
+  filterStatus();
+}
+
+function sortByProvider(s) {
+  for (let child of children) {
+    let childProvider = child.querySelector('.provider-name').textContent;
+    let childProviderList = childProvider.split(' ');
+    let providerMatch = childProviderList.includes(s);
+    let childInHistory = providerFilter.has(child);
+
+    if (selectedProviders.length === 0 && !providerMatch) {
+      updateFilterMap(child, true, providerFilter);
+    } else if (selectedProviders.length > 1 && selectedProviders.includes(s) && providerMatch) {
+      updateFilterMap(child, true, providerFilter );
+    } else if (selectedProviders.length > 0 && !selectedProviders.includes(s) && providerMatch && childInHistory) {
+      updateFilterMap(child, false, providerFilter );
+    } else if (selectedProviders.length === 1 && selectedProviders.includes(s) && providerMatch) {
+      updateFilterMap(child, false, providerFilter);
+    }
+  }
+
+  updateSelection(s,selectedProviders);
+}
+
+function onProviderCheckboxChange(event){
+  sortByProvider(onCheckboxChange(event));}
 function onCheckboxChange(event) {
   const checkboxId = event.target.id;
   const isChecked = event.target.checked;
@@ -491,7 +624,7 @@ function onCheckboxChange(event) {
     let activeFilterContainer = document.getElementById('active-filter-container');
     activeFilterContainer.appendChild(container);
 
-    categorizeCourses(labelName);
+    return labelName;
 
   } else {
     localStorage.setItem(checkboxId, 'true');
@@ -500,7 +633,7 @@ function onCheckboxChange(event) {
 
     let label = document.querySelector(`label[for="${checkboxId}"]`);
 
-    categorizeCourses(label.textContent);
+    return label.textContent;
   }
 
 }
@@ -512,52 +645,41 @@ function categorizeCourses(category) {
     let childInHistory = categoryFilter.has(child);
 
     if (selectedCategories.length === 0 && !categoryMatch) {
-      updateCategoryFilter(child, true);
+      updateFilterMap(child, true, categoryFilter);
     } else if (selectedCategories.length > 1 && selectedCategories.includes(category) && categoryMatch) {
-      updateCategoryFilter(child, true );
+      updateFilterMap(child, true, categoryFilter );
     } else if (selectedCategories.length > 0 && !selectedCategories.includes(category) && categoryMatch && childInHistory) {
-      updateCategoryFilter(child, false );
+      updateFilterMap(child, false, categoryFilter );
     } else if (selectedCategories.length === 1 && selectedCategories.includes(category) && categoryMatch) {
-      updateCategoryFilter(child, false);
+      updateFilterMap(child, false, categoryFilter);
     }
   }
 
-  // End of process, update selected categories
-  if (selectedCategories.includes(category)) {
-    const index = selectedCategories.indexOf(category);
-    if (index > -1) {
-      selectedCategories.splice(index, 1);
-    }
-  } else {
-    selectedCategories.push(category);
-  }
-
-  filterStatus();
+  updateSelection(category,selectedCategories);
 }
 
-function updateCategoryFilter(child, add) {
+function updateFilterMap(child, add, filterMap) {
   if (add) {
-    if (categoryFilter.has(child)) {
-      let count = categoryFilter.get(child);
-      categoryFilter.set(child, count + 1);
+    if (filterMap.has(child)) {
+      let count = filterMap.get(child);
+      filterMap.set(child, count + 1);
     } else {
-      categoryFilter.set(child, 1);
+      filterMap.set(child, 1);
     }
   } else {
-    if (categoryFilter.has(child)) {
-      let count = categoryFilter.get(child);
-      categoryFilter.set(child, count - 1);
-      console.log("count" + count)
+    if (filterMap.has(child)) {
+      let count = filterMap.get(child);
+      filterMap.set(child, count - 1);
       if (count - 1 < 1) {
-        categoryFilter.delete(child);
+        filterMap.delete(child);
       }
     } else {
-      categoryFilter.forEach((count, child) => {
+      filterMap.forEach((count, child) => {
         count -= 1;
         if (count < 1) {
-          categoryFilter.delete(child);
+          filterMap.delete(child);
         } else {
-          categoryFilter.set(child, count);
+          filterMap.set(child, count);
         }
       });
     }
@@ -567,29 +689,7 @@ function updateCategoryFilter(child, add) {
 
 
 
-let picker;
-document.addEventListener('DOMContentLoaded', function () {
-  picker = new Litepicker({
-    element: document.getElementById('datepicker'),
-    format: "DD MMM",
-    minDate: new Date() - 1,
-    useResetBtn: false,
-    buttonText: {
-      apply: 'Done',
-      reset: 'Reset'
-    },
-    TooltipText: {
-      one: 'day',
-      other: 'days'
-    },
-    mobileFriendly: true,
-    numberOfMonths: 2,
-    numberOfColumns: 2,
-    singleMode: false,
-    moduleNavKeyboard: true,
-    moduleRanges: false
-  });
-});
+
 
 function filterPrices(value) {
   for (let i = 0; i < children.length; i++) {
@@ -597,8 +697,6 @@ function filterPrices(value) {
     let childPrice = child.querySelector('.price').textContent;
     let price = parseFloat(childPrice.split(' ')[0]);
 
-    console.log(price)
-    console.log(value)
     if (price > value) {
       child.style.display = 'none';
     } else {
@@ -620,6 +718,24 @@ watch(minRangeValue, (newVal) => {
 watch(maxRangeValue, (newVal) => {
   filterPrices(newVal)
 });
+
+
+
+function sortByDate(date1,date2) {
+  for (let i = 0; i < children.length; i++) {
+    let child = children[i];
+    let childDate = child.querySelector('.content-box-attributes').textContent;
+    let date = childDate.split(' ')[0];
+
+    if (date < date1 || date > date2) {
+      child.style.display = 'none';
+    } else {
+      child.style.display = 'block';
+    }
+  }
+}
+
+
 
 
 </script>
