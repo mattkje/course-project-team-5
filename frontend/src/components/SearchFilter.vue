@@ -117,25 +117,25 @@
           'border-radius': isDifficultyVisible ? '0 0 10px 10px' : '10px'
         }">
         <header>
-          <h2>Difficulty</h2>
+          <div class="checkbox-wrapper">
+            <label class="cbx" for="beginnerBox">Beginner</label>
+            <input class="inp-cbx" id="beginnerBox" type="checkbox" v-model="isBeginnerChecked"
+                   @change="onDifficultyBoxChange">
+          </div>
+
+          <div class="checkbox-wrapper">
+            <label class="cbx" for="intermediateBox">Intermediate</label>
+            <input class="inp-cbx" id="intermediateBox" type="checkbox" v-model="isIntermediateChecked"
+                   @change="onDifficultyBoxChange">
+          </div>
+
+          <div class="checkbox-wrapper">
+            <label class="cbx" for="expertBox">Expert</label>
+            <input class="inp-cbx" id="expertBox" type="checkbox" v-model="isExpertChecked"
+                   @change="onDifficultyBoxChange">
+          </div>
         </header>
       </div>
-
-      <button class="price-ranger" @click="toggleShowDuration" :style="{
-          'border-radius': isDurationVisible ? '10px 10px 0 0' : '10px'
-        }">Duration
-      </button>
-      <div class="wrapper" id="durationContainer" :style="{
-          height: isDurationVisible ? '200px' : '0px',
-          opacity: isDurationVisible ? '1' : '0',
-          zIndex: isDurationVisible ? '0' : -100,
-          'border-radius': isDurationVisible ? '0 0 10px 10px' : '10px'
-        }">
-        <header>
-          <h2>Duration</h2>
-        </header>
-      </div>
-
       <button class="price-ranger" @click="toggleShowCredit" :style="{
           'border-radius': isCreditVisible ? '10px 10px 0 0' : '10px'
         }">Credit
@@ -147,7 +147,13 @@
           'border-radius': isCreditVisible ? '0 0 10px 10px' : '10px'
         }">
         <header>
-          <h2>Credit</h2>
+          <div class="slider-container">
+            <input type="range" min="0" max="5" class="slider" id="creditSlider" v-model="creditValue" @change="onCreditBoxChange" >
+            <div style="display: flex; justify-content: space-between;">
+              <p>Minimum Credit</p>
+              <p >{{ creditValue }}</p>
+            </div>
+          </div>
         </header>
       </div>
 
@@ -173,6 +179,10 @@ const isItChecked = ref(false);
 const isDmChecked = ref(false);
 const isBeChecked = ref(false);
 const isDsChecked = ref(false);
+const creditValue = ref(0);
+const isBeginnerChecked = ref(false);
+const isIntermediateChecked = ref(false);
+const isExpertChecked = ref(false);
 
 const minValue = ref(0);
 const maxValue = ref(10000);
@@ -185,8 +195,12 @@ let searchedChildren = new Map();
 let categoryFilter = new Map();
 let dateFilter = new Map();
 let providerFilter = new Map();
+let difficultyFilter = new Map();
+let creditFilter = new Map();
 let selectedCategories = [];
 let selectedProviders = [];
+let selectedDifficulties = [];
+let selectedCredits = [];
 
 onMounted(() => {
   courseContainer = document.querySelector('#courseContainer');
@@ -217,7 +231,7 @@ onMounted(() => {
       moduleNavKeyboard: true,
       moduleRanges: false,
     });
-    picker.on('hide', function(startDate, endDate) {
+    picker.on('hide', function (startDate, endDate) {
       console.log(startDate, endDate)
       sortByDate(startDate, endDate);
     });
@@ -296,7 +310,6 @@ function populateCourses(selector) {
                   const courseProviders = courseProvider.providers.filter(provider => provider.courseId === courseProvider.course.courseId);
 
 
-
                   if (Array.isArray(courseProviders) && courseProviders.length) {
                     providersElement.innerHTML = `${courseProviders.length}&nbsp;Providers`;
                   } else {
@@ -369,8 +382,6 @@ function populateCourses(selector) {
                   contentBox.appendChild(durationText);
 
 
-
-
                   // importing provider name as hidden to be able to access it´s value
                   const providerNameText = document.createElement('p');
                   providerNameText.className = 'provider-name';
@@ -379,6 +390,20 @@ function populateCourses(selector) {
                   });
                   providerNameText.style.display = 'none';
                   contentBox.appendChild(providerNameText);
+
+                  // importing difficulty as hidden to be able to access it´s value
+                  const difficultyText = document.createElement('p');
+                  difficultyText.className = 'content-box-difficulty';
+                  difficultyText.innerText += courseProvider.course.level;
+                  difficultyText.style.display = 'none';
+                  contentBox.appendChild(difficultyText);
+
+                  // Importing credit as hidden to be able to access it´s value
+                  const creditText = document.createElement('p');
+                  creditText.className = 'content-box-credit';
+                  creditText.innerText += courseProvider.course.courseSize;
+                  creditText.style.display = 'none';
+                  contentBox.appendChild(creditText);
 
                   const hr2 = document.createElement('hr');
                   descriptionBox.appendChild(hr2);
@@ -407,13 +432,13 @@ function populateProviders() {
 
           const label = document.createElement('label');
           label.className = 'cbx';
-          label.setAttribute('for', `provider${provider.id}`);
+          label.setAttribute('for', `provider${provider.providerId}`);
           label.textContent = provider.name;
           checkboxWrapper.appendChild(label);
 
           const checkbox = document.createElement('input');
           checkbox.className = 'inp-cbx';
-          checkbox.id = `provider${provider.id}`;
+          checkbox.id = `provider${provider.providerId}`;
           checkbox.type = 'checkbox';
           checkbox.setAttribute('v-model', `isProviderChecked['${provider.name}']`);
           checkbox.addEventListener('change', onProviderCheckboxChange);
@@ -442,7 +467,7 @@ function searchCourses() {
 
 function filterStatus() {
   for (let i = 0; i < children.length; i++) {
-    if (searchedChildren.has(children[i]) ) {
+    if (searchedChildren.has(children[i])) {
       children[i].style.display = 'none';
     } else {
       if (categoryFilter.has(children[i])) {
@@ -451,12 +476,19 @@ function filterStatus() {
         if (providerFilter.has(children[i])) {
           children[i].style.display = 'none';
         } else {
-          children[i].style.display = 'block';
+          if (difficultyFilter.has(children[i])) {
+            children[i].style.display = 'none';
+          } else {
+            if (creditFilter.has(children[i])) {
+              children[i].style.display = 'none';
+            } else {
+            children[i].style.display = 'block';
+          }
         }
       }
     }
   }
-}
+}}
 
 const isCategoryVisible = ref(false);
 const isPriceVisible = ref(false);
@@ -545,7 +577,7 @@ function initiateComponents() {
 }
 
 
-function onCategoryBoxChange(event){
+function onCategoryBoxChange(event) {
   categorizeCourses(onCheckboxChange(event));
 }
 
@@ -560,7 +592,6 @@ function updateSelection(filter, selectedList) {
     selectedList.push(filter);
   }
 
-  console.log(selectedList.length);
   filterStatus();
 }
 
@@ -574,19 +605,23 @@ function sortByProvider(s) {
     if (selectedProviders.length === 0 && !providerMatch) {
       updateFilterMap(child, true, providerFilter);
     } else if (selectedProviders.length > 1 && selectedProviders.includes(s) && providerMatch) {
-      updateFilterMap(child, true, providerFilter );
+      updateFilterMap(child, true, providerFilter);
     } else if (selectedProviders.length > 0 && !selectedProviders.includes(s) && providerMatch && childInHistory) {
-      updateFilterMap(child, false, providerFilter );
+      updateFilterMap(child, false, providerFilter);
     } else if (selectedProviders.length === 1 && selectedProviders.includes(s) && providerMatch) {
+      updateFilterMap(child, false, providerFilter);
+    } else {
       updateFilterMap(child, false, providerFilter);
     }
   }
 
-  updateSelection(s,selectedProviders);
+  updateSelection(s, selectedProviders);
 }
 
-function onProviderCheckboxChange(event){
-  sortByProvider(onCheckboxChange(event));}
+function onProviderCheckboxChange(event) {
+  sortByProvider(onCheckboxChange(event));
+}
+
 function onCheckboxChange(event) {
   const checkboxId = event.target.id;
   const isChecked = event.target.checked;
@@ -608,6 +643,7 @@ function onCheckboxChange(event) {
     let labelSpan = document.createElement('span');
     labelSpan.id = 'labelName';
     labelSpan.textContent = labelName;
+
 
     // Create remove button
     let removeButton = document.createElement('button');
@@ -647,33 +683,37 @@ function categorizeCourses(category) {
     if (selectedCategories.length === 0 && !categoryMatch) {
       updateFilterMap(child, true, categoryFilter);
     } else if (selectedCategories.length > 1 && selectedCategories.includes(category) && categoryMatch) {
-      updateFilterMap(child, true, categoryFilter );
+      updateFilterMap(child, true, categoryFilter);
     } else if (selectedCategories.length > 0 && !selectedCategories.includes(category) && categoryMatch && childInHistory) {
-      updateFilterMap(child, false, categoryFilter );
+      updateFilterMap(child, false, categoryFilter);
     } else if (selectedCategories.length === 1 && selectedCategories.includes(category) && categoryMatch) {
       updateFilterMap(child, false, categoryFilter);
     }
   }
 
-  updateSelection(category,selectedCategories);
+  updateSelection(category, selectedCategories);
 }
 
 function updateFilterMap(child, add, filterMap) {
   if (add) {
     if (filterMap.has(child)) {
+      console.log("Has child but add")
       let count = filterMap.get(child);
       filterMap.set(child, count + 1);
     } else {
+      console.log("Does not have child but add")
       filterMap.set(child, 1);
     }
   } else {
     if (filterMap.has(child)) {
+      console.log("Has child but remove")
       let count = filterMap.get(child);
       filterMap.set(child, count - 1);
       if (count - 1 < 1) {
         filterMap.delete(child);
       }
     } else {
+      console.log("Does not have child but remove")
       filterMap.forEach((count, child) => {
         count -= 1;
         if (count < 1) {
@@ -685,10 +725,6 @@ function updateFilterMap(child, add, filterMap) {
     }
   }
 }
-
-
-
-
 
 
 function filterPrices(value) {
@@ -720,8 +756,7 @@ watch(maxRangeValue, (newVal) => {
 });
 
 
-
-function sortByDate(date1,date2) {
+function sortByDate(date1, date2) {
   for (let i = 0; i < children.length; i++) {
     let child = children[i];
     let childDate = child.querySelector('.content-box-attributes').textContent;
@@ -735,8 +770,80 @@ function sortByDate(date1,date2) {
   }
 }
 
+function sortByDifficulty(difficulty) {
+  for (let child of children) {
+    let childDifficulty = child.querySelector('.content-box-difficulty').textContent;
+    let difficultyMatch = childDifficulty === difficulty;
+    let childInHistory = difficultyFilter.has(child);
 
+    if (selectedDifficulties.length ===  0 && !difficultyMatch) {
+      updateFilterMap(child, true, difficultyFilter);
+    } else if (selectedDifficulties.length > 1 && selectedDifficulties.includes(difficulty) && difficultyMatch) {
+      updateFilterMap(child, true, difficultyFilter);
+    } else if (selectedDifficulties.length > 0 && !selectedDifficulties.includes(difficulty) && difficultyMatch && childInHistory) {
+      updateFilterMap(child, false, difficultyFilter);
+    } else if (selectedDifficulties.length === 1 && selectedDifficulties.includes(difficulty) && difficultyMatch) {
+      updateFilterMap(child, false, difficultyFilter);
+    }
+  }
 
+  updateSelection(difficulty, selectedDifficulties);
+}
+
+function onDifficultyBoxChange(event) {
+  sortByDifficulty(onCheckboxChange(event));
+}
+
+function sortByCredit(credit) {
+  for (let child of children) {
+    let childCredit = child.querySelector('.content-box-credit').textContent;
+    let creditMatch = childCredit >= credit;
+
+    if (!creditMatch){
+      creditFilter.set(child, 1);
+    } else {
+      creditFilter.delete(child);
+    }
+  }
+  console.log("dead children " + creditFilter.size)
+  updateSelection(credit, selectedCredits);
+}
+
+function onCreditBoxChange(event) {
+  sortByCredit(onSliderChange(event));
+}
+
+function onSliderChange(event) {
+  const sliderId = event.target.id;
+  const sliderValue = event.target.value;
+
+  localStorage.setItem(sliderId, sliderValue);
+
+  // Get the text content of the label
+  let labelName = "Minimum Credit";
+
+  // Create container div
+  let container = document.createElement('div');
+  container.id = sliderId + "container";
+
+  // Create label name span
+  let labelSpan = document.createElement('span');
+  labelSpan.id = 'labelName';
+  labelSpan.textContent = labelName;
+
+  // Create value span
+  let valueSpan = document.createElement('span');
+  valueSpan.id = 'sliderValue';
+  valueSpan.textContent = sliderValue;
+
+  container.appendChild(labelSpan);
+  container.appendChild(valueSpan);
+
+  let activeFilterContainer = document.getElementById('active-filter-container');
+  activeFilterContainer.appendChild(container);
+
+  return sliderValue;
+}
 
 </script>
 
@@ -1060,6 +1167,19 @@ input[type="range"]::-moz-range-thumb {
   flex-direction: column;
   justify-content: left;
   align-content: center;
+}
+
+#creditSlider {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 100%;
+  height: 10px;
+  border-radius: 5px;
+  background: #dde5ff;
+  outline: none;
+  opacity: 0.7;
+  transition: opacity .2s;
+  -webkit-transition: .2s;
 }
 
 
