@@ -154,9 +154,7 @@ public class UserController {
                 } else {
                     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Only accessible to authorized users");
                 }
-            } else{
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
-            }
+            } 
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
     }
