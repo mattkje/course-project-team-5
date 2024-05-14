@@ -3,7 +3,8 @@ package no.ntnu.api.keywords;
 import jakarta.persistence.*;
 
 /**
- * Contains the keywords used in the database
+ * This class represents the Keywords entity. It is used to store keywords in the database.
+ * Each keyword has an id and a name.
  */
 @Entity
 @Table(name = "keywords")
@@ -16,23 +17,44 @@ public class Keywords {
   @Column
   private String keywordName;
 
-  public Keywords() { // This constructor is empty due to the use of the @Entity annotation
-
+  /**
+   * Empty constructor needed for JPA.
+   */
+  public Keywords() {
   }
 
-  // Getters and setters
+  /**
+   * Set the id of the keyword.
+   *
+   * @param keyword_id The id of the keyword
+   */
   public void setId(int keyword_id) {
     this.keywordId = keyword_id;
   }
 
+  /**
+   * Get the id of the keyword.
+   *
+   * @return The id of the keyword
+   */
   public int getId() {
     return keywordId;
   }
 
+  /**
+   * Get the name of the keyword.
+   *
+   * @return The name of the keyword
+   */
   public String getKeyword() {
     return keywordName;
   }
 
+  /**
+   * Set the name of the keyword.
+   *
+   * @param keywordName The name of the keyword
+   */
   public void setKeyword(String keywordName) {
     this.keywordName = keywordName;
   }

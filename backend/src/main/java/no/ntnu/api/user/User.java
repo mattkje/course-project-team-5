@@ -25,13 +25,14 @@ import java.util.Set;
 /**
  * Represents a user in the application.
  * This class encapsulates information about a user, including their username, name, email, role, password,
- * account status, creation date, and last update date.
- * Users can have different roles such as ADMIN, MODERATOR, or USER, each with specific permissions and privileges.
+ * account status, creation date, last update date and subscription expiry date.
+ * Users can have different roles such as ADMIN, PRO, or USER, each with specific permissions and privileges.
  * The enabled flag indicates whether the user's account is active.
  * The createdAt field stores the date when the user account was created, and updatedAt stores the date
  * when the user account was last updated.
- * Additionally, users may have a phone number associated with their account for communication purposes.
- * TODO: More optional fields?
+ * Users may have a phone number associated with their account for communication purposes.
+ * Additionally, the subscriptionExpire field stores the date when the user's subscription expires.
+ * The users are able to hold a set of courses that they are enrolled in. The courses are represented by the Course class.
  */
 
 
@@ -102,7 +103,9 @@ public class User {
     @Column(name = "subscription_expire")
     private LocalDate subscriptionExpire;
 
-    //This is needed for JPA
+    /**
+     * Empty constructor needed for JPA.
+     */
     public User() {
     }
 
@@ -199,6 +202,11 @@ public class User {
         return phoneNumber;
     }
 
+    /**
+     * Sets the user username.
+     *
+     * @param username Username
+     */
     public void setUsername(String username) {
         this.username = username;
     }
@@ -249,60 +257,124 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-
+    /**
+     * Sets the user ID.
+     *
+     * @param id The user ID.
+     */
     public void setUserId(int id) {
         this.id = id;
     }
 
+    /**
+     * Retrieves the user ID.
+     *
+     * @return The user ID.
+     */
     public int getUserId() {
         return id;
     }
 
-    public void setCreatedAt() {
-        this.createdAt = new Date();
+    /**
+     * Sets the date when the user account was created.
+     */
+    public void setCreatedAt(Date date) {
+        this.createdAt = date;
     }
 
-    public void setUpdatedAt() {
-        this.updatedAt = new Date();
+    /**
+     * Sets the date when the user account was last updated.
+     */
+    public void setUpdatedAt(Date date) {
+        this.updatedAt = date;
     }
 
+    /**
+     * Checks if a user account is active.
+     *
+     * @return True if the user account is active, false otherwise.
+     */
     public boolean isActive() {
         return active;
     }
 
+    /**
+     * Sets the active status of the user account.
+     *
+     * @param active True if the user account is active, false otherwise.
+     */
     public void setActive(boolean active) {
         this.active = active;
     }
 
-
+    /**
+     * Sets the roles for the user.
+     *
+     * @param roles The roles for the user.
+     */
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 
+    /**
+     * Retrieves the roles for the user.
+     *
+     * @return The roles for the user.
+     */
     public Set<Role> getRoles() {
         return roles;
     }
 
+    /**
+     * Adds a role to the user.
+     *
+     * @param role The role to add.
+     */
     public void addRole(Role role) {
         roles.add(role);
     }
 
+    /**
+     * Sets the courses for the user.
+     *
+     * @param courses The courses for the user.
+     */
     public void setCourses(Set<Course> courses) {
         this.courses = courses;
     }
 
+    /**
+     * Retrieves the courses for the user.
+     *
+     * @return The courses for the user.
+     */
     public Set<Course> getCourses() {
         return courses;
     }
 
+    /**
+     * Adds a course to the user.
+     *
+     * @param course The course to add.
+     */
     public void addCourse(Course course) {
         courses.add(course);
     }
 
+    /**
+     * Retrieves the date when the user's subscription expires.
+     *
+     * @return The date when the user's subscription expires.
+     */
     public LocalDate getSubscriptionExpire() {
         return subscriptionExpire;
     }
 
+    /**
+     * Sets the date when the user's subscription expires.
+     *
+     * @param subscriptionExpire The date when the user's subscription expires.
+     */
     public void setSubscriptionExpire(LocalDate subscriptionExpire) {
         this.subscriptionExpire = subscriptionExpire;
     }

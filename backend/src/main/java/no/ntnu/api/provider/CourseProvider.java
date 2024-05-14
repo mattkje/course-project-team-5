@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 
 /**
  * The CourseProvider class is a JPA entity that represents the course_providers table in the database.
- * It is used to store information about the providers of a course, including the price and currency.
+ * It is used to store information about the providers of a course, including the price, currency and location.
  */
 @Entity
 @Table(name = "course_providers")
@@ -133,22 +133,47 @@ public class CourseProvider {
         this.provider.setName(providerName);
     }
 
+    /**
+     * Set the id of the course.
+     *
+     * @param courseId The id of the course
+     */
     public void setCourseId(int courseId) {
         this.courseId = courseId;
     }
 
+    /**
+     * Get the latitude of the provider location.
+     *
+     * @return The latitude of the provider location
+     */
     public BigDecimal getLatitude() {
         return latitude;
     }
 
+    /**
+     * Set the latitude of the provider location.
+     *
+     * @param latitude The latitude of the provider location
+     */
     public void setLatitude(BigDecimal latitude) {
         this.latitude = latitude;
     }
 
+    /**
+     * Get the longitude of the provider location.
+     *
+     * @return The longitude of the provider location
+     */
     public BigDecimal getLongitude() {
         return longitude;
     }
 
+    /**
+     * Set the longitude of the provider location.
+     *
+     * @param longitude The longitude of the provider location
+     */
     public void setLongitude(BigDecimal longitude) {
         this.longitude = longitude;
     }

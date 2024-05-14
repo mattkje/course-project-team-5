@@ -289,40 +289,6 @@ function cancelChangePassword() {
   background-color: lightgrey;
 }
 
-.course-information {
-  background-color: var(--light-1);
-  border-radius: 20px;
-  padding: 20px;
-  display: grid;
-  width: 100%;
-  margin: 50px 0;
-  line-height: 50px;
-  grid-template-rows: auto;
-  justify-content: space-between;
-  overflow: auto;
-  max-height: 400px;
-  min-height: 100px;
-}
-
-.hero-container {
-  display: flex;
-  justify-content: center;
-}
-
-.hero-box {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.bend {
-  width: 100%;
-  transform: scaleX(1.01) translateY(2px);
-  margin: 0;
-  padding: 0;
-}
-
 .planet {
   height: 300px;
   animation: ease-out pulse 5s infinite;
