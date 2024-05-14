@@ -41,6 +41,7 @@ span {
   top: 0;
   height: min-content;
   background-color: var(--light-3);
+  padding: 50px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
