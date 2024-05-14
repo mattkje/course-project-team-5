@@ -1,7 +1,40 @@
 <script setup>
-import {ref} from "vue";
+import {ref, onMounted, getCurrentInstance} from 'vue';
+import {getCookie} from "@/js/tools";
 
+const users = ref([]);
 const loading = ref(true);
+const {appContext} = getCurrentInstance();
+const API_URL = appContext.config.globalProperties.$apiAddress;
+
+onMounted(async () => {
+  const response = await fetch(API_URL + '/users');
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+  users.value = await response.json();
+  loading.value = false;
+});
+
+async function deleteUser(user) {
+  const token = getCookie('jwt');
+  const response = await fetch(API_URL + '/users/' + user.username, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': 'Bearer ' + token,
+    },
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(`HTTP error! status: ${response.status}, message: ${errorData}`);
+  }
+
+
+  location.reload();
+  return "User successfully deleted";
+}
+
 </script>
 
 <template>
@@ -11,14 +44,16 @@ const loading = ref(true);
       <div class="three-body__dot"></div>
       <div class="three-body__dot"></div>
     </div>
-    <div class="title" v-show="!changePassword">
-      <h1>Courses</h1>
-      <p>Manage your profile</p>
+    <div class="title">
+      <h1>User Management</h1>
+      <p>User Account</p>
     </div>
     <div class="page-highlight" v-show="!loading">
-
+      <div v-for="user in users" :key="user.id" class="user-block">
+        <p>{{ user.username }}</p>
+        <button class="fancy-button" @click="deleteUser(user)">Delete</button>
+      </div>
     </div>
-
   </div>
 </template>
 
@@ -48,5 +83,16 @@ const loading = ref(true);
   line-height: 50px;
   grid-template-rows: auto;
   justify-content: space-between;
+}
+
+.user-block {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border: 1px solid var(--light-1);
+  border-radius: 5px;
+  margin-bottom: 10px;
+  background-color: var(--light-3);
 }
 </style>

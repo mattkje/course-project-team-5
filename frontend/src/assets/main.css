@@ -185,7 +185,7 @@ p {
 
 
 .fancy-button {
-  color: #352f5e;
+  color: var(--dark-1);
   font-family: 'Inter', sans-serif;
   font-weight: bold;
   font-size: 14px;
@@ -196,8 +196,8 @@ p {
   margin: 0 5px;
   max-height: 40px;
   min-height: 40px;
-  background: var(--light-1);
-  border: 0.5px solid #ffffff;
+  background: #fff;
+  border: none;
   transition: all 0.3s ease-in-out;
 }
 

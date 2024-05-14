@@ -9,7 +9,7 @@ import {redirectTo} from "@/js/navigation";
 
 
 onMounted(loadProfileData);
-const loading = ref(true);
+const loading = ref(false);
 const user = getAuthenticatedUser();
 let navigate = ref("userManage");
 
@@ -17,6 +17,7 @@ async function loadProfileData() {
   if(!hasRole('ROLE_ADMIN')) {
     redirectTo("/no-access");
   }
+
   navigate.value = "userManage";
   document.querySelector('.nav-button').style.background = 'var(--light-1)';
 }

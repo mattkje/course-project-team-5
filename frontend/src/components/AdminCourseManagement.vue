@@ -1,7 +1,40 @@
 <script setup>
-import {ref} from "vue";
+import {ref, onMounted, getCurrentInstance} from 'vue';
+import {getCookie} from "@/js/tools";
 
+const courses = ref([]);
 const loading = ref(true);
+const {appContext} = getCurrentInstance();
+const API_URL = appContext.config.globalProperties.$apiAddress;
+
+onMounted(async () => {
+  const response = await fetch(API_URL + '/courses');
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+  courses.value = await response.json();
+  loading.value = false;
+});
+
+async function deleteCourse(courseProvider) {
+  const token = getCookie('jwt');
+  const response = await fetch(API_URL + '/courses/' + courseProvider.course.courseId, {
+
+    method: 'DELETE',
+    headers: {
+      'Authorization': 'Bearer ' + token,
+    },
+  });
+
+  console.log(response);
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(`HTTP error! status: ${response.status}, message: ${errorData}`);
+  }
+
+  location.reload();
+}
+
 </script>
 
 <template>
@@ -11,12 +44,15 @@ const loading = ref(true);
       <div class="three-body__dot"></div>
       <div class="three-body__dot"></div>
     </div>
-    <div class="title" v-show="!changePassword">
-      <h1>Courses</h1>
-      <p>Manage your profile</p>
+    <div class="title">
+      <h1>Course Management</h1>
+      <p>Review active courses</p>
     </div>
     <div class="page-highlight" v-show="!loading">
-
+      <div v-for="courseProvider in courses" :key="courseProvider.course.id" class="user-block">
+        <p>{{ courseProvider.course.title }}</p>
+        <button class="fancy-button" @click="deleteCourse(courseProvider)">Delete</button>
+      </div>
     </div>
 
   </div>
@@ -48,5 +84,16 @@ const loading = ref(true);
   line-height: 50px;
   grid-template-rows: auto;
   justify-content: space-between;
+}
+
+.user-block {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border: 1px solid var(--light-1);
+  border-radius: 5px;
+  margin-bottom: 10px;
+  background-color: var(--light-3);
 }
 </style>
