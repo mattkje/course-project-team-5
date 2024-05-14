@@ -137,7 +137,11 @@ VALUES
     -- PASSWORD: JoeBiden
     (3, 'john_doe', 'john.doe@example.com', '$2a$10$sCuzU/RymH5ZJrGUFxEf5uT4zSJEpr/J4oDSRrrQi5SrFXjNy.Zsq', 'John',
      'Doe', true, '2024-02-12', '2024-02-12',
-     '+1234567890');
+     '+1234567890'),
+    -- PASSWORD: Anne12345
+    (4, 'anne', 'annedavies@mail.com', '$2a$10$SUyIHgfa3qPARl4l2/WzhOa08gm5bJ7/RlZGlphIxC7ZJVsO/q9pm', 'Anne',
+     'Davies', true, '2024-02-12', '2024-02-12',
+     '123123442');
 
 
 
@@ -192,7 +196,11 @@ VALUES (1, 'Information Technology', 'Real-Time Programming in Java', 'Expert', 
        (12, 'Data Science and Analytics', 'Databricks fundamentals', 'Beginner',
         '19.08 - 30.08', 2, 10, 'Databricks Practitioner',
         'Embark on your data journey with our beginner-level online course, Databricks Fundamentals. Designed for individuals new to the world of big data and analytics, this course offers a comprehensive introduction to the essential concepts of Databricks, a leading unified analytics platform. Led by experienced instructors, youll navigate through the fundamentals of data exploration, data engineering, and collaborative data science using Databricks. No prior experience with big data technologies is required, making this course an ideal starting point for beginners eager to harness the power of Databricks for streamlined data processing and analysis. By the end of the course, youll have a solid foundation in using Databricks to uncover insights from large datasets, setting you on a path towards mastering the intricacies of modern data analytics. Join us and demystify the fundamentals of Databricks in this accessible and empowering course.',
-        'https://www.databricks.com/sites/default/files/2023-11/databricks-og-universal.png');
+        'https://www.databricks.com/sites/default/files/2023-11/databricks-og-universal.png'),
+       (13, 'Data Science and Analytics', 'Algorithms and Data structures', 'Intermediate',
+        '19.08 - 30.08', 2, 10, 'Algorithm specialist',
+        'Embark on your data journey with our beginner-level online course, Databricks Fundamentals. Designed for individuals new to the world of big data and analytics, this course offers a comprehensive introduction to the essential concepts of Databricks, a leading unified analytics platform. Led by experienced instructors, youll navigate through the fundamentals of data exploration, data engineering, and collaborative data science using Databricks. No prior experience with big data technologies is required, making this course an ideal starting point for beginners eager to harness the power of Databricks for streamlined data processing and analysis. By the end of the course, youll have a solid foundation in using Databricks to uncover insights from large datasets, setting you on a path towards mastering the intricacies of modern data analytics. Join us and demystify the fundamentals of Databricks in this accessible and empowering course.',
+        'https://media.gcflearnfree.org/content/5be1de13686707122ccd266f_11_06_2018/algorithms_illustration.jpg');
 
 
 -- Exclusive courses
@@ -358,7 +366,5 @@ VALUES (1, 1),
 INSERT INTO user_roles (role_id, user_id)
 VALUES (1, 1),
        (3, 2),
-       (1, 2),
-       (2, 2),
        (1, 3),
-       (2, 3);
+       (2, 4);
