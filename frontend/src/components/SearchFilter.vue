@@ -117,7 +117,23 @@
           'border-radius': isDifficultyVisible ? '0 0 10px 10px' : '10px'
         }">
         <header>
-          <h2>Difficulty</h2>
+          <div class="checkbox-wrapper">
+            <label class="cbx" for="beginnerBox">Beginner</label>
+            <input class="inp-cbx" id="beginnerBox" type="checkbox" v-model="isBeginnerChecked"
+                   @change="onDifficultyBoxChange">
+          </div>
+
+          <div class="checkbox-wrapper">
+            <label class="cbx" for="intermediateBox">Intermediate</label>
+            <input class="inp-cbx" id="intermediateBox" type="checkbox" v-model="isIntermediateChecked"
+                   @change="onDifficultyBoxChange">
+          </div>
+
+          <div class="checkbox-wrapper">
+            <label class="cbx" for="expertBox">Expert</label>
+            <input class="inp-cbx" id="expertBox" type="checkbox" v-model="isExpertChecked"
+                   @change="onDifficultyBoxChange">
+          </div>
         </header>
       </div>
 
@@ -185,8 +201,10 @@ let searchedChildren = new Map();
 let categoryFilter = new Map();
 let dateFilter = new Map();
 let providerFilter = new Map();
+let difficultyFilter = new Map();
 let selectedCategories = [];
 let selectedProviders = [];
+let selectedDifficulties = [];
 
 onMounted(() => {
   courseContainer = document.querySelector('#courseContainer');
@@ -217,7 +235,7 @@ onMounted(() => {
       moduleNavKeyboard: true,
       moduleRanges: false,
     });
-    picker.on('hide', function(startDate, endDate) {
+    picker.on('hide', function (startDate, endDate) {
       console.log(startDate, endDate)
       sortByDate(startDate, endDate);
     });
@@ -294,7 +312,6 @@ function populateCourses(selector) {
 
 
                   const courseProviders = courseProvider.providers.filter(provider => provider.courseId === courseProvider.course.courseId);
-
 
 
                   if (Array.isArray(courseProviders) && courseProviders.length) {
@@ -378,6 +395,13 @@ function populateCourses(selector) {
                   providerNameText.style.display = 'none';
                   contentBox.appendChild(providerNameText);
 
+                  // importing difficulty as hidden to be able to access it´s value
+                  const difficultyText = document.createElement('p');
+                  difficultyText.className = 'content-box-difficulty';
+                  difficultyText.innerText += courseProvider.course.level;
+                  difficultyText.style.display = 'none';
+                  contentBox.appendChild(difficultyText);
+
                   const hr2 = document.createElement('hr');
                   descriptionBox.appendChild(hr2);
 
@@ -440,7 +464,7 @@ function searchCourses() {
 
 function filterStatus() {
   for (let i = 0; i < children.length; i++) {
-    if (searchedChildren.has(children[i]) ) {
+    if (searchedChildren.has(children[i])) {
       children[i].style.display = 'none';
     } else {
       if (categoryFilter.has(children[i])) {
@@ -449,7 +473,11 @@ function filterStatus() {
         if (providerFilter.has(children[i])) {
           children[i].style.display = 'none';
         } else {
-          children[i].style.display = 'block';
+          if (difficultyFilter.has(children[i])) {
+            children[i].style.display = 'none';
+          } else {
+            children[i].style.display = 'block';
+          }
         }
       }
     }
@@ -543,7 +571,7 @@ function initiateComponents() {
 }
 
 
-function onCategoryBoxChange(event){
+function onCategoryBoxChange(event) {
   categorizeCourses(onCheckboxChange(event));
 }
 
@@ -558,7 +586,6 @@ function updateSelection(filter, selectedList) {
     selectedList.push(filter);
   }
 
-  console.log(selectedList.length);
   filterStatus();
 }
 
@@ -569,16 +596,12 @@ function sortByProvider(s) {
     let providerMatch = childProviderList.includes(s);
     let childInHistory = providerFilter.has(child);
 
-    console.log("filter: " + s)
-    console.log("childProvider: " + childProvider)
-    console.log("providerMatch: " + providerMatch)
-
     if (selectedProviders.length === 0 && !providerMatch) {
       updateFilterMap(child, true, providerFilter);
     } else if (selectedProviders.length > 1 && selectedProviders.includes(s) && providerMatch) {
-      updateFilterMap(child, true, providerFilter );
+      updateFilterMap(child, true, providerFilter);
     } else if (selectedProviders.length > 0 && !selectedProviders.includes(s) && providerMatch && childInHistory) {
-      updateFilterMap(child, false, providerFilter );
+      updateFilterMap(child, false, providerFilter);
     } else if (selectedProviders.length === 1 && selectedProviders.includes(s) && providerMatch) {
       updateFilterMap(child, false, providerFilter);
     } else {
@@ -586,11 +609,13 @@ function sortByProvider(s) {
     }
   }
 
-  updateSelection(s,selectedProviders);
+  updateSelection(s, selectedProviders);
 }
 
-function onProviderCheckboxChange(event){
-  sortByProvider(onCheckboxChange(event));}
+function onProviderCheckboxChange(event) {
+  sortByProvider(onCheckboxChange(event));
+}
+
 function onCheckboxChange(event) {
   const checkboxId = event.target.id;
   const isChecked = event.target.checked;
@@ -603,8 +628,6 @@ function onCheckboxChange(event) {
 
     // Get the text content of the label
     let labelName = label.textContent;
-
-    console.log(document.querySelector(`label[for="${checkboxId}"]`))
 
     // Create container div
     let container = document.createElement('div');
@@ -653,15 +676,15 @@ function categorizeCourses(category) {
     if (selectedCategories.length === 0 && !categoryMatch) {
       updateFilterMap(child, true, categoryFilter);
     } else if (selectedCategories.length > 1 && selectedCategories.includes(category) && categoryMatch) {
-      updateFilterMap(child, true, categoryFilter );
+      updateFilterMap(child, true, categoryFilter);
     } else if (selectedCategories.length > 0 && !selectedCategories.includes(category) && categoryMatch && childInHistory) {
-      updateFilterMap(child, false, categoryFilter );
+      updateFilterMap(child, false, categoryFilter);
     } else if (selectedCategories.length === 1 && selectedCategories.includes(category) && categoryMatch) {
       updateFilterMap(child, false, categoryFilter);
     }
   }
 
-  updateSelection(category,selectedCategories);
+  updateSelection(category, selectedCategories);
 }
 
 function updateFilterMap(child, add, filterMap) {
@@ -693,10 +716,6 @@ function updateFilterMap(child, add, filterMap) {
 }
 
 
-
-
-
-
 function filterPrices(value) {
   for (let i = 0; i < children.length; i++) {
     let child = children[i];
@@ -726,8 +745,7 @@ watch(maxRangeValue, (newVal) => {
 });
 
 
-
-function sortByDate(date1,date2) {
+function sortByDate(date1, date2) {
   for (let i = 0; i < children.length; i++) {
     let child = children[i];
     let childDate = child.querySelector('.content-box-attributes').textContent;
@@ -741,7 +759,33 @@ function sortByDate(date1,date2) {
   }
 }
 
+function sortByDifficulty(difficulty) {
+  for (let child of children) {
+    let childDifficulty = child.querySelector('.content-box-difficulty').textContent;
+    let difficultyMatch = childDifficulty === difficulty;
+    let childInHistory = difficultyFilter.has(child);
 
+    console.log("difficulty: " + difficulty)
+    console.log("childDifficulty: " + childDifficulty)
+    console.log("difficultyMatch: " + difficultyMatch)
+
+    if (selectedDifficulties.length === 0 && !difficultyMatch) {
+      updateFilterMap(child, true, difficultyFilter);
+    } else if (selectedDifficulties.length > 1 && selectedDifficulties.includes(difficulty) && difficultyMatch) {
+      updateFilterMap(child, true, difficultyFilter);
+    } else if (selectedDifficulties.length > 0 && !selectedDifficulties.includes(difficulty) && difficultyMatch && childInHistory) {
+      updateFilterMap(child, false, difficultyFilter);
+    } else if (selectedDifficulties.length === 1 && selectedDifficulties.includes(difficulty) && difficultyMatch) {
+      updateFilterMap(child, false, difficultyFilter);
+    }
+  }
+
+  updateSelection(difficulty, selectedDifficulties);
+}
+
+function onDifficultyBoxChange(event) {
+  sortByDifficulty(onCheckboxChange(event));
+}
 
 
 </script>
