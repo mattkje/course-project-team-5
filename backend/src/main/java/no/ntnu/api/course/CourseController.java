@@ -82,9 +82,8 @@ public class CourseController {
         if(getCourse(id) == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-
         else{
-            courseService.deleteCourse(Objects.requireNonNull(getCourse(id).getBody()).course());
+            courseService.deleteCourse(courseService.getCourseInfo(id));
             return ResponseEntity.status(HttpStatus.OK).body("Course deleted");
         }
     }

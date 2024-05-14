@@ -3,6 +3,7 @@
 </script>
 
 <template>
+
   <div class="greeting">
     <h2>About Us</h2>
   </div>
@@ -51,11 +52,11 @@
 
   .greeting h2 {
     font-size: 2.5em;
-    color: #2c3e50;
+    color: var(--light-1);
   }
 
   .greeting p {
     font-size: 1.2em;
-    color: #2c3e50;
+    color: var(--light-1);
   }
 </style>
