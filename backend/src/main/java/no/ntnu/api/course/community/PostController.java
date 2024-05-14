@@ -4,6 +4,7 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,11 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class PostController {
 
-    private final PostService communityCourseService;
+    private final PostService postService;
 
     @Autowired
     public PostController(PostService courseService) {
-        this.communityCourseService = courseService;
+        this.postService = courseService;
     }
 
     /**
@@ -29,10 +30,21 @@ public class PostController {
      */
     @GetMapping("/api/community/courses/{id}")
     public ResponseEntity<Post> getCourse(@PathVariable int id) {
-        if(communityCourseService.getCourseInfo(id) == null) {
+        if(postService.getCourseInfo(id) == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         } else {
-            return ResponseEntity.status(HttpStatus.OK).body(communityCourseService.getCourse(id));
+            return ResponseEntity.status(HttpStatus.OK).body(postService.getCourse(id));
+        }
+    }
+
+    @DeleteMapping("/api/community/courses/{id}")
+    public ResponseEntity<String> deleteCourse(@PathVariable int id) {
+        if(getCourse(id) == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        else{
+            postService.deletePost(postService.getCourseInfo(id));
+            return ResponseEntity.status(HttpStatus.OK).body("Course deleted");
         }
     }
 
@@ -43,7 +55,7 @@ public class PostController {
 
     @GetMapping("/api/community/courses")
     public Collection<Post> getCourses() {
-        return communityCourseService.getAllCourses();
+        return postService.getAllCourses();
     }
 
     /**
@@ -57,7 +69,7 @@ public class PostController {
         if(post == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }else {
-            communityCourseService.postCourse(post);
+            postService.postCourse(post);
             return ResponseEntity.status(HttpStatus.CREATED).body(post);
         }
     }

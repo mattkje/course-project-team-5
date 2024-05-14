@@ -6,6 +6,7 @@ import {getAuthenticatedUser, hasRole} from "@/js/authentication";
 import AdminUserManagement from "@/components/AdminUserManagement.vue";
 import AdminCourseManagement from "@/components/AdminCourseManagement.vue";
 import {redirectTo} from "@/js/navigation";
+import AdminPostManagement from "@/components/AdminPostManagement.vue";
 
 
 onMounted(loadProfileData);
@@ -23,12 +24,12 @@ async function loadProfileData() {
 }
 
 
-function siteManage() {
+function postManage() {
   const buttons = document.querySelectorAll('.nav-button');
   buttons[0].style.background = 'none';
   buttons[1].style.background = 'none';
   buttons[2].style.background = 'var(--light-1)';
-  navigate.value = "siteManage";
+  navigate.value = "postManage";
 }
 
 function userManage() {
@@ -63,10 +64,11 @@ function courseManage() {
         <p>Admin tools</p>
         <button class="nav-button" @click="userManage()"><img class="nav-icon" src="/settingsaccount.svg">User Management</button>
         <button class="nav-button" @click="courseManage()"><img class="nav-icon" src="/settingscourses.svg">Course Management</button>
-        <button class="nav-button" @click="siteManage()"><img class="nav-icon"src="/settingsPlanet.svg">Site Traffic</button>
+        <button class="nav-button" @click="postManage()"><img class="nav-icon"src="/settingsPost.svg">Post Management</button>
       </div>
       <AdminUserManagement v-show="navigate === 'userManage' && !loading"/>
       <AdminCourseManagement v-show="navigate === 'courseManage' && !loading"/>
+      <AdminPostManagement v-show="navigate === 'postManage' && !loading"/>
     </div>
   </div>
 </template>

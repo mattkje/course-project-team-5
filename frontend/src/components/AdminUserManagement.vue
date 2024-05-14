@@ -51,7 +51,10 @@ async function deleteUser(user) {
     <div class="page-highlight" v-show="!loading">
       <div v-for="user in users" :key="user.id" class="user-block">
         <p>{{ user.username }}</p>
-        <button class="fancy-button" @click="deleteUser(user)">Delete</button>
+        <div class="right-content">
+          <button class="fancy-button" @click="">Actions</button>
+          <button class="fancy-button" style="background-color: orangered; color: white" @click="deleteUser(user)">Delete</button>
+        </div>
       </div>
     </div>
   </div>
@@ -78,6 +81,7 @@ async function deleteUser(user) {
   padding: 20px;
   display: grid;
   width: 100%;
+  min-height: 50vh;
   grid-template-columns: repeat(2, 1fr);
   margin: 20px 0;
   line-height: 50px;
@@ -94,5 +98,11 @@ async function deleteUser(user) {
   border-radius: 5px;
   margin-bottom: 10px;
   background-color: var(--light-3);
+}
+
+.right-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 </style>

@@ -2,27 +2,27 @@
 import {ref, onMounted, getCurrentInstance} from 'vue';
 import {getCookie} from "@/js/tools";
 
-const courses = ref([]);
+const posts = ref([]);
 const loading = ref(true);
 const {appContext} = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
 
 onMounted(async () => {
-  const response = await fetch(API_URL + '/courses');
+  const response = await fetch(API_URL + '/community/courses');
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
-  courses.value = await response.json();
+  posts.value = await response.json();
   loading.value = false;
 });
 
-function visitPage(courseProvider) {
-  location.href = '/courses?id=' + courseProvider.course.courseId;
+function visitPage(post) {
+  location.href = '/community/post?id=' + post.courseId;
 }
 
-async function deleteCourse(courseProvider) {
+async function deleteCourse(post) {
   const token = getCookie('jwt');
-  const response = await fetch(API_URL + '/courses/' + courseProvider.course.courseId, {
+  const response = await fetch(API_URL + '/community/courses/' + post.courseId, {
 
     method: 'DELETE',
     headers: {
@@ -49,17 +49,16 @@ async function deleteCourse(courseProvider) {
       <div class="three-body__dot"></div>
     </div>
     <div class="title">
-      <h1>Course Management</h1>
-      <p>Review active courses</p>
+      <h1>Post Management</h1>
+      <p>Review active posts</p>
     </div>
     <div class="page-highlight" v-show="!loading">
-      <div v-for="courseProvider in courses" :key="courseProvider.course.id" class="user-block">
-        <p>{{ courseProvider.course.title }}</p>
+      <div v-for="post in posts" :key="post.courseId" class="user-block">
+        <p>{{ post.title }}</p>
         <div class="right-content">
-          <button class="fancy-button" @click="visitPage(courseProvider)">Review</button>
-          <button class="fancy-button" style="background-color: orangered; color: white" @click="deleteCourse(courseProvider)">Delete</button>
+          <button class="fancy-button" @click="visitPage(post)">Review</button>
+          <button class="fancy-button" style="background-color: orangered; color: white" @click="deleteCourse(post)">Delete</button>
         </div>
-
       </div>
     </div>
 

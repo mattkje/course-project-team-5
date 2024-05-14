@@ -1,7 +1,7 @@
 CREATE DATABASE IF NOT EXISTS learniversedb;
 USE learniversedb;
 
-CREATE TABLE course_keywords
+CREATE TABLE IF NOT EXISTS course_keywords
 (
     course_keyword_id INT AUTO_INCREMENT NOT NULL,
     course_id         INT                NULL,
@@ -9,7 +9,7 @@ CREATE TABLE course_keywords
     CONSTRAINT pk_course_keywords PRIMARY KEY (course_keyword_id)
 );
 
-CREATE TABLE course_providers
+CREATE TABLE IF NOT EXISTS course_providers
 (
     course_provider_id INT AUTO_INCREMENT NOT NULL,
     course_id          INT                NULL,
@@ -21,7 +21,7 @@ CREATE TABLE course_providers
     CONSTRAINT pk_course_providers PRIMARY KEY (course_provider_id)
 );
 
-CREATE TABLE courses
+CREATE TABLE IF NOT EXISTS courses
 (
     course_id              INT           NOT NULL,
     title                  VARCHAR(255)  NULL,
@@ -36,7 +36,7 @@ CREATE TABLE courses
     CONSTRAINT pk_courses PRIMARY KEY (course_id)
 );
 
-CREATE TABLE currencies
+CREATE TABLE IF NOT EXISTS currencies
 (
     code   VARCHAR(255)   NOT NULL,
     name   VARCHAR(255)   NULL,
@@ -45,21 +45,21 @@ CREATE TABLE currencies
     CONSTRAINT pk_currencies PRIMARY KEY (code)
 );
 
-CREATE TABLE keywords
+CREATE TABLE IF NOT EXISTS keywords
 (
     keyword_id   INT          NOT NULL,
     keyword_name VARCHAR(255) NULL,
     CONSTRAINT pk_keywords PRIMARY KEY (keyword_id)
 );
 
-CREATE TABLE providers
+CREATE TABLE IF NOT EXISTS providers
 (
     provider_id INT          NOT NULL,
     name        VARCHAR(255) NULL,
     CONSTRAINT pk_providers PRIMARY KEY (provider_id)
 );
 
-CREATE TABLE community_courses (
+CREATE TABLE IF NOT EXISTS community_courses (
                                    id INT AUTO_INCREMENT,
                                    author VARCHAR(20),
                                    title VARCHAR(255),
@@ -71,21 +71,21 @@ CREATE TABLE community_courses (
                                    PRIMARY KEY (id)
 );
 
-CREATE TABLE roles
+CREATE TABLE IF NOT EXISTS roles
 (
     id   BIGINT AUTO_INCREMENT NOT NULL,
     name VARCHAR(255)          NULL,
     CONSTRAINT pk_roles PRIMARY KEY (id)
 );
 
-CREATE TABLE user_roles
+CREATE TABLE IF NOT EXISTS user_roles
 (
     role_id BIGINT NOT NULL,
     user_id INT    NOT NULL,
     CONSTRAINT pk_user_roles PRIMARY KEY (role_id, user_id)
 );
 
-CREATE TABLE users
+CREATE TABLE IF NOT EXISTS users
 (
     id           INT AUTO_INCREMENT NOT NULL,
     username     VARCHAR(16)        NULL,
@@ -100,7 +100,7 @@ CREATE TABLE users
     CONSTRAINT pk_users PRIMARY KEY (id)
 );
 
-CREATE TABLE user_courses
+CREATE TABLE IF NOT EXISTS user_courses
 (
     user_course_id INT AUTO_INCREMENT NOT NULL,
     user_id  INT NOT NULL,
@@ -194,6 +194,52 @@ VALUES (1, 'Information Technology', 'Real-Time Programming in Java', 'Expert', 
         'Embark on your data journey with our beginner-level online course, Databricks Fundamentals. Designed for individuals new to the world of big data and analytics, this course offers a comprehensive introduction to the essential concepts of Databricks, a leading unified analytics platform. Led by experienced instructors, youll navigate through the fundamentals of data exploration, data engineering, and collaborative data science using Databricks. No prior experience with big data technologies is required, making this course an ideal starting point for beginners eager to harness the power of Databricks for streamlined data processing and analysis. By the end of the course, youll have a solid foundation in using Databricks to uncover insights from large datasets, setting you on a path towards mastering the intricacies of modern data analytics. Join us and demystify the fundamentals of Databricks in this accessible and empowering course.',
         'https://www.databricks.com/sites/default/files/2023-11/databricks-og-universal.png');
 
+
+-- Exclusive courses
+
+INSERT INTO courses (course_id, category, title, level, closest_course_session, course_size, hours_per_week,
+                     related_certifications, description, image)
+VALUES (14, 'Data Science and Analytics', 'Data Visualization with Python',
+        'Intermediate', '01.10 - 30.10', 2, 15,
+        'Python Data Visualization Specialist',
+        'Dive into the world of data visualization with our intermediate-level online course, "Data Visualization with Python." This course is designed for individuals with a basic understanding of Python and data science, and it aims to provide a comprehensive introduction to the use of Python in creating meaningful and insightful data visualizations. Led by experienced instructors, you will learn how to use popular Python libraries such as Matplotlib and Seaborn to create plots, charts, and other visual representations of data. By the end of the course, you will have a solid foundation in using Python for data visualization, enabling you to effectively communicate data-driven insights.',
+        'https://datascientest.com/en/wp-content/uploads/sites/9/2023/09/matplotlib-graphs-1024x576.png'),
+       (15, 'Software Development', 'Advanced Java Programming',
+        'Advanced', '01.05 - 30.05', 4, 20,
+        'Oracle Certified Professional, Java SE 8 Programmer',
+        'This course is designed for students who are looking for an in-depth understanding of Java and OO principles. This course takes a deep dive into the intricacies of Java, covering topics such as exception handling, Java I/O, collections, generics, threads, JDBC, and more.',
+        'https://www.mindsmapped.com/wp-content/uploads/2016/08/Advanced-Java-J2EE.jpeg'),
+       (16, 'Software Development', 'Web Development with JavaScript',
+        'Intermediate', '01.06 - 30.06', 3, 15,
+        'JavaScript Developer Certificate',
+        'This course covers the essential concepts and techniques for programming in JavaScript. Students will learn how to create dynamic web pages using JavaScript, including topics such as data types, control structures, functions, objects, arrays, and the Document Object Model (DOM).',
+        'https://www.digitalsilk.com/wp-content/uploads/2020/06/website-development-process-hero-image.png.webp'),
+       (17, 'Software Development', 'Advanced C++ Programming',
+        'Advanced', '01.07 - 30.07', 4, 20,
+        'C++ Certified Professional Programmer',
+        'This course is designed for students who are looking for an in-depth understanding of C++ and OO principles. This course takes a deep dive into the intricacies of C++, covering topics such as exception handling, C++ I/O, collections, generics, threads, and more.',
+        'https://familycomputercentre.com/wp-content/uploads/fp-cpp-adv.jpg'),
+       (18, 'Data Science and Analytics', 'Data Analysis with R',
+        'Intermediate', '01.08 - 30.08', 3, 15,
+        'R Certified Data Analyst',
+        'This course covers the essential concepts and techniques for data analysis in R. Students will learn how to manipulate and analyze data using R, including topics such as data types, control structures, functions, objects, arrays, and data visualization.',
+        'https://www.orbitanalytics.com/wp-content/uploads/2019/06/R-language-advanced-analytics1024x560.jpg');
+
+
+
+-- Extra courses
+
+INSERT INTO courses (course_id, category, title, level, closest_course_session, course_size, hours_per_week,
+                     related_certifications, description, image)
+VALUES (19, 'Digital Marketing', 'Advanced SEO Techniques', 'Advanced', '01.07 - 30.07', 4, 20,
+        'Google Analytics Individual Qualification',
+        'This course covers advanced SEO techniques including keyword research, link building, and technical SEO. Students will learn how to optimize their websites for search engines and improve their website''s ranking on search engine results pages.',
+        null),
+       (20, 'Digital Marketing', 'Social Media Marketing Strategies', 'Intermediate', '01.08 - 30.08', 3, 15,
+        'Hootsuite Social Marketing Certification',
+        'This course covers the essential concepts and techniques for social media marketing. Students will learn how to create engaging content, use analytics to measure success, and develop a comprehensive social media marketing strategy.',
+        null);
+
 INSERT INTO providers (provider_id, name)
 VALUES (1, 'NTNU'),
        (2, 'Oracle'),
@@ -208,6 +254,21 @@ VALUES (1, 'NTNU'),
        (11, 'University of Oslo'),
        (12, 'University of Bergen'),
        (13, 'Learniverse');
+
+INSERT INTO keywords (keyword_id, keyword_name)
+VALUES (1, 'Java'),
+       (2, 'Python'),
+       (3, 'C+');
+
+INSERT INTO course_keywords (course_id, keyword_id)
+VALUES (1, 1),
+       (2, 1),
+       (2, 2),
+       (3, 3),
+       (1, 3);
+
+
+
 
 INSERT INTO course_providers (course_id, provider_id, price, currency, latitude, longitude)
 VALUES (1, 1, 29999.00, 'NOK', 62.49151100481676, 6.2356728695082415),
@@ -257,66 +318,6 @@ VALUES (1, 1, 29999.00, 'NOK', 62.49151100481676, 6.2356728695082415),
        (18, 13, 9.99, 'SUB', null, null),
        (19, 12, 1000.00, 'USD', 60.387980480834656, 5.321840740337752),
        (20, 11, 100.00, 'USD', 59.94055289029062, 10.721540432557507);
-
-INSERT INTO keywords (keyword_id, keyword_name)
-VALUES (1, 'Java'),
-       (2, 'Python'),
-       (3, 'C+');
-
-INSERT INTO course_keywords (course_id, keyword_id)
-VALUES (1, 1),
-       (2, 1),
-       (2, 2),
-       (3, 3),
-       (1, 3);
-
-
--- Exclusive courses
-
-INSERT INTO courses (course_id, category, title, level, closest_course_session, course_size, hours_per_week,
-                     related_certifications, description, image)
-VALUES (14, 'Data Science and Analytics', 'Data Visualization with Python',
-        'Intermediate', '01.10 - 30.10', 2, 15,
-        'Python Data Visualization Specialist',
-        'Dive into the world of data visualization with our intermediate-level online course, "Data Visualization with Python." This course is designed for individuals with a basic understanding of Python and data science, and it aims to provide a comprehensive introduction to the use of Python in creating meaningful and insightful data visualizations. Led by experienced instructors, you will learn how to use popular Python libraries such as Matplotlib and Seaborn to create plots, charts, and other visual representations of data. By the end of the course, you will have a solid foundation in using Python for data visualization, enabling you to effectively communicate data-driven insights.',
-        'https://datascientest.com/en/wp-content/uploads/sites/9/2023/09/matplotlib-graphs-1024x576.png'),
-       (15, 'Software Development', 'Advanced Java Programming',
-        'Advanced', '01.05 - 30.05', 4, 20,
-        'Oracle Certified Professional, Java SE 8 Programmer',
-        'This course is designed for students who are looking for an in-depth understanding of Java and OO principles. This course takes a deep dive into the intricacies of Java, covering topics such as exception handling, Java I/O, collections, generics, threads, JDBC, and more.',
-        'https://www.mindsmapped.com/wp-content/uploads/2016/08/Advanced-Java-J2EE.jpeg'),
-       (16, 'Software Development', 'Web Development with JavaScript',
-        'Intermediate', '01.06 - 30.06', 3, 15,
-        'JavaScript Developer Certificate',
-        'This course covers the essential concepts and techniques for programming in JavaScript. Students will learn how to create dynamic web pages using JavaScript, including topics such as data types, control structures, functions, objects, arrays, and the Document Object Model (DOM).',
-        'https://www.digitalsilk.com/wp-content/uploads/2020/06/website-development-process-hero-image.png.webp'),
-       (17, 'Software Development', 'Advanced C++ Programming',
-        'Advanced', '01.07 - 30.07', 4, 20,
-        'C++ Certified Professional Programmer',
-        'This course is designed for students who are looking for an in-depth understanding of C++ and OO principles. This course takes a deep dive into the intricacies of C++, covering topics such as exception handling, C++ I/O, collections, generics, threads, and more.',
-        'https://familycomputercentre.com/wp-content/uploads/fp-cpp-adv.jpg'),
-       (18, 'Data Science and Analytics', 'Data Analysis with R',
-        'Intermediate', '01.08 - 30.08', 3, 15,
-        'R Certified Data Analyst',
-        'This course covers the essential concepts and techniques for data analysis in R. Students will learn how to manipulate and analyze data using R, including topics such as data types, control structures, functions, objects, arrays, and data visualization.',
-        'https://www.orbitanalytics.com/wp-content/uploads/2019/06/R-language-advanced-analytics1024x560.jpg');
-
-INSERT INTO course_providers (course_id, provider_id, price, currency)
-VALUES (14, 13, 9.99, 'SUB');
-
-
--- Extra courses
-
-INSERT INTO courses (course_id, category, title, level, closest_course_session, course_size, hours_per_week,
-                     related_certifications, description, image)
-VALUES (19, 'Digital Marketing', 'Advanced SEO Techniques', 'Advanced', '01.07 - 30.07', 4, 20,
-        'Google Analytics Individual Qualification',
-        'This course covers advanced SEO techniques including keyword research, link building, and technical SEO. Students will learn how to optimize their websites for search engines and improve their website''s ranking on search engine results pages.',
-        null),
-       (20, 'Digital Marketing', 'Social Media Marketing Strategies', 'Intermediate', '01.08 - 30.08', 3, 15,
-        'Hootsuite Social Marketing Certification',
-        'This course covers the essential concepts and techniques for social media marketing. Students will learn how to create engaging content, use analytics to measure success, and develop a comprehensive social media marketing strategy.',
-        null);
 
 INSERT INTO currencies (code, name, symbol, rate)
 VALUES ('USD', 'United States Dollar', '$', 1),

@@ -1,6 +1,8 @@
 package no.ntnu.api.course.community;
 
 import java.util.Collection;
+import no.ntnu.api.course.Course;
+import no.ntnu.api.course.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 public class PostService {
 
   private final PostRepository courseRepository;
+
 
   /**
    * Constructor for the CourseService class.
@@ -54,6 +57,12 @@ public class PostService {
 
   public Post getCourse(int id) {
     return courseRepository.findById((long) id).orElse(null);
+  }
+
+  public void deletePost(Post post) {
+    if (post != null) {
+      courseRepository.delete(post);
+    }
   }
 
   /**
