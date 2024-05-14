@@ -87,7 +87,7 @@ function onSignUpError(error) {
       </div>
     </div>
   </form>
-  <div v-else class="sign-up-confirmation"><p>User created successfully!</p><router-link to="/login" class="standard-button">Log in</router-link></div>
+  <div v-else class="sign-up-confirmation"><p>User created successfully!</p><a @click="$emit('change-compo')" class="standard-button">Log in</a></div>
 </template>
 
 <style scoped>

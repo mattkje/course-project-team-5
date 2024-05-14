@@ -3,7 +3,7 @@
 </script>
 
 <template>
-
+<img class="about-us-pic" src="/desk.jpg">
   <div class="greeting">
     <h2>About Us</h2>
   </div>
@@ -58,5 +58,10 @@
   .greeting p {
     font-size: 1.2em;
     color: var(--light-1);
+  }
+
+  .about-us-pic {
+    width: 100%;
+    height: 600px;
   }
 </style>

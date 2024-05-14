@@ -147,16 +147,18 @@ public class UserController {
     public ResponseEntity<?> deleteUser(@PathVariable String username) {
         UserWithCourses sessionUser = userService.getSessionUser();
         for(User user : userService.getAllUsers()) {
-            if(!user.getUsername().equals(username)) {
+            if(user.getUsername().equals(username)) {
+                if((sessionUser != null && sessionUser.user().getUsername().equals(username)) || userService.isAdmin()) {
+                    userService.deleteUser(username);
+                    return ResponseEntity.status(HttpStatus.OK).body("User successfully deleted");
+                } else {
+                    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Only accessible to authorized users");
+                }
+            } else{
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
             }
         }
-        if((sessionUser != null && sessionUser.user().getUsername().equals(username)) || userService.isAdmin()) {
-            userService.deleteUser(username);
-            return ResponseEntity.status(HttpStatus.OK).body("User successfully deleted");
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Only accessible to authorized users");
-        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
     }
 
     @PutMapping("/{username}/add-role")
