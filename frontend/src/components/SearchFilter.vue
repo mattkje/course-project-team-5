@@ -369,8 +369,6 @@ function populateCourses(selector) {
                   contentBox.appendChild(durationText);
 
 
-
-
                   // importing provider name as hidden to be able to access it´s value
                   const providerNameText = document.createElement('p');
                   providerNameText.className = 'provider-name';
@@ -407,13 +405,13 @@ function populateProviders() {
 
           const label = document.createElement('label');
           label.className = 'cbx';
-          label.setAttribute('for', `provider${provider.id}`);
+          label.setAttribute('for', `provider${provider.providerId}`);
           label.textContent = provider.name;
           checkboxWrapper.appendChild(label);
 
           const checkbox = document.createElement('input');
           checkbox.className = 'inp-cbx';
-          checkbox.id = `provider${provider.id}`;
+          checkbox.id = `provider${provider.providerId}`;
           checkbox.type = 'checkbox';
           checkbox.setAttribute('v-model', `isProviderChecked['${provider.name}']`);
           checkbox.addEventListener('change', onProviderCheckboxChange);
@@ -571,6 +569,10 @@ function sortByProvider(s) {
     let providerMatch = childProviderList.includes(s);
     let childInHistory = providerFilter.has(child);
 
+    console.log("filter: " + s)
+    console.log("childProvider: " + childProvider)
+    console.log("providerMatch: " + providerMatch)
+
     if (selectedProviders.length === 0 && !providerMatch) {
       updateFilterMap(child, true, providerFilter);
     } else if (selectedProviders.length > 1 && selectedProviders.includes(s) && providerMatch) {
@@ -578,6 +580,8 @@ function sortByProvider(s) {
     } else if (selectedProviders.length > 0 && !selectedProviders.includes(s) && providerMatch && childInHistory) {
       updateFilterMap(child, false, providerFilter );
     } else if (selectedProviders.length === 1 && selectedProviders.includes(s) && providerMatch) {
+      updateFilterMap(child, false, providerFilter);
+    } else {
       updateFilterMap(child, false, providerFilter);
     }
   }
@@ -599,6 +603,8 @@ function onCheckboxChange(event) {
 
     // Get the text content of the label
     let labelName = label.textContent;
+
+    console.log(document.querySelector(`label[for="${checkboxId}"]`))
 
     // Create container div
     let container = document.createElement('div');
