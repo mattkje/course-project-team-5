@@ -10,13 +10,12 @@
     border: 0.5px solid #ffffff;
     text-decoration: none;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
-    transition: transform 0.5s ease, box-shadow 0.5s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
     margin: 30px;
-}
-
-.content-box:hover {
-    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.53);
-    transform: scale(1.01);
+    &:hover {
+        box-shadow: 0 4px 5px rgba(0, 0, 0, 0.33);
+        transform: scale(1.05);
+    }
 }
 
 * {
@@ -137,10 +136,10 @@ hr {
         max-width: 600px;
         max-height: 200px;
         text-decoration: none;
-        transition: transform 0.5s ease, box-shadow 0.5s ease;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
         &:hover {
-            box-shadow: 0 4px 5px rgba(0, 0, 0, 0.53);
-            transform: scale(1.01);
+            box-shadow: 0 4px 5px rgba(0, 0, 0, 0.33);
+            transform: scale(1.05);
         }
     }
 

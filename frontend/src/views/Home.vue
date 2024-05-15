@@ -330,7 +330,7 @@ ul {
 
 .bend {
   width: 100%;
-  transform: scaleX(1.01) translateY(2px);
+  transform: translateY(2px);
   margin: 0;
   padding: 0;
 
@@ -339,7 +339,7 @@ ul {
 .bend-bottom {
   rotate: 180deg;
   width: 100%;
-  transform: scaleX(1.01) translateY(2px);
+  transform: translateY(2px);
   margin: 0;
   padding: 0;
 }
@@ -496,7 +496,6 @@ input:focus {
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
@@ -522,7 +521,7 @@ button {
   margin: 0 10px;
   max-height: 50px;
   background: #0C0C0C;
-  border: 0.5px solid #252525;
+  border: 1px solid #252525;
 
 }
 
@@ -535,7 +534,6 @@ button {
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
@@ -560,7 +558,7 @@ button {
 .three-body__dot:after {
   content: '';
   position: absolute;
-  height: 0%;
+  height: 0;
   width: 100%;
   padding-bottom: 100%;
   background-color: var(--uib-color);
