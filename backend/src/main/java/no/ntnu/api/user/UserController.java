@@ -38,8 +38,12 @@ public class UserController {
      * @return A list of all users
      */
     @GetMapping
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
+    public ResponseEntity<?> getAllUsers() {
+        if(userService.isAdmin()) {
+            return ResponseEntity.status(HttpStatus.OK).body(userService.getAllUsers());
+        }else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Only accessible to authorized users");
+        }
     }
 
     /**
@@ -89,7 +93,7 @@ public class UserController {
      */
     @GetMapping("/{username}")
     public ResponseEntity<?> getProfile(@PathVariable String username) {
-        if(userService.getSessionUser() != null || userService.getSessionUser().user().getUsername().equals(username)) {
+        if(userService.getSessionUser() != null || userService.getSessionUser().user().getUsername().equals(username) || userService.isAdmin()) {
             return ResponseEntity.status(HttpStatus.OK).body(userService.getSessionUser());
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -238,7 +242,7 @@ public class UserController {
     @PutMapping("/purchase-pro/{subscriptionType}")
     public ResponseEntity<?> purchasePro(@PathVariable String subscriptionType) {
         UserWithCourses sessionUser = userService.getSessionUser();
-        if (sessionUser != null) {
+        if (sessionUser != null && !userService.isPro()) {
             userService.purchasePro(sessionUser.user(), subscriptionType);
             return new ResponseEntity<>("", HttpStatus.OK);
         } else {

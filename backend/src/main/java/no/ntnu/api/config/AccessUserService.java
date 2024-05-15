@@ -279,4 +279,16 @@ public class AccessUserService implements UserDetailsService {
       userRepository.save(user);
     }
   }
+
+    public boolean isPro() {
+        UserWithCourses sessionUser = getSessionUser();
+        if (sessionUser != null) {
+            for (Role role : sessionUser.user().getRoles()) {
+                if (role.getName().equals("ROLE_PRO")) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

@@ -1,6 +1,8 @@
 package no.ntnu.api.course.community;
 
 import java.util.Collection;
+
+import no.ntnu.api.config.AccessUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class PostController {
 
     private final PostService postService;
+    private final AccessUserService userService;
 
     @Autowired
-    public PostController(PostService courseService) {
+    public PostController(PostService courseService, AccessUserService userService) {
         this.postService = courseService;
+        this.userService = userService;
     }
 
     /**
@@ -30,21 +34,21 @@ public class PostController {
      */
     @GetMapping("/api/community/courses/{id}")
     public ResponseEntity<Post> getCourse(@PathVariable int id) {
-        if(postService.getCourseInfo(id) == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        } else {
+        if(postService.getCourseInfo(id) != null) {
             return ResponseEntity.status(HttpStatus.OK).body(postService.getCourse(id));
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 
     @DeleteMapping("/api/community/courses/{id}")
     public ResponseEntity<String> deleteCourse(@PathVariable int id) {
-        if(getCourse(id) == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-        else{
+        if(getCourse(id) != null && userService.isAdmin()) {
             postService.deletePost(postService.getCourseInfo(id));
             return ResponseEntity.status(HttpStatus.OK).body("Course deleted");
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 
@@ -66,11 +70,11 @@ public class PostController {
      */
     @PostMapping("/api/community/courses")
     public ResponseEntity<Post> postCourse(@RequestBody Post post) {
-        if(post == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }else {
+        if(post != null && userService.isAdmin()) {
             postService.postCourse(post);
             return ResponseEntity.status(HttpStatus.CREATED).body(post);
+        }else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 }

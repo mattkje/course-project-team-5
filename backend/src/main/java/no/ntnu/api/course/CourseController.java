@@ -2,6 +2,7 @@ package no.ntnu.api.course;
 
 import java.util.Objects;
 
+import no.ntnu.api.config.AccessUserService;
 import no.ntnu.api.provider.CourseProvider;
 import no.ntnu.api.provider.Provider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,12 @@ import java.util.Collection;
 public class CourseController {
 
     private final CourseService courseService;
+    private final AccessUserService userService;
 
     @Autowired
-    public CourseController(CourseService courseService) {
+    public CourseController(CourseService courseService, AccessUserService userService) {
         this.courseService = courseService;
+        this.userService = userService;
     }
 
     /**
@@ -79,12 +82,12 @@ public class CourseController {
      */
     @DeleteMapping("/api/courses/{id}")
     public ResponseEntity<String> deleteCourse(@PathVariable int id) {
-        if(getCourse(id) == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-        else{
+        if(getCourse(id) != null && userService.isAdmin()) {
             courseService.deleteCourse(courseService.getCourseInfo(id));
             return ResponseEntity.status(HttpStatus.OK).body("Course deleted");
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 
@@ -96,11 +99,11 @@ public class CourseController {
      */
     @PostMapping("/api/courses")
     public ResponseEntity<Course> postCourse(@RequestBody Course course) {
-        if(course == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }else {
+        if(course != null && userService.isAdmin()) {
             courseService.postCourse(course);
             return ResponseEntity.status(HttpStatus.CREATED).body(course);
+        }else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 
@@ -130,11 +133,11 @@ public class CourseController {
     @DeleteMapping("/api/courses/{courseId}/providers/{providerId}/keywords/{keywordId}")
     public ResponseEntity<String> deleteProvider(@PathVariable int courseId, @PathVariable int providerId,
                                                  @PathVariable int keywordId) {
-        if(courseService.getCourse(courseId, providerId, keywordId) == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }else {
+        if(courseService.getCourse(courseId, providerId, keywordId) == null && userService.isAdmin()) {
             courseService.deleteProvider(courseId, providerId);
             return ResponseEntity.status(HttpStatus.OK).body("Provider deleted");
+        }else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 }
