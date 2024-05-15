@@ -9,7 +9,9 @@
       </div>
     </div>
   </div>
-  <div id="curtain" class="curtain"/>
+  <div id="curtain" class="curtain-before">
+    <img id="logo" class="logo" src="/logo.svg"/>
+  </div>
 </template>
 
 <script>
@@ -40,7 +42,7 @@ export default {
         if (images.value.length > 0) {
           const randomIndex = Math.floor(Math.random() * images.value.length);
           if (images.value[randomIndex] === null) {
-            currentImage.value = 'https://raw.githubusercontent.com/mattkje/course-project-team-5/221e131a84afbf8c00f93295b720fb25071db6b0/frontend/public/noImage.svg?token=AJS2STSZ5A3GUGWLM7HQI43GISG4A';
+            currentImage.value = '/noImage.svg';
           } else {
             currentImage.value = images.value[randomIndex];
           }
@@ -49,7 +51,7 @@ export default {
           document.getElementById('currentDifficulty').innerText = difficulty.value[randomIndex];
           console.log('currentImage.value:', currentImage.value); // Debug log
         }
-        const curtain = document.getElementById('curtain');
+        const curtain = document.getElementById('curtain')
         curtain.className = 'curtain';
         document.body.appendChild(curtain);
       }, 1000); // Delay should match the duration of the CSS animation
@@ -101,14 +103,38 @@ img {
   height: 500px;
 }
 
+.curtain-before {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 71px;
+  height: 500px;
+  width: 100%;
+  right: 0;
+  background-color: var(--light-1);
+}
+
 .curtain {
   position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   top: 71px;
-  left: 0;
-  width: 100%;
   height: 500px;
-  background-color: white;
+  width: 100%;
+  right: 0;
+  background-color: var(--light-1);
   animation: slide 5s ease-in-out;
+}
+
+
+.logo {
+  width: 200px;
+  height: auto;
+  position: absolute;
+  margin: auto;
+  animation: logofix 5s ease-in-out;
 }
 
 @keyframes slide {
@@ -120,6 +146,24 @@ img {
   }
   80% {
     transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(100%);
+  }
+}
+
+@keyframes logofix {
+  0% {
+    transform: scaleX(100%);
+  }
+  20% {
+    opacity: 0;
+  }
+  50% {
+    transform: scaleX(1000%);
+  }
+  80% {
+    opacity: 0;
   }
   100% {
     transform: scaleX(100%);
