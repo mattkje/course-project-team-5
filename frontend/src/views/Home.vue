@@ -2,7 +2,7 @@
 
   <!--- Show/hide hero section depending on user authenticated--->
   <HeroSection v-if="getAuthenticatedUser() === null"/>
-  <WelcomeBack v-else />
+  <WelcomeBack v-else/>
 
   <div class="course-section">
 
@@ -18,7 +18,7 @@
         <!--- Featured courses will be appended here --->
       </div>
       <div v-show="loading" class="featured">
-        <div  class="three-body">
+        <div class="three-body">
           <div class="three-body__dot"></div>
           <div class="three-body__dot"></div>
           <div class="three-body__dot"></div>
@@ -49,7 +49,7 @@
 
       </div>
       <div v-show="loading" class="data-Science">
-        <div  class="three-body">
+        <div class="three-body">
           <div class="three-body__dot"></div>
           <div class="three-body__dot"></div>
           <div class="three-body__dot"></div>
@@ -73,7 +73,7 @@
 
       </div>
       <div v-show="loading" class="digital-marketing">
-        <div  class="three-body">
+        <div class="three-body">
           <div class="three-body__dot"></div>
           <div class="three-body__dot"></div>
           <div class="three-body__dot"></div>
@@ -120,7 +120,7 @@
 
       </div>
       <div v-show="loading" class="information-technologies">
-        <div  class="three-body">
+        <div class="three-body">
           <div class="three-body__dot"></div>
           <div class="three-body__dot"></div>
           <div class="three-body__dot"></div>
@@ -143,7 +143,7 @@
 
       </div>
       <div v-show="loading" class="learniverse-pro">
-        <div  class="three-body">
+        <div class="three-body">
           <div class="three-body__dot"></div>
           <div class="three-body__dot"></div>
           <div class="three-body__dot"></div>
@@ -163,6 +163,7 @@
 <script setup>
 import ProBox from "@/components/ProBox.vue";
 import HeroSection from "@/components/HeroSection.vue";
+
 const loading = ref(true);
 import "@/courseBox.css"
 import {getCurrentInstance, onMounted, ref} from 'vue';
@@ -171,193 +172,187 @@ import {currency, setDefaultCurrency} from "@/js/currency";
 import WelcomeBack from "@/components/WelcomeBack.vue";
 
 
-const { appContext } = getCurrentInstance();
+const {appContext} = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
 
-
+// Initialize the page
 onMounted(() => {
   populateCourses('.featured', () => true);
   populateCourses('.learniverse-pro', checkIfProCourse);
-  populateCourses('.digital-marketing', checkIfDmCourse);
-  populateCourses('.data-Science', checkIfDsCourse);
-  populateCourses('.information-technologies', checkIfItCourse);
+  populateCourses('.digital-marketing', courseProvider => checkIfCourseInCategory(courseProvider, "Digital Marketing"));
+  populateCourses('.data-Science', courseProvider => checkIfCourseInCategory(courseProvider, "Data Science and Analytics"));
+  populateCourses('.information-technologies', courseProvider => checkIfCourseInCategory(courseProvider, "Information Technology"));
   currency(API_URL);
   loadButtons();
 });
 
-function populateCourses(selector, filterFn) {
-  document.querySelector(selector).innerHTML = '';
-  const defaultCurrency = setDefaultCurrency() || 'USD';
-  fetch(API_URL + '/courses')
-      .then(response => response.json())
-      .then(data => {
-        fetch(API_URL + '/currency')
-            .then(response => response.json())
-            .then(currencies => {
-              data.forEach(courseProvider => {
-
-                if (filterFn(courseProvider)) {
-
-                  const contentBox = document.createElement('a');
-                  contentBox.href = `/courses?id=${courseProvider.course.courseId}`;
-                  contentBox.className = 'content-box';
-
-                  const image = document.createElement('img');
-                  image.src = courseProvider.course.image || '/noImage.svg';
-                  image.alt = 'Course image';
-                  image.className = 'content-box-image';
-                  contentBox.appendChild(image);
-
-
-
-                  const descriptionBox = document.createElement('div');
-                  descriptionBox.className = 'content-box-description';
-                  contentBox.appendChild(descriptionBox);
-
-                  const title = document.createElement('h2');
-                  title.className = 'content-box-title';
-                  title.textContent = courseProvider.course.title;
-                  descriptionBox.appendChild(title);
-
-                  const hr = document.createElement('hr');
-                  descriptionBox.appendChild(hr);
-
-                  const attributes = document.createElement('div');
-                  attributes.className = 'content-box-attributes';
-                  descriptionBox.appendChild(attributes);
-
-                  // Create and append the category attribute
-                  const categoryAttribute = document.createElement('div');
-                  categoryAttribute.className = 'content-box-attribute';
-                  attributes.appendChild(categoryAttribute);
-
-                  const categoryIcon = document.createElement('img');
-                  categoryIcon.className = 'content-box-icon';
-                  categoryIcon.src = '/category.svg';
-                  categoryAttribute.appendChild(categoryIcon);
-
-                  const category = document.createElement('p');
-                  category.className = 'content-box-text';
-                  category.textContent = courseProvider.course.category;
-                  categoryAttribute.appendChild(category);
-
-                  // Create and append the providers attribute
-                  const providersAttribute = document.createElement('div');
-                  providersAttribute.className = 'content-box-attribute';
-                  attributes.appendChild(providersAttribute);
-
-                  const providersIcon = document.createElement('img');
-                  providersIcon.className = 'content-box-icon';
-                  providersIcon.src = '/providers.svg';
-                  providersAttribute.appendChild(providersIcon);
-
-                  const providersElement = document.createElement('p');
-                  providersElement.className = 'content-box-text';
-
-
-                  const courseProviders = courseProvider.providers.filter(provider => provider.courseId === courseProvider.course.courseId);
-
-                  if (Array.isArray(courseProviders) && courseProviders.length) {
-                    providersElement.innerHTML = `${courseProviders.length}&nbsp;Providers`;
-                  } else {
-                    providersElement.innerHTML = 'No&nbsp;Providers';
-                  }
-
-                  providersAttribute.appendChild(providersElement);
-
-
-
-                  const price = document.createElement('p');
-                  price.className = 'content-button';
-
-
-                  const lowestPriceProvider = courseProviders.reduce((prev, curr) => {
-                    return (prev.price < curr.price) ? prev : curr;
-                  });
-
-                  const currency = lowestPriceProvider.currency;
-                  const priceInCurrency = lowestPriceProvider.price;
-
-
-                  let symbol = '';
-                  let rate = 1;
-
-                  for (let i = 0; i < currencies.length; i++) {
-                    if (currencies[i].code === currency) {
-                      rate = currencies[i].rate;
-                      break;
-                    }
-                  }
-
-                  const priceInDefaultCurrency = priceInCurrency / rate;
-
-                  for (let i = 0; i < currencies.length; i++) {
-                    if (currencies[i].code === defaultCurrency) {
-                      symbol = currencies[i].symbol;
-                      rate = currencies[i].rate;
-                      break;
-                    }
-                  }
-
-                  const finalPrice = priceInDefaultCurrency * rate;
-
-                  const priceBox = document.createElement('div');
-                  priceBox.className = 'price-box';
-
-
-                  if (currency === 'SUB') {
-                    const image2 = document.createElement('img');
-                    image2.className = 'content-box-image-banner';
-                    image2.src = '/proBanner.svg';
-                    priceBox.appendChild(image2);
-                    price.textContent = symbol + finalPrice.toFixed(2) + "/month";
-                  } else {
-                    const startsAt = document.createElement('p');
-                    startsAt.className = 'content-box-text';
-                    startsAt.textContent = 'Starts at';
-                    priceBox.appendChild(startsAt);
-                    price.textContent =symbol + finalPrice.toFixed(2);
-                  }
-
-
-                  priceBox.appendChild(price);
-
-                  const hr2 = document.createElement('hr');
-                  descriptionBox.appendChild(hr2);
-
-                  descriptionBox.appendChild(priceBox);
-
-                  document.querySelector(selector).appendChild(contentBox.cloneNode(true));
-                }
-              });
-              loading.value = false;
-            })
-            .catch(error => console.error('Error:', error));
-      })
-      .catch(error => console.error('Error:', error));
+// Fetch the courses from the API
+async function fetchCourses() {
+  const response = await fetch(API_URL + '/courses');
+  return response.json();
 }
 
+// Fetch the currencies from the API
+async function fetchCurrencies() {
+  const response = await fetch(API_URL + '/currency');
+  return response.json();
+}
+
+// Create a content box.
+function createContentBox(courseProvider, currencies, defaultCurrency) {
+  const contentBox = document.createElement('a');
+  contentBox.href = `/courses?id=${courseProvider.course.courseId}`;
+  contentBox.className = 'content-box';
+
+  const image = document.createElement('img');
+  image.src = courseProvider.course.image || '/noImage.svg';
+  image.alt = 'Course image';
+  image.className = 'content-box-image';
+  contentBox.appendChild(image);
+
+  const descriptionBox = document.createElement('div');
+  descriptionBox.className = 'content-box-description';
+  contentBox.appendChild(descriptionBox);
+
+  const title = document.createElement('h2');
+  title.className = 'content-box-title';
+  title.textContent = courseProvider.course.title;
+  descriptionBox.appendChild(title);
+
+  const hr = document.createElement('hr');
+  descriptionBox.appendChild(hr);
+
+  const attributes = document.createElement('div');
+  attributes.className = 'content-box-attributes';
+  descriptionBox.appendChild(attributes);
+
+  // Create and append the category attribute
+  const categoryAttribute = document.createElement('div');
+  categoryAttribute.className = 'content-box-attribute';
+  attributes.appendChild(categoryAttribute);
+
+  const categoryIcon = document.createElement('img');
+  categoryIcon.className = 'content-box-icon';
+  categoryIcon.src = '/category.svg';
+  categoryAttribute.appendChild(categoryIcon);
+
+  const category = document.createElement('p');
+  category.className = 'content-box-text';
+  category.textContent = courseProvider.course.category;
+  categoryAttribute.appendChild(category);
+
+  // Create and append the providers attribute
+  const providersAttribute = document.createElement('div');
+  providersAttribute.className = 'content-box-attribute';
+  attributes.appendChild(providersAttribute);
+
+  const providersIcon = document.createElement('img');
+  providersIcon.className = 'content-box-icon';
+  providersIcon.src = '/providers.svg';
+  providersAttribute.appendChild(providersIcon);
+
+  const providersElement = document.createElement('p');
+  providersElement.className = 'content-box-text';
+  const courseProviders = courseProvider.providers.filter(provider => provider.courseId === courseProvider.course.courseId);
+
+  if (Array.isArray(courseProviders) && courseProviders.length) {
+    providersElement.innerHTML = `${courseProviders.length}&nbsp;Providers`;
+  } else {
+    providersElement.innerHTML = 'No&nbsp;Providers';
+  }
+  providersAttribute.appendChild(providersElement);
+  const priceBox = createPrice(courseProviders, currencies, defaultCurrency);
+  const hr2 = document.createElement('hr');
+  descriptionBox.appendChild(hr2);
+  descriptionBox.appendChild(priceBox);
+
+  return contentBox;
+}
+
+// Populate the courses in the given selector
+async function populateCourses(selector, filterFn) {
+  document.querySelector(selector).innerHTML = '';
+  const defaultCurrency = setDefaultCurrency() || 'USD';
+  try {
+    const [data, currencies] = await Promise.all([fetchCourses(), fetchCurrencies()]);
+
+    data.forEach(courseProvider => {
+
+      if (filterFn(courseProvider)) {
+        const contentBox = createContentBox(courseProvider, currencies, defaultCurrency);
+        document.querySelector(selector).appendChild(contentBox.cloneNode(true));
+      }
+    });
+    loading.value = false;
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+// Create a price box
+function createPrice(courseProviders, currencies, defaultCurrency) {
+  const price = document.createElement('p');
+  price.className = 'content-button';
+
+  const lowestPriceProvider = courseProviders.reduce((prev, curr) => {
+    return (prev.price < curr.price) ? prev : curr;
+  });
+
+  const currency = lowestPriceProvider.currency;
+  const priceInCurrency = lowestPriceProvider.price;
+  let symbol = '';
+  let rate = 1;
+
+  for (let i = 0; i < currencies.length; i++) {
+    if (currencies[i].code === currency) {
+      rate = currencies[i].rate;
+      break;
+    }
+  }
+
+  const priceInDefaultCurrency = priceInCurrency / rate;
+
+  for (let i = 0; i < currencies.length; i++) {
+    if (currencies[i].code === defaultCurrency) {
+      symbol = currencies[i].symbol;
+      rate = currencies[i].rate;
+      break;
+    }
+  }
+
+  const finalPrice = priceInDefaultCurrency * rate;
+  const priceBox = document.createElement('div');
+  priceBox.className = 'price-box';
+
+  if (currency === 'SUB') {
+    const image2 = document.createElement('img');
+    image2.className = 'content-box-image-banner';
+    image2.src = '/proBanner.svg';
+    priceBox.appendChild(image2);
+    price.textContent = symbol + finalPrice.toFixed(2) + "/month";
+  } else {
+    const startsAt = document.createElement('p');
+    startsAt.className = 'content-box-text';
+    startsAt.textContent = 'Starts at';
+    priceBox.appendChild(startsAt);
+    price.textContent = symbol + finalPrice.toFixed(2);
+  }
+  priceBox.appendChild(price);
+  return priceBox;
+}
 
 function checkIfProCourse(courseProvider) {
   return courseProvider.providers.some(provider => provider.name === "Learniverse");
 }
 
-function checkIfDmCourse(courseProvider) {
-  return courseProvider.course.category === "Digital Marketing";
+function checkIfCourseInCategory(courseProvider, category) {
+  return courseProvider.course.category === category;
 }
 
-function checkIfDsCourse(courseProvider) {
-  return courseProvider.course.category === "Data Science and Analytics";
-}
-
-function checkIfItCourse(courseProvider) {
-  return courseProvider.course.category === "Information Technology";
-}
-
-
+// Responsible for the scrolling buttons. Written with assistance from AI
 function loadButtons() {
-  const scrollAmount = 332; // Amount of pixels to scroll
-  const scrollDuration = 500; //Time to scroll
+  const scrollAmount = 332;
+  const scrollDuration = 500;
 
   function smoothScroll(target, direction) {
     const start = target.scrollLeft;
@@ -385,7 +380,7 @@ function loadButtons() {
 
     requestAnimationFrame(animateScroll);
     const usernameLabel = document.getElementById('usernameLabel');
-    if(usernameLabel) {
+    if (usernameLabel) {
       usernameLabel.textContent = 'Welcome, ' + localStorage.getItem('username');
     }
   }
@@ -438,7 +433,6 @@ function loadButtons() {
 }
 
 
-
 hr {
   background: #ADADAD;
   height: 0.15vw;
@@ -458,7 +452,6 @@ ul {
 }
 
 
-
 @keyframes slide {
   0% {
     background-position: 0 0;
@@ -467,7 +460,6 @@ ul {
     background-position: -100px 0;
   }
 }
-
 
 
 .bend {
@@ -485,8 +477,6 @@ ul {
   margin: 0;
   padding: 0;
 }
-
-
 
 
 @keyframes fadeIn {
@@ -735,8 +725,7 @@ button {
 .three-body__dot:nth-child(2)::after {
   bottom: 0;
   left: 0;
-  animation: wobble1 var(--uib-speed) infinite
-  calc(var(--uib-speed) * -0.15) ease-in-out;
+  animation: wobble1 var(--uib-speed) infinite calc(var(--uib-speed) * -0.15) ease-in-out;
 }
 
 .three-body__dot:nth-child(3) {
