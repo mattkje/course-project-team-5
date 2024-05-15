@@ -1,24 +1,10 @@
 package no.ntnu.api.user;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.*;
-
-import java.util.Date;
-
-
 /**
  * Represents a user in the application.
- * This class encapsulates information about a user, including their username, name, email, role, password,
- * account status, creation date, and last update date.
- * Users can have different roles such as ADMIN, MODERATOR, or USER, each with specific permissions and privileges.
- * The enabled flag indicates whether the user's account is active.
- * The createdAt field stores the date when the user account was created, and updatedAt stores the date
- * when the user account was last updated.
- * Additionally, users may have a phone number associated with their account for communication purposes.
- * TODO: More optional fields?
+ * This class encapsulates information about a user, including their username, name, email, password and phone number.
+ * This class is used to transfer user registration data between the client and the server.
  */
-
-
 
 public class RegistrationRequest {
 
@@ -33,7 +19,6 @@ public class RegistrationRequest {
     private String lastName;
 
     private String phoneNumber;
-
 
 
     /**

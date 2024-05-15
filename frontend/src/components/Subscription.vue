@@ -68,8 +68,7 @@
 </template>
 <script>
 import {sendApiRequest} from "@/js/requests";
-import {addRole, doLogout, getAuthenticatedUser, sendAuthenticationRequest} from "@/js/authentication";
-import {setCookie} from "@/js/tools";
+import {addRole} from "@/js/authentication";
 
 export default {
   name: 'Subscription',

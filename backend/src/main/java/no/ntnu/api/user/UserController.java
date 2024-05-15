@@ -128,6 +128,13 @@ public class UserController {
         return response;
     }
 
+    /**
+     * Change the password of a user.
+     *
+     * @param username The username of the user
+     * @param details The new password
+     * @return The response
+     */
     @PutMapping("/{username}/change-password")
     public ResponseEntity<?> changePassword(@PathVariable String username, @RequestBody ChangePasswordRequest details) {
         UserWithCourses sessionUser = userService.getSessionUser();
@@ -145,6 +152,12 @@ public class UserController {
         }
     }
 
+    /**
+     * Delete a user.
+     *
+     * @param username The username of the user
+     * @return The response
+     */
     @DeleteMapping("/{username}")
     public ResponseEntity<?> deleteUser(@PathVariable String username) {
         UserWithCourses sessionUser = userService.getSessionUser();
@@ -161,6 +174,13 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
     }
 
+    /**
+     * Add a role to a user.
+     *
+     * @param username The username of the user
+     * @param role The role to add
+     * @return The response
+     */
     @PutMapping("/{username}/add-role")
     public ResponseEntity<?> addRole(@PathVariable String username, @RequestBody Role role) {
         if(userService.isAdmin()) {
@@ -171,6 +191,13 @@ public class UserController {
         }
     }
 
+    /**
+     * Delete a role from a user.
+     *
+     * @param username The username of the user
+     * @param role The role to delete
+     * @return The response
+     */
     @PutMapping("/{username}/delete-role")
     public ResponseEntity<?> deleteRole(@PathVariable String username, @RequestBody Role role) {
         if(userService.isAdmin()) {
@@ -181,6 +208,11 @@ public class UserController {
         }
     }
 
+    /**
+     * Refresh a jwt token.
+     * @param tokenRefreshRequest The refresh token request
+     * @return The response
+     */
     @PostMapping("/refresh-token")
     public ResponseEntity<?> refreshToken(@RequestBody TokenRefreshRequest tokenRefreshRequest) {
         try {
@@ -197,6 +229,12 @@ public class UserController {
         }
     }
 
+    /**
+     * Allow user to buy a pro subscription.
+     *
+     * @param subscriptionType The type of subscription
+     * @return The response
+     */
     @PutMapping("/purchase-pro/{subscriptionType}")
     public ResponseEntity<?> purchasePro(@PathVariable String subscriptionType) {
         UserWithCourses sessionUser = userService.getSessionUser();
@@ -208,6 +246,9 @@ public class UserController {
         }
     }
 
+    /**
+     * Check for expired subscriptions and remove pro role if expired.
+     */
     @Scheduled(cron = "0 0 0 * * ?")
     public void checkExpiredSubscriptions() {
         LocalDate now = LocalDate.now();

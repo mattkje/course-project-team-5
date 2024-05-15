@@ -33,7 +33,7 @@
           <div class="course-action-box">
 
             <button id="enrollButton" class="enroll-button">Buy now</button>
-            <button v-on:click="addCourseToCart()" class="CartBtn">
+            <button v-on:click="addCourseToCart()" class="CartBtn" :class="{ 'button-disabled': !selectedProvider }">
                     <span class="IconContainer">
                         <img class="cart-icon-small" src="/cart-small.svg" alt="Cart">
                     </span>
@@ -75,7 +75,11 @@ import "@/assets/coursePage.css"
 import {hasRole} from "@/js/authentication";
 import MarkdownIt from "markdown-it";
 import {useStore} from 'vuex';
+import myStore from '@/js/store.js';
+import {createContentBox, fetchCourses, fetchCurrencies} from "@/js/populationTools";
 const loading = ref(true);
+
+
 
 
 const store = useStore();
@@ -84,7 +88,9 @@ function addCourseToCart() {
   const urlParams = new URLSearchParams(window.location.search)
   const id = urlParams.get('id');
   console.log(id);
-  //store.commit("addCourseID", id);
+  myStore.commit("addCourseID", id);
+  console.log(myStore.state.cart);
+  console.log(myStore.state.cart.length);
 }
 
 
@@ -276,6 +282,27 @@ function populateCoursePage() {
                     document.getElementById('enrollButton').textContent = "Buy for " + symbol + finalPrice.toFixed(2);
                     document.getElementById('notShowingLocationText').innerText = 'Showing location for provider ' + provider.name
                     initMap(provider.latitude, provider.longitude);
+
+                    const buyButton = document.getElementById('enrollButton');
+                    //This is just a temporary solution to make the button work as it should
+                    Object.assign(buyButton.style, {
+                      fontFamily: 'Inter, sans-serif',
+                      fontWeight: 'bold',
+                      color: 'white',
+                      backgroundColor: '#584BEB',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: '70%',
+                      height: '50px',
+                      borderRadius: '12px',
+                      cursor: 'pointer',
+                      transition: 'all .5s',
+                      marginRight: '10px',
+                    });
+
+
+
                   });
                 }
 
@@ -338,157 +365,23 @@ function formatDate(closestCourseSession) {
   return `${formattedStartDate} -> ${formattedEndDate}`;
 }
 
-
-function populateCourses(selector, filterFn) {
+async function populateCourses(selector) {
   document.querySelector(selector).innerHTML = '';
   const defaultCurrency = setDefaultCurrency() || 'USD';
-  fetch(API_URL + '/courses')
-      .then(response => response.json())
-      .then(data => {
-        fetch(API_URL + '/currency')
-            .then(response => response.json())
-            .then(currencies => {
-              data.forEach(courseProvider => {
-                if (document.querySelector(selector).childElementCount >= 5) {
-                  return false;
-                }
-                if (courseProvider.course.category === document.getElementById('courseCategoryLink').innerText) {
-                  const contentBox = document.createElement('a');
-                  contentBox.href = `/courses?id=${courseProvider.course.courseId}`;
-                  contentBox.className = 'content-box';
+  try {
+    const [data, currencies] = await Promise.all([fetchCourses(API_URL), fetchCurrencies(API_URL)]);
 
-                  const image = document.createElement('img');
-                  image.src = courseProvider.course.image || '/noImage.svg';
-                  image.alt = 'Course image';
-                  image.className = 'content-box-image';
-                  contentBox.appendChild(image);
+    data.forEach(courseProvider => {
 
-
-
-                  const descriptionBox = document.createElement('div');
-                  descriptionBox.className = 'content-box-description';
-                  contentBox.appendChild(descriptionBox);
-
-                  const title = document.createElement('h2');
-                  title.className = 'content-box-title';
-                  title.textContent = courseProvider.course.title;
-                  descriptionBox.appendChild(title);
-
-                  const hr = document.createElement('hr');
-                  descriptionBox.appendChild(hr);
-
-                  const attributes = document.createElement('div');
-                  attributes.className = 'content-box-attributes';
-                  descriptionBox.appendChild(attributes);
-
-                  // Create and append the category attribute
-                  const categoryAttribute = document.createElement('div');
-                  categoryAttribute.className = 'content-box-attribute';
-                  attributes.appendChild(categoryAttribute);
-
-                  const categoryIcon = document.createElement('img');
-                  categoryIcon.className = 'content-box-icon';
-                  categoryIcon.src = '/category.svg';
-                  categoryAttribute.appendChild(categoryIcon);
-
-                  const category = document.createElement('p');
-                  category.className = 'content-box-text';
-                  category.textContent = courseProvider.course.category;
-                  categoryAttribute.appendChild(category);
-
-                  // Create and append the providers attribute
-                  const providersAttribute = document.createElement('div');
-                  providersAttribute.className = 'content-box-attribute';
-                  attributes.appendChild(providersAttribute);
-
-                  const providersIcon = document.createElement('img');
-                  providersIcon.className = 'content-box-icon';
-                  providersIcon.src = '/providers.svg';
-                  providersAttribute.appendChild(providersIcon);
-
-                  const providersElement = document.createElement('p');
-                  providersElement.className = 'content-box-text';
-
-
-                  const courseProviders = courseProvider.providers.filter(provider => provider.courseId === courseProvider.course.courseId);
-
-                  if (Array.isArray(courseProviders) && courseProviders.length) {
-                    providersElement.innerHTML = `${courseProviders.length}&nbsp;Providers`;
-                  } else {
-                    providersElement.innerHTML = 'No&nbsp;Providers';
-                  }
-
-                  providersAttribute.appendChild(providersElement);
-
-
-
-                  const price = document.createElement('p');
-                  price.className = 'content-button';
-
-
-                  const lowestPriceProvider = courseProviders.reduce((prev, curr) => {
-                    return (prev.price < curr.price) ? prev : curr;
-                  });
-
-                  const currency = lowestPriceProvider.currency;
-                  const priceInCurrency = lowestPriceProvider.price;
-
-
-                  let symbol = '';
-                  let rate = 1;
-
-                  for (let i = 0; i < currencies.length; i++) {
-                    if (currencies[i].code === currency) {
-                      rate = currencies[i].rate;
-                      break;
-                    }
-                  }
-
-                  const priceInDefaultCurrency = priceInCurrency / rate;
-
-                  for (let i = 0; i < currencies.length; i++) {
-                    if (currencies[i].code === defaultCurrency) {
-                      symbol = currencies[i].symbol;
-                      rate = currencies[i].rate;
-                      break;
-                    }
-                  }
-
-                  const finalPrice = priceInDefaultCurrency * rate;
-
-                  const priceBox = document.createElement('div');
-                  priceBox.className = 'price-box';
-
-
-                  if (currency === 'SUB') {
-                    const image2 = document.createElement('img');
-                    image2.className = 'content-box-image-banner';
-                    image2.src = '/proBanner.svg';
-                    priceBox.appendChild(image2);
-                    price.textContent = symbol + finalPrice.toFixed(2) + "/month";
-                  } else {
-                    const startsAt = document.createElement('p');
-                    startsAt.className = 'content-box-text';
-                    startsAt.textContent = 'Starts at';
-                    priceBox.appendChild(startsAt);
-                    price.textContent =symbol + finalPrice.toFixed(2);
-                  }
-
-
-                  priceBox.appendChild(price);
-
-                  const hr2 = document.createElement('hr');
-                  descriptionBox.appendChild(hr2);
-
-                  descriptionBox.appendChild(priceBox);
-
-                  document.querySelector(selector).appendChild(contentBox.cloneNode(true));
-                }
-              });
-            })
-            .catch(error => console.error('Error:', error));
-      })
-      .catch(error => console.error('Error:', error));
+      if (courseProvider.course.category === document.getElementById('courseCategoryLink').innerText) {
+        const contentBox = createContentBox(courseProvider, currencies, defaultCurrency);
+        document.querySelector(selector).appendChild(contentBox.cloneNode(true));
+      }
+    });
+    loading.value = false;
+  } catch (error) {
+    console.error('Error:', error);
+  }
 }
 
 
@@ -584,7 +477,13 @@ img {
 button {
   background-color: transparent;
   border-color: transparent;
+  cursor: not-allowed;
 }
+
+.button-disabled {
+   background-color: grey;
+   cursor: not-allowed;
+ }
 
 ul {
   list-style-type: none;
@@ -1064,6 +963,7 @@ button {
   color: white;
   font-size: 1.04em;
   background: #584BEB;
+  background-color: grey;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1073,6 +973,7 @@ button {
   cursor: pointer;
   transition: all .5s;
   margin-right: 10px;
+  cursor: not-allowed;
 }
 
 .enroll-button:hover {

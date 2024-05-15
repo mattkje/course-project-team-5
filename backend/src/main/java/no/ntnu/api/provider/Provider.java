@@ -7,7 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents a provider of a course.
+ * Represents a provider of a course. A provider is an entity that offers courses to users.
+ * Each provider has an id and a name. A provider can offer multiple courses.
  */
 @Entity
 @Table(name = "providers")
@@ -23,8 +24,10 @@ public class Provider {
   @ManyToMany(mappedBy = "providers")
   private List<Course> courses = new ArrayList<>();
 
-    public Provider() { // This constructor is empty due to the use of the @Entity annotation
-
+  /**
+   * Empty constructor needed for JPA.
+   */
+    public Provider() {
     }
 
   /**

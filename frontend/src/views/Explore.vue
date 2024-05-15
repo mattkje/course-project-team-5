@@ -1,6 +1,6 @@
 <template>
   <div id="background" class="background">
-    <img class="planet" src="/bluePlanet.svg">
+    <img class="planet" src="/bluePlanet.svg" alt="Blue Planet">
   </div>
   <div class="course-section">
 
@@ -8,10 +8,6 @@
       <h1>Explore</h1>
       <p class="description">Explore our library</p>
     </div>
-
-
-
-
     <SearchFilter/>
   </div>
 </template>
@@ -19,10 +15,6 @@
 <script setup>
 
 import SearchFilter from "@/components/SearchFilter.vue";
-import {ref} from "vue";
-
-
-
 
 </script>
 
@@ -37,25 +29,6 @@ import {ref} from "vue";
   flex-direction: column;
   width: 100%;
   margin: 0;
-
-}
-
-.hero-container {
-  display: flex;
-  justify-content: center;
-}
-
-.hero-box {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.bend {
-  width: 100%;
-  margin: 0;
-  padding: 0;
 
 }
 
@@ -81,59 +54,6 @@ import {ref} from "vue";
   margin: 0;
 }
 
-
-.filter-container {
-  padding: 0;
-  display: flex;
-  flex-direction: row;
-  align-content: space-between;
-  justify-content: center;
-  margin: auto;
-}
-
-.range-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-content: center;
-  margin: 20px;
-}
-
-
-.flexible-grid {
-  background-color: white;
-  border-radius: 10px;
-  width: 900px;
-  height: 600px;
-  padding: 20px;
-  display: flex;
-  flex-direction: row;
-  align-content: flex-start;
-  justify-content: center;
-  margin: 30px;
-}
-
-.course-block {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  margin: 0 auto;
-  width: 70%;
-}
-
-.course-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 20px;
-  padding: 20px;
-  border-radius: 15px;
-  background-color: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 300px;
-}
 
 .course-card img {
   width: 100%;
@@ -205,7 +125,6 @@ header h2 {
   border-radius: 5px;
   text-align: center;
   border: 1px solid #999;
-  -moz-appearance: textfield;
 }
 
 input[type="number"]::-webkit-outer-spin-button,

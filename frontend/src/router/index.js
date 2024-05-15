@@ -46,6 +46,12 @@ const routes = [
         component: Explore
     },
     {
+        path: '/cart',
+        name: 'cart',
+        component: () => import(/* webpackChunkName: "about" */ '../views/Cart.vue'),
+        meta: { requiresAuth: true }
+    },
+    {
         path: '/login',
         name: 'Login',
         component: () => import('@/components/Login.vue')
