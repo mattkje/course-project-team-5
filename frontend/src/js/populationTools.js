@@ -74,6 +74,38 @@ export function createContentBox(courseProvider, currencies, defaultCurrency) {
     }
     providersAttribute.appendChild(providersElement);
     const priceBox = createPrice(courseProviders, currencies, defaultCurrency);
+
+    // importing date as hidden to be able to access it´s value
+    const durationText = document.createElement('p');
+    const rawDate = `${courseProvider.course.closestCourseSession}`;
+    durationText.innerText += rawDate;
+    durationText.style.display = 'none';
+    contentBox.appendChild(durationText);
+
+
+    // importing provider name as hidden to be able to access it´s value
+    const providerNameText = document.createElement('p');
+    providerNameText.className = 'provider-name';
+    courseProviders.forEach(provider => {
+        providerNameText.innerText += provider.name + " ";
+    });
+    providerNameText.style.display = 'none';
+    contentBox.appendChild(providerNameText);
+
+    // importing difficulty as hidden to be able to access it´s value
+    const difficultyText = document.createElement('p');
+    difficultyText.className = 'content-box-difficulty';
+    difficultyText.innerText += courseProvider.course.level;
+    difficultyText.style.display = 'none';
+    contentBox.appendChild(difficultyText);
+
+    // Importing credit as hidden to be able to access it´s value
+    const creditText = document.createElement('p');
+    creditText.className = 'content-box-credit';
+    creditText.innerText += courseProvider.course.courseSize;
+    creditText.style.display = 'none';
+    contentBox.appendChild(creditText);
+
     const hr2 = document.createElement('hr');
     descriptionBox.appendChild(hr2);
     descriptionBox.appendChild(priceBox);
