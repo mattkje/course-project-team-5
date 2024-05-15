@@ -516,7 +516,7 @@ ul {
 }
 
 .course-section {
-  background-color: #f1f0fd;
+  background-color: var(--light-3);
   transform: translateZ(-50px);
   margin: 0;
 }
@@ -529,7 +529,6 @@ ul {
   justify-content: space-between;
   background: #f8f8ff;
   border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 40px;
   width: 100%;
   min-height: 550px;
   padding: 50px 30px;
