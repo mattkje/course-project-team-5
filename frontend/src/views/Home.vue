@@ -169,11 +169,19 @@ import "@/courseBox.css"
 import {getCurrentInstance, onMounted, ref} from 'vue';
 import {getAuthenticatedUser, hasRole} from "@/js/authentication";
 import {currency, setDefaultCurrency} from "@/js/currency";
+import {
+  createContentBox,
+  checkIfCourseInCategory,
+  checkIfProCourse,
+  fetchCourses,
+  fetchCurrencies
+} from "@/js/populationTools";
 import WelcomeBack from "@/components/WelcomeBack.vue";
 
 
 const {appContext} = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
+
 
 // Initialize the page
 onMounted(() => {
@@ -186,95 +194,13 @@ onMounted(() => {
   loadButtons();
 });
 
-// Fetch the courses from the API
-async function fetchCourses() {
-  const response = await fetch(API_URL + '/courses');
-  return response.json();
-}
-
-// Fetch the currencies from the API
-async function fetchCurrencies() {
-  const response = await fetch(API_URL + '/currency');
-  return response.json();
-}
-
-// Create a content box.
-function createContentBox(courseProvider, currencies, defaultCurrency) {
-  const contentBox = document.createElement('a');
-  contentBox.href = `/courses?id=${courseProvider.course.courseId}`;
-  contentBox.className = 'content-box';
-
-  const image = document.createElement('img');
-  image.src = courseProvider.course.image || '/noImage.svg';
-  image.alt = 'Course image';
-  image.className = 'content-box-image';
-  contentBox.appendChild(image);
-
-  const descriptionBox = document.createElement('div');
-  descriptionBox.className = 'content-box-description';
-  contentBox.appendChild(descriptionBox);
-
-  const title = document.createElement('h2');
-  title.className = 'content-box-title';
-  title.textContent = courseProvider.course.title;
-  descriptionBox.appendChild(title);
-
-  const hr = document.createElement('hr');
-  descriptionBox.appendChild(hr);
-
-  const attributes = document.createElement('div');
-  attributes.className = 'content-box-attributes';
-  descriptionBox.appendChild(attributes);
-
-  // Create and append the category attribute
-  const categoryAttribute = document.createElement('div');
-  categoryAttribute.className = 'content-box-attribute';
-  attributes.appendChild(categoryAttribute);
-
-  const categoryIcon = document.createElement('img');
-  categoryIcon.className = 'content-box-icon';
-  categoryIcon.src = '/category.svg';
-  categoryAttribute.appendChild(categoryIcon);
-
-  const category = document.createElement('p');
-  category.className = 'content-box-text';
-  category.textContent = courseProvider.course.category;
-  categoryAttribute.appendChild(category);
-
-  // Create and append the providers attribute
-  const providersAttribute = document.createElement('div');
-  providersAttribute.className = 'content-box-attribute';
-  attributes.appendChild(providersAttribute);
-
-  const providersIcon = document.createElement('img');
-  providersIcon.className = 'content-box-icon';
-  providersIcon.src = '/providers.svg';
-  providersAttribute.appendChild(providersIcon);
-
-  const providersElement = document.createElement('p');
-  providersElement.className = 'content-box-text';
-  const courseProviders = courseProvider.providers.filter(provider => provider.courseId === courseProvider.course.courseId);
-
-  if (Array.isArray(courseProviders) && courseProviders.length) {
-    providersElement.innerHTML = `${courseProviders.length}&nbsp;Providers`;
-  } else {
-    providersElement.innerHTML = 'No&nbsp;Providers';
-  }
-  providersAttribute.appendChild(providersElement);
-  const priceBox = createPrice(courseProviders, currencies, defaultCurrency);
-  const hr2 = document.createElement('hr');
-  descriptionBox.appendChild(hr2);
-  descriptionBox.appendChild(priceBox);
-
-  return contentBox;
-}
 
 // Populate the courses in the given selector
 async function populateCourses(selector, filterFn) {
   document.querySelector(selector).innerHTML = '';
   const defaultCurrency = setDefaultCurrency() || 'USD';
   try {
-    const [data, currencies] = await Promise.all([fetchCourses(), fetchCurrencies()]);
+    const [data, currencies] = await Promise.all([fetchCourses(API_URL), fetchCurrencies(API_URL)]);
 
     data.forEach(courseProvider => {
 
@@ -287,66 +213,6 @@ async function populateCourses(selector, filterFn) {
   } catch (error) {
     console.error('Error:', error);
   }
-}
-
-// Create a price box
-function createPrice(courseProviders, currencies, defaultCurrency) {
-  const price = document.createElement('p');
-  price.className = 'content-button';
-
-  const lowestPriceProvider = courseProviders.reduce((prev, curr) => {
-    return (prev.price < curr.price) ? prev : curr;
-  });
-
-  const currency = lowestPriceProvider.currency;
-  const priceInCurrency = lowestPriceProvider.price;
-  let symbol = '';
-  let rate = 1;
-
-  for (let i = 0; i < currencies.length; i++) {
-    if (currencies[i].code === currency) {
-      rate = currencies[i].rate;
-      break;
-    }
-  }
-
-  const priceInDefaultCurrency = priceInCurrency / rate;
-
-  for (let i = 0; i < currencies.length; i++) {
-    if (currencies[i].code === defaultCurrency) {
-      symbol = currencies[i].symbol;
-      rate = currencies[i].rate;
-      break;
-    }
-  }
-
-  const finalPrice = priceInDefaultCurrency * rate;
-  const priceBox = document.createElement('div');
-  priceBox.className = 'price-box';
-
-  if (currency === 'SUB') {
-    const image2 = document.createElement('img');
-    image2.className = 'content-box-image-banner';
-    image2.src = '/proBanner.svg';
-    priceBox.appendChild(image2);
-    price.textContent = symbol + finalPrice.toFixed(2) + "/month";
-  } else {
-    const startsAt = document.createElement('p');
-    startsAt.className = 'content-box-text';
-    startsAt.textContent = 'Starts at';
-    priceBox.appendChild(startsAt);
-    price.textContent = symbol + finalPrice.toFixed(2);
-  }
-  priceBox.appendChild(price);
-  return priceBox;
-}
-
-function checkIfProCourse(courseProvider) {
-  return courseProvider.providers.some(provider => provider.name === "Learniverse");
-}
-
-function checkIfCourseInCategory(courseProvider, category) {
-  return courseProvider.course.category === category;
 }
 
 // Responsible for the scrolling buttons. Written with assistance from AI
