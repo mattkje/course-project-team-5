@@ -1,16 +1,15 @@
 <template>
   <div class="background">
-    <transition name="slide">
-      <div class="course-display">
-        <img :src="currentImage" alt="Course image" v-show="currentImage" key="currentImage">
-        <div class="course-display-info">
-          <h1 id="currentTitle"/>
-          <hr>
-          <p>$100 </p>
-        </div>
+    <div class="course-display">
+      <img :src="currentImage" alt="Course image" v-show="currentImage" key="currentImage">
+      <div class="course-display-info">
+        <h1 id="currentTitle"/>
+        <hr>
+        <h2 id="currentDifficulty"/>
       </div>
-    </transition>
+    </div>
   </div>
+  <div id="curtain" class="curtain"/>
 </template>
 
 <script>
@@ -21,6 +20,7 @@ export default {
   setup() {
     const images = ref([]);
     const titles = ref([]);
+    const difficulty = ref([]);
     const currentImage = ref(null);
     let intervalId = null;
 
@@ -30,21 +30,29 @@ export default {
       console.log('coursesData:', coursesData); // Debug log
       images.value = coursesData.map(courseData => courseData.course.image);
       titles.value = coursesData.map(courseData => courseData.course.title);
+      difficulty.value = coursesData.map(courseData => courseData.course.level);
       console.log('images.value:', images.value); // Debug log
     };
 
     const selectRandomImage = () => {
-      if (images.value.length > 0) {
-        const randomIndex = Math.floor(Math.random() * images.value.length);
-        if (images.value[randomIndex] === null) {
-          currentImage.value = 'https://raw.githubusercontent.com/mattkje/course-project-team-5/221e131a84afbf8c00f93295b720fb25071db6b0/frontend/public/noImage.svg?token=AJS2STSZ5A3GUGWLM7HQI43GISG4A';
-        } else {
-          currentImage.value = images.value[randomIndex];
-        }
 
-        document.getElementById('currentTitle').innerText = titles.value[randomIndex];
-        console.log('currentImage.value:', currentImage.value); // Debug log
-      }
+      setTimeout(() => {
+        if (images.value.length > 0) {
+          const randomIndex = Math.floor(Math.random() * images.value.length);
+          if (images.value[randomIndex] === null) {
+            currentImage.value = 'https://raw.githubusercontent.com/mattkje/course-project-team-5/221e131a84afbf8c00f93295b720fb25071db6b0/frontend/public/noImage.svg?token=AJS2STSZ5A3GUGWLM7HQI43GISG4A';
+          } else {
+            currentImage.value = images.value[randomIndex];
+          }
+
+          document.getElementById('currentTitle').innerText = titles.value[randomIndex];
+          document.getElementById('currentDifficulty').innerText = difficulty.value[randomIndex];
+          console.log('currentImage.value:', currentImage.value); // Debug log
+        }
+        const curtain = document.getElementById('curtain');
+        curtain.className = 'curtain';
+        document.body.appendChild(curtain);
+      }, 1000); // Delay should match the duration of the CSS animation
     };
 
     onMounted(async () => {
@@ -71,15 +79,17 @@ export default {
 }
 
 .course-display {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .course-display-info {
   background-color: var(--light-1);
   padding: 20px;
-  height: 40vh;
+  height: 500px;
   width: 600px;
   margin: 0;
 
@@ -88,15 +98,32 @@ export default {
 img {
   width: 100%;
   object-fit: cover;
-  height: 40vh;
+  height: 500px;
 }
 
-/* Add these styles for the transition */
-.slide-enter-active, .slide-leave-active {
-  transition: transform 1s;
+.curtain {
+  position: absolute;
+  top: 71px;
+  left: 0;
+  width: 100%;
+  height: 500px;
+  background-color: white;
+  animation: slide 5s ease-in-out;
 }
 
-.slide-enter, .slide-leave-to {
-  transform: translateX(100%);
+@keyframes slide {
+  0% {
+    transform: scaleX(100%);
+  }
+  20% {
+    transform: scaleX(0);
+  }
+  80% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(100%);
+  }
 }
+
 </style>
