@@ -186,19 +186,24 @@ const isIntermediateChecked = ref(false);
 const isExpertChecked = ref(false);
 
 const minValue = ref(0);
-const maxValue = ref(10000);
+const maxValue = ref(50000);
 const minRangeValue = ref(0);
-const maxRangeValue = ref(10000);
+const maxRangeValue = ref(50000);
 
 let courseContainer;
 let children;
 let searchedChildren = new Map();
 let categoryFilter = new Map();
+let maxPriceFilter = new Map();
+let minPriceFilter = new Map();
 let dateFilter = new Map();
 let providerFilter = new Map();
 let difficultyFilter = new Map();
 let creditFilter = new Map();
 let selectedCategories = [];
+let selectedPrices = [];
+let selectedMinPrice = null;
+let selectedMaxPrice = null;
 let selectedProviders = [];
 let selectedDifficulties = [];
 let selectedCredits = [];
@@ -323,13 +328,23 @@ function filterStatus() {
             if (creditFilter.has(children[i])) {
               children[i].style.display = 'none';
             } else {
-            children[i].style.display = 'block';
+              if (maxPriceFilter.has(children[i])) {
+                children[i].style.display = 'none';
+              } else {
+                if (dateFilter.has(children[i])) {
+                  children[i].style.display = 'none';
+                } else {
+                  if (minPriceFilter.has(children[i])) {
+                    children[i].style.display = 'none';
+                  } else {
+                    children[i].style.display = 'block';
+                  }
+                }
+              }
+            }
           }
-        }
-      }
-    }
-  }
-}}
+        }} }
+  }}
 
 const isCategoryVisible = ref(false);
 const isPriceVisible = ref(false);
@@ -568,32 +583,52 @@ function updateFilterMap(child, add, filterMap) {
 }
 
 
-function filterPrices(value) {
-  for (let i = 0; i < children.length; i++) {
-    let child = children[i];
-    let childPrice = child.querySelector('.price').textContent;
-    let price = parseFloat(childPrice.split(' ')[0]);
+function filterMinPrice(minPrice) {
+  for (let child of children) {
+    let childPriceElement = child.querySelector('.finalPriceBox').textContent;
+    let price = parseFloat(childPriceElement.split(' ')[0]);
+    let priceMatch = price >= minPrice;
 
-    if (price > value) {
-      child.style.display = 'none';
+    if (!priceMatch) {
+      minPriceFilter.set(child, 1);
     } else {
-      child.style.display = 'block';
+      minPriceFilter.delete(child);
     }
   }
+
+  updateSelection({min: minPrice}, selectedPrices);
 }
 
-watch(minValue, (newVal) => {
-  filterPrices(newVal)
+function filterMaxPrice(maxPrice) {
+  for (let child of children) {
+    let childPriceElement = child.querySelector('.finalPriceBox').textContent;
+    let price = parseFloat(childPriceElement.split(' ')[0]);
+    let priceMatch = price <= maxPrice;
+
+    if (!priceMatch) {
+      maxPriceFilter.set(child, 1);
+    } else {
+      maxPriceFilter.delete(child);
+    }
+  }
+
+  updateSelection({max: maxPrice}, selectedPrices);
+}
+
+watch(minValue, (newMinVal) => {
+  filterMinPrice(newMinVal);
 });
 
-watch(maxValue, (newVal) => {
-  filterPrices(newVal)
+watch(maxValue, (newMaxVal) => {
+  filterMaxPrice(newMaxVal);
 });
-watch(minRangeValue, (newVal) => {
-  filterPrices(newVal)
+
+watch(minRangeValue, (newMinRangeVal) => {
+  filterMinPrice(newMinRangeVal);
 });
-watch(maxRangeValue, (newVal) => {
-  filterPrices(newVal)
+
+watch(maxRangeValue, (newMaxRangeVal) => {
+  filterMaxPrice(newMaxRangeVal);
 });
 
 

@@ -147,6 +147,12 @@ function createPrice(courseProviders, currencies, defaultCurrency) {
     const priceBox = document.createElement('div');
     priceBox.className = 'price-box';
 
+    const finalPriceBox = document.createElement('p');
+    finalPriceBox.className = 'finalPriceBox';
+    finalPriceBox.innerText += finalPrice.toFixed(2)
+    finalPriceBox.style.display = 'none';
+    priceBox.appendChild(finalPriceBox);
+
     if (currency === 'SUB') {
         const image2 = document.createElement('img');
         image2.className = 'content-box-image-banner';
