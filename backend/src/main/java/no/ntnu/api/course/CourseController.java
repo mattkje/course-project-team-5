@@ -51,10 +51,6 @@ public class CourseController {
         return courseService.getAllCourses();
     }
 
-    @GetMapping("/api/providers")
-    public Collection<Provider> getProviders() {
-        return courseService.getAllProviders();
-    }
 
     /**
      * Returns the course that has the matching id as the path variable.
@@ -140,4 +136,6 @@ public class CourseController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
+
+
 }
