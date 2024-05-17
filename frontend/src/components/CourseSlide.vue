@@ -9,9 +9,7 @@
       </div>
     </div>
   </div>
-  <div id="curtain" class="curtain-before">
-    <img id="logo" class="logo" src="/logo.svg"/>
-  </div>
+  <div id="curtain" class="curtain-before"/>
 </template>
 
 <script>
