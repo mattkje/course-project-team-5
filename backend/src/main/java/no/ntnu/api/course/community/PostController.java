@@ -43,7 +43,7 @@ public class PostController {
 
     @DeleteMapping("/api/community/courses/{id}")
     public ResponseEntity<String> deleteCourse(@PathVariable int id) {
-        if(getCourse(id) != null) {
+        if(getCourse(id) == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         if(postService.getCourse(id).getAuthor().equals(userService.getSessionUser().user().getUsername()) ||
