@@ -106,6 +106,13 @@ export function createContentBox(courseProvider, currencies, defaultCurrency) {
     creditText.style.display = 'none';
     contentBox.appendChild(creditText);
 
+    // importing course id as hidden to be able to access it´s value
+    const courseIdText = document.createElement('p');
+    courseIdText.className = 'course-id';
+    courseIdText.innerText += courseProvider.course.courseId;
+    courseIdText.style.display = 'none';
+    contentBox.appendChild(courseIdText);
+
     const hr2 = document.createElement('hr');
     descriptionBox.appendChild(hr2);
     descriptionBox.appendChild(priceBox);
