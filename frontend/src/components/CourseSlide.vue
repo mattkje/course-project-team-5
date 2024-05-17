@@ -77,16 +77,22 @@ export default {
 
 <style scoped>
 .background {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
   background-color: var(--light-3);
 }
 
 .course-display {
   text-decoration: none;
-  width: 100%;
+  width: 1300px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 75px auto auto auto;
+  border-radius: 20px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   &:hover {
     box-shadow: 0 4px 5px rgba(0, 0, 0, 0.33);
@@ -99,13 +105,14 @@ export default {
   height: 500px;
   width: 600px;
   margin: 0;
-
+  border-radius: 0 20px 20px 0;
 }
 
 img {
   width: 100%;
   object-fit: cover;
   height: 500px;
+  border-radius: 20px 0 0 20px;
 }
 
 .curtain {
@@ -113,10 +120,14 @@ img {
   display: flex;
   justify-content: center;
   align-items: center;
-  top: 71px;
+  top: 146px;
   height: 500px;
-  width: 100%;
+  width: 1300px;
+  left: 0;
   right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 20px;
   background-color: #0e0e0e;
   animation: slide 10s ease-in-out infinite;
 }
@@ -126,7 +137,7 @@ img {
   width: 200px;
   height: auto;
   position: absolute;
-  top: 250px;
+  top: 325px;
   left: 0;
   right: 0;
   margin-left: auto;
