@@ -57,22 +57,14 @@
           'border-radius': isPriceVisible ? '0 0 10px 10px' : '10px'
         }">
         <div class="price-input">
+          <span>Max Price</span>
           <div class="field">
-            <span>Min</span>
-            <input type="number" class="input-min" value="0" v-model="minValue">
+            <input type="number" class="input-max" value="50000" v-model="maxValue" @input="maxRangeValue = maxValue" @change="sortByPriceRange">
           </div>
-          <div class="separator">-</div>
-          <div class="field">
-            <span>Max</span>
-            <input type="number" class="input-max" value="10000" v-model="maxValue">
-          </div>
-        </div>
-        <div class="slider">
-          <div class="progress"></div>
         </div>
         <div class="range-input">
-          <input type="range" class="range-min" min="0" max="10000" v-model="minRangeValue" step="100">
-          <input type="range" class="range-max" min="0" max="10000" v-model="maxRangeValue" step="100">
+          <input type="range" class="range-max" min="0" max="50000" v-model="maxRangeValue" step="100"
+                 @input="maxValue = maxRangeValue" @change="sortByPriceRange">
         </div>
       </div>
 
@@ -148,10 +140,11 @@
         }">
         <header>
           <div class="slider-container">
-            <input type="range" min="0" max="5" class="slider" id="creditSlider" v-model="creditValue" @change="sortByCredit" >
+            <input type="range" min="0" max="5" class="slider" id="creditSlider" v-model="creditValue"
+                   @change="sortByCredit">
             <div style="display: flex; justify-content: space-between;">
               <p>Minimum Credit</p>
-              <p >{{ creditValue }}</p>
+              <p>{{ creditValue }}</p>
             </div>
           </div>
         </header>
@@ -212,7 +205,6 @@ onMounted(() => {
   populateCourses('.flexible-grid');
   populateProviders();
   currency(API_URL);
-  initiateComponents();
 
   let picker;
   document.addEventListener('DOMContentLoaded', function () {
@@ -243,7 +235,6 @@ onMounted(() => {
   });
 
 });
-
 
 
 // Populate the courses in the given selector
@@ -304,34 +295,42 @@ function createChildrenIdList() {
     childrenIdList.push(i + 1);
   }
 }
+
 function getCheckboxId(event) {
   let checkboxId = event.target.id;
   let label = document.querySelector(`label[for="${checkboxId}"]`);
   let labelName = label.textContent;
-  return {labelName,checkboxId};
+  return {labelName, checkboxId};
 }
 
-function handleSliderFilter(checkboxId,id) {
+function handleSliderFilter(checkboxId, id) {
+
   let key = checkboxId.split(" ")[0];
- if (filterMap.has(id)){
-   let existingFilter = filterMap.get(id);
-    if (existingFilter.get(key).includes(checkboxId)){
+
+  console.log("key " + key)
+  if (filterMap.has(id)) {
+    console.log(id + " exists in filterMap")
+    let existingFilter = filterMap.get(id);
+    console.log("existingFilter " + existingFilter)
+    console.log("existingFilter.get(key) " + existingFilter.get(key))
+    if (existingFilter.get(key).includes(checkboxId)) {
+      console.log("should delete " + checkboxId + " from " + id)
       existingFilter.delete(key);
     }
- }
+  }
 }
 
-function addFilterToCourse(id, checkboxId,isSlider) {
+function addFilterToCourse(id, checkboxId, isSlider) {
   let key = checkboxId.split(" ")[0];
 
-  if (filterMap.has(id) ) {
+  if (filterMap.has(id)) {
     let existingFilter = filterMap.get(id);
     if (existingFilter.has(key)) {
-      if (existingFilter.get(key).includes(checkboxId) && existingFilter.get(key).length === 1){
-        if (!isSlider){
+      if (existingFilter.get(key).includes(checkboxId) && existingFilter.get(key).length === 1) {
+        if (!isSlider) {
           existingFilter.delete(key);
         }
-      } else if (existingFilter.get(key).includes(checkboxId) && existingFilter.get(key).length > 1){
+      } else if (existingFilter.get(key).includes(checkboxId) && existingFilter.get(key).length > 1) {
         let filterArray = existingFilter.get(key);
         filterArray.splice(filterArray.indexOf(checkboxId), 1);
         existingFilter.set(key, filterArray); // Set the updated array back to the Map
@@ -349,7 +348,7 @@ function addFilterToCourse(id, checkboxId,isSlider) {
 }
 
 
-function updateActiveFilters(checkboxId,isSlider) {
+function updateActiveFilters(checkboxId, isSlider) {
   let key = checkboxId.split(" ")[0];
 
   if (!activeFilters.has(key)) {
@@ -373,17 +372,19 @@ function updateActiveFilters(checkboxId,isSlider) {
 
 }
 
-function filterCourse(Matching, checkboxId,isSlider) {
+function filterCourse(Matching, checkboxId, isSlider) {
 
   for (let id of childrenIdList) {
     if (Matching.includes(id)) {
-      addFilterToCourse(id, checkboxId,isSlider);
+      console.log("addfilter")
+      addFilterToCourse(id, checkboxId, isSlider);
     } else if (!Matching.includes(id) && isSlider) {
+      console.log("handleSliderFilter")
       handleSliderFilter(checkboxId, id);
     }
   }
 
-  updateActiveFilters(checkboxId,isSlider);
+  updateActiveFilters(checkboxId, isSlider);
 }
 
 function updateView() {
@@ -408,58 +409,80 @@ function updateView() {
   }
 }
 
-function isMatch(courses,checkboxId,isSlider){
+function isMatch(courses, checkboxId, isSlider) {
   if (childrenIdList.length === 0) {
     createChildrenIdList();
   }
 
   let Matching = [];
 
+
   for (let course of courses) {
     if (childrenIdList.includes(course.courseId)) {
       Matching.push(course.courseId);
     }
   }
-  filterCourse(Matching,checkboxId,isSlider);
+  filterCourse(Matching, checkboxId, isSlider);
   updateView();
 
 }
 
-async function sortByCategory (event){
+async function sortByCategory(event) {
   let nameId = getCheckboxId(event);
   let category = nameId.labelName
   let checkboxId = "category " + nameId.labelName;
-  await sendApiRequest("GET", '/courses/category/' + category , (data) => isMatch(data, checkboxId,false), onFailure);
+  await sendApiRequest("GET", '/courses/category/' + category, (data) => isMatch(data, checkboxId, false), onFailure);
 }
 
 async function onProviderCheckboxChange(event) {
   let nameId = getCheckboxId(event);
   let provider = nameId.labelName;
   let checkboxId = "provider " + nameId.checkboxId.split("provider")[1];
-  await sendApiRequest("GET", '/courses/provider/' + checkboxId.split(" ")[1] , (data) => isMatch(data, checkboxId,false), onFailure);
+  await sendApiRequest("GET", '/courses/provider/' + checkboxId.split(" ")[1], (data) => isMatch(data, checkboxId, false), onFailure);
 }
 
 async function sortByDifficulty(event) {
   let nameId = getCheckboxId(event);
   let difficulty = nameId.labelName;
   let checkboxId = "difficulty " + nameId.checkboxId;
-  await sendApiRequest("GET", '/courses/level/' + difficulty , (data) => isMatch(data, checkboxId,false), onFailure);
+  await sendApiRequest("GET", '/courses/level/' + difficulty, (data) => isMatch(data, checkboxId, false), onFailure);
 }
 
 function getSliderValues(event) {
   let checkboxId = event.target.id;
   let sliderValue = event.target.value;
-  return {sliderValue,checkboxId};
+  return {sliderValue, checkboxId};
 }
 
 async function sortByCredit(event) {
   let nameId = getSliderValues(event);
   let credit = nameId.sliderValue;
   let checkboxId = "credit " + "credit";
-  await sendApiRequest("GET", '/courses/course_size/' + credit , (data) => isMatch(data, checkboxId,true), onFailure);
+  await sendApiRequest("GET", '/courses/course_size/' + credit, (data) => isMatch(data, checkboxId, true), onFailure);
 }
 
-function onFailure(){
+async function sortByPriceRange(event) {
+  let nameId = getSliderValues(event);
+  let checkboxId = "priceRange " + "priceRange";
+  let priceRangeFilter = [];
+
+  for (let child of children) {
+    let childId = child.querySelector('.course-id').textContent;
+    let childPriceElement = child.querySelector('.finalPriceBox').textContent;
+    let price = parseFloat(childPriceElement.split(' ')[0]);
+    let priceMatch = price <= nameId.sliderValue;
+
+    if (priceMatch) {
+      priceRangeFilter.push(childId);
+    }
+  }
+  console.log("priceRangeFilter: ", priceRangeFilter.length)
+  priceRangeFilter = priceRangeFilter.join(',');
+
+  await sendApiRequest("GET", '/courses/ids?ids=' + priceRangeFilter, (data) => isMatch(data, checkboxId, true), onFailure);
+}
+
+function onFailure() {
   console.log("Failed to fetch courses");
 }
 
@@ -486,51 +509,6 @@ function toggleShowProvider() {
 
 function toggleShowCredit() {
   isCreditVisible.value = !isCreditVisible.value;
-}
-
-
-function initiateComponents() {
-  const rangeInput = document.querySelectorAll(".range-input input"),
-      priceInput = document.querySelectorAll(".price-input input"),
-      range = document.querySelector(".slider .progress");
-  let priceGap = 1000;
-
-  priceInput.forEach(input => {
-    input.addEventListener("input", e => {
-      let minPrice = parseInt(priceInput[0].value),
-          maxPrice = parseInt(priceInput[1].value);
-
-      if ((maxPrice - minPrice >= priceGap) && maxPrice <= rangeInput[1].max) {
-        if (e.target.className === "input-min") {
-          rangeInput[0].value = minPrice;
-          range.style.left = ((minPrice / rangeInput[0].max) * 100) + "%";
-        } else {
-          rangeInput[1].value = maxPrice;
-          range.style.right = 100 - (maxPrice / rangeInput[1].max) * 100 + "%";
-        }
-      }
-    });
-  });
-
-  rangeInput.forEach(input => {
-    input.addEventListener("input", e => {
-      let minVal = parseInt(rangeInput[0].value),
-          maxVal = parseInt(rangeInput[1].value);
-
-      if ((maxVal - minVal) < priceGap) {
-        if (e.target.className === "range-min") {
-          rangeInput[0].value = maxVal - priceGap
-        } else {
-          rangeInput[1].value = minVal + priceGap;
-        }
-      } else {
-        priceInput[0].value = minVal;
-        priceInput[1].value = maxVal;
-        range.style.left = ((minVal / rangeInput[0].max) * 100) + "%";
-        range.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + "%";
-      }
-    });
-  });
 }
 
 
