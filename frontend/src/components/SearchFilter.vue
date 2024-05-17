@@ -28,19 +28,19 @@
         <div class="category-list">
           <div class="checkbox-wrapper">
             <label class="cbx" for="itBox">Information Technology</label>
-            <input class="inp-cbx" id="itBox" type="checkbox" v-model="isItChecked" @change="onCategoryBoxChange">
+            <input class="inp-cbx" id="itBox" type="checkbox" v-model="isItChecked" @change="sortByCategory">
           </div>
           <div class="checkbox-wrapper">
             <label class="cbx" for="dmBox">Digital Marketing</label>
-            <input class="inp-cbx" id="dmBox" type="checkbox" v-model="isDmChecked" @change="onCategoryBoxChange">
+            <input class="inp-cbx" id="dmBox" type="checkbox" v-model="isDmChecked" @change="sortByCategory">
           </div>
           <div class="checkbox-wrapper">
             <label class="cbx" for="beBox">Business and Entrepreneurship</label>
-            <input class="inp-cbx" id="beBox" type="checkbox" v-model="isBeChecked" @change="onCategoryBoxChange">
+            <input class="inp-cbx" id="beBox" type="checkbox" v-model="isBeChecked" @change="sortByCategory">
           </div>
           <div class="checkbox-wrapper">
             <label class="cbx" for="dsBox">Data Science and Analytics</label>
-            <input class="inp-cbx" id="dsBox" type="checkbox" v-model="isDsChecked" @change="onCategoryBoxChange">
+            <input class="inp-cbx" id="dsBox" type="checkbox" v-model="isDsChecked" @change="sortByCategory">
           </div>
         </div>
       </div>
@@ -120,19 +120,19 @@
           <div class="checkbox-wrapper">
             <label class="cbx" for="beginnerBox">Beginner</label>
             <input class="inp-cbx" id="beginnerBox" type="checkbox" v-model="isBeginnerChecked"
-                   @change="onDifficultyBoxChange">
+                   @change="sortByDifficulty">
           </div>
 
           <div class="checkbox-wrapper">
             <label class="cbx" for="intermediateBox">Intermediate</label>
             <input class="inp-cbx" id="intermediateBox" type="checkbox" v-model="isIntermediateChecked"
-                   @change="onDifficultyBoxChange">
+                   @change="sortByDifficulty">
           </div>
 
           <div class="checkbox-wrapper">
             <label class="cbx" for="expertBox">Expert</label>
             <input class="inp-cbx" id="expertBox" type="checkbox" v-model="isExpertChecked"
-                   @change="onDifficultyBoxChange">
+                   @change="sortByDifficulty">
           </div>
         </header>
       </div>
@@ -148,7 +148,7 @@
         }">
         <header>
           <div class="slider-container">
-            <input type="range" min="0" max="5" class="slider" id="creditSlider" v-model="creditValue" @change="onCreditBoxChange" >
+            <input type="range" min="0" max="5" class="slider" id="creditSlider" v-model="creditValue" @change="sortByCredit" >
             <div style="display: flex; justify-content: space-between;">
               <p>Minimum Credit</p>
               <p >{{ creditValue }}</p>
@@ -172,6 +172,7 @@ import {currency, setDefaultCurrency} from "@/js/currency";
 import Litepicker from 'litepicker';
 import {watch} from 'vue';
 import {createContentBox, fetchCourses, fetchCurrencies} from "@/js/populationTools";
+import {sendApiRequest} from "@/js/requests";
 
 const {appContext} = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
@@ -185,6 +186,14 @@ const isBeginnerChecked = ref(false);
 const isIntermediateChecked = ref(false);
 const isExpertChecked = ref(false);
 
+const isCategoryVisible = ref(false);
+const isPriceVisible = ref(false);
+const isDateVisible = ref(false);
+const isDifficultyVisible = ref(false);
+const isProviderVisible = ref(false);
+const isDurationVisible = ref(false);
+const isCreditVisible = ref(false);
+
 const minValue = ref(0);
 const maxValue = ref(50000);
 const minRangeValue = ref(0);
@@ -192,21 +201,10 @@ const maxRangeValue = ref(50000);
 
 let courseContainer;
 let children;
-let searchedChildren = new Map();
-let categoryFilter = new Map();
-let maxPriceFilter = new Map();
-let minPriceFilter = new Map();
-let dateFilter = new Map();
-let providerFilter = new Map();
-let difficultyFilter = new Map();
-let creditFilter = new Map();
-let selectedCategories = [];
-let selectedPrices = [];
-let selectedMinPrice = null;
-let selectedMaxPrice = null;
-let selectedProviders = [];
-let selectedDifficulties = [];
-let selectedCredits = [];
+let childrenIdList = [];
+let filterMap = new Map();
+let activeFilters = new Map();
+let Matching = [];
 
 onMounted(() => {
   courseContainer = document.querySelector('#courseContainer');
@@ -214,6 +212,7 @@ onMounted(() => {
   populateCourses('.flexible-grid');
   populateProviders();
   currency(API_URL);
+  initiateComponents();
 
   let picker;
   document.addEventListener('DOMContentLoaded', function () {
@@ -242,6 +241,7 @@ onMounted(() => {
       sortByDate(startDate, endDate);
     });
   });
+
 });
 
 
@@ -299,65 +299,168 @@ function populateProviders() {
       .catch(error => console.error('Error:', error));
 }
 
-function searchCourses() {
-  for (let child of children) {
-    let childTitle = child.querySelector('.content-box-title').textContent.toLowerCase();
-    if (!childTitle.includes(searchQuery.value.toLowerCase())) {
-      searchedChildren.set(child, 1);
-    } else if (searchedChildren.has(child)) {
-      searchedChildren.delete(child);
-    }
+function createChildrenIdList() {
+  for (let i = 0; i < children.length; i++) {
+    childrenIdList.push(i + 1);
   }
-  filterStatus();
+}
+function getCheckboxId(event) {
+  let checkboxId = event.target.id;
+  let label = document.querySelector(`label[for="${checkboxId}"]`);
+  let labelName = label.textContent;
+  return {labelName,checkboxId};
 }
 
-function filterStatus() {
-  for (let i = 0; i < children.length; i++) {
-    if (searchedChildren.has(children[i])) {
-      children[i].style.display = 'none';
-    } else {
-      if (categoryFilter.has(children[i])) {
-        children[i].style.display = 'none';
+function addFilterToCourse(id, checkboxId,isSlider) {
+  let key = checkboxId.split(" ")[0];
+
+  if (filterMap.has(id) ) {
+    let existingFilter = filterMap.get(id);
+    if (existingFilter.has(key)) {
+      if (existingFilter.get(key).includes(checkboxId) && existingFilter.get(key).length === 1){
+        if (!isSlider){
+          existingFilter.delete(key);
+        }
+      } else if (existingFilter.get(key).includes(checkboxId) && existingFilter.get(key).length > 1){
+        let filterArray = existingFilter.get(key);
+        filterArray.splice(filterArray.indexOf(checkboxId), 1);
+        existingFilter.set(key, filterArray); // Set the updated array back to the Map
       } else {
-        if (providerFilter.has(children[i])) {
-          children[i].style.display = 'none';
-        } else {
-          if (difficultyFilter.has(children[i])) {
-            children[i].style.display = 'none';
-          } else {
-            if (creditFilter.has(children[i])) {
-              children[i].style.display = 'none';
-            } else {
-              if (maxPriceFilter.has(children[i])) {
-                children[i].style.display = 'none';
-              } else {
-                if (dateFilter.has(children[i])) {
-                  children[i].style.display = 'none';
-                } else {
-                  if (minPriceFilter.has(children[i])) {
-                    children[i].style.display = 'none';
-                  } else {
-                    children[i].style.display = 'block';
-                  }
-                }
-              }
-            }
-          }
-        }} }
-  }}
-
-const isCategoryVisible = ref(false);
-const isPriceVisible = ref(false);
-const isDateVisible = ref(false);
-const isDifficultyVisible = ref(false);
-const isProviderVisible = ref(false);
-const isDurationVisible = ref(false);
-const isCreditVisible = ref(false);
+        existingFilter.get(key).push(checkboxId);
+      }
+    } else {
+      existingFilter.set(key, [checkboxId]);
+    }
+  } else {
+    let newFilter = new Map();
+    newFilter.set(key, [checkboxId]);
+    filterMap.set(id, newFilter);
+  }
+}
 
 
-onMounted(() => {
-  initiateComponents();
-});
+function updateActiveFilters(checkboxId,isSlider) {
+  let key = checkboxId.split(" ")[0];
+
+  if (!activeFilters.has(key)) {
+    activeFilters.set(key, [checkboxId]);
+  } else {
+    let existingValues = activeFilters.get(key);
+    if (existingValues.includes(checkboxId)) {
+      if (existingValues.length === 1) {
+        if (!isSlider) {
+          activeFilters.delete(key);
+        }
+      } else {
+        existingValues.splice(existingValues.indexOf(checkboxId), 1);
+      }
+    } else {
+      existingValues.push(checkboxId);
+    }
+  }
+  console.log("Active filters: " + activeFilters.size);
+
+}
+
+function filterCourse(Matching, checkboxId,isSlider) {
+
+  for (let id of childrenIdList) {
+    if (Matching.includes(id)) {
+      addFilterToCourse(id, checkboxId,isSlider);
+    }
+  }
+
+  updateActiveFilters(checkboxId,isSlider);
+}
+
+function updateView() {
+
+  console.log("active filterssss: " + activeFilters.size)
+
+  if (activeFilters.size === 0) {
+    for (let child of children) {
+      child.style.display = 'block';
+    }
+  } else {
+    for (let child of children) {
+      child.style.display = 'none';
+    }
+    for (let key of filterMap.keys()) {
+      let existingFilter = filterMap.get(key);
+      for (let filter of existingFilter.keys()) {
+        let filterList = existingFilter.get(filter);
+        console.log("key: " + key + " filter: " + filter + " filterList: " + filterList.length)
+        console.log(existingFilter.size + " " + activeFilters.size)
+        if (filterList.length > 0 && existingFilter.size === activeFilters.size) {
+          children[key - 1].style.display = 'block';
+        }
+      }
+    }
+  }
+}
+
+function isMatch(courses,checkboxId,isSlider){
+  if (childrenIdList.length === 0) {
+    createChildrenIdList();
+  }
+
+  let Matching = [];
+
+  for (let course of courses) {
+    if (childrenIdList.includes(course.courseId)) {
+      Matching.push(course.courseId);
+    }
+  }
+  filterCourse(Matching,checkboxId,isSlider);
+  updateView();
+
+}
+
+async function sortByCategory (event){
+  let nameId = getCheckboxId(event);
+  let category = nameId.labelName
+  let checkboxId = "category " + nameId.labelName;
+
+  console.log(category,checkboxId)
+
+  await sendApiRequest("GET", '/courses/category/' + category , (data) => isMatch(data, checkboxId,false), onFailure);
+}
+
+async function onProviderCheckboxChange(event) {
+  let nameId = getCheckboxId(event);
+  let provider = nameId.labelName;
+  let checkboxId = "provider " + nameId.checkboxId.split("provider")[1];
+
+  console.log(provider,checkboxId)
+
+  await sendApiRequest("GET", '/courses/provider/' + checkboxId.split(" ")[1] , (data) => isMatch(data, checkboxId,false), onFailure);
+}
+
+async function sortByDifficulty(event) {
+  let nameId = getCheckboxId(event);
+  let difficulty = nameId.labelName;
+  let checkboxId = "difficulty " + nameId.checkboxId;
+  await sendApiRequest("GET", '/courses/level/' + difficulty , (data) => isMatch(data, checkboxId,false), onFailure);
+}
+
+function getSliderValues(event) {
+  let checkboxId = event.target.id;
+  let sliderValue = event.target.value;
+  return {sliderValue,checkboxId};
+}
+
+async function sortByCredit(event) {
+  let nameId = getSliderValues(event);
+  let credit = nameId.sliderValue;
+  let checkboxId   = "credit " + "credit";
+
+  await sendApiRequest("GET", '/courses/course_size/' + credit , (data) => isMatch(data, checkboxId,true), onFailure);
+}
+
+function onFailure(){
+  console.log("Failed to fetch courses");
+}
+
 
 function toggleShowPrice() {
   isPriceVisible.value = !isPriceVisible.value;
@@ -377,10 +480,6 @@ function toggleShowDifficulty() {
 
 function toggleShowProvider() {
   isProviderVisible.value = !isProviderVisible.value;
-}
-
-function toggleShowDuration() {
-  isDurationVisible.value = !isDurationVisible.value;
 }
 
 function toggleShowCredit() {
@@ -432,294 +531,6 @@ function initiateComponents() {
   });
 }
 
-
-function onCategoryBoxChange(event) {
-  categorizeCourses(onCheckboxChange(event));
-}
-
-function updateSelection(filter, selectedList) {
-  // End of process, update selected categories
-  if (selectedList.includes(filter)) {
-    const index = selectedList.indexOf(filter);
-    if (index > -1) {
-      selectedList.splice(index, 1);
-    }
-  } else {
-    selectedList.push(filter);
-  }
-
-  filterStatus();
-}
-
-function sortByProvider(s) {
-  for (let child of children) {
-    let childProvider = child.querySelector('.provider-name').textContent;
-    let childProviderList = childProvider.split(' ');
-    let providerMatch = childProviderList.includes(s);
-    let childInHistory = providerFilter.has(child);
-
-    if (selectedProviders.length === 0 && !providerMatch) {
-      updateFilterMap(child, true, providerFilter);
-    } else if (selectedProviders.length > 1 && selectedProviders.includes(s) && providerMatch) {
-      updateFilterMap(child, true, providerFilter);
-    } else if (selectedProviders.length > 0 && !selectedProviders.includes(s) && providerMatch && childInHistory) {
-      updateFilterMap(child, false, providerFilter);
-    } else if (selectedProviders.length === 1 && selectedProviders.includes(s) && providerMatch) {
-      updateFilterMap(child, false, providerFilter);
-    } else {
-      updateFilterMap(child, false, providerFilter);
-    }
-  }
-
-  updateSelection(s, selectedProviders);
-}
-
-function onProviderCheckboxChange(event) {
-  sortByProvider(onCheckboxChange(event));
-}
-
-function onCheckboxChange(event) {
-  const checkboxId = event.target.id;
-  const isChecked = event.target.checked;
-
-  if (isChecked) {
-    localStorage.setItem(checkboxId, 'false');
-
-    // Select the label element inside .checkbox-wrapper
-    let label = document.querySelector(`label[for="${checkboxId}"]`);
-
-    // Get the text content of the label
-    let labelName = label.textContent;
-
-    // Create container div
-    let container = document.createElement('div');
-    container.id = checkboxId + "container";
-
-    // Create label name span
-    let labelSpan = document.createElement('span');
-    labelSpan.id = 'labelName';
-    labelSpan.textContent = labelName;
-
-
-    // Create remove button
-    let removeButton = document.createElement('button');
-    removeButton.id = 'removeButton';
-    removeButton.textContent = 'x';
-    removeButton.onclick = function () {
-      container.parentNode.removeChild(container);
-      document.getElementById(checkboxId).checked = false;
-    };
-
-    container.appendChild(labelSpan);
-    container.appendChild(removeButton);
-
-    let activeFilterContainer = document.getElementById('active-filter-container');
-    activeFilterContainer.appendChild(container);
-
-    return labelName;
-
-  } else {
-    localStorage.setItem(checkboxId, 'true');
-    let activeFilterContainer = document.getElementById('active-filter-container');
-    activeFilterContainer.removeChild(document.getElementById(checkboxId + "container"));
-
-    let label = document.querySelector(`label[for="${checkboxId}"]`);
-
-    return label.textContent;
-  }
-
-}
-
-function categorizeCourses(category) {
-  for (let child of children) {
-    let childCategory = child.querySelector('.content-box-text').textContent;
-    let categoryMatch = childCategory === category;
-    let childInHistory = categoryFilter.has(child);
-
-    if (selectedCategories.length === 0 && !categoryMatch) {
-      updateFilterMap(child, true, categoryFilter);
-    } else if (selectedCategories.length > 1 && selectedCategories.includes(category) && categoryMatch) {
-      updateFilterMap(child, true, categoryFilter);
-    } else if (selectedCategories.length > 0 && !selectedCategories.includes(category) && categoryMatch && childInHistory) {
-      updateFilterMap(child, false, categoryFilter);
-    } else if (selectedCategories.length === 1 && selectedCategories.includes(category) && categoryMatch) {
-      updateFilterMap(child, false, categoryFilter);
-    }
-  }
-
-  updateSelection(category, selectedCategories);
-}
-
-function updateFilterMap(child, add, filterMap) {
-  if (add) {
-    if (filterMap.has(child)) {
-      console.log("Has child but add")
-      let count = filterMap.get(child);
-      filterMap.set(child, count + 1);
-    } else {
-      console.log("Does not have child but add")
-      filterMap.set(child, 1);
-    }
-  } else {
-    if (filterMap.has(child)) {
-      console.log("Has child but remove")
-      let count = filterMap.get(child);
-      filterMap.set(child, count - 1);
-      if (count - 1 < 1) {
-        filterMap.delete(child);
-      }
-    } else {
-      console.log("Does not have child but remove")
-      filterMap.forEach((count, child) => {
-        count -= 1;
-        if (count < 1) {
-          filterMap.delete(child);
-        } else {
-          filterMap.set(child, count);
-        }
-      });
-    }
-  }
-}
-
-
-function filterMinPrice(minPrice) {
-  for (let child of children) {
-    let childPriceElement = child.querySelector('.finalPriceBox').textContent;
-    let price = parseFloat(childPriceElement.split(' ')[0]);
-    let priceMatch = price >= minPrice;
-
-    if (!priceMatch) {
-      minPriceFilter.set(child, 1);
-    } else {
-      minPriceFilter.delete(child);
-    }
-  }
-
-  updateSelection({min: minPrice}, selectedPrices);
-}
-
-function filterMaxPrice(maxPrice) {
-  for (let child of children) {
-    let childPriceElement = child.querySelector('.finalPriceBox').textContent;
-    let price = parseFloat(childPriceElement.split(' ')[0]);
-    let priceMatch = price <= maxPrice;
-
-    if (!priceMatch) {
-      maxPriceFilter.set(child, 1);
-    } else {
-      maxPriceFilter.delete(child);
-    }
-  }
-
-  updateSelection({max: maxPrice}, selectedPrices);
-}
-
-watch(minValue, (newMinVal) => {
-  filterMinPrice(newMinVal);
-});
-
-watch(maxValue, (newMaxVal) => {
-  filterMaxPrice(newMaxVal);
-});
-
-watch(minRangeValue, (newMinRangeVal) => {
-  filterMinPrice(newMinRangeVal);
-});
-
-watch(maxRangeValue, (newMaxRangeVal) => {
-  filterMaxPrice(newMaxRangeVal);
-});
-
-
-function sortByDate(date1, date2) {
-  for (let i = 0; i < children.length; i++) {
-    let child = children[i];
-    let childDate = child.querySelector('.content-box-attributes').textContent;
-    let date = childDate.split(' ')[0];
-
-    if (date < date1 || date > date2) {
-      child.style.display = 'none';
-    } else {
-      child.style.display = 'block';
-    }
-  }
-}
-
-function sortByDifficulty(difficulty) {
-  for (let child of children) {
-    let childDifficulty = child.querySelector('.content-box-difficulty').textContent;
-    let difficultyMatch = childDifficulty === difficulty;
-    let childInHistory = difficultyFilter.has(child);
-
-    if (selectedDifficulties.length ===  0 && !difficultyMatch) {
-      updateFilterMap(child, true, difficultyFilter);
-    } else if (selectedDifficulties.length > 1 && selectedDifficulties.includes(difficulty) && difficultyMatch) {
-      updateFilterMap(child, true, difficultyFilter);
-    } else if (selectedDifficulties.length > 0 && !selectedDifficulties.includes(difficulty) && difficultyMatch && childInHistory) {
-      updateFilterMap(child, false, difficultyFilter);
-    } else if (selectedDifficulties.length === 1 && selectedDifficulties.includes(difficulty) && difficultyMatch) {
-      updateFilterMap(child, false, difficultyFilter);
-    }
-  }
-
-  updateSelection(difficulty, selectedDifficulties);
-}
-
-function onDifficultyBoxChange(event) {
-  sortByDifficulty(onCheckboxChange(event));
-}
-
-function sortByCredit(credit) {
-  for (let child of children) {
-    let childCredit = child.querySelector('.content-box-credit').textContent;
-    let creditMatch = childCredit >= credit;
-
-    if (!creditMatch){
-      creditFilter.set(child, 1);
-    } else {
-      creditFilter.delete(child);
-    }
-  }
-  console.log("dead children " + creditFilter.size)
-  updateSelection(credit, selectedCredits);
-}
-
-function onCreditBoxChange(event) {
-  sortByCredit(onSliderChange(event));
-}
-
-function onSliderChange(event) {
-  const sliderId = event.target.id;
-  const sliderValue = event.target.value;
-
-  localStorage.setItem(sliderId, sliderValue);
-
-  // Get the text content of the label
-  let labelName = "Minimum Credit";
-
-  // Create container div
-  let container = document.createElement('div');
-  container.id = sliderId + "container";
-
-  // Create label name span
-  let labelSpan = document.createElement('span');
-  labelSpan.id = 'labelName';
-  labelSpan.textContent = labelName;
-
-  // Create value span
-  let valueSpan = document.createElement('span');
-  valueSpan.id = 'sliderValue';
-  valueSpan.textContent = sliderValue;
-
-  container.appendChild(labelSpan);
-  container.appendChild(valueSpan);
-
-  let activeFilterContainer = document.getElementById('active-filter-container');
-  activeFilterContainer.appendChild(container);
-
-  return sliderValue;
-}
 
 </script>
 
