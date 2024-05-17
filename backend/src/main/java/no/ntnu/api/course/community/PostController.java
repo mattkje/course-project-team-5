@@ -46,6 +46,9 @@ public class PostController {
         if(getCourse(id) == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+        if(userService.getSessionUser() == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
         if(postService.getCourse(id).getAuthor().equals(userService.getSessionUser().user().getUsername()) ||
                 userService.isAdmin()) {
             postService.deletePost(postService.getCourseInfo(id));

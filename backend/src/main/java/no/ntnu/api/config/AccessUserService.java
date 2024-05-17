@@ -303,4 +303,14 @@ public class AccessUserService implements UserDetailsService {
         }
         return false;
     }
+
+    public UserWithCourses getUser(String username) {
+        Optional<User> userOptional = userRepository.findByUsername(username);
+        if (userOptional.isPresent()) {
+            User user = userRepository.findByUsername(username).get();
+            List<UserCourses> courses = getCourses(username);
+            return new UserWithCourses(user, courses);
+        }
+        return null;
+    }
 }

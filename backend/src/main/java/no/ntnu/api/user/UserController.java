@@ -1,6 +1,7 @@
 package no.ntnu.api.user;
 
 import no.ntnu.api.config.*;
+import no.ntnu.api.course.userCourses.UserCourses;
 import no.ntnu.api.role.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -95,11 +96,10 @@ public class UserController {
     public ResponseEntity<?> getProfile(@PathVariable String username) {
         if(userService.getSessionUser() != null) {
             if(userService.isAdmin() || userService.getSessionUser().user().getUsername().equals(username)){
-                for(User user : userService.getAllUsers()) {
-                    if(user.getUsername().equals(username)) {
-                        return ResponseEntity.status(HttpStatus.OK).body(user);
-                    }
+                if(userService.getUser(username) == null) {
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
                 }
+                return ResponseEntity.status(HttpStatus.OK).body(userService.getUser(username));
             } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Only accessible to authorized users");
             }
