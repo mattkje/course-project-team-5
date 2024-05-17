@@ -1,15 +1,10 @@
 package no.ntnu.api.course;
 
-import java.util.Objects;
-
 import no.ntnu.api.config.AccessUserService;
-import no.ntnu.api.provider.CourseProvider;
-import no.ntnu.api.provider.Provider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collection;
 
@@ -87,12 +82,6 @@ public class CourseController {
     @GetMapping("/api/courses/category/{category}")
     public Collection<Course> getCoursesByCategory(@PathVariable String category) {
         return courseService.getCoursesByCategory(category);
-    }
-
-
-    @GetMapping("/api/courses/provider/{providerId}")
-    public Collection<Course> getCoursesByProvider(@PathVariable int providerId) {
-        return courseService.getCoursesByProvider(providerId);
     }
 
     @GetMapping("/api/courses/level/{level}")
