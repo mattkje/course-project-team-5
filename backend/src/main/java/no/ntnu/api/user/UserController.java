@@ -93,8 +93,12 @@ public class UserController {
      */
     @GetMapping("/{username}")
     public ResponseEntity<?> getProfile(@PathVariable String username) {
-        if(userService.getSessionUser() != null || userService.getSessionUser().user().getUsername().equals(username) || userService.isAdmin()) {
-            return ResponseEntity.status(HttpStatus.OK).body(userService.getSessionUser());
+        if(userService.getSessionUser() != null) {
+            if(userService.getSessionUser().user().getUsername().equals(username) || userService.isAdmin() && userService.loadUserByUsername(username).getUsername().equals(username)){
+                return ResponseEntity.status(HttpStatus.OK).body(userService.getSessionUser());
+            }else {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Profile data for other users not accessible!");
+            }
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }

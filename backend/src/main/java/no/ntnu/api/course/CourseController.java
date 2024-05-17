@@ -51,25 +51,6 @@ public class CourseController {
         return courseService.getAllCourses();
     }
 
-
-    /**
-     * Returns the course that has the matching id as the path variable.
-     * @param courseId The id of the course
-     * @param providerId The id of the provider
-     * @param keywordId The id of the keyword
-     * @return a Http response either containing the course with matching id or a NOT FOUND response.
-     */
-    @GetMapping("/api/courses/{courseId}/{providerId}/{keywordId}")
-    public CourseWithProvidersAndKeywords getCourseFromProvider(@PathVariable int courseId,
-                                                                @PathVariable int providerId,
-                                                                @PathVariable int keywordId) {
-        if (courseService.getCourse(courseId, providerId, keywordId) == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Course not found");
-        } else {
-            return courseService.getCourse(courseId, providerId, keywordId);
-        }
-    }
-
     /**
      * Deletes a course from the api, the course is chosen by the given id parameter.
      * @param id the id of the course to be deleted
@@ -98,40 +79,6 @@ public class CourseController {
         if(course != null && userService.isAdmin()) {
             courseService.postCourse(course);
             return ResponseEntity.status(HttpStatus.CREATED).body(course);
-        }else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-    }
-
-    /**
-     * Posts a new provider into the API, the provider cannot be null and responds with status
-     * @param courseId The id of the course
-     * @param provider The provider to be added into the database
-     * @return either a bad request or created status.
-     */
-    @PostMapping("/api/courses/{courseId}/providers")
-    public ResponseEntity<CourseProvider> postProvider(@PathVariable int courseId, @RequestBody CourseProvider provider) {
-        if(provider == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }else {
-            courseService.postProvider(courseId, provider);
-            return ResponseEntity.status(HttpStatus.CREATED).body(provider);
-        }
-    }
-
-    /**
-     * Deletes a provider from the api, the provider is chosen by the given id parameter.
-     * @param courseId The id of the course
-     * @param providerId The id of the provider
-     * @param keywordId The id of the keyword
-     * @return returns a Not found response if the provider is not found. Or returns an OK response
-     */
-    @DeleteMapping("/api/courses/{courseId}/providers/{providerId}/keywords/{keywordId}")
-    public ResponseEntity<String> deleteProvider(@PathVariable int courseId, @PathVariable int providerId,
-                                                 @PathVariable int keywordId) {
-        if(courseService.getCourse(courseId, providerId, keywordId) == null && userService.isAdmin()) {
-            courseService.deleteProvider(courseId, providerId);
-            return ResponseEntity.status(HttpStatus.OK).body("Provider deleted");
         }else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }

@@ -3,6 +3,7 @@ package no.ntnu.api.provider;
 import no.ntnu.api.course.Course;
 import no.ntnu.api.course.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,5 +49,21 @@ public class ProviderController {
     return providerService.getProviderIdByName(name)
         .map(ResponseEntity::ok)
         .orElse(ResponseEntity.notFound().build());
+  }
+
+  /**
+   * Posts a new provider into the API, the provider cannot be null and responds with status
+   * @param courseId The id of the course
+   * @param provider The provider to be added into the database
+   * @return either a bad request or created status.
+   */
+  @PostMapping("/api/courses/{courseId}/providers")
+  public ResponseEntity<CourseProvider> postProvider(@PathVariable int courseId, @RequestBody CourseProvider provider) {
+    if(provider == null) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }else {
+      courseService.postProvider(courseId, provider);
+      return ResponseEntity.status(HttpStatus.CREATED).body(provider);
+    }
   }
 }
