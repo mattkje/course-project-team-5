@@ -198,6 +198,7 @@ let childrenIdList = [];
 let filterMap = new Map();
 let activeFilters = new Map();
 let Matching = [];
+let searchedChildren = new Map();
 
 onMounted(() => {
   courseContainer = document.querySelector('#courseContainer');
@@ -407,6 +408,11 @@ function updateView() {
       }
     }
   }
+  for (let child of children) {
+    if (searchedChildren.has(child)) {
+      child.style.display = 'none';
+    }
+  }
 }
 
 function isMatch(courses, checkboxId, isSlider) {
@@ -480,6 +486,22 @@ async function sortByPriceRange(event) {
   priceRangeFilter = priceRangeFilter.join(',');
 
   await sendApiRequest("GET", '/courses/ids?ids=' + priceRangeFilter, (data) => isMatch(data, checkboxId, true), onFailure);
+}
+
+
+function searchCourses() {
+  console.log("test")
+  for (let child of children) {
+    let childTitle = child.querySelector('.content-box-title').textContent.toLowerCase();
+    if (!childTitle.includes(searchQuery.value.toLowerCase())) {
+      searchedChildren.set(child, 1);
+      console.log("test 2")
+    } else if (searchedChildren.has(child)) {
+      console.log("test 3")
+      searchedChildren.delete(child);
+    }
+  }
+  updateView();
 }
 
 function onFailure() {
