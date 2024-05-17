@@ -49,6 +49,7 @@ public class SecurityConfiguration {
   @Bean
   public SecurityFilterChain apiSecurityFilterChain(HttpSecurity http) throws Exception {
     http
+            .csrf(AbstractHttpConfigurer::disable)
         .securityMatchers((matchers) -> matchers.requestMatchers("/api/courses"))
         .authorizeHttpRequests((requests) -> requests.anyRequest().permitAll())
         .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
@@ -68,15 +69,14 @@ public class SecurityConfiguration {
   }
 
   @Bean
-  public SecurityFilterChain userRoleSecurityFilterChain(HttpSecurity http) throws Exception {
+  public SecurityFilterChain putMethodSecurityFilterChain(HttpSecurity http) throws Exception {
     http
+            .csrf(AbstractHttpConfigurer::disable)
             .securityMatchers((matchers) -> matchers.requestMatchers("/api/users/*/add-role", "/api/users/*/delete-role"))
-            .authorizeHttpRequests((requests) -> requests.anyRequest().authenticated())
+            .authorizeHttpRequests((requests) -> requests.anyRequest().permitAll())
             .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     return http.build();
   }
-
-
 
   // For login
   @Bean

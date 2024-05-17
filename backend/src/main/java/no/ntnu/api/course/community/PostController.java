@@ -43,11 +43,10 @@ public class PostController {
 
     @DeleteMapping("/api/community/courses/{id}")
     public ResponseEntity<String> deleteCourse(@PathVariable int id) {
-        if(!userService.isUser()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        if(getCourse(id) != null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        if(getCourse(id) != null &&
-                (postService.getCourse(id).getAuthor().equals(userService.getSessionUser().user().getUsername())) ||
+        if(postService.getCourse(id).getAuthor().equals(userService.getSessionUser().user().getUsername()) ||
                 userService.isAdmin()) {
             postService.deletePost(postService.getCourseInfo(id));
             return ResponseEntity.status(HttpStatus.OK).body("Course deleted");

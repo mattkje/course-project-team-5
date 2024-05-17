@@ -218,20 +218,20 @@ public class AccessUserService implements UserDetailsService {
     return false;
   }
 
-  public void addRole(String username, Role role) {
+  public void addRole(String username, String role) {
     Optional<User> userOptional = userRepository.findByUsername(username);
     if (userOptional.isPresent()) {
       User user = userRepository.findByUsername(username).get();
-      user.addRole(role);
+      user.addRole(roleRepository.findOneByName(role));
       userRepository.save(user);
     }
   }
 
-  public void deleteRole(String username, Role role) {
+  public void deleteRole(String username, String role) {
     Optional<User> userOptional = userRepository.findByUsername(username);
     if (userOptional.isPresent()) {
       User user = userRepository.findByUsername(username).get();
-      user.getRoles().remove(role);
+      user.getRoles().remove(roleRepository.findOneByName(role));
       userRepository.save(user);
     }
   }

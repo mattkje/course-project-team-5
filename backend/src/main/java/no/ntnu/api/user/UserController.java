@@ -95,17 +95,16 @@ public class UserController {
     public ResponseEntity<?> getProfile(@PathVariable String username) {
         if(userService.getSessionUser() != null) {
             if(userService.isAdmin() || userService.getSessionUser().user().getUsername().equals(username)){
-                if (userService.getSessionUser().user().getUsername().equals(username)) {
-                    return ResponseEntity.status(HttpStatus.OK).body(userService.getSessionUser());
-                } else {
-                    return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Profile data for other users not accessible!");
+                for(User user : userService.getAllUsers()) {
+                    if(user.getUsername().equals(username)) {
+                        return ResponseEntity.status(HttpStatus.OK).body(user);
+                    }
                 }
             } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Only accessible to authorized users");
             }
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
+        return null;
     }
 
     /**
@@ -197,7 +196,7 @@ public class UserController {
      * @return The response
      */
     @PutMapping("/{username}/add-role")
-    public ResponseEntity<?> addRole(@PathVariable String username, @RequestBody Role role) {
+    public ResponseEntity<?> addRole(@PathVariable String username, @RequestBody String role) {
         if(userService.isAdmin()) {
             userService.addRole(username, role);
             return ResponseEntity.status(HttpStatus.OK).body("Role successfully added");
@@ -214,7 +213,7 @@ public class UserController {
      * @return The response
      */
     @PutMapping("/{username}/delete-role")
-    public ResponseEntity<?> deleteRole(@PathVariable String username, @RequestBody Role role) {
+    public ResponseEntity<?> deleteRole(@PathVariable String username, @RequestBody String role) {
         if(userService.isAdmin()) {
             userService.deleteRole(username, role);
             return ResponseEntity.status(HttpStatus.OK).body("Role successfully deleted");

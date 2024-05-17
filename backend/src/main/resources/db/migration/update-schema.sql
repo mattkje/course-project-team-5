@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS course_providers
 
 CREATE TABLE IF NOT EXISTS courses
 (
-    course_id              INT           NOT NULL,
+    course_id              INT AUTO_INCREMENT NOT NULL,
     title                  VARCHAR(255)  NULL,
     category               VARCHAR(100)  NULL,
     level                  VARCHAR(50)   NULL,
