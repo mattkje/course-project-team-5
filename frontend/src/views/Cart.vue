@@ -6,7 +6,7 @@
 
       <div class="title">
         <h1>Your cart:</h1>
-        <p class="description">Your cart is empty.</p>
+        <p class="description">{{ cartText }}</p>
       </div>
 
       <ShoppingCart/>
@@ -15,8 +15,13 @@
 
 <script setup>
 
-
+import { ref } from 'vue';
 import ShoppingCart from "@/components/ShoppingCart.vue";
+
+const cartText = ref('Your cart is empty');
+
+
+
 </script>
 
 
