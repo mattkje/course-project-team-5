@@ -228,7 +228,7 @@ public class CourseService {
     return courseRepository.findByLevel(level);
   }
 
-  public Collection<Course> getCoursesBySize(int size) {
+  public Collection<Course> getCoursesBySize(double size) {
     return courseRepository.findBySizeGreaterThanEqual(size);
   }
 }

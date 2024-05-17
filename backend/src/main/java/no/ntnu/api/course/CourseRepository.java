@@ -20,5 +20,5 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
   Collection<Course> findByLevel(String level);
 
   @Query("SELECT c FROM Course c WHERE c.courseSize >= :size")
-  List<Course> findBySizeGreaterThanEqual(int size);
+  List<Course> findBySizeGreaterThanEqual(double size);
 }

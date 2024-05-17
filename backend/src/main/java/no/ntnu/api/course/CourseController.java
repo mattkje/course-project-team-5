@@ -101,7 +101,7 @@ public class CourseController {
     }
 
     @GetMapping("/api/courses/course_size/{size}")
-    public Collection<Course> getCoursesBySize(@PathVariable int size) {
+    public Collection<Course> getCoursesBySize(@PathVariable double size) {
         return courseService.getCoursesBySize(size);
     }
 
