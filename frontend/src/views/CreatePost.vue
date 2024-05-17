@@ -46,6 +46,7 @@
 import {getAuthenticatedUser, hasRole, isAuthorized} from '@/js/authentication'; // Assuming the correct path
 import Guidelines from "@/components/Guidelines.vue";
 import router from "@/router";
+import {getCookie} from "@/js/tools";
 
 
 export default {
@@ -97,13 +98,13 @@ export default {
 
       this.post.author = currentUser.username;
       this.post.postDate = new Date().toISOString();
-
+      const token = getCookie('jwt');
 
       fetch( 'http://localhost:8080/api/community/courses', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${currentUser.token}`
+          'Authorization': 'Bearer ' + token,
         },
         body: JSON.stringify(this.post)
       })
