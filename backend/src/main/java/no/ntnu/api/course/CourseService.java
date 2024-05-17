@@ -231,4 +231,25 @@ public class CourseService {
   public Collection<Course> getCoursesBySize(double size) {
     return courseRepository.findBySizeGreaterThanEqual(size);
   }
+
+  public Map<String, Double> getLowestPrice() {
+    Map<String, Double> courseLowestPriceMap = new HashMap<>();
+    List<Course> courses = this.fetchAllCourses();
+    for (Course course : courses) {
+      double lowestPrice = this.courseProviderRepository.findById(course.getId()).stream()
+          .mapToDouble(CourseProvider::getPrice)
+          .min()
+          .orElseThrow(NoSuchElementException::new);
+      courseLowestPriceMap.put(course.getName(), lowestPrice);
+    }
+    return courseLowestPriceMap;
+  }
+
+  public List<Course> fetchAllCourses() {
+    return this.courseRepository.findAll();
+  }
+
+  public Collection<Course> getCoursesByIds(List<Integer> ids) {
+    return this.courseRepository.findAllByCourseId(ids);
+  }
 }

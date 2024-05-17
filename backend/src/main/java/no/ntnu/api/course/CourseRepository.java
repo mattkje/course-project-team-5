@@ -4,13 +4,14 @@ import java.util.Collection;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  * Repository for the Course entity.
  */
 public interface CourseRepository extends JpaRepository<Course, Long> {
 
-  @Query("SELECT c FROM Course c JOIN c.providers p WHERE p.id = :providerId")
+  @Query("SELECT c FROM Course c JOIN c.providers p WHERE p.providerId = :providerId")
   List<Course> findAllByProviderId(Long providerId);
 
   @Query("SELECT c FROM Course c WHERE c.category = :category")
@@ -21,4 +22,7 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
 
   @Query("SELECT c FROM Course c WHERE c.courseSize >= :size")
   List<Course> findBySizeGreaterThanEqual(double size);
+
+  @Query("SELECT c FROM Course c WHERE c.id IN :ids")
+  Collection<Course> findAllByCourseId(@Param("ids") List<Integer> ids);
 }

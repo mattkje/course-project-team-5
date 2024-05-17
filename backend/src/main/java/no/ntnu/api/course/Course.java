@@ -124,4 +124,12 @@ public class Course {
     public String getImage() {
         return image;
     }
+
+    public Long getId() {
+        return (long) courseId;
+    }
+
+    public String getName() {
+        return title;
+    }
 }

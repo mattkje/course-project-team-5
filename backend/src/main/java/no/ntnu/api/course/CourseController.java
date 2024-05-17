@@ -1,5 +1,7 @@
 package no.ntnu.api.course;
 
+import java.util.List;
+import java.util.Map;
 import no.ntnu.api.config.AccessUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -94,4 +96,13 @@ public class CourseController {
         return courseService.getCoursesBySize(size);
     }
 
+    @GetMapping("/api/courses/lowest-price")
+    public Map<String, Double> getLowestPrice() {
+        return courseService.getLowestPrice();
+    }
+
+    @GetMapping("/api/courses/ids")
+    public Collection<Course> getCoursesByIds(@RequestParam List<Integer> ids) {
+        return courseService.getCoursesByIds(ids);
+    }
 }
