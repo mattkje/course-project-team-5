@@ -70,7 +70,7 @@ public class PostController {
      */
     @PostMapping("/api/community/courses")
     public ResponseEntity<Post> postCourse(@RequestBody Post post) {
-        if(post != null && userService.isAdmin()) {
+        if(post != null && userService.isUser()) {
             postService.postCourse(post);
             return ResponseEntity.status(HttpStatus.CREATED).body(post);
         }else {

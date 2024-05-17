@@ -291,4 +291,16 @@ public class AccessUserService implements UserDetailsService {
         }
         return false;
     }
+
+    public boolean isUser() {
+        UserWithCourses sessionUser = getSessionUser();
+        if (sessionUser != null) {
+            for (Role role : sessionUser.user().getRoles()) {
+                if (role.getName().equals("ROLE_USER")) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }
