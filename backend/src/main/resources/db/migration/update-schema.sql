@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS providers
     CONSTRAINT pk_providers PRIMARY KEY (provider_id)
 );
 
-CREATE TABLE IF NOT EXISTS community_courses (
+CREATE TABLE IF NOT EXISTS community_posts (
                                    id INT AUTO_INCREMENT,
                                    author VARCHAR(20),
                                    title VARCHAR(255),
@@ -345,7 +345,7 @@ VALUES (1, 'ROLE_USER'),
        (2, 'ROLE_PRO'),
        (3, 'ROLE_ADMIN');
 
-INSERT INTO community_courses (title, author, category, description, content, post_date, image)
+INSERT INTO community_posts (title, author, category, description, content, post_date, image)
 VALUES
     ('Introduction to Python', 'john_doe','Programming', 'This course will introduce the basics of Python programming language.','This is the course content','2024-02-02', null),
     ('Web Development with JavaScript', 'chucknorris21', 'Web Development', 'This course covers the essential concepts and techniques for web development using JavaScript.','This is the course content','2024-02-12',  null),

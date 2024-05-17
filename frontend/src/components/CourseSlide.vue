@@ -90,7 +90,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
   margin: 75px auto auto auto;
   border-radius: 20px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -129,6 +129,7 @@ img {
   margin-right: auto;
   border-radius: 20px;
   background-color: #0e0e0e;
+  box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
   animation: slide 10s ease-in-out infinite;
 }
 

@@ -12,7 +12,7 @@ import java.util.Date;
  * Represents a community course in the database.
  */
 @Entity
-@Table(name = "community_courses")
+@Table(name = "community_posts")
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
