@@ -99,7 +99,7 @@ export default {
       this.post.postDate = new Date().toISOString();
 
 
-      fetch( 'http://localhost:8080/api/community/courses', { // Use environment variables for API_URL
+      fetch( 'http://localhost:8080/api/community/courses', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -109,6 +109,7 @@ export default {
       })
           .then(response => {
             if (!response.ok) {
+              console.log(response);
               throw new Error('Failed to create post');
             }
             console.log('Post created successfully');
