@@ -94,17 +94,18 @@ public class UserController {
     @GetMapping("/{username}")
     public ResponseEntity<?> getProfile(@PathVariable String username) {
         if(userService.getSessionUser() != null) {
-            for(User user : userService.getAllUsers()) {
-                if(userService.getSessionUser().user().getUsername().equals(username) && user.equals(username) || userService.isAdmin()){
+            if(userService.isAdmin() || userService.getSessionUser().user().getUsername().equals(username)){
+                if (userService.getSessionUser().user().getUsername().equals(username)) {
                     return ResponseEntity.status(HttpStatus.OK).body(userService.getSessionUser());
-                }else {
+                } else {
                     return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Profile data for other users not accessible!");
                 }
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Only accessible to authorized users");
             }
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
     /**

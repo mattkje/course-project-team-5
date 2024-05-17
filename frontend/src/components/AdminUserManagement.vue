@@ -8,7 +8,12 @@ const {appContext} = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
 
 onMounted(async () => {
-  const response = await fetch(API_URL + '/users');
+  const response = await fetch(API_URL + '/users', {
+    headers: {
+      'Authorization': 'Bearer ' + getCookie('jwt'),
+    },
+
+  });
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
