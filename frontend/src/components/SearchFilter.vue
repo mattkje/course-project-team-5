@@ -311,6 +311,16 @@ function getCheckboxId(event) {
   return {labelName,checkboxId};
 }
 
+function handleSliderFilter(checkboxId,id) {
+  let key = checkboxId.split(" ")[0];
+ if (filterMap.has(id)){
+   let existingFilter = filterMap.get(id);
+    if (existingFilter.get(key).includes(checkboxId)){
+      existingFilter.delete(key);
+    }
+ }
+}
+
 function addFilterToCourse(id, checkboxId,isSlider) {
   let key = checkboxId.split(" ")[0];
 
@@ -350,6 +360,8 @@ function updateActiveFilters(checkboxId,isSlider) {
       if (existingValues.length === 1) {
         if (!isSlider) {
           activeFilters.delete(key);
+        } else {
+          activeFilters.set(key, [checkboxId]);
         }
       } else {
         existingValues.splice(existingValues.indexOf(checkboxId), 1);
@@ -358,7 +370,6 @@ function updateActiveFilters(checkboxId,isSlider) {
       existingValues.push(checkboxId);
     }
   }
-  console.log("Active filters: " + activeFilters.size);
 
 }
 
@@ -367,6 +378,8 @@ function filterCourse(Matching, checkboxId,isSlider) {
   for (let id of childrenIdList) {
     if (Matching.includes(id)) {
       addFilterToCourse(id, checkboxId,isSlider);
+    } else if (!Matching.includes(id) && isSlider) {
+      handleSliderFilter(checkboxId, id);
     }
   }
 
@@ -374,8 +387,6 @@ function filterCourse(Matching, checkboxId,isSlider) {
 }
 
 function updateView() {
-
-  console.log("active filterssss: " + activeFilters.size)
 
   if (activeFilters.size === 0) {
     for (let child of children) {
@@ -389,8 +400,6 @@ function updateView() {
       let existingFilter = filterMap.get(key);
       for (let filter of existingFilter.keys()) {
         let filterList = existingFilter.get(filter);
-        console.log("key: " + key + " filter: " + filter + " filterList: " + filterList.length)
-        console.log(existingFilter.size + " " + activeFilters.size)
         if (filterList.length > 0 && existingFilter.size === activeFilters.size) {
           children[key - 1].style.display = 'block';
         }
@@ -420,9 +429,6 @@ async function sortByCategory (event){
   let nameId = getCheckboxId(event);
   let category = nameId.labelName
   let checkboxId = "category " + nameId.labelName;
-
-  console.log(category,checkboxId)
-
   await sendApiRequest("GET", '/courses/category/' + category , (data) => isMatch(data, checkboxId,false), onFailure);
 }
 
@@ -430,9 +436,6 @@ async function onProviderCheckboxChange(event) {
   let nameId = getCheckboxId(event);
   let provider = nameId.labelName;
   let checkboxId = "provider " + nameId.checkboxId.split("provider")[1];
-
-  console.log(provider,checkboxId)
-
   await sendApiRequest("GET", '/courses/provider/' + checkboxId.split(" ")[1] , (data) => isMatch(data, checkboxId,false), onFailure);
 }
 
@@ -452,8 +455,7 @@ function getSliderValues(event) {
 async function sortByCredit(event) {
   let nameId = getSliderValues(event);
   let credit = nameId.sliderValue;
-  let checkboxId   = "credit " + "credit";
-
+  let checkboxId = "credit " + "credit";
   await sendApiRequest("GET", '/courses/course_size/' + credit , (data) => isMatch(data, checkboxId,true), onFailure);
 }
 
