@@ -70,7 +70,6 @@ public class User {
     private boolean active = true;
 
     @JsonIgnore
-    @JsonManagedReference
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_courses",
         joinColumns = @JoinColumn(name = "user_id"),

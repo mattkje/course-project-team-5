@@ -1,5 +1,6 @@
 package no.ntnu.api.course;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import no.ntnu.api.provider.Provider;
 

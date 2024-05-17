@@ -94,14 +94,17 @@ public class UserController {
     @GetMapping("/{username}")
     public ResponseEntity<?> getProfile(@PathVariable String username) {
         if(userService.getSessionUser() != null) {
-            if(userService.getSessionUser().user().getUsername().equals(username) || userService.isAdmin() && userService.loadUserByUsername(username).getUsername().equals(username)){
-                return ResponseEntity.status(HttpStatus.OK).body(userService.getSessionUser());
-            }else {
-                return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Profile data for other users not accessible!");
+            for(User user : userService.getAllUsers()) {
+                if(userService.getSessionUser().user().getUsername().equals(username) && user.equals(username) || userService.isAdmin()){
+                    return ResponseEntity.status(HttpStatus.OK).body(userService.getSessionUser());
+                }else {
+                    return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Profile data for other users not accessible!");
+                }
             }
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
     /**
@@ -145,6 +148,9 @@ public class UserController {
      */
     @PutMapping("/{username}/change-password")
     public ResponseEntity<?> changePassword(@PathVariable String username, @RequestBody ChangePasswordRequest details) {
+        if(details.getNewPassword().length() < 8) {
+            return new ResponseEntity<>("Password must be at least 8 characters long", HttpStatus.BAD_REQUEST);
+        }
         UserWithCourses sessionUser = userService.getSessionUser();
         if (sessionUser != null && sessionUser.user().getUsername().equals(username)) {
             if(details.getNewPassword() != null) {
@@ -168,10 +174,10 @@ public class UserController {
      */
     @DeleteMapping("/{username}")
     public ResponseEntity<?> deleteUser(@PathVariable String username) {
-        UserWithCourses sessionUser = userService.getSessionUser();
         for(User user : userService.getAllUsers()) {
             if(user.getUsername().equals(username)) {
-                if((sessionUser != null && sessionUser.user().getUsername().equals(username)) || userService.isAdmin()) {
+                UserWithCourses sessionUser = userService.getSessionUser();
+                if(sessionUser != null && sessionUser.user().getUsername().equals(username) || userService.isAdmin()) {
                     userService.deleteUser(username);
                     return ResponseEntity.status(HttpStatus.OK).body("User successfully deleted");
                 } else {
@@ -246,9 +252,12 @@ public class UserController {
     @PutMapping("/purchase-pro/{subscriptionType}")
     public ResponseEntity<?> purchasePro(@PathVariable String subscriptionType) {
         UserWithCourses sessionUser = userService.getSessionUser();
-        if (sessionUser != null && !userService.isPro()) {
+        if (sessionUser != null) {
+            if (userService.isPro()) {
+                return new ResponseEntity<>("This user already has the Pro role", HttpStatus.BAD_REQUEST);
+            }
             userService.purchasePro(sessionUser.user(), subscriptionType);
-            return new ResponseEntity<>("", HttpStatus.OK);
+            return new ResponseEntity<>("This user now has the Pro role", HttpStatus.OK);
         } else {
             return new ResponseEntity<>("Profile data accessible only to authenticated users", HttpStatus.UNAUTHORIZED);
         }
