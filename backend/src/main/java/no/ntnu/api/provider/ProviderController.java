@@ -1,5 +1,6 @@
 package no.ntnu.api.provider;
 
+import no.ntnu.api.config.AccessUserService;
 import no.ntnu.api.course.Course;
 import no.ntnu.api.course.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +16,13 @@ public class ProviderController {
 
   private final ProviderService providerService;
   private final CourseService courseService;
+  private final AccessUserService userService;
 
   @Autowired
-  public ProviderController(ProviderService providerService, CourseService courseService) {
+  public ProviderController(ProviderService providerService, CourseService courseService, AccessUserService userService) {
     this.providerService = providerService;
     this.courseService = courseService;
+    this.userService = userService;
   }
 
   @GetMapping
@@ -57,9 +60,9 @@ public class ProviderController {
    * @param provider The provider to be added into the database
    * @return either a bad request or created status.
    */
-  @PostMapping("/api/courses/{courseId}/providers")
+  @PostMapping("{courseId}")
   public ResponseEntity<CourseProvider> postProvider(@PathVariable int courseId, @RequestBody CourseProvider provider) {
-    if(provider == null) {
+    if(provider == null && userService.isAdmin()) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }else {
       courseService.postProvider(courseId, provider);
