@@ -23,4 +23,14 @@ public class ProviderService {
   public Optional<Provider> getProviderById(Integer id) {
     return providerRepository.findById(Long.valueOf(id));
   }
+
+  public Optional<Long> getProviderIdByName(String name) {
+    List<Provider> providers = providerRepository.findAll();
+    for (Provider provider : providers) {
+      if (provider.getName().equals(name)) {
+        return Optional.of((long) provider.getProviderId());
+      }
+    }
+    return Optional.empty();
+  }
 }

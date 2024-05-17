@@ -209,4 +209,26 @@ public class CourseService {
   public Collection<Provider> getAllProviders() {
     return providerRepository.findAll();
   }
+
+  // Java
+  public List<Course> getCoursesByProviderId(Long providerId) {
+    return courseRepository.findAllByProviderId(providerId);
+  }
+
+  public Collection<Course> getCoursesByCategory(String category) {
+    return courseRepository.findByCategory(category);
+  }
+
+
+  public Collection<Course> getCoursesByProvider(int providerId) {
+    return courseRepository.findAllByProviderId((long) providerId);
+  }
+
+  public Collection<Course> getCoursesByLevel(String level) {
+    return courseRepository.findByLevel(level);
+  }
+
+  public Collection<Course> getCoursesBySize(int size) {
+    return courseRepository.findBySizeGreaterThanEqual(size);
+  }
 }

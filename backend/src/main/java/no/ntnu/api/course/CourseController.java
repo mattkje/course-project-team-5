@@ -137,5 +137,25 @@ public class CourseController {
         }
     }
 
+    @GetMapping("/api/courses/category/{category}")
+    public Collection<Course> getCoursesByCategory(@PathVariable String category) {
+        return courseService.getCoursesByCategory(category);
+    }
+
+
+    @GetMapping("/api/courses/provider/{providerId}")
+    public Collection<Course> getCoursesByProvider(@PathVariable int providerId) {
+        return courseService.getCoursesByProvider(providerId);
+    }
+
+    @GetMapping("/api/courses/level/{level}")
+    public Collection<Course> getCoursesByLevel(@PathVariable String level) {
+        return courseService.getCoursesByLevel(level);
+    }
+
+    @GetMapping("/api/courses/course_size/{size}")
+    public Collection<Course> getCoursesBySize(@PathVariable int size) {
+        return courseService.getCoursesBySize(size);
+    }
 
 }
