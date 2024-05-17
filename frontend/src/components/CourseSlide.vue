@@ -1,15 +1,16 @@
 <template>
   <div class="background">
-    <div class="course-display">
+    <a id="currentLink" class="course-display">
       <img :src="currentImage" alt="Course image" v-show="currentImage" key="currentImage">
       <div class="course-display-info">
         <h1 id="currentTitle"/>
         <hr>
         <h2 id="currentDifficulty"/>
       </div>
-    </div>
+    </a>
   </div>
-  <div id="curtain" class="curtain-before"/>
+  <div id="curtain" class="curtain"/>
+  <img class="logo" src="/logo.svg"/>
 </template>
 
 <script>
@@ -20,6 +21,7 @@ export default {
   setup() {
     const images = ref([]);
     const titles = ref([]);
+    const links = ref([]);
     const difficulty = ref([]);
     const currentImage = ref(null);
     let intervalId = null;
@@ -30,6 +32,7 @@ export default {
       console.log('coursesData:', coursesData); // Debug log
       images.value = coursesData.map(courseData => courseData.course.image);
       titles.value = coursesData.map(courseData => courseData.course.title);
+      links.value = coursesData.map(courseData => courseData.course.courseId);
       difficulty.value = coursesData.map(courseData => courseData.course.level);
       console.log('images.value:', images.value); // Debug log
     };
@@ -46,19 +49,18 @@ export default {
           }
 
           document.getElementById('currentTitle').innerText = titles.value[randomIndex];
+          document.getElementById('currentLink').href = '/courses?id=' + links.value[randomIndex];
           document.getElementById('currentDifficulty').innerText = difficulty.value[randomIndex];
           console.log('currentImage.value:', currentImage.value); // Debug log
         }
-        const curtain = document.getElementById('curtain')
-        curtain.className = 'curtain';
-        document.body.appendChild(curtain);
-      }, 1000); // Delay should match the duration of the CSS animation
+
+      }); // Delay should match the duration of the CSS animation
     };
 
     onMounted(async () => {
       await fetchImages();
       selectRandomImage();
-      intervalId = setInterval(selectRandomImage, 5000); // Change image every 5 seconds
+      intervalId = setInterval(selectRandomImage, 10000);
     });
 
     onUnmounted(() => {
@@ -79,11 +81,16 @@ export default {
 }
 
 .course-display {
+  text-decoration: none;
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  &:hover {
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.33);
+  }
 }
 
 .course-display-info {
@@ -101,18 +108,6 @@ img {
   height: 500px;
 }
 
-.curtain-before {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  top: 71px;
-  height: 500px;
-  width: 100%;
-  right: 0;
-  background-color: var(--light-1);
-}
-
 .curtain {
   position: absolute;
   display: flex;
@@ -122,8 +117,8 @@ img {
   height: 500px;
   width: 100%;
   right: 0;
-  background-color: var(--light-1);
-  animation: slide 5s ease-in-out;
+  background-color: #0e0e0e;
+  animation: slide 10s ease-in-out infinite;
 }
 
 
@@ -131,15 +126,23 @@ img {
   width: 200px;
   height: auto;
   position: absolute;
-  margin: auto;
-  animation: logofix 5s ease-in-out;
+  top: 250px;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  animation: logoshow 10s ease-in-out infinite;
 }
+
 
 @keyframes slide {
   0% {
     transform: scaleX(100%);
   }
-  20% {
+  5% {
+    transform: scaleX(100%);
+  }
+  25% {
     transform: scaleX(0);
   }
   80% {
@@ -150,21 +153,21 @@ img {
   }
 }
 
-@keyframes logofix {
+@keyframes logoshow {
   0% {
-    transform: scaleX(100%);
+    opacity: 1;
   }
-  20% {
+  15% {
     opacity: 0;
   }
   50% {
-    transform: scaleX(1000%);
+    opacity: 0;
   }
-  80% {
+  85% {
     opacity: 0;
   }
   100% {
-    transform: scaleX(100%);
+    opacity: 1;
   }
 }
 
