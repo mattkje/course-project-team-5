@@ -17,16 +17,20 @@ async function sendApiRequest(method, url, callback, requestBody, errorCallback)
         if (response.status === 200) {
             let responseJson = "";
             if (responseText) {
-                responseJson = JSON.parse(responseText);
+                try {
+                    responseJson = JSON.parse(responseText);
+                } catch (error) {
+                    console.error("Error parsing JSON: ", error);
+                }
             }
             console.log("Status code is 200, calling callback function");
             callback(responseJson);
-        } else if (response.status === 500) {
-            redirectTo("/login-failure");
-            doLogout();
         } else if (errorCallback) {
             console.log("Status code is not 200, calling errorCallback function");
             errorCallback(responseText);
+        } else {
+            console.log("Status code is not 200, no errorCallback function provided");
+            console.error(responseText);
         }
     } catch (error) {
         if (errorCallback) {

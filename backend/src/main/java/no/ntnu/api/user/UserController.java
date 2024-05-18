@@ -236,10 +236,10 @@ public class UserController {
                 String newJwtToken = jwtUtil.refreshToken(refreshToken, userDetails);
                 return ResponseEntity.ok(new AuthenticationResponse(newJwtToken));
             } else {
-                return new ResponseEntity<>("Invalid refresh token", HttpStatus.UNAUTHORIZED);
+                return ResponseEntity.badRequest().body("Invalid refresh token");
             }
         } catch (Exception e) {
-            return new ResponseEntity<>("Failed to refresh token", HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -254,12 +254,12 @@ public class UserController {
         UserWithCourses sessionUser = userService.getSessionUser();
         if (sessionUser != null) {
             if (userService.isPro()) {
-                return new ResponseEntity<>("This user already has the Pro role", HttpStatus.BAD_REQUEST);
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("This user already has the Pro role");
             }
             userService.purchasePro(sessionUser.user(), subscriptionType);
-            return new ResponseEntity<>("This user now has the Pro role", HttpStatus.OK);
+            return ResponseEntity.status(HttpStatus.OK).body("Pro role successfully added");
         } else {
-            return new ResponseEntity<>("Profile data accessible only to authenticated users", HttpStatus.UNAUTHORIZED);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Profile data accessible only to authenticated users");
         }
     }
 
@@ -268,12 +268,12 @@ public class UserController {
         UserWithCourses sessionUser = userService.getSessionUser();
         if (sessionUser != null) {
             if (!userService.isPro()) {
-                return new ResponseEntity<>("This user does not have the Pro role", HttpStatus.BAD_REQUEST);
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("This user does not have the Pro role");
             }
             userService.unsubscribe(sessionUser.user());
-            return new ResponseEntity<>("This user no longer has the Pro role", HttpStatus.OK);
+            return ResponseEntity.status(HttpStatus.OK).body("Pro role successfully removed");
         } else {
-            return new ResponseEntity<>("Profile data accessible only to authenticated users", HttpStatus.UNAUTHORIZED);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Profile data accessible only to authenticated users");
         }
     }
 
