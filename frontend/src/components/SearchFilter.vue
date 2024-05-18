@@ -2,7 +2,6 @@
   <div class="search-container">
 
     <div class="search-bar">
-      <label for="myTextBox"></label>
       <input class="search-prompt" type="text" id="myTextBox" name="myTextBox"
              placeholder="Search for courses to boost your skills" v-model="searchQuery" @input="searchCourses">
       <img class="search-icon" src="/search.png" alt="Connect">
@@ -675,17 +674,20 @@ function toggleShowCredit() {
   display: none;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .filter-container {
     flex-direction: column;
+    max-width: 70%
   }
 
   .range-container {
     display: none;
   }
 
-  #mobile-filter {
-    display: flex;
+  .flexible-grid {
+    margin: 0;
+    justify-content: center;
+    align-items: center;
   }
 }
 
@@ -821,9 +823,11 @@ input[type="range"]::-moz-range-thumb {
 .filter-wrapper {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .search-container {
+  width:100vw;
   position: relative;
   display: flex;
   justify-content: center;
@@ -859,7 +863,6 @@ input[type="range"]::-moz-range-thumb {
   width: 100%;
   text-decoration: none;
   padding: 20px 20px 20px 100px;
-  margin-right: 10px;
   border: none;
   border-radius: 15px;
   font-size: 16px;
@@ -917,6 +920,12 @@ input[type="range"]::-moz-range-thumb {
 body, html {
   max-width: 100%;
   overflow-x: hidden;
+}
+
+@media (max-width: 1000px) {
+  .search-bar {
+    width: 70%;
+  }
 }
 
 </style>
