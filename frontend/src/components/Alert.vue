@@ -69,6 +69,7 @@ h2 {
 p {
   padding: 10px 0 0 0;
   height: 90px;
+  text-align: center;
 }
 
 #buttons {
