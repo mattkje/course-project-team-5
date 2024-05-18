@@ -56,7 +56,7 @@ export default {
   mounted() {
     const currentUser = getAuthenticatedUser();
     if (!currentUser) {
-      router.push('/register');
+      //redirectTo('/login');
     }
   },
   data() {

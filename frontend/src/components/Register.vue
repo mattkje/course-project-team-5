@@ -192,9 +192,7 @@ input:focus {
 .standard-button {
   width: 100%;
   height: 40px;
-  background: var(--base-1);
-  color: var(--light-1);
-  font-weight: bold;
+  color: var(--dark-1);
   padding: 20px;
   border-radius: 10px;
   text-align: center;
@@ -203,10 +201,14 @@ input:focus {
   justify-content: center;
   align-items: center;
   text-decoration: none;
-
+  background: var(--light-1);
+  border: 0.5px solid #ffffff;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 1px 1px rgba(0, 0, 0, .25);
   &:hover {
-    background-color: var(--base-2);
+    background-color: var(--light-3);
     box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
+    cursor: pointer;
   }
 }
 
@@ -220,14 +222,14 @@ input:focus {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 800px;
+  height: 700px;
   margin-bottom: 0;
 }
 
 
 .login-box {
   height: min-content;
-  background-color: var(--light-1);
+  background: linear-gradient(#f3f3ff -0%, #ede9ff 100%);
   display: flex;
   align-items: center;
   padding: 30px;
@@ -245,15 +247,16 @@ input:focus {
 }
 
 .login-prompt {
-  color: var(--dark-3);
+  color: var(--dark-1);
   width: 100%;
   height: 40px;
-  background: none;
   padding: 20px;
-  border: 2px solid var(--dark-3);
+  border: none;
+  background-color: var(--light-1);
   border-radius: 10px;
   font-size: 12px;
   margin: 10px 0;
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.2);
 }
 
 .alert-failed {

@@ -3,10 +3,13 @@ import { getCurrentInstance, onMounted, ref } from "vue";
 import {getAuthenticatedUser} from "@/js/authentication";
 import createPost from "@/views/CreatePost.vue";
 import router from "@/router";
+import {redirectTo} from "@/js/navigation";
+import Alert from "@/components/Alert.vue";
 
 const { appContext } = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
 const searchQuery = ref('');
+const showAlert = ref(false);
 
 onMounted(() => {
   populateCourses();
@@ -69,21 +72,31 @@ function searchPosts() {
       existingMessage.remove();
     }
   }
-
 }
 
 function authenticatePost(){
   const currentUser = getAuthenticatedUser();
   if (!currentUser) {
-    router.push('/register');
+    showAlert.value = true;
     return;
   }
   router.push('/community/create');
 }
 
+const handleButtonClick = (button) => {
+  if (button === 'OK') {
+    showAlert.value = false;
+    redirectTo('/login');
+  }
+  if (button === 'Cancel') {
+    showAlert.value = false;
+  }
+};
+
 </script>
 
 <template>
+  <Alert v-show="showAlert === true" title="Missing user" message="You must create a user to access this functionality" :buttons="['OK', 'Cancel']" @buttonClicked="handleButtonClick"></Alert>
   <div id="background" class="background">
     <img class="planet" src="/greenPlanet.svg">
   </div>
