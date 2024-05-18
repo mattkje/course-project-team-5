@@ -606,7 +606,8 @@ function toggleShowCredit() {
 
 
 .range-container {
-  max-width: 20%;
+  min-width: 250px;
+  max-width: 250px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -621,7 +622,7 @@ function toggleShowCredit() {
   justify-content: flex-start;
   padding: 5px;
   min-height: 90%;
-  min-width: 40%;
+  min-width: 85%;
   max-width: 100%;
 }
 
@@ -632,7 +633,9 @@ function toggleShowCredit() {
   display: flex;
   flex-wrap: wrap;
   margin: 30px;
-  justify-content: space-around;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-content:flex-start;
 }
 
 .flexible-grid > * {
