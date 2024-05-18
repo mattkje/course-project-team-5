@@ -16,10 +16,11 @@
 <script setup>
 import {getCurrentInstance, onMounted, ref} from 'vue';
 import {currency, setDefaultCurrency} from "@/js/currency";
-import {createContentBox, fetchCourses, fetchCurrencies} from "@/js/populationTools";
+import {fetchCourses, fetchCurrencies} from "@/js/populationTools";
 
 const courses = ref([]);
 const {appContext} = getCurrentInstance();
+
 
 
 let courseContainer;
@@ -38,15 +39,22 @@ onMounted(() => {
 async function populateCourses(selector) {
   document.querySelector(selector).innerHTML = '';
   const defaultCurrency = setDefaultCurrency() || 'USD';
+  console.log('Default Currency:', defaultCurrency);
   try {
     const [data, currencies] = await Promise.all([fetchCourses(API_URL), fetchCurrencies(API_URL)]);
-
+    console.log('Fetched currency:', currencies);
     // Limit to 3 courses for now
-    const limitedData = data.slice(0, 3);
+    const limitedData = data.slice(0, 10);
 
     limitedData.forEach(courseProvider => {
       const courseItem = document.createElement('div');
       courseItem.className = 'course-item';
+      courseItem.style.display = 'flex';
+      courseItem.style.alignItems = 'center';
+      courseItem.style.justifyContent = 'space-between';
+      courseItem.style.border = '1px solid #000';
+      courseItem.style.padding = '10px';
+      courseItem.style.marginBottom = '10px';
 
       const img = document.createElement('img');
       img.src = courseProvider.course.picture ? `${API_URL}/${courseProvider.course.picture}` : 'default-image-url';
@@ -142,9 +150,9 @@ async function populateCourses(selector) {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border: 1px solid #000; /* Add this line */
-  padding: 10px; /* Add this line */
-  margin-bottom: 10px; /* Add this line */
+  border: 1px solid #000;
+  padding: 10px;
+  margin-bottom: 10px;
 }
 
 .course-img {
