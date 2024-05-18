@@ -49,7 +49,7 @@ const buttonClicked = (button) => {
   left: 50%;
   margin-top: -100px;
   margin-left: -150px;
-  background-color: white;
+  background: linear-gradient(#f3f3ff -0%, #ede9ff 100%);
   z-index: 3;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
@@ -58,6 +58,8 @@ const buttonClicked = (button) => {
 
 .fancy-button{
   display: inline-block;
+  width: 100px;
+  height: 40px;
 }
 
 h2 {

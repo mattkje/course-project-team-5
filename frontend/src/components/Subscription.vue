@@ -68,10 +68,13 @@
 </template>
 <script>
 import {sendApiRequest} from "@/js/requests";
-import {addRole} from "@/js/authentication";
+import {addRole, getAuthenticatedUser} from "@/js/authentication";
+import Alert from "@/components/Alert.vue";
+import {ref} from "vue";
 
 export default {
   name: 'Subscription',
+  components: {Alert},
   methods: {
     add1MonthSubscription,
     add3MonthsSubscription,
@@ -81,16 +84,21 @@ export default {
   }
 }
 
+const showAlert = ref(false);
+
 function add1MonthSubscription() {
-  sendApiRequest('PUT', '/users/purchase-pro/1-month', success, error)
+  if(getAuthenticatedUser()) sendApiRequest('PUT', '/users/purchase-pro/1-month', success, error);
+  else this.$emit('show-alert');
 }
 
 function add3MonthsSubscription() {
-  sendApiRequest('PUT', '/users/purchase-pro/3-months', success, error)
+  if(getAuthenticatedUser()) sendApiRequest('PUT', '/users/purchase-pro/3-month', success, error);
+  else this.$emit('show-alert');
 }
 
 function add12MonthsSubscription() {
-  sendApiRequest('PUT', '/users/purchase-pro/12-months', success, error)
+  if(getAuthenticatedUser()) sendApiRequest('PUT', '/users/purchase-pro/12-month', success, error);
+  else this.$emit('show-alert');
 }
 
 function success() {

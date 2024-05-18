@@ -1,6 +1,24 @@
 <script setup>
 
 import Subscription from "@/components/Subscription.vue";
+import Alert from "@/components/Alert.vue";
+import {ref} from "vue";
+import {redirectTo} from "@/js/navigation";
+
+const showAlert = ref(false);
+
+function handleButtonClick(button) {
+  if (button === 'OK') {
+    redirectTo('/login');
+  }
+  if (button === 'Cancel') {
+    showAlert.value = false;
+  }
+}
+
+function handleAlert() {
+  showAlert.value = true;
+}
 </script>
 
 <template>
@@ -8,7 +26,8 @@ import Subscription from "@/components/Subscription.vue";
     <img class="planet" src="/pro.svg">
     <h2>Learniverse Pro</h2>
   </div>
-  <Subscription style="padding: 100px 0 200px 0"/>
+  <Alert v-show="showAlert" title="Missing user" message="You must create a user to access this functionality" :buttons="['OK', 'Cancel']" @buttonClicked="handleButtonClick"></Alert>
+  <Subscription style="padding: 100px 0 200px 0" @show-alert="handleAlert"/>
 </template>
 
 <style scoped>

@@ -56,7 +56,7 @@ export default {
   mounted() {
     const currentUser = getAuthenticatedUser();
     if (!currentUser) {
-      //redirectTo('/login');
+      redirectTo('/login');
     }
   },
   data() {

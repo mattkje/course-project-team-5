@@ -263,6 +263,20 @@ public class UserController {
         }
     }
 
+    @PutMapping("/unsubscribe")
+    public ResponseEntity<?> unsubscribe() {
+        UserWithCourses sessionUser = userService.getSessionUser();
+        if (sessionUser != null) {
+            if (!userService.isPro()) {
+                return new ResponseEntity<>("This user does not have the Pro role", HttpStatus.BAD_REQUEST);
+            }
+            userService.unsubscribe(sessionUser.user());
+            return new ResponseEntity<>("This user no longer has the Pro role", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Profile data accessible only to authenticated users", HttpStatus.UNAUTHORIZED);
+        }
+    }
+
     /**
      * Check for expired subscriptions and remove pro role if expired.
      */
