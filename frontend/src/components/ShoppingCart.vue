@@ -30,7 +30,6 @@ onMounted(() => {
   courseContainer = document.querySelector('#courseContainer');
   children = courseContainer.children;
   populateCourses('.flexible-grid');
-  populateProviders();
   currency(API_URL);
 });
 
@@ -50,7 +49,7 @@ async function populateCourses(selector) {
       courseItem.className = 'course-item';
 
       const img = document.createElement('img');
-      img.src = courseProvider.course.picture;
+      img.src = courseProvider.course.picture ? `${API_URL}/${courseProvider.course.picture}` : 'default-image-url';
       img.className = 'course-img';
       courseItem.appendChild(img);
 
@@ -67,8 +66,11 @@ async function populateCourses(selector) {
       const removeButton = document.createElement('button');
       removeButton.textContent = 'X';
       removeButton.className = 'remove-button';
+      removeButton.style.color = 'red';
+      removeButton.style.background = 'none';
+      removeButton.style.border = 'none';
       removeButton.addEventListener('click', () => {
-        // Add your logic here to remove the course from the cart
+        courseItem.remove();
       });
       courseItem.appendChild(removeButton);
 
@@ -82,33 +84,6 @@ async function populateCourses(selector) {
   } catch (error) {
     console.error('Error:', error);
   }
-}
-
-function populateProviders() {
-  fetch(API_URL + '/providers')
-      .then(response => response.json())
-      .then(data => {
-        const providerList = document.getElementById('providerList');
-        data.forEach(provider => {
-          const checkboxWrapper = document.createElement('div');
-          checkboxWrapper.className = 'checkbox-wrapper';
-
-          const label = document.createElement('label');
-          label.className = 'cbx';
-          label.setAttribute('for', `provider${provider.providerId}`);
-          label.textContent = provider.name;
-          checkboxWrapper.appendChild(label);
-
-          const checkbox = document.createElement('input');
-          checkbox.className = 'inp-cbx';
-          checkbox.id = `provider${provider.providerId}`;
-          checkbox.type = 'checkbox';
-          checkboxWrapper.appendChild(checkbox);
-
-          providerList.appendChild(checkboxWrapper);
-        });
-      })
-      .catch(error => console.error('Error:', error));
 }
 </script>
 
@@ -161,6 +136,44 @@ function populateProviders() {
   cursor: pointer;
   transition: all .5s;
   margin-right: 10px;
+}
+
+.course-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #000; /* Add this line */
+  padding: 10px; /* Add this line */
+  margin-bottom: 10px; /* Add this line */
+}
+
+.course-img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.course-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+  margin-left: 20px;
+}
+
+.course-description {
+  flex-grow: 1;
+}
+
+.course-price {
+  margin-right: auto;
+}
+
+.remove-button {
+  align-self: flex-end;
+  color: red;
+  background: none;
+  border: none;
 }
 
 </style>
