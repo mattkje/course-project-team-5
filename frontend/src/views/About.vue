@@ -1,5 +1,10 @@
 <script setup>
 
+import Alert from "@/components/Alert.vue";
+
+const handleButtonClick = (button) => {
+  console.log(`Button "${button}" was clicked.`);
+};
 </script>
 
 <template>

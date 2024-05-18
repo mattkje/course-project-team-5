@@ -3,6 +3,7 @@
 
 import { ref } from 'vue';
 import { sendApiRequest } from '../js/requests.js';
+import Alert from "@/components/Alert.vue";
 
 
 const username = ref('');
@@ -13,6 +14,8 @@ const email = ref('');
 const phoneNumber = ref('');
 const repeatPassword = ref('');
 const isUserCreated = ref(false);
+const errorMessage = ref('');
+const showAlert = ref(false);
 
 const register = async () => {
   if(repeatPassword.value === password.value) {
@@ -35,13 +38,19 @@ function onSignupSuccess() {
 }
 
 function onSignUpError(error) {
-  alert(error);
+  errorMessage.value = error;
+  showAlert.value = true;
+}
+
+function handleButtonClick() {
+  showAlert.value = false;
 }
 
 </script>
 
 <template>
   <form v-if="!isUserCreated" @submit.prevent="register" id="registrationForm" method="post">
+    <Alert v-if="showAlert" title="An error has occurred" :message="errorMessage" :buttons="[ 'OK' ]" @buttonClicked="handleButtonClick"></Alert>
     <div class="login-container">
       <div class="login-box">
         <div class="login-field-box">
@@ -101,7 +110,6 @@ body {
   margin: 0;
   padding: 0;
 }
-
 
 h1 {
   font-size: 50px;
