@@ -47,6 +47,8 @@ import {getAuthenticatedUser, hasRole, isAuthorized} from '@/js/authentication';
 import Guidelines from "@/components/Guidelines.vue";
 import router from "@/router";
 import {getCookie} from "@/js/tools";
+import {redirectTo} from "@/js/navigation";
+import {sendApiRequest} from "@/js/requests";
 
 
 export default {
@@ -114,7 +116,9 @@ export default {
               throw new Error('Failed to create post');
             }
             console.log('Post created successfully');
+            alert('Post created successfully!');
             this.resetForm();
+            sendApiRequest('GET', '/community/courses', success, error);
           })
           .catch(error => {
             console.error('Error creating post:', error);
@@ -133,6 +137,15 @@ export default {
     }
   }
 };
+
+function success(data) {
+  let recentPost = data[data.length - 1];
+  redirectTo('/community/post/?id=' + recentPost.courseId);
+}
+
+function error() {
+  console.log('error');
+}
 </script>
 
 
