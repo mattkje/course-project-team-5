@@ -179,6 +179,7 @@ const handleButtonClick = (button) => {
 .title {
   border: none;
   text-decoration: none;
+  padding-bottom: 5%;
 }
 
 .description {
@@ -238,11 +239,10 @@ const handleButtonClick = (button) => {
 .course-block {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(auto-fill, 150px);
   grid-column-gap: 30px;
-  padding-top: 80px;
+  padding-top: 20px;
   justify-content: center;
-  align-items: end;
+  align-items: start;
   margin: 0 auto;
   width: 70%;
   justify-items: center;
@@ -262,6 +262,29 @@ const handleButtonClick = (button) => {
 
   .community-title-container .fancy-button {
     margin-top: 20px;
+  }
+
+  .course-block p:nth-child(2) {
+    display: none;
+  }
+}
+
+@media (max-width: 450px) {
+  .course-block .course-card.course-card img {
+    width: 100px;
+    height: 50%;
+  }
+
+  .course-block .course-description-box p:nth-child(2) {
+    display: none;
+  }
+
+  .course-block p:nth-child(1) {
+    display: block;
+  }
+
+  .course-block .course-card.course-card h3 {
+    font-size: 16px;
   }
 }
 
