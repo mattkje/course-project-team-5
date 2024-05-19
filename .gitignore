@@ -36,6 +36,8 @@ build/
 .env
 *.env
 
+### Key ###
+keystore.p12
 
 /OldStatic
 backend/src/main/resources/application.properties
