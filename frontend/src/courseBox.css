@@ -1,64 +1,68 @@
 .content-box {
     display: flex;
     flex-direction: column;
-    padding: 20px 20px 40px 20px;
-    justify-content: space-between;
-    min-width: 270px;
-    max-width: 270px;
-    height: 390px;
+    align-items: center;
+    padding: 1vw;
+    justify-content: center;
+    min-width: 242px;
+    max-width: 13vw;
+    height: calc(350px + 4vw);
+    min-height: 350px;
+    max-height: 21vw;
     background: var(--light-1);
-    border: 0.5px solid #ffffff;
+    border: 0.025vw solid #ffffff;
     text-decoration: none;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0.1vw 0.25vw rgba(0, 0, 0, 0.25);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    margin: 30px;
-    &:hover {
-        box-shadow: 0 4px 5px rgba(0, 0, 0, 0.33);
-        transform: scale(1.05);
-    }
-}
-
-* {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
+    margin: 1.5vw;
+&:hover {
+     box-shadow: 0 0.2vw 0.25vw rgba(0, 0, 0, 0.33);
+     transform: scale(1.05);
+ }
 }
 
 .content-description {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    height: 4vw;
+    height: 2vw;
+    min-width: 168px;
+    min-height: 133.5px;
 }
 
 .content-box-title {
-    font-size: 16px;
+    font-size: calc(15px + 0.1vw);
     font-weight: bold;
     color: #282828;
+    margin-top: 0.5vw;
+    min-width: 168px;
+    min-height: 33px;
 }
 
 .content-box-text {
-    font-size: 10px;
+    font-size: calc(10px + 0.06vw);
     font-weight: 900;
     color: #ADADAD;
-    margin: 10px;
+    margin: 0.4vw;
+    min-width: 108px;
+    min-height: 10.5px;
 }
 
 .content-box-image {
     margin: 0;
-    height: 170px;
-    width: 230px;
+    height: 10vw;
+    width: 11vw;
     object-fit: cover;
-
+    min-width: 190px;
+    min-height: 170px;
 }
 
 .content-box-image-banner {
-    width: 170px;
+    width: 8.5vw;
     margin: 0;
     padding: 0;
-    bottom: 300px;
-    right: 40px;
+    bottom: 15vw;
+    right: 2vw;
     position: relative;
 }
 
@@ -69,26 +73,18 @@
     flex-direction: row;
     margin: 0;
     padding: 0;
-}
-
-.content-box-attributes {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-content: center;
-    padding: 0;
-    margin: 0;
+    min-width: 168px;
+    min-height: 28.5px;
 }
 
 .content-box-icon {
-    width: 15px;
-    height: 15px;
-    margin: 8px 0 0 0;
+    width: calc(13px + 0.15vw);
+    height: calc(13px + 0.15vw);
+    margin: 0.4vw 0 0 0;
 }
 
-
 .content-price {
-    padding: 0 0 0 0;
+    padding: 0;
     position: absolute;
     right: 0;
 }
@@ -98,25 +94,37 @@
     flex-direction: column;
     justify-content: center;
     text-align: right;
-    border-width: 1px;
-    max-height: 30px;
-    border-radius: 10px;
-    margin: 5px 0 0 0;
+    border-width: 0.05vw;
+    max-height: 1.5vw;
+    border-radius: 0.5vw;
+    margin: 0.25vw 0 0 0;
+    min-width: 168px;
+    min-height: 27px;
 }
 
 .content-button {
     padding: 0;
     font-weight: bold;
-    font-size: 20px;
-    border-radius: 10px;
+    font-size: calc(18px + 0.1vw);
+    border-radius: 0.5vw;
     margin: 0;
     color: #282828;
+    min-width: 165px;
+    min-height: 22.5px;
 }
 
 hr {
     background: #ADADAD;
-    height: 2px;
+    height: 0.1vw;
     border: none;
+    min-width: 165px;
+    min-height: 1.875px;
+}
+
+@media (max-width: 768px) {
+    .course-block p:nth-child(2) {
+        display: none;
+    }
 }
 
 .course-block {
@@ -131,11 +139,10 @@ hr {
         background: var(--light-1);
         border: 0.5px solid #ffffff;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        min-width: 600px;
-        min-height: 200px;
-        max-width: 600px;
-        max-height: 200px;
+        width: 100%;
+        height: 200px;
         text-decoration: none;
+
         transition: transform 0.2s ease, box-shadow 0.2s ease;
         &:hover {
             box-shadow: 0 4px 5px rgba(0, 0, 0, 0.33);
@@ -149,6 +156,7 @@ hr {
         justify-content: flex-start;
         align-items: flex-start;
         margin: 10px;
+        overflow: hidden;
     }
 
     .course-card img {

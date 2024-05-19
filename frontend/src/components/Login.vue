@@ -167,7 +167,7 @@ input:focus {
   text-decoration: none;
   background: var(--light-1);
   border: 0.5px solid #ffffff;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.2s ease-in-out;
   box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 1px 1px rgba(0, 0, 0, .25);
   &:hover {
     background-color: var(--light-3);

@@ -1,5 +1,6 @@
 <script setup>
-import {getCurrentInstance, onMounted} from "vue";
+import
+{getCurrentInstance, onMounted} from "vue";
 import {getAuthenticatedUser, hasRole, isAuthorized} from "@/js/authentication";
 import {computed} from "vue";
 import {useStore} from "vuex";
@@ -148,7 +149,7 @@ function setDefaultCurrency() {
 
 
 <style scoped>
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   #menubar {
     background-color: #614fff;
     backdrop-filter: none;
@@ -169,7 +170,7 @@ function setDefaultCurrency() {
   }
 }
 
-@media (min-width: 600px) {
+@media (min-width: 768px) {
   #menubar {
     background: linear-gradient(180deg, #f8f8ff -0%, #f1f0fd 100%);
     backdrop-filter: blur(5px);
@@ -196,7 +197,6 @@ function setDefaultCurrency() {
 .content {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   height: 70px;
   width: 100%;
 }
@@ -371,6 +371,26 @@ function setDefaultCurrency() {
   color: #fff;
   transition: all ease-in-out 0.3s;
   cursor: pointer;
+}
+
+@media (max-width: 1000px) {
+  .logo-top,
+  .logo-bottom {
+    display: none;
+  }
+  .menu-links {
+    padding: 0;
+  }
+  .logo-button {
+    margin: 0;
+  }
+  .left-content {
+    gap: 10px;
+    padding: 0 4%;
+  }
+  .logo {
+    padding: 0;
+  }
 }
 
 </style>

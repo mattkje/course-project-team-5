@@ -5,7 +5,7 @@
   <div class="course-section">
 
     <div class="title">
-      <h1>Explore</h1>
+      <h1 id="explore">Explore</h1>
       <p class="description">Explore our library</p>
     </div>
     <SearchFilter/>
@@ -46,6 +46,11 @@ import SearchFilter from "@/components/SearchFilter.vue";
   color: #282828;
   font-size: 20px;
   margin: 0 auto;
+  text-align: center;
+}
+#explore {
+
+  text-align: center;
 }
 
 .course-section {

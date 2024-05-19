@@ -68,32 +68,35 @@
 </template>
 <script>
 import {sendApiRequest} from "@/js/requests";
-import {addRole} from "@/js/authentication";
+import {addRole, getAuthenticatedUser} from "@/js/authentication";
+import Alert from "@/components/Alert.vue";
 
 export default {
   name: 'Subscription',
+  components: {Alert},
   methods: {
     add1MonthSubscription,
     add3MonthsSubscription,
-    add12MonthsSubscription,
-    success,
-    error
+    add12MonthsSubscription
   }
 }
 
-function add1MonthSubscription() {
-  sendApiRequest('PUT', '/users/purchase-pro/1-month', success, error)
+async function add1MonthSubscription() {
+  if(getAuthenticatedUser()) await sendApiRequest('PUT', '/users/purchase-pro/1-month', successfulExecution, error);
+  else this.$emit('show-alert');
 }
 
-function add3MonthsSubscription() {
-  sendApiRequest('PUT', '/users/purchase-pro/3-months', success, error)
+async function add3MonthsSubscription() {
+  if(getAuthenticatedUser()) await sendApiRequest('PUT', '/users/purchase-pro/3-month', successfulExecution, error);
+  else this.$emit('show-alert');
 }
 
-function add12MonthsSubscription() {
-  sendApiRequest('PUT', '/users/purchase-pro/12-months', success, error)
+async function add12MonthsSubscription() {
+  if(getAuthenticatedUser()) await sendApiRequest('PUT', '/users/purchase-pro/12-month', successfulExecution, error);
+  else this.$emit('show-alert');
 }
 
-function success() {
+function successfulExecution() {
   addRole("ROLE_PRO");
   alert('Subscription purchased successfully!');
   window.location.reload();

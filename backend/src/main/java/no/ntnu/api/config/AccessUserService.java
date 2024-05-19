@@ -313,4 +313,8 @@ public class AccessUserService implements UserDetailsService {
         }
         return null;
     }
+
+  public void unsubscribe(User user) {
+    deleteProRole(user.getUsername());
+  }
 }

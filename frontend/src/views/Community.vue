@@ -3,10 +3,13 @@ import { getCurrentInstance, onMounted, ref } from "vue";
 import {getAuthenticatedUser} from "@/js/authentication";
 import createPost from "@/views/CreatePost.vue";
 import router from "@/router";
+import {redirectTo} from "@/js/navigation";
+import Alert from "@/components/Alert.vue";
 
 const { appContext } = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
 const searchQuery = ref('');
+const showAlert = ref(false);
 
 onMounted(() => {
   populateCourses();
@@ -69,26 +72,36 @@ function searchPosts() {
       existingMessage.remove();
     }
   }
-
 }
 
 function authenticatePost(){
   const currentUser = getAuthenticatedUser();
   if (!currentUser) {
-    router.push('/register');
+    showAlert.value = true;
     return;
   }
   router.push('/community/create');
 }
 
+const handleButtonClick = (button) => {
+  if (button === 'OK') {
+    showAlert.value = false;
+    redirectTo('/login');
+  }
+  if (button === 'Cancel') {
+    showAlert.value = false;
+  }
+};
+
 </script>
 
 <template>
+  <Alert v-show="showAlert === true" title="Missing user" message="You must create a user to access this functionality" :buttons="['OK', 'Cancel']" @buttonClicked="handleButtonClick"></Alert>
   <div id="background" class="background">
     <img class="planet" src="/greenPlanet.svg">
   </div>
   <div class="course-section">
-
+    <div class="community-top-container">
     <div class="community-title-container">
       <div class="title">
         <h1>Community</h1>
@@ -104,7 +117,7 @@ function authenticatePost(){
         <img class="search-icon" src="/search.png" alt="Connect">
       </div>
     </div>
-
+    </div>
     <div class="course-block" ref="courseBlock">
     </div>
     <div class="greeting"></div>
@@ -182,6 +195,7 @@ function authenticatePost(){
 
 .search-container {
   position: relative;
+  width: 80%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -208,7 +222,6 @@ function authenticatePost(){
   filter: invert(50%);
 }
 
-
 .search-prompt {
   color: var(--dark-1);
   background: none;
@@ -218,18 +231,45 @@ function authenticatePost(){
   border: none;
   border-radius: 15px;
   font-size: 16px;
+  text-overflow: ellipsis;
 }
 
 
 .course-block {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(auto-fill, 150px);
+  grid-column-gap: 30px;
+  padding-top: 80px;
   justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
+  align-items: end;
   margin: 0 auto;
   width: 70%;
+  justify-items: center;
 }
 
+@media (max-width: 1320px) {
+  .course-block {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .community-title-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .community-title-container .fancy-button {
+    margin-top: 20px;
+  }
+}
+
+.community-top-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 .planet {
   height: 300px;
@@ -268,11 +308,11 @@ function authenticatePost(){
   border-radius: 10px;
   text-decoration: none;
   display: flex;
-  max-height: 40px;
-  min-height: 40px;
+  min-width: 100px;
   background: #0C0C0C;
   border: 0.5px solid #252525;
   transition: all 0.3s ease-in-out;
+  white-space: nowrap;
 }
 
 .fancy-button:hover {

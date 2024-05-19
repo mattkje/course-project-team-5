@@ -188,9 +188,19 @@ function onChangePasswordError(error) {
 }
 
 function endSubscription() {
+  sendApiRequest("PUT", "/users/unsubscribe", onEndSubscriptionSuccess, onEndSubscriptionError);
   removeRole('ROLE_PRO');
   alert('You have successfully ended you subscription');
   redirectTo('/profile');
+}
+
+function onEndSubscriptionSuccess(data) {
+  console.log("Subscription ended: ", data);
+}
+
+function onEndSubscriptionError(error) {
+  console.error("Error ending subscription: ", error);
+  alert("Error ending subscription. Please try again.");
 }
 
 function addCourses(data) {
