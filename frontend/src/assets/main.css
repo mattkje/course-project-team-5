@@ -223,3 +223,16 @@ p {
   min-width: 20px;
   background-color: #eee;;
 }
+
+#range-vertical-container .inp-cbx {
+  min-height: 14px;
+  min-width: 14px;
+}
+
+#range-vertical-container .checkbox-wrapper {
+  font-size: 14px;
+  display: flex;
+  flex-direction: row-reverse;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+}
