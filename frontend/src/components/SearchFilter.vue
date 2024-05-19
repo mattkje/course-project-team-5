@@ -22,7 +22,7 @@
         }">Category
         </button>
         <div class="wrapper" id="categoryContainer" :style="{
-          height: isCategoryVisible ? '0px' : '200px',
+          height: isCategoryVisible ? '0px' : '120px',
           opacity: isCategoryVisible ? '0' : '1',
           zIndex: isCategoryVisible ? -100 : '0',
           'border-radius': isCategoryVisible ? '0 0 10px 10px' : '10px'
@@ -47,26 +47,19 @@
           </div>
         </div>
 
+        <div class="separator"></div>
 
         <button class="price-ranger" @click="toggleShowPrice" :style="{
           'border-radius': isPriceVisible ? '10px 10px 0 0' : '10px'
         }">Price
         </button>
         <div class="wrapper" id="priceText" :style="{
-          height: isPriceVisible ? '0px' : '150px',
+          height: isPriceVisible ? '0px' : '100px',
           opacity: isPriceVisible ? '0' : '1',
           zIndex: isPriceVisible ? -100 :  '0',
           'border-radius': isPriceVisible ? '0 0 10px 10px' : '10px'
         }">
-          <div class="price-input">
-            <span>Max Price</span>
-            <div class="field">
-              <input type="number" class="input-max" value="50000" v-model="maxValue" @input="maxRangeValue = maxValue" @change="sortByPriceRange">
-            </div>
-          </div>
-          <div class="range-input">
-            <input type="range" class="range-max" min="0" max="50000" v-model="maxRangeValue" step="100"
-                   @input="maxValue = maxRangeValue" @change="sortByPriceRange">
+          <div class="price-input-container">
           </div>
         </div>
 
@@ -207,15 +200,17 @@
           zIndex: isPriceVisible ? '0' : -100,
           'border-radius': isPriceVisible ? '0 0 10px 10px' : '10px'
         }">
-          <div class="price-input">
-            <span>Max Price</span>
-            <div class="field">
-              <input type="number" class="input-max" value="50000" v-model="maxValue" @input="maxRangeValue = maxValue" @change="sortByPriceRange">
+          <div class="price-input-container">
+            <div class="price-input">
+              <label for="min-price">Min Price:</label>
+              <p>-</p>
+              <input type="number" id="min-price" v-model="minPrice" min="0" @change="sortByPriceRange">
             </div>
-          </div>
-          <div class="range-input">
-            <input type="range" class="range-max" min="0" max="50000" v-model="maxRangeValue" step="100"
-                   @input="maxValue = maxRangeValue" @change="sortByPriceRange">
+            <div class="price-input">
+              <label for="max-price">Max Price:</label>
+              <p>-</p>
+              <input type="number" id="max-price" v-model="maxPrice" min="1" @change="sortByPriceRange">
+            </div>
           </div>
         </div>
 
@@ -318,7 +313,7 @@ import Litepicker from 'litepicker';
 import {watch} from 'vue';
 import {createContentBox, fetchCourses, fetchCurrencies} from "@/js/populationTools";
 import {sendApiRequest} from "@/js/requests";
-import { defineEmits } from 'vue';
+import {defineEmits} from 'vue';
 
 const {appContext} = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
@@ -337,23 +332,18 @@ const isPriceVisible = ref(false);
 const isDateVisible = ref(false);
 const isDifficultyVisible = ref(false);
 const isProviderVisible = ref(false);
-const isDurationVisible = ref(false);
 const isCreditVisible = ref(false);
-const emits = defineEmits(['checkbox-change']);
 
-const minValue = ref(0);
-const maxValue = ref(50000);
-const minRangeValue = ref(0);
-const maxRangeValue = ref(50000);
-
+const minPrice = ref(0);
+const maxPrice = ref(50000);
 
 let courseContainer;
 let children;
 let childrenIdList = [];
 let filterMap = new Map();
 let activeFilters = new Map();
-let Matching = [];
 let searchedChildren = new Map();
+let pricedChildren = new Map();
 
 let showFilters = ref(false);
 
@@ -571,6 +561,9 @@ function updateView() {
     if (searchedChildren.has(child)) {
       child.style.display = 'none';
     }
+    if (pricedChildren.has(child)) {
+      child.style.display = 'none';
+    }
   }
 }
 
@@ -622,7 +615,7 @@ function getSliderValues(event) {
   return {sliderValue, checkboxId};
 }
 
-function onCheckboxChange(checkboxid,type){
+function onCheckboxChange(checkboxid, type) {
   // Create a new div element
   const newElement = document.createElement('div');
 
@@ -631,17 +624,17 @@ function onCheckboxChange(checkboxid,type){
 
   // Apply CSS style
   newElement.style.display = 'inline-block';
-newElement.style.padding = '7px';
-newElement.style.backgroundColor = '#270e98';
-newElement.style.color = '#fafaff';
-newElement.style.textAlign = 'center';
-newElement.style.textDecoration = 'none';
-newElement.style.fontSize = '12px';
-newElement.style.margin = '2px';
-newElement.style.borderRadius = '50px';
-newElement.style.border = 'none';
-newElement.style.fontWeight = 'bold';
-newElement.style.height = '30px';
+  newElement.style.padding = '7px';
+  newElement.style.backgroundColor = '#270e98';
+  newElement.style.color = '#fafaff';
+  newElement.style.textAlign = 'center';
+  newElement.style.textDecoration = 'none';
+  newElement.style.fontSize = '12px';
+  newElement.style.margin = '2px';
+  newElement.style.borderRadius = '50px';
+  newElement.style.border = 'none';
+  newElement.style.fontWeight = 'bold';
+  newElement.style.height = '30px';
 
   // Append the new element to the active-filter-container
   const activeFilterContainer = document.querySelector('.active-filter-container');
@@ -656,6 +649,7 @@ newElement.style.height = '30px';
     activeFilterContainer.appendChild(newElement);
   }
 }
+
 async function sortByCredit(event) {
   let nameId = getSliderValues(event);
   let credit = nameId.sliderValue;
@@ -663,30 +657,21 @@ async function sortByCredit(event) {
   await sendApiRequest("GET", '/courses/course_size/' + credit, (data) => isMatch(data, checkboxId, true), onFailure);
 }
 
-async function sortByPriceRange(event) {
-  let nameId = getSliderValues(event);
-  let checkboxId = "priceRange " + "priceRange";
-  let priceRangeFilter = [];
-
-  for (let child of children) {
-    let childId = child.querySelector('.course-id').textContent;
-    let childPriceElement = child.querySelector('.finalPriceBox').textContent;
-    let price = parseFloat(childPriceElement.split(' ')[0]);
-    let priceMatch = price <= nameId.sliderValue;
-
-    if (priceMatch) {
-      priceRangeFilter.push(childId);
+async function sortByPriceRange() {
+  for (let child of children){
+    let childPrice = child.querySelector('.finalPriceBox').textContent;
+    let price = parseFloat(childPrice.split(' ')[0]);
+    if (price < minPrice.value || price > maxPrice.value){
+      pricedChildren.set(child, 1);
+    } else if (pricedChildren.has(child)){
+      pricedChildren.delete(child);
     }
   }
-  console.log("priceRangeFilter: ", priceRangeFilter.length)
-  priceRangeFilter = priceRangeFilter.join(',');
-
-  await sendApiRequest("GET", '/courses/ids?ids=' + priceRangeFilter, (data) => isMatch(data, checkboxId, true), onFailure);
+  updateView();
 }
 
 
 function searchCourses() {
-  console.log("test")
   for (let child of children) {
     let childTitle = child.querySelector('.content-box-title').textContent.toLowerCase();
     if (!childTitle.includes(searchQuery.value.toLowerCase())) {
@@ -734,26 +719,12 @@ function toggleFilters() {
   showFilters.value = !showFilters.value;
 }
 
-
 </script>
 
 <style scoped>
-.background {
-  top: 0;
-  height: 500px;
-  background: linear-gradient(180deg, rgba(21, 16, 82, 0.14) 0%, rgba(158, 150, 255, 0.14) 100%);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-direction: column;
-  width: 100%;
-  margin: 0;
-
-}
-
 
 .filter-container {
-  padding: 0 2% 0 2%;
+  padding: 0 11% 0 11%;
   max-width: 100%;
   display: flex;
   flex-direction: row;
@@ -779,7 +750,7 @@ function toggleFilters() {
   position: fixed;
   bottom: 0;
   left: 0;
-  width: 100% ;
+  width: 100%;
   max-width: 100%;
   height: 60%;
   background-color: var(--light-1);
@@ -804,7 +775,7 @@ function toggleFilters() {
   left: 0;
   width: 100%;
   height: 40%;
-  background-color: rgb(88, 75, 235 ,0.1);
+  background-color: rgb(88, 75, 235, 0.1);
   z-index: 99;
 }
 
@@ -814,7 +785,7 @@ function toggleFilters() {
 }
 
 #range-vertical-container .checkbox-wrapper {
- display: flex;
+  display: flex;
   flex-direction: row-reverse;
   justify-content: flex-end;
 }
@@ -824,6 +795,14 @@ function toggleFilters() {
   gap: 5px;
 }
 
+#range-vertical-container .cbx {
+  font-size: 14px;
+}
+
+#range-vertical-container .span {
+  font-size: 14px;
+}
+
 
 #filters {
   color: var(--dark-3);
@@ -831,11 +810,12 @@ function toggleFilters() {
   font-size: 18px;
   font-weight: bold;
 }
+
 .separator {
   height: 1px;
   width: 100%;
   background-color: grey;
-  margin: 20px 0;
+  margin: 5px 0;
   padding: 0 40px;
 }
 
@@ -857,10 +837,9 @@ function toggleFilters() {
   padding: 5px;
   display: flex;
   flex-wrap: wrap;
-  margin: 30px;
   justify-content: space-evenly;
   align-items: flex-start;
-  align-content:flex-start;
+  align-content: flex-start;
 }
 
 .flexible-grid > * {
@@ -923,19 +902,26 @@ header h2 {
 
 .price-input {
   width: 100%;
+  gap: 10px;
+  margin-top: 20px;
   display: flex;
-  margin: 30px 0 35px;
   justify-content: center;
+  align-items: center;
 }
 
-.price-input .field {
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-  height: 45px;
-  align-items: center;
-  justify-content: center;
+.price-input input {
+  min-height: 40px;
 }
+
+.price-input-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
 
 .field input {
   width: 100%;
@@ -959,42 +945,6 @@ input[type="number"]::-webkit-inner-spin-button {
   position: relative;
   background: #ddd;
   border-radius: 5px;
-}
-
-.range-input {
-  position: relative;
-}
-
-.range-input input {
-  position: absolute;
-  width: 100%;
-  height: 5px;
-  top: -5px;
-  background: none;
-  pointer-events: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-}
-
-input[type="range"]::-webkit-slider-thumb {
-  height: 17px;
-  width: 17px;
-  border-radius: 50%;
-  background: #584BEB;
-  pointer-events: auto;
-  -webkit-appearance: none;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
-}
-
-input[type="range"]::-moz-range-thumb {
-  height: 17px;
-  width: 17px;
-  border: none;
-  border-radius: 50%;
-  background: #584BEB;
-  pointer-events: auto;
-  -moz-appearance: none;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
 }
 
 .price-ranger {
@@ -1051,7 +1001,7 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .search-container {
-  width:100vw;
+  width: 100vw;
   position: relative;
   display: flex;
   justify-content: center;
@@ -1112,33 +1062,6 @@ input[type="range"]::-moz-range-thumb {
   -webkit-transition: .2s;
 }
 
-input[type="range"] {
-  -webkit-appearance: none;
-  width: 100%;
-  height: 8px;
-  outline: none;
-  border-radius: 5px;
-  overflow: hidden;
-  margin: 20px 0;
-}
-
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 20px;
-  height: 20px;
-  background: #584beb;
-  cursor: pointer;
-  border-radius: 50%;
-}
-
-input[type="range"]::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
-  background: #584beb;
-  cursor: pointer;
-  border-radius: 50%;
-}
 
 .active-filter-container button {
   padding: 7px 4.5vw 7px 4.5vw;
@@ -1173,32 +1096,43 @@ body, html {
 }
 
 @media (max-width: 1250px) {
+  .filter-container {
+    flex-direction: column;
+    max-width: 90%;
+    margin: 0 5% 0 5%;
+    padding: 0;
+  }
+
   .search-bar {
     width: 70%;
   }
+
   .range-container {
     display: none;
   }
+
   .active-filter-container {
     width: 90%;
     margin: 0 5% 0 5%;
   }
+
   .active-filter-container button {
     display: flex;
   }
+
   #range-vertical-container {
     display: flex;
     align-content: flex-start;
-    align-items:flex-start;
+    align-items: flex-start;
+    min-width: 100%;
   }
+
   .search-bar {
     width: 90%;
     margin: 0 5% 0 5%;
   }
+
   .search-prompt {
     padding: 20px 20px 20px 70px;
-  }
-
-}
-
+  } }
 </style>
