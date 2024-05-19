@@ -27,7 +27,7 @@ export default {
     let intervalId = null;
 
     const fetchImages = async () => {
-      const response = await fetch('http://localhost:8080/api/courses');
+      const response = await fetch('https://localhost:8443/api/courses');
       const coursesData = await response.json();
       console.log('coursesData:', coursesData); // Debug log
       images.value = coursesData.map(courseData => courseData.course.image);

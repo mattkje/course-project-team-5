@@ -1,6 +1,6 @@
 import {redirectTo} from "@/js/navigation";
 
-const API_BASE_URL = `http://localhost:8080/api`;
+const API_BASE_URL = `https://localhost:8443/api`;
 import {getCookie, setCookie} from "../js/tools.js";
 import {doLogout} from "@/js/authentication";
 

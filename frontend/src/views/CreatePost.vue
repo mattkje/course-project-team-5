@@ -111,7 +111,7 @@ export default {
       this.post.postDate = new Date().toISOString();
       const token = getCookie('jwt');
 
-      fetch( 'http://localhost:8080/api/community/courses', {
+      fetch( 'https://localhost:8443/api/community/courses', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
