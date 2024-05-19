@@ -6,7 +6,7 @@
 
       <div class="title">
         <h1>Your cart:</h1>
-        <p class="description">{{ cartText }}</p>
+        <p class="itemCountText"> {{ cartText }}</p>
       </div>
 
       <ShoppingCart/>
@@ -19,6 +19,7 @@ import { ref } from 'vue';
 import ShoppingCart from "@/components/ShoppingCart.vue";
 
 const cartText = ref('Your cart is empty');
+
 
 
 

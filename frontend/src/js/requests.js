@@ -4,7 +4,7 @@ const API_BASE_URL = `http://localhost:8080/api`;
 import {getCookie, setCookie} from "../js/tools.js";
 import {doLogout} from "@/js/authentication";
 
-async function sendApiRequest(method, url, callback, requestBody, errorCallback) {
+export async function sendApiRequest(method, url, callback, requestBody, errorCallback) {
     let parameters = { method: method, headers: constructRequestHeaders(method)};
     if (requestBody) {
         parameters.body = JSON.stringify(requestBody);
@@ -89,5 +89,4 @@ function refreshToken() {
 
 setInterval(refreshToken, 15 * 60 * 1000);
 
-export { sendApiRequest };
 export { sendTokenRefreshRequest };
