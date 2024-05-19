@@ -7,84 +7,97 @@
       </li>
     </ul>
     <div class="flexible-grid-container">
-      <div class="flexible-grid" id="courseContainer">
+      <div class="course-table">
+        <h1>hei</h1>
+        <div class="courseContainer"></div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import {getCurrentInstance, onMounted, ref} from 'vue';
-import {currency, setDefaultCurrency} from "@/js/currency";
-import {createContentBox, fetchCourses, fetchCurrencies} from "@/js/populationTools";
-
-const courses = ref([]);
-const {appContext} = getCurrentInstance();
-
-
-let courseContainer;
-let children;
-const API_URL = appContext.config.globalProperties.$apiAddress;
-
-onMounted(() => {
-  courseContainer = document.querySelector('#courseContainer');
-  children = courseContainer.children;
-  populateCourses('.flexible-grid');
-  currency(API_URL);
-});
+import {onMounted, ref} from 'vue';
+import {doLogout, getAuthenticatedUser, hasRole, removeRole} from "@/js/authentication";
+import {sendApiRequest, sendTokenRefreshRequest} from "@/js/requests";
+import {redirectTo} from "@/js/navigation";
+import {getCookie, isTokenAboutToExpire} from "@/js/tools";
+import { inject } from "vue";
 
 
-//Temporary function to populate courses
-async function populateCourses(selector) {
-  document.querySelector(selector).innerHTML = '';
-  const defaultCurrency = setDefaultCurrency() || 'USD';
-  try {
-    const [data, currencies] = await Promise.all([fetchCourses(API_URL), fetchCurrencies(API_URL)]);
-
-    // Limit to 3 courses for now
-    const limitedData = data.slice(0, 3);
-
-    limitedData.forEach(courseProvider => {
-      const courseItem = document.createElement('div');
-      courseItem.className = 'course-item';
-
-      const img = document.createElement('img');
-      img.src = courseProvider.course.picture ? `${API_URL}/${courseProvider.course.picture}` : 'default-image-url';
-      img.className = 'course-img';
-      courseItem.appendChild(img);
-
-      const description = document.createElement('span');
-      description.textContent = courseProvider.course.description;
-      description.className = 'course-description';
-      courseItem.appendChild(description);
-
-      const price = document.createElement('span');
-      price.textContent = `${courseProvider.course.price} ${defaultCurrency}`;
-      price.className = 'course-price';
-      courseItem.appendChild(price);
-
-      const removeButton = document.createElement('button');
-      removeButton.textContent = 'X';
-      removeButton.className = 'remove-button';
-      removeButton.style.color = 'red';
-      removeButton.style.background = 'none';
-      removeButton.style.border = 'none';
-      removeButton.addEventListener('click', () => {
-        courseItem.remove();
-      });
-      courseItem.appendChild(removeButton);
-
-      document.querySelector(selector).appendChild(courseItem);
-    });
-
-    const checkoutButton = document.createElement('button');
-    checkoutButton.textContent = 'Check out';
-    checkoutButton.className = 'checkout-button';
-    document.querySelector(selector).appendChild(checkoutButton);
-  } catch (error) {
-    console.error('Error:', error);
+async function loadShoppingCart() {
+  const user = getAuthenticatedUser();
+  if (user) {
+    await sendApiRequest("GET", "/users/" + user.username, onProfileDataSuccess, onProfileDataError);
   }
 }
+
+
+function onProfileDataError() {
+  console.log("Error fetching user data");
+}
+
+onMounted(async () => {
+  const user = getAuthenticatedUser();
+  if (user) {
+    await sendApiRequest("GET", "/users/" + user.username, onProfileDataSuccess, onProfileDataError);
+  }
+});
+
+function onProfileDataSuccess(data) {
+  if (data.courses.length > 0) {
+    addCourses(data.courses);
+  }
+}
+
+
+//Temporary function to add courses to the shopping cart
+function addCourses(courses) {
+  const courseList = document.getElementsByClassName("course-table")[0];
+  courseList.children[0].remove();
+  const courseBody = document.createElement("tbody");
+  courseBody.classList.add("course-block");
+  const line = document.createElement("hr");
+  line.style.maxWidth = "600px";
+  line.style.margin = "20px";
+  courseBody.appendChild(line);
+  courseList.appendChild(courseBody);
+  for (const course of courses) {
+    const row = document.createElement("tr");
+    const courseName = document.createElement("p");
+    const coursePrice = document.createElement("p");
+    const courseImg = document.createElement("img");
+    courseImg.classList.add("course-image");
+    row.classList.add("course-card");
+    row.style.cursor = "pointer";
+    courseName.innerText = course.course.title;
+    coursePrice.innerText = course.course.price;
+    courseName.style.paddingLeft = "20px";
+    courseImg.src = course.course.image || '/noImageCom.svg';
+    row.appendChild(courseImg);
+    row.appendChild(courseName);
+    row.appendChild(coursePrice);
+    editCourseCard(row, course);
+    courseBody.appendChild(row);
+    const line = document.createElement("hr");
+    line.style.maxWidth = "600px";
+    line.style.margin = "20px";
+    courseBody.appendChild(line);
+    console.log(courses.length);
+  }
+}
+
+
+
+function editCourseCard(object, course) {
+  object.style.minWidth = "500px";
+  object.style.minHeight = "50px";
+  object.onclick = function () {
+    redirectTo("/courses/?id=" + course.course.courseId);
+  };
+
+
+}
+
 </script>
 
 <style scoped>
@@ -142,9 +155,24 @@ async function populateCourses(selector) {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border: 1px solid #000; /* Add this line */
-  padding: 10px; /* Add this line */
-  margin-bottom: 10px; /* Add this line */
+  border: 1px solid #000;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.course-table {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.course-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 40px;
 }
 
 .course-img {
