@@ -125,12 +125,25 @@ hr {
     .course-block .course-card.course-card {
         height: 300px;
     }
+
+    .course-block .course-card-description.course-card-description {
+        max-width: 200px;
+        justify-content: center;
+    }
+
+    .course-block .course-card.course-card h3{
+        white-space: normal;
+    }
+
+    .course-block .course-card.course-card p:nth-child(3) {
+        display: none;
+    }
 }
 
 @media (max-width: 500px) {
     .course-block .course-card.course-card {
         height: 300px;
-        width: 200px;
+        width: 300px;
     }
 
     .course-block .course-card.course-card img {
@@ -138,10 +151,14 @@ hr {
         height: 50%;
     }
 
+    .course-block .course-card-description.course-card-description {
+        max-width: 100%;
+    }
+
     .course-block .course-card.course-card-description p{
         overflow: hidden;
         text-overflow: ellipsis;
-        max-width: 200px;
+        max-width: 100px;
     }
 
     .course-block .course-card.course-card p:nth-child(3) {
@@ -165,7 +182,7 @@ hr {
         border: 0.5px solid #ffffff;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         width: 100%;
-        height: 200px;
+        height: 250px;
         text-decoration: none;
 
         transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -183,7 +200,7 @@ hr {
         margin: 10px;
         overflow: hidden;
         height: 100%;
-        max-width: 250px;
+        max-width: 400px;
     }
 
     .course-card img {
@@ -195,7 +212,11 @@ hr {
     .course-card h3 {
         font-size: 20px;
         margin: 10px 0;
+        max-width: 100%;
+        max-height: 50px;
+        overflow: hidden;
         text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     .course-card p {
