@@ -56,7 +56,7 @@ import SearchFilter from "@/components/SearchFilter.vue";
 .course-section {
   padding-top: 20px;
   background-color: var(--light-3);
-  margin: 0;
+  padding-bottom: 200px;
 }
 
 

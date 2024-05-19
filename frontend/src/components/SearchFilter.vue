@@ -7,10 +7,157 @@
       <img class="search-icon" src="/search.png" alt="Connect">
     </div>
   </div>
+  <div class="filter-popup" v-show="showFilters">
+    <div class="dark-overlay"></div>
+    <div class="mobile-filter">
+      <div class="styledHeader">
+        <h3 id="filters">Filters</h3>
 
+      </div>
+      <div class="separator"></div>
+      <div class="range-container" id="range-vertical-container">
+
+        <button class="price-ranger" @click="toggleShowCategory" :style="{
+          'border-radius': isCategoryVisible ? '10px 10px 0 0' : '10px'
+        }">Category
+        </button>
+        <div class="wrapper" id="categoryContainer" :style="{
+          height: isCategoryVisible ? '0px' : '200px',
+          opacity: isCategoryVisible ? '0' : '1',
+          zIndex: isCategoryVisible ? -100 : '0',
+          'border-radius': isCategoryVisible ? '0 0 10px 10px' : '10px'
+        }">
+          <div class="category-list">
+            <div class="checkbox-wrapper">
+              <label class="cbx" for="itBox">Information Technology</label>
+              <input class="inp-cbx" id="itBox" type="checkbox" v-model="isItChecked" @change="sortByCategory">
+            </div>
+            <div class="checkbox-wrapper">
+              <label class="cbx" for="dmBox">Digital Marketing</label>
+              <input class="inp-cbx" id="dmBox" type="checkbox" v-model="isDmChecked" @change="sortByCategory">
+            </div>
+            <div class="checkbox-wrapper">
+              <label class="cbx" for="beBox">Business and Entrepreneurship</label>
+              <input class="inp-cbx" id="beBox" type="checkbox" v-model="isBeChecked" @change="sortByCategory">
+            </div>
+            <div class="checkbox-wrapper">
+              <label class="cbx" for="dsBox">Data Science and Analytics</label>
+              <input class="inp-cbx" id="dsBox" type="checkbox" v-model="isDsChecked" @change="sortByCategory">
+            </div>
+          </div>
+        </div>
+
+
+        <button class="price-ranger" @click="toggleShowPrice" :style="{
+          'border-radius': isPriceVisible ? '10px 10px 0 0' : '10px'
+        }">Price
+        </button>
+        <div class="wrapper" id="priceText" :style="{
+          height: isPriceVisible ? '0px' : '150px',
+          opacity: isPriceVisible ? '0' : '1',
+          zIndex: isPriceVisible ? -100 :  '0',
+          'border-radius': isPriceVisible ? '0 0 10px 10px' : '10px'
+        }">
+          <div class="price-input">
+            <span>Max Price</span>
+            <div class="field">
+              <input type="number" class="input-max" value="50000" v-model="maxValue" @input="maxRangeValue = maxValue" @change="sortByPriceRange">
+            </div>
+          </div>
+          <div class="range-input">
+            <input type="range" class="range-max" min="0" max="50000" v-model="maxRangeValue" step="100"
+                   @input="maxValue = maxRangeValue" @change="sortByPriceRange">
+          </div>
+        </div>
+
+        <button class="price-ranger" @click="toggleShowDate" :style="{
+          'border-radius': isDateVisible ? '10px 10px 0 0' : '10px'
+        }">Date
+        </button>
+
+        <div class="wrapper" id="dateContainer" :style="{
+          height: isDateVisible ? '0px' : '50px',
+          opacity: isDateVisible ? '0' : '1',
+          zIndex: isDateVisible ? -100 : '0',
+          'border-radius': isDateVisible ? '0 0 10px 10px' : '10px'
+        }">
+          <span>Start date - End Date</span>
+          <input id="datepicker" type="text" placeholder="Now - Forever"/>
+        </div>
+
+        <button class="price-ranger" @click="toggleShowProvider" :style="{
+          'border-radius': isProviderVisible ? '10px 10px 0 0' : '10px'
+        }">Provider
+        </button>
+        <div class="wrapper" id="providerContainer" :style="{
+          height: isProviderVisible ? '0px' : '400px',
+          opacity: isProviderVisible ? '0' : '1',
+          zIndex: isProviderVisible ?  -100 : '0',
+          'border-radius': isProviderVisible ? '0 0 10px 10px' : '10px'
+        }">
+          <header>
+            <div id="providerList1"></div>
+          </header>
+        </div>
+
+        <button class="price-ranger" @click="toggleShowDifficulty" :style="{
+          'border-radius': isDifficultyVisible ? '10px 10px 0 0' : '10px'
+        }">Difficulty
+        </button>
+        <div class="wrapper" id="difficultyContainer" :style="{
+          height: isDifficultyVisible ? '0px' : '150px',
+          opacity: isDifficultyVisible ? '0' : '1',
+          zIndex: isDifficultyVisible ? -100 : '0',
+          'border-radius': isDifficultyVisible ? '0 0 10px 10px' : '10px'
+        }">
+          <header>
+            <div class="checkbox-wrapper">
+              <label class="cbx" for="beginnerBox">Beginner</label>
+              <input class="inp-cbx" id="beginnerBox" type="checkbox" v-model="isBeginnerChecked"
+                     @change="sortByDifficulty">
+            </div>
+
+            <div class="checkbox-wrapper">
+              <label class="cbx" for="intermediateBox">Intermediate</label>
+              <input class="inp-cbx" id="intermediateBox" type="checkbox" v-model="isIntermediateChecked"
+                     @change="sortByDifficulty">
+            </div>
+
+            <div class="checkbox-wrapper">
+              <label class="cbx" for="expertBox">Expert</label>
+              <input class="inp-cbx" id="expertBox" type="checkbox" v-model="isExpertChecked"
+                     @change="sortByDifficulty">
+            </div>
+          </header>
+        </div>
+        <button class="price-ranger" @click="toggleShowCredit" :style="{
+          'border-radius': isCreditVisible ? '10px 10px 0 0' : '10px'
+        }">Credit
+        </button>
+        <div class="wrapper" id="creditContainer" :style="{
+          height: isCreditVisible ? '0px' : '200px',
+          opacity: isCreditVisible ? '0' : '1',
+          zIndex: isCreditVisible ? -100 : '0',
+          'border-radius': isCreditVisible ? '0 0 10px 10px' : '10px'
+        }">
+          <header>
+            <div class="slider-container">
+              <input type="range" min="0" max="5" class="slider" id="creditSlider" v-model="creditValue"
+                     @change="sortByCredit">
+              <div style="display: flex; justify-content: space-between;">
+                <p>Minimum Credit:</p>
+                <p>{{ creditValue }}</p>
+              </div>
+            </div>
+          </header>
+        </div>
+
+      </div>
+    </div>
+  </div>
   <div class="filter-wrapper">
     <div class="active-filter-container">
-      <button>
+      <button @click="toggleFilters">
         <img src="https://www.svgrepo.com/show/472431/bars-filter.svg" alt="Filter Icon">
         <p>Filters</p>
       </button>
@@ -98,7 +245,7 @@
           'border-radius': isProviderVisible ? '0 0 10px 10px' : '10px'
         }">
           <header>
-            <div id="providerList"></div>
+            <div id="providerList2"></div>
           </header>
         </div>
 
@@ -199,6 +346,7 @@ const maxValue = ref(50000);
 const minRangeValue = ref(0);
 const maxRangeValue = ref(50000);
 
+
 let courseContainer;
 let children;
 let childrenIdList = [];
@@ -207,11 +355,13 @@ let activeFilters = new Map();
 let Matching = [];
 let searchedChildren = new Map();
 
+let showFilters = ref(false);
+
 onMounted(() => {
   courseContainer = document.querySelector('#courseContainer');
   children = courseContainer.children;
   populateCourses('.flexible-grid');
-  populateProviders();
+  populateProviders(['#providerList1', '#providerList2']);
   currency(API_URL);
 
   let picker;
@@ -266,33 +416,35 @@ async function populateCourses(selector) {
 
 let isProviderChecked = ref({}); // Initialize as an empty object
 
-function populateProviders() {
+function populateProviders(selectors) {
   fetch(API_URL + '/providers')
       .then(response => response.json())
       .then(data => {
-        const providerList = document.getElementById('providerList');
-        data.forEach(provider => {
-          const checkboxWrapper = document.createElement('div');
-          checkboxWrapper.className = 'checkbox-wrapper';
+        selectors.forEach(selector => {
+          const providerList = document.querySelector(selector);
+          data.forEach(provider => {
+            const checkboxWrapper = document.createElement('div');
+            checkboxWrapper.className = 'checkbox-wrapper';
 
-          const label = document.createElement('label');
-          label.className = 'cbx';
-          label.setAttribute('for', `provider${provider.providerId}`);
-          label.textContent = provider.name;
-          checkboxWrapper.appendChild(label);
+            const label = document.createElement('label');
+            label.className = 'cbx';
+            label.setAttribute('for', `provider${provider.providerId}`);
+            label.textContent = provider.name;
+            checkboxWrapper.appendChild(label);
 
-          const checkbox = document.createElement('input');
-          checkbox.className = 'inp-cbx';
-          checkbox.id = `provider${provider.providerId}`;
-          checkbox.type = 'checkbox';
-          checkbox.setAttribute('v-model', `isProviderChecked['${provider.name}']`);
-          checkbox.addEventListener('change', onProviderCheckboxChange);
-          checkboxWrapper.appendChild(checkbox);
+            const checkbox = document.createElement('input');
+            checkbox.className = 'inp-cbx';
+            checkbox.id = `provider${provider.providerId}`;
+            checkbox.type = 'checkbox';
+            checkbox.setAttribute('v-model', `isProviderChecked['${provider.name}']`);
+            checkbox.addEventListener('change', onProviderCheckboxChange);
+            checkboxWrapper.appendChild(checkbox);
 
-          providerList.appendChild(checkboxWrapper);
+            providerList.appendChild(checkboxWrapper);
 
-          // Initialize the checkbox state for this provider
-          isProviderChecked.value[provider.name] = false;
+            // Initialize the checkbox state for this provider
+            isProviderChecked.value[provider.name] = false;
+          });
         });
       })
       .catch(error => console.error('Error:', error));
@@ -577,6 +729,11 @@ function toggleShowCredit() {
   isCreditVisible.value = !isCreditVisible.value;
 }
 
+function toggleFilters() {
+  console.log(showFilters)
+  showFilters.value = !showFilters.value;
+}
+
 
 </script>
 
@@ -596,8 +753,7 @@ function toggleShowCredit() {
 
 
 .filter-container {
-  margin: 0 2% 0 2%;
-  padding: 0;
+  padding: 0 2% 0 2%;
   max-width: 100%;
   display: flex;
   flex-direction: row;
@@ -605,6 +761,7 @@ function toggleShowCredit() {
   justify-content: center;
   flex-wrap: nowrap;
   gap: 2%;
+  width: 100%;
 }
 
 
@@ -617,6 +774,71 @@ function toggleShowCredit() {
   align-content: center;
 }
 
+
+.filter-popup {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100% ;
+  max-width: 100%;
+  height: 60%;
+  background-color: var(--light-1);
+  z-index: 100;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: bottom 0.3s ease;
+}
+
+.mobile-filter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 10px;
+  width: 100%;
+}
+
+.dark-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 40%;
+  background-color: rgb(88, 75, 235 ,0.1);
+  z-index: 99;
+}
+
+.styledHeader {
+  padding: 10px;
+  width: 100%;
+}
+
+#range-vertical-container .checkbox-wrapper {
+ display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+
+#range-vertical-container .wrapper {
+  padding-left: 10px;
+  gap: 5px;
+}
+
+
+#filters {
+  color: var(--dark-3);
+  font-family: Inter, sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+}
+.separator {
+  height: 1px;
+  width: 100%;
+  background-color: grey;
+  margin: 20px 0;
+  padding: 0 40px;
+}
+
 .flexible-grid-container {
   margin-top: 10px;
   background-color: var(--light-1);
@@ -625,8 +847,8 @@ function toggleShowCredit() {
   justify-content: flex-start;
   padding: 5px;
   min-height: 90%;
-  min-width: 85%;
-  max-width: 100%;
+  width: 100%; /* Set width to 100% */
+  max-width: 100%; /* Ensure it doesn't exceed 100% */
 }
 
 .flexible-grid {
@@ -636,7 +858,7 @@ function toggleShowCredit() {
   display: flex;
   flex-wrap: wrap;
   margin: 30px;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: flex-start;
   align-content:flex-start;
 }
@@ -674,9 +896,6 @@ function toggleShowCredit() {
   padding: 0 20px;
 }
 
-#mobile-filter {
-  display: none;
-}
 
 @media (max-width: 769px) {
   .filter-container {
@@ -950,9 +1169,10 @@ input[type="range"]::-moz-range-thumb {
 body, html {
   max-width: 100%;
   overflow-x: hidden;
+  overflow-y: auto;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1250px) {
   .search-bar {
     width: 70%;
   }
@@ -965,6 +1185,18 @@ body, html {
   }
   .active-filter-container button {
     display: flex;
+  }
+  #range-vertical-container {
+    display: flex;
+    align-content: flex-start;
+    align-items:flex-start;
+  }
+  .search-bar {
+    width: 90%;
+    margin: 0 5% 0 5%;
+  }
+  .search-prompt {
+    padding: 20px 20px 20px 70px;
   }
 
 }
