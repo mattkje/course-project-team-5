@@ -148,7 +148,7 @@ export default defineComponent({
 }
 
 .profile-item {
-  width: 400px;
+  width: 100%;
 }
 
 .profile-item label {

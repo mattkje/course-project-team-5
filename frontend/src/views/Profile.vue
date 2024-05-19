@@ -334,13 +334,14 @@ function cancelChangePassword() {
 .navigation-bar {
   display: flex;
   flex-direction: column;
+  width: 40%;
+  padding-left: 50px;
 }
 
 .navigation-bar p {
   font-weight: bold;
   color: var(--light-2);
   font-size: 17px;
-  margin-left: 70px;
 }
 
 .nav-button {
@@ -356,8 +357,7 @@ function cancelChangePassword() {
   display: flex;
   border: none;
   margin-bottom: 5px;
-  margin-left: 50px;
-  width: 450px;
+  width: 100%;
   max-height: 50px;
   min-height: 50px;
   transition: all 0.15s ease-in-out;
