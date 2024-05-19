@@ -10,9 +10,18 @@
       <div class="course-table">
         <h1>hei</h1>
         <div class="courseContainer"></div>
+        <div class="cartTotal"></div>
+      </div>
+      <div class="couponContainer">
+        <h2>Coupon Code</h2>
+        <p>You can apply a coupon code to get a discount on your purchase.</p>
+        <input type="text" placeholder="Enter coupon code here"/>
+        <button @click="applyCoupon">Apply</button>
       </div>
     </div>
+    <div class="couponContainer">
   </div>
+    </div>
 </template>
 
 <script setup>
@@ -23,6 +32,10 @@ import {redirectTo} from "@/js/navigation";
 import {getCookie, isTokenAboutToExpire} from "@/js/tools";
 import { inject } from "vue";
 
+
+function applyCoupon() {
+  console.log("Applying coupon");
+}
 
 async function loadShoppingCart() {
   const user = getAuthenticatedUser();
@@ -202,6 +215,20 @@ function editCourseCard(object, course) {
   color: red;
   background: none;
   border: none;
+}
+
+.couponContainer {
+  border: 1px solid black;
+  padding: 20px;
+  margin-left: 20px;
+}
+
+.couponContainer button {
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  margin-top: 10px;
+  cursor: pointer;
 }
 
 </style>
