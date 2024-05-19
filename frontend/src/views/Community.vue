@@ -101,7 +101,7 @@ const handleButtonClick = (button) => {
     <img class="planet" src="/greenPlanet.svg">
   </div>
   <div class="course-section">
-
+    <div class="community-top-container">
     <div class="community-title-container">
       <div class="title">
         <h1>Community</h1>
@@ -117,7 +117,7 @@ const handleButtonClick = (button) => {
         <img class="search-icon" src="/search.png" alt="Connect">
       </div>
     </div>
-
+    </div>
     <div class="course-block" ref="courseBlock">
     </div>
     <div class="greeting"></div>
@@ -195,6 +195,7 @@ const handleButtonClick = (button) => {
 
 .search-container {
   position: relative;
+  width: 80%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -221,7 +222,6 @@ const handleButtonClick = (button) => {
   filter: invert(50%);
 }
 
-
 .search-prompt {
   color: var(--dark-1);
   background: none;
@@ -231,18 +231,45 @@ const handleButtonClick = (button) => {
   border: none;
   border-radius: 15px;
   font-size: 16px;
+  text-overflow: ellipsis;
 }
 
 
 .course-block {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(auto-fill, 150px);
+  grid-column-gap: 30px;
+  padding-top: 80px;
   justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
+  align-items: end;
   margin: 0 auto;
   width: 70%;
+  justify-items: center;
 }
 
+@media (max-width: 1320px) {
+  .course-block {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .community-title-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .community-title-container .fancy-button {
+    margin-top: 20px;
+  }
+}
+
+.community-top-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 .planet {
   height: 300px;
@@ -281,11 +308,11 @@ const handleButtonClick = (button) => {
   border-radius: 10px;
   text-decoration: none;
   display: flex;
-  max-height: 40px;
-  min-height: 40px;
+  min-width: 100px;
   background: #0C0C0C;
   border: 0.5px solid #252525;
   transition: all 0.3s ease-in-out;
+  white-space: nowrap;
 }
 
 .fancy-button:hover {
