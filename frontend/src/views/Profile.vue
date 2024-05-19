@@ -273,20 +273,6 @@ function cancelChangePassword() {
   padding-top: 50px;
 }
 
-.profile-box {
-  background-color: var(--light-1);
-  padding: 30px 0 30px 20px;
-  border-radius: 30px;
-  margin: 10px 0 10px 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: left;
-  align-content: center;
-  width: 60%;
-  overflow: hidden;
-  box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
-}
-
 #currentPassword {
   margin-bottom: 30px;
 }
@@ -357,6 +343,7 @@ function cancelChangePassword() {
   display: flex;
   border: none;
   margin-bottom: 5px;
+  padding-left: 50px;
   width: 100%;
   max-height: 50px;
   min-height: 50px;

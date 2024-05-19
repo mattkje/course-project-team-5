@@ -52,20 +52,6 @@ export default defineComponent({
 </script>
 <style scoped>
 
-.profile-box {
-  background-color: var(--light-1);
-  padding: 30px 0 30px 30px;
-  border-radius: 30px;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: left;
-  align-content: center;
-  width: 60%;
-  overflow: hidden;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
-}
-
 .profile-information {
   background-color: var(--light-1);
   border-radius: 20px;
