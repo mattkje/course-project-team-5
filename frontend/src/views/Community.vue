@@ -200,7 +200,8 @@ const handleButtonClick = (button) => {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 10vh; /* Adjust as needed */
+  height: 100%;
+  padding-top: 20px;
 }
 
 .search-bar {

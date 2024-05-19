@@ -11,19 +11,23 @@
     <form @submit.prevent="createPost" class="post-form">
       <div class="form-group">
         <label for="title">Title:</label>
-        <input type="text" id="title" v-model="post.title" required>
+        <input type="text" id="title" v-model="post.title" required maxlength="255">
       </div>
       <div class="form-group">
         <label for="category">Category:</label>
-        <input type="text" id="category" v-model="post.category" required>
+        <input type="text" id="category" v-model="post.category" required maxlength="100">
       </div>
       <div class="form-group">
         <label for="description">Topic:</label>
-        <input type="text" id="description" v-model="post.description" required></input>
+        <input type="text" id="description" v-model="post.description" required maxlength="100"></input>
       </div>
       <div class="form-group">
+        <div class="content-div">
         <label for="content">Content:</label>
-        <textarea class="big-input" id="content" v-model="post.content" required></textarea>
+          <p id="max-characters">(max characters: 6000)</p>
+        </div>
+        <textarea class="big-input" id="content" v-model="post.content" required maxlength="6000"></textarea>
+        <p class="char-counter">{{ remainingCharacters }}</p>
         <div class="formatting-tools">
           <button type="button" @click="insertText('# ', 'content')">Heading 1</button>
           <button type="button" @click="insertText('## ', 'content')">Heading 2</button>
@@ -35,7 +39,7 @@
       </div>
       <div class="form-group">
         <label for="image">Image URL:</label>
-        <input type="text" id="image" v-model="post.image">
+        <input type="text" id="image" v-model="post.image" maxlength="255">
       </div>
       <button type="submit">Create Post</button>
     </form>
@@ -72,6 +76,11 @@ export default {
         image: ''
       }
     };
+  },
+  computed: {
+    remainingCharacters() {
+      return 6000 - this.post.content.length;
+    }
   },
   methods: {
     insertText(text, field) {
@@ -230,5 +239,28 @@ button[type="submit"]:hover {
   &:hover {
     color: var(--base-2);
   }
+}
+
+#max-characters {
+  font-size: 14px;
+  color: var(--dark-1);
+}
+
+.content-div {
+  display: flex;
+  flex-flow: row;
+  align-items: flex-end;
+}
+
+#max-characters {
+  font-size: 10px;
+  margin-bottom: 5px;
+  padding-left: 5px;
+}
+
+.char-counter {
+  display: flex;
+  font-size: 14px;
+  color: var(--dark-1);
 }
 </style>
