@@ -149,7 +149,7 @@ function setDefaultCurrency() {
 
 
 <style scoped>
-@media (max-width: 768px) {
+@media (max-width: 769px) {
   #menubar {
     background-color: #614fff;
     backdrop-filter: none;
@@ -170,7 +170,7 @@ function setDefaultCurrency() {
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 769px) {
   #menubar {
     background: linear-gradient(180deg, #f8f8ff -0%, #f1f0fd 100%);
     backdrop-filter: blur(5px);

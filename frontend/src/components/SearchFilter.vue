@@ -10,6 +10,10 @@
 
   <div class="filter-wrapper">
     <div class="active-filter-container">
+      <button>
+        <img src="https://www.svgrepo.com/show/472431/bars-filter.svg" alt="Filter Icon">
+        <p>Filters</p>
+      </button>
     </div>
 
     <div class="filter-container">
@@ -473,8 +477,8 @@ function onCheckboxChange(checkboxid,type){
   // Set the text content
   newElement.textContent = `${type}`;
 
-  // Apply CSS styles
- newElement.style.display = 'inline-block';
+  // Apply CSS style
+  newElement.style.display = 'inline-block';
 newElement.style.padding = '7px';
 newElement.style.backgroundColor = '#270e98';
 newElement.style.color = '#fafaff';
@@ -674,10 +678,11 @@ function toggleShowCredit() {
   display: none;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 769px) {
   .filter-container {
     flex-direction: column;
-    max-width: 70%
+    max-width: 90%;
+    margin: 0 5% 0 5%;
   }
 
   .range-container {
@@ -916,6 +921,31 @@ input[type="range"]::-moz-range-thumb {
   border-radius: 50%;
 }
 
+.active-filter-container button {
+  padding: 7px 4.5vw 7px 4.5vw;
+  background-color: #fafaff;
+  color: #282828;
+  text-align: center;
+  text-decoration: none;
+  margin: 2px 5px 2px 2px;
+  border-radius: 50px;
+  border: none;
+  height: 30px;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 5px;
+  display: none;
+}
+
+.active-filter-container p {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.active-filter-container img {
+  max-width: 15px;
+  max-height: 15px;
+}
 
 body, html {
   max-width: 100%;
@@ -926,6 +956,17 @@ body, html {
   .search-bar {
     width: 70%;
   }
+  .range-container {
+    display: none;
+  }
+  .active-filter-container {
+    width: 90%;
+    margin: 0 5% 0 5%;
+  }
+  .active-filter-container button {
+    display: flex;
+  }
+
 }
 
 </style>
