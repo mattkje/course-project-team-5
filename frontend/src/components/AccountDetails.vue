@@ -54,16 +54,14 @@ export default defineComponent({
 
 .profile-information {
   background-color: var(--light-1);
-  border-radius: 20px;
-  padding: 0 0 0 20px;
   display: grid;
   width: 100%;
   grid-template-columns: repeat(2, 1fr);
   margin-bottom: 20px;
   line-height: 50px;
   grid-template-rows: auto;
-  grid-column-gap: 10px;
   justify-content: space-between;
+  grid-gap: 20px;
 }
 
 .courses tr:nth-child(odd) {
@@ -75,17 +73,12 @@ export default defineComponent({
 }
 
 .course-options {
-  background-color: var(--light-1);
-  border-radius: 20px;
-  display: grid;
+  padding-top: 20px;
+  display: flex;
   flex-direction: column;
-  width: 100%;
-  line-height: 50px;
-  margin: 30px 0;
   justify-content: left;
-  overflow: auto;
-  max-height: 400px;
-  min-height: 100px;
+  gap: 20px;
+  width: 175px;
 }
 
 @keyframes slideIn {
@@ -135,15 +128,19 @@ export default defineComponent({
 
 .profile-item {
   width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .profile-item label {
   padding: 5px 20px;
   display: inline-block;
-  border-radius: 10px;
+  border-radius: 15px;
   color: var(--dark-3);
-  border: 2px solid var(--light-2);
   width: 100%;
+  max-width: 100%;
+  border: 2px solid var(--light-2);
+  overflow: hidden;
 }
 
 .fancy-button {
@@ -161,5 +158,9 @@ hr {
 
 .title{
   margin-bottom: 20px;
+}
+
+.fancy-button:nth-child(2) {
+  background-color: #fad8d8;
 }
 </style>

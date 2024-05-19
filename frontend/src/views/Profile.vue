@@ -141,7 +141,7 @@ function onProfileDataSuccess(data) {
     addCourses(data);
   } else {
     const profileInfo = document.getElementById("profileInformation");
-    profileInfo.style.maxHeight = "800px";
+    profileInfo.style.maxHeight = "900px";
   }
   loading.value = false;
 }
@@ -209,8 +209,9 @@ function addCourses(data) {
   const courseBody = document.createElement("tbody");
   courseBody.classList.add("course-block");
   const line = document.createElement("hr");
-  line.style.maxWidth = "600px";
+  line.style.Width = "100%";
   line.style.margin = "20px";
+  line.style.paddingLeft = "20px";
   courseBody.appendChild(line);
   courseList.appendChild(courseBody);
   for (const element of data.courses) {
@@ -229,14 +230,15 @@ function addCourses(data) {
     editCourseCard(row, course);
     courseBody.appendChild(row);
     const line = document.createElement("hr");
-    line.style.maxWidth = "600px";
+    line.style.Width = "100%";
     line.style.margin = "20px";
+    line.style.paddingLeft = "20px";
     courseBody.appendChild(line);
   }
 }
 
 function editCourseCard(object, course) {
-  object.style.minWidth = "500px";
+  object.style.Width = "100%"
   object.style.minHeight = "50px";
   object.onclick = function () {
     redirectTo("/courses/?id=" + course.course.courseId);
@@ -321,7 +323,6 @@ function cancelChangePassword() {
   display: flex;
   flex-direction: column;
   width: 40%;
-  padding-left: 50px;
 }
 
 .navigation-bar p {
@@ -416,5 +417,11 @@ function cancelChangePassword() {
 hr {
   max-width: 100%;
   margin: 20px;
+}
+
+.profile-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
 }
 </style>
