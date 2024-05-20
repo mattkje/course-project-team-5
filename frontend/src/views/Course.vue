@@ -1,7 +1,9 @@
 
 
 <template>
-  <div class="course-page-background">
+  <div class="course-page-background" v-show="!addProvider">
+    <button v-show="hasRole('ROLE_ADMIN')" class="fancy-button" @click="changeProviderValue">Add provider</button>
+
     <div v-show="!loading" class="courseLinkElement">
       <a href="/">Courses</a>
       <p>&nbsp;->&nbsp;</p>
@@ -67,19 +69,51 @@
     <div v-show="!loading" class="greeting">
     </div>
   </div>
+  <div class="addProvider" v-show="addProvider">
+    <div class="provider-box">
+      <div class="provider-box-content">
+        <h1>Add Provider</h1>
+        <form @submit.prevent="addNewProvider">
+          <div class="provider-form">
+            <label for="provider-name">Provider name:</label>
+            <select name="providers" id="provider-name" v-model="singleProvider.providerId">
+              <option v-for="provider in providers" :key="provider.providerId" :value="provider.providerId">
+                {{ provider.name }}
+              </option>
+            </select>
+          </div>
+          <div class="provider-form">
+            <label for="provider-price">Price:</label>
+            <input type="text" id="provider-price" required v-model="singleProvider.price">
+          </div>
+          <div class="provider-form">
+            <label for="provider-currency">Currency:</label>
+            <select type="text" id="provider-currency" required v-model="singleProvider.currency">
+              <option v-for="currency in currencies" :key="currency.code" :value="currency.code">
+                {{ currency.code }} - {{ currency.symbol }}
+              </option>
+            </select>
+          </div>
+          <button type="submit" class="fancy-button">Add Provider</button>
+          <button @click="changeProviderValue" class="fancy-button">Cancel</button>
+          </form>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
 import {getCurrentInstance, onMounted, ref} from 'vue';
 import "@/assets/coursePage.css"
-import {hasRole} from "@/js/authentication";
+import {getAuthenticatedUser, hasRole} from "@/js/authentication";
 import MarkdownIt from "markdown-it";
 import myStore from '@/js/store.js';
 import {createContentBox, fetchCourses, fetchCurrencies} from "@/js/populationTools";
 import { setCookie } from "@/js/tools";
-
+import {sendApiRequest} from "@/js/requests";
+import {redirectTo} from "@/js/navigation";
 const loading = ref(true);
-
+const addProvider = ref(false);
 
 //Test cookies
 function addCourseToCart() {
@@ -91,6 +125,7 @@ function addCourseToCart() {
 
 onMounted(() => {
   populateCoursePage();
+  populateProviders();
 });
 
 
@@ -452,8 +487,67 @@ function setDefaultCurrency() {
   }
 }
 
+let providers = ref([]);
+let currencies = ref([]);
 
+const singleProvider = ref({
+  providerId: '',
+  price: '',
+  currency: ''
+});
 
+function changeProviderValue() {
+  addProvider.value = !addProvider.value;
+}
+
+function populateProviders() {
+  sendApiRequest('GET', '/providers', providerComplete, providerFailed);
+  sendApiRequest('GET', '/currency', currencyComplete, currencyFailed);
+}
+
+function currencyComplete(data) {
+  currencies.value = data;
+}
+
+function currencyFailed() {
+  console.log('Failed to fetch currencies');
+}
+
+function providerComplete(data) {
+  providers.value = data;
+}
+
+function providerFailed() {
+  console.log('Failed to fetch providers');
+}
+
+function addNewProvider() {
+  const urlParams = new URLSearchParams(window.location.search);
+
+  const providerData = {
+    courseId: urlParams.get('id'),
+    provider: {
+      providerId: singleProvider.value.providerId,
+      name: providers.value.find(provider => provider.providerId === singleProvider.value.providerId).name
+    },
+    price: singleProvider.value.price,
+    currency: singleProvider.value.currency,
+  };
+
+  console.log(providerData);
+
+  sendApiRequest('POST', '/providers/' + providerData.courseId, addProviderSuccess, providerData, addProviderFailed);
+
+}
+
+function addProviderSuccess() {
+  alert('Provider added successfully');
+  window.location.reload();
+}
+
+function addProviderFailed() {
+  alert('Failed to add provider');
+}
 </script>
 
 <style scoped>
@@ -474,7 +568,7 @@ img {
 button {
   background-color: transparent;
   border-color: transparent;
-  cursor: not-allowed;
+  cursor: pointer;
 }
 
 .button-disabled {
@@ -1060,4 +1154,25 @@ button {
   transition-duration: .5s;
 }
 
+.addProvider {
+  background-color: var(--light-3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+  width: 100%;
+}
+
+.provider-box {
+  background-color: var(--light-1);
+  border-radius: 20px;
+  padding: 20px;
+  width: 50%;
+  height: 50%;
+  box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
+}
+
+.provider-form {
+  margin-bottom: 10px;
+}
 </style>

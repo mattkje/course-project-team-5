@@ -14,7 +14,7 @@ export async function sendApiRequest(method, url, callback, requestBody, errorCa
         const response = await fetch(API_BASE_URL + url, parameters);
         const responseText = await response.text();
 
-        if (response.status === 200) {
+        if (response.status === 200 || response.status === 201) {
             let responseJson = "";
             if (responseText) {
                 try {
