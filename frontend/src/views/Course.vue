@@ -74,23 +74,17 @@ import {getCurrentInstance, onMounted, ref} from 'vue';
 import "@/assets/coursePage.css"
 import {hasRole} from "@/js/authentication";
 import MarkdownIt from "markdown-it";
-import {useStore} from 'vuex';
 import myStore from '@/js/store.js';
 import {createContentBox, fetchCourses, fetchCurrencies} from "@/js/populationTools";
+import { setCookie } from "@/js/tools";
+
 const loading = ref(true);
 
 
-
-
-const store = useStore();
-
+//Test cookies
 function addCourseToCart() {
-  const urlParams = new URLSearchParams(window.location.search)
-  const id = urlParams.get('id');
-  console.log(id);
-  myStore.commit("addCourseID", id);
-  console.log(myStore.state.cart);
-  console.log(myStore.state.cart.length);
+  setCookie('courseProviderId','1',1);
+  setCookie('courseId','1',1);
 }
 
 
@@ -249,6 +243,8 @@ function populateCoursePage() {
                 }
 
                 const priceInDefaultCurrency = provider.price / rate;
+                const providerID = provider.courseProviderId; //244
+
 
                 for (let i = 0; i < currencies.length; i++) {
                   if (currencies[i].code === defaultCurrency) {
@@ -280,6 +276,7 @@ function populateCoursePage() {
                   document.getElementById('providerList').appendChild(providerElement);
                   providerElement.addEventListener('click', function() {
                     document.getElementById('enrollButton').textContent = "Buy for " + symbol + finalPrice.toFixed(2);
+                    console.log(providerID + " hei"); //275
                     document.getElementById('notShowingLocationText').innerText = 'Showing location for provider ' + provider.name
                     initMap(provider.latitude, provider.longitude);
 
