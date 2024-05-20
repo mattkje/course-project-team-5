@@ -211,7 +211,6 @@
               <p>-</p>
               <input type="number" id="max-price" v-model="maxPrice" min="1" @change="sortByPriceRange">
             </div>
-            <div id="price-slider"></div>
           </div>
         </div>
 
@@ -314,8 +313,6 @@ import Litepicker from 'litepicker';
 import {watch} from 'vue';
 import {createContentBox, fetchCourses, fetchCurrencies} from "@/js/populationTools";
 import {sendApiRequest} from "@/js/requests";
-import noUiSlider from 'nouislider';
-import 'nouislider/dist/nouislider.css';
 
 const {appContext} = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
@@ -355,24 +352,6 @@ onMounted(() => {
   populateCourses('.flexible-grid');
   populateProviders(['#providerList1', '#providerList2']);
   currency(API_URL);
-
-  const slider = document.getElementById('price-slider');
-
-  noUiSlider.create(slider, {
-    start: [0, 75000],
-    connect: true,
-    range: {
-      'min': 0,
-      'max': 75000
-    }  });
-
-  slider.noUiSlider.on('update', function (values, handle) {
-    if (handle) {
-      maxPrice.value = values[handle];
-    } else {
-      minPrice.value = values[handle];
-    }
-  });
 
   let picker;
   document.addEventListener('DOMContentLoaded', function () {

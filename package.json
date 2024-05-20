@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "litepicker": "^2.0.12",
-    "nouislider": "^15.7.2"
+    "litepicker": "^2.0.12"
   }
 }
