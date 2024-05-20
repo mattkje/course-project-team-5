@@ -1,55 +1,65 @@
-<script>
-import Guidelines from "@/components/Guidelines.vue";
-import {redirectTo} from "@/js/navigation";
-import {getAuthenticatedUser} from "@/js/authentication";
-import {sendApiRequest} from "@/js/requests";
-import {computed, onMounted, ref} from "vue";
+<script setup>
+  import { ref, computed, onMounted } from 'vue';
+  import Guidelines from "@/components/Guidelines.vue";
+  import {redirectTo} from "@/js/navigation";
+  import {getAuthenticatedUser} from "@/js/authentication";
+  import {sendApiRequest} from "@/js/requests";
+  import flatPickr from 'vue-flatpickr-component';
+  import 'flatpickr/dist/flatpickr.css';
 
-export default {
-  components: {Guidelines},
-  mounted() {
-    initSite();
-  },
-  computed: {
-    remainingCharacters() {
-      return 6000 - this.course.description.length;
-    }
-  },
-  data() {
-    return {
-      showGuidelinesModal: false,
-      course: {
-        title: '',
-        category: '',
-        level: '',
-        startDate: '',
-        endDate: '',
-        hours_per_week: '',
-        related_certifications: '',
-        description: '',
-        image: ''
-      }
-    }
-  },
-  methods: {
-    toggleGuidelinesModal() {
-      this.showGuidelinesModal = !this.showGuidelinesModal;
-    },
-    createCourse() {
-      sendApiRequest('POST', '/courses', onSuccess, this.course, error);
-    }
-  }
+  const config = ref({
+    mode: 'range',
+    dateFormat: 'd-m',
+    altFormat: 'd-m-Y',
+    minDate: 'today',
+    conjunction: ' to ',
+  });
+
+  const showGuidelinesModal = ref(false);
+  const course = ref({
+  title: '',
+  category: '',
+  level: '',
+  start_date: '',
+  end_date: '',
+  hours_per_week: '',
+  related_certifications: '',
+  description: '',
+  image: ''
+});
+
+  const remainingCharacters = computed(() => 6000 - course.value.description.length);
+
+  function toggleGuidelinesModal() {
+  showGuidelinesModal.value = !showGuidelinesModal.value;
 }
 
-function initSite() {
+  function createCourse() {
+  sendApiRequest('POST', '/courses', onSuccess, course.value, error);
+}
+
+  onMounted(() => {
+  initSite();
+});
+
+  function initSite() {
   const currentUser = getAuthenticatedUser();
   if (!currentUser) {
-    redirectTo('/login');
-  }
+  redirectTo('/login');
+}
 }
 
-function resetForm() {
-  this.course = {
+  function onSuccess() {
+  alert('Course created successfully!');
+  resetForm();
+}
+
+  function error() {
+  alert('There was an error creating the course. Please try again.');
+}
+
+  function resetForm() {
+  course.value = {
     title: '',
     category: '',
     level: '',
@@ -60,15 +70,6 @@ function resetForm() {
     description: '',
     image: ''
   }
-}
-
-function onSuccess() {
-  alert('Course created successfully!');
-  resetForm();
-}
-
-function error() {
-  alert('There was an error creating the course. Please try again.');
 }
 </script>
 
@@ -97,7 +98,7 @@ function error() {
       </div>
       <div class="form-group">
         <label for="closest-course-session">Closest course session:</label>
-        <input type="text" id="closest-course-session" v-model="course.closestCourseSession" required maxlength="100">
+        <flat-pickr id="closest-course-session" v-model="course.closestCourseSession" :config="config" class="form-control" required></flat-pickr>
       </div>
       <div class="form-group">
         <label for="closest-size">Course size:</label>
