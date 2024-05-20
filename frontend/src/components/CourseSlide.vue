@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import {ref, onMounted, onUnmounted} from 'vue';
+import {ref, onMounted, onUnmounted, getCurrentInstance} from 'vue';
 
 export default {
   name: 'ImageSlider',
@@ -27,7 +27,9 @@ export default {
     let intervalId = null;
 
     const fetchImages = async () => {
-      const response = await fetch('https://localhost:8443/api/courses');
+      const {appContext} = getCurrentInstance();
+      const API_URL = appContext.config.globalProperties.$apiAddress;
+      const response = await fetch(API_URL + '/courses');
       const coursesData = await response.json();
       console.log('coursesData:', coursesData); // Debug log
       images.value = coursesData.map(courseData => courseData.course.image);
