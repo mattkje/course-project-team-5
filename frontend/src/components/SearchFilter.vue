@@ -311,6 +311,7 @@ const providerData = ref(null);
 
 let isCategoryChecked = ref({});
 let isProviderChecked = ref({});
+let Matching = [];
 
 let courseContainer;
 let children;
@@ -437,33 +438,14 @@ function getCheckboxId(event) {
   return {labelName, checkboxId};
 }
 
-function handleSliderFilter(checkboxId, id) {
-
-  let key = checkboxId.split(" ")[0];
-
-  console.log("key " + key)
-  if (filterMap.has(id)) {
-    console.log(id + " exists in filterMap")
-    let existingFilter = filterMap.get(id);
-    console.log("existingFilter " + existingFilter)
-    console.log("existingFilter.get(key) " + existingFilter.get(key))
-    if (existingFilter.get(key).includes(checkboxId)) {
-      console.log("should delete " + checkboxId + " from " + id)
-      existingFilter.delete(key);
-    }
-  }
-}
-
-function addFilterToCourse(id, checkboxId, isSlider) {
+function addFilterToCourse(id, checkboxId) {
   let key = checkboxId.split(" ")[0];
 
   if (filterMap.has(id)) {
     let existingFilter = filterMap.get(id);
     if (existingFilter.has(key)) {
       if (existingFilter.get(key).includes(checkboxId) && existingFilter.get(key).length === 1) {
-        if (!isSlider) {
           existingFilter.delete(key);
-        }
       } else if (existingFilter.get(key).includes(checkboxId) && existingFilter.get(key).length > 1) {
         let filterArray = existingFilter.get(key);
         filterArray.splice(filterArray.indexOf(checkboxId), 1);
@@ -482,7 +464,7 @@ function addFilterToCourse(id, checkboxId, isSlider) {
 }
 
 
-function updateActiveFilters(checkboxId, isSlider) {
+function updateActiveFilters(checkboxId,isSlider) {
   let key = checkboxId.split(" ")[0];
 
   if (!activeFilters.has(key)) {
@@ -491,10 +473,8 @@ function updateActiveFilters(checkboxId, isSlider) {
     let existingValues = activeFilters.get(key);
     if (existingValues.includes(checkboxId)) {
       if (existingValues.length === 1) {
-        if (!isSlider) {
+        if(!isSlider) {
           activeFilters.delete(key);
-        } else {
-          activeFilters.set(key, [checkboxId]);
         }
       } else {
         existingValues.splice(existingValues.indexOf(checkboxId), 1);
@@ -511,14 +491,11 @@ function filterCourse(Matching, checkboxId, isSlider) {
   for (let id of childrenIdList) {
     if (Matching.includes(id)) {
       console.log("addfilter")
-      addFilterToCourse(id, checkboxId, isSlider);
-    } else if (!Matching.includes(id) && isSlider) {
-      console.log("handleSliderFilter")
-      handleSliderFilter(checkboxId, id);
+      addFilterToCourse(id, checkboxId);
     }
   }
 
-  updateActiveFilters(checkboxId, isSlider);
+  updateActiveFilters(checkboxId,isSlider);
 }
 
 function updateView() {
@@ -556,8 +533,17 @@ function isMatch(courses, checkboxId, isSlider) {
     createChildrenIdList();
   }
 
-  let Matching = [];
-
+  if (activeFilters.has("credit") && checkboxId.includes("credit")) {
+    console.log(activeFilters.size)
+    for (let key of filterMap.keys()) {
+      let existingFilter = filterMap.get(key);
+      if (existingFilter.has("credit")) {
+        console.log("check")
+        existingFilter.delete("credit");
+      }
+    }
+  }
+  Matching = [];
 
   for (let course of courses) {
     if (childrenIdList.includes(course.courseId)) {
@@ -566,6 +552,8 @@ function isMatch(courses, checkboxId, isSlider) {
   }
   filterCourse(Matching, checkboxId, isSlider);
   updateView();
+
+  console.log(activeFilters)
 
 }
 
