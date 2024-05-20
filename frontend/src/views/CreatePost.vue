@@ -10,20 +10,20 @@
 
     <form @submit.prevent="createPost" class="post-form">
       <div class="form-group">
-        <label for="title">Title:</label>
+        <label for="title">Title</label>
         <input type="text" id="title" v-model="post.title" required maxlength="100">
       </div>
       <div class="form-group">
-        <label for="category">Category:</label>
+        <label for="category">Category</label>
         <input type="text" id="category" v-model="post.category" required maxlength="100">
       </div>
       <div class="form-group">
-        <label for="description">Topic:</label>
+        <label for="description">Description</label>
         <input type="text" id="description" v-model="post.description" required maxlength="100"></input>
       </div>
       <div class="form-group">
         <div class="content-div">
-        <label for="content">Content:</label>
+        <label for="content">Content</label>
           <p id="max-characters">(max characters: 6000)</p>
         </div>
         <textarea class="big-input" id="content" v-model="post.content" required maxlength="6000"></textarea>
@@ -38,7 +38,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="image">Image URL:</label>
+        <label for="image">Image URL</label>
         <input type="text" id="image" v-model="post.image" maxlength="255">
       </div>
       <button type="submit">Create Post</button>
@@ -169,8 +169,8 @@ function error() {
   max-width: 900px;
   margin: auto auto 50px auto;
   padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 5px;
+  background-color: #ffffff;
+  border-radius: 20px;
 }
 
 .form-group {
@@ -183,27 +183,34 @@ function error() {
 }
 
 label {
+  font-family: Inter, sans-serif;
+  font-weight: bold;
+  font-size: 16px;
   display: block;
   margin-bottom: 5px;
 }
 
 input[type="text"],
 textarea {
+  font-family: Inter, sans-serif;
   width: 100%;
+  height: 60px;
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  border: 2px solid var(--light-2);
+  border-radius: 15px;
   font-size: 16px;
 }
 
 button[type="submit"] {
+  font-family: Inter, sans-serif;
   display: block;
   width: 100%;
+  height: 60px;
   padding: 10px;
   background-color: var(--base-1);
   color: #fff;
   border: none;
-  border-radius: 5px;
+  border-radius: 15px;
   font-size: 16px;
   cursor: pointer;
 }
@@ -217,13 +224,26 @@ button[type="submit"]:hover {
 }
 
 .formatting-tools button {
-  margin-right: 5px;
-  padding: 5px 10px;
-  background-color: #ffffff;
-  box-shadow: none;
-  border-radius: 5px;
+
+  font-family: 'Inter', sans-serif;
+  font-weight: bold;
+  color: #ffffff;
   font-size: 14px;
+  background: #000000;
+  border: none;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 40px;
+  border-radius: 10px;
   cursor: pointer;
+  margin: 10px;
+  transition: all .5s;
+
+  &:active {
+    transform: scale(0.95);
+    transition-duration: .5s;
+  }
 }
 
 .formatting-tools button:hover {

@@ -147,7 +147,7 @@ function editCourseCard(object, course) {
 
 .flexible-grid-container {
   background-color: var(--light-1);
-  border-radius: 10px;
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -271,17 +271,26 @@ function editCourseCard(object, course) {
 }
 
 .couponContainer button {
-  font-family: Inter, sans-serif;
-  font-weight: bold;
-  font-size: 16px;
-  background-color: #ffffff;
+
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
   color: #000000;
-  padding: 10px 20px;
-  margin-top: 10px;
-  cursor: pointer;
+  font-size: 20px;
+  background: #ffffff;
+  border: none;
+  align-items: center;
+  justify-content: center;
   width: 100%;
-  height: 60px;
-  border-radius: 10px;
+  height: 70px;
+  border-radius: 15px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all .5s;
+
+  &:active {
+    transform: scale(0.95);
+    transition-duration: .5s;
+  }
 }
 
 
@@ -291,8 +300,8 @@ function editCourseCard(object, course) {
   margin-top: 10px;
   padding: 10px 20px;
   width: 100%;
-  height: 60px;
-  border-radius: 10px;
+  height: 70px;
+  border-radius: 15px;
   border: none;
 }
 
@@ -338,12 +347,12 @@ function editCourseCard(object, course) {
   font-weight: 900;
   color: white;
   font-size: 20px;
-  background: #584BEB;
+  background: #5649e7;
   border: none;
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 70px;
+  height: 80px;
   border-radius: 20px;
   cursor: pointer;
   margin: 30px auto;
@@ -351,7 +360,7 @@ function editCourseCard(object, course) {
 }
 
 .checkout-button:hover {
-  background-color: #6E67FC;
+  background-color: #000000;
 }
 
 .checkout-button:active {
