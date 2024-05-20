@@ -75,6 +75,11 @@ const routes = [
         path: '/login-failure',
         name: 'LoginFailure',
         component: () => import('@/components/LoginFailure.vue')
+    },
+    {
+        path: '/create-course',
+        name: 'CreateCourse',
+        component: () => import('@/views/CreateCourse.vue')
     }
 ]
 
