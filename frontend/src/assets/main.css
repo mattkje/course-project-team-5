@@ -224,6 +224,13 @@ p {
   background-color: #eee;;
 }
 
+.cbx {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 180px;
+  max-height: 20px;
+}
+
 #range-vertical-container .inp-cbx {
   min-height: 14px;
   min-width: 14px;
@@ -236,3 +243,4 @@ p {
   flex-wrap: nowrap;
   justify-content: flex-end;
 }
+

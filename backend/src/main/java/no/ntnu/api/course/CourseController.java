@@ -106,8 +106,8 @@ public class CourseController {
         return courseService.getCoursesByIds(ids);
     }
 
-    @GetMapping("/api/courses/provider/{providerId}")
-    public Collection<Course> getCoursesByProvider(@PathVariable int providerId) {
-        return courseService.getCoursesByProvider(providerId);
-    }
+    @GetMapping("/api/courses/provider/{providerName}")
+public Collection<Course> getCoursesByProvider(@PathVariable String providerName) {
+    return courseService.getCoursesByProvider(providerName);
+}
 }

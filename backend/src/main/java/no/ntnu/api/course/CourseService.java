@@ -220,9 +220,9 @@ public class CourseService {
   }
 
 
-  public Collection<Course> getCoursesByProvider(int providerId) {
-    return courseRepository.findAllByProviderId((long) providerId);
-  }
+  public Collection<Course> getCoursesByProvider(String providerName) {
+    return courseRepository.findAllByProviderName(providerName);
+}
 
   public Collection<Course> getCoursesByLevel(String level) {
     return courseRepository.findByLevel(level);

@@ -27,23 +27,7 @@
           zIndex: isCategoryVisible ? -100 : '0',
           'border-radius': isCategoryVisible ? '0 0 10px 10px' : '10px'
         }">
-          <div class="category-list">
-            <div class="checkbox-wrapper">
-              <label class="cbx" for="itBox">Information Technology</label>
-              <input class="inp-cbx" id="itBox" type="checkbox" v-model="isItChecked" @change="sortByCategory">
-            </div>
-            <div class="checkbox-wrapper">
-              <label class="cbx" for="dmBox">Digital Marketing</label>
-              <input class="inp-cbx" id="dmBox" type="checkbox" v-model="isDmChecked" @change="sortByCategory">
-            </div>
-            <div class="checkbox-wrapper">
-              <label class="cbx" for="beBox">Business and Entrepreneurship</label>
-              <input class="inp-cbx" id="beBox" type="checkbox" v-model="isBeChecked" @change="sortByCategory">
-            </div>
-            <div class="checkbox-wrapper">
-              <label class="cbx" for="dsBox">Data Science and Analytics</label>
-              <input class="inp-cbx" id="dsBox" type="checkbox" v-model="isDsChecked" @change="sortByCategory">
-            </div>
+          <div class="category-list" id="categoryList2">
           </div>
         </div>
 
@@ -163,29 +147,14 @@
           'border-radius': isCategoryVisible ? '10px 10px 0 0' : '10px'
         }">Category
         </button>
-        <div class="wrapper" id="categoryContainer" :style="{
+        <div class="wrapper" id="categoryContainer1" :style="{
           height: isCategoryVisible ? '200px' : '0px',
           opacity: isCategoryVisible ? '1' : '0',
           zIndex: isCategoryVisible ? '0' : -100,
           'border-radius': isCategoryVisible ? '0 0 10px 10px' : '10px'
         }">
-          <div class="category-list">
-            <div class="checkbox-wrapper">
-              <label class="cbx" for="itBox">Information Technology</label>
-              <input class="inp-cbx" id="itBox" type="checkbox" v-model="isItChecked" @change="sortByCategory">
-            </div>
-            <div class="checkbox-wrapper">
-              <label class="cbx" for="dmBox">Digital Marketing</label>
-              <input class="inp-cbx" id="dmBox" type="checkbox" v-model="isDmChecked" @change="sortByCategory">
-            </div>
-            <div class="checkbox-wrapper">
-              <label class="cbx" for="beBox">Business and Entrepreneurship</label>
-              <input class="inp-cbx" id="beBox" type="checkbox" v-model="isBeChecked" @change="sortByCategory">
-            </div>
-            <div class="checkbox-wrapper">
-              <label class="cbx" for="dsBox">Data Science and Analytics</label>
-              <input class="inp-cbx" id="dsBox" type="checkbox" v-model="isDsChecked" @change="sortByCategory">
-            </div>
+          <div class="category-list" id="categoryList1">
+
           </div>
         </div>
 
@@ -234,7 +203,7 @@
         }">Provider
         </button>
         <div class="wrapper" id="providerContainer" :style="{
-          height: isProviderVisible ? '400px' : '0px',
+          height: isProviderVisible ? '320px' : '0px',
           opacity: isProviderVisible ? '1' : '0',
           zIndex: isProviderVisible ? '0' : -100,
           'border-radius': isProviderVisible ? '0 0 10px 10px' : '10px'
@@ -249,7 +218,7 @@
         }">Difficulty
         </button>
         <div class="wrapper" id="difficultyContainer" :style="{
-          height: isDifficultyVisible ? '150px' : '0px',
+          height: isDifficultyVisible ? '80px' : '0px',
           opacity: isDifficultyVisible ? '1' : '0',
           zIndex: isDifficultyVisible ? '0' : -100,
           'border-radius': isDifficultyVisible ? '0 0 10px 10px' : '10px'
@@ -279,7 +248,7 @@
         }">Credit
         </button>
         <div class="wrapper" id="creditContainer" :style="{
-          height: isCreditVisible ? '200px' : '0px',
+          height: isCreditVisible ? '70px' : '0px',
           opacity: isCreditVisible ? '1' : '0',
           zIndex: isCreditVisible ? '0' : -100,
           'border-radius': isCreditVisible ? '0 0 10px 10px' : '10px'
@@ -311,7 +280,7 @@ import {getCurrentInstance, onMounted, ref} from "vue";
 import {currency, setDefaultCurrency} from "@/js/currency";
 import Litepicker from 'litepicker';
 import {watch} from 'vue';
-import {createContentBox, fetchCourses, fetchCurrencies} from "@/js/populationTools";
+import {createContentBox, fetchCourses, fetchCurrencies, fetchProviders} from "@/js/populationTools";
 import {sendApiRequest} from "@/js/requests";
 
 const {appContext} = getCurrentInstance();
@@ -336,6 +305,13 @@ const isCreditVisible = ref(false);
 const minPrice = ref(0);
 const maxPrice = ref(7500);
 
+const coursesData = ref(null);
+const currenciesData = ref(null);
+const providerData = ref(null);
+
+let isCategoryChecked = ref({});
+let isProviderChecked = ref({});
+
 let courseContainer;
 let children;
 let childrenIdList = [];
@@ -346,11 +322,11 @@ let pricedChildren = new Map();
 
 let showFilters = ref(false);
 
+
 onMounted(() => {
   courseContainer = document.querySelector('#courseContainer');
   children = courseContainer.children;
   populateCourses('.flexible-grid');
-  populateProviders(['#providerList1', '#providerList2']);
   currency(API_URL);
 
   let picker;
@@ -383,60 +359,71 @@ onMounted(() => {
 
 });
 
-
 // Populate the courses in the given selector
 async function populateCourses(selector) {
   document.querySelector(selector).innerHTML = '';
   const defaultCurrency = setDefaultCurrency() || 'USD';
   try {
-    const [data, currencies] = await Promise.all([fetchCourses(API_URL), fetchCurrencies(API_URL)]);
+    const [data, currencies, providers] = await Promise.all([fetchCourses(API_URL), fetchCurrencies(API_URL), fetchProviders(API_URL)]);
+
+    // Store the data in the reactive properties
+    coursesData.value = data;
+    currenciesData.value = currencies;
+    providerData.value = providers;
 
     data.forEach(courseProvider => {
-
       if (courseProvider.course.title.toLowerCase().includes(searchQuery.value.toLowerCase()) || courseProvider.course.category.toLowerCase().includes(searchQuery.value.toLowerCase())) {
         const contentBox = createContentBox(courseProvider, currencies, defaultCurrency);
         document.querySelector(selector).appendChild(contentBox.cloneNode(true));
       }
     });
+
+    populateCheckboxes(['#categoryList1', '#categoryList2'],coursesData,'course.category',isCategoryChecked,sortByCategory);
+    populateCheckboxes(['#providerList1', '#providerList2'],providerData,'name',isProviderChecked,onProviderCheckboxChange);
   } catch (error) {
     console.error('Error:', error);
   }
 }
 
-let isProviderChecked = ref({}); // Initialize as an empty object
+function populateCheckboxes(selectors, data,dataType,checkedRef, changeHandler) {
+  const uniqueItems = new Set();
 
-function populateProviders(selectors) {
-  fetch(API_URL + '/providers')
-      .then(response => response.json())
-      .then(data => {
-        selectors.forEach(selector => {
-          const providerList = document.querySelector(selector);
-          data.forEach(provider => {
-            const checkboxWrapper = document.createElement('div');
-            checkboxWrapper.className = 'checkbox-wrapper';
+  selectors.forEach(selector => {
+    const list = document.querySelector(selector);
 
-            const label = document.createElement('label');
-            label.className = 'cbx';
-            label.setAttribute('for', `provider${provider.providerId}`);
-            label.textContent = provider.name;
-            checkboxWrapper.appendChild(label);
+    console.log(dataType)
+    data.value.forEach(item => {
+      uniqueItems.add(getNestedProperty(item, dataType));
+    });
 
-            const checkbox = document.createElement('input');
-            checkbox.className = 'inp-cbx';
-            checkbox.id = `provider${provider.providerId}`;
-            checkbox.type = 'checkbox';
-            checkbox.setAttribute('v-model', `isProviderChecked['${provider.name}']`);
-            checkbox.addEventListener('change', onProviderCheckboxChange);
-            checkboxWrapper.appendChild(checkbox);
+    uniqueItems.forEach(itemName => {
+      const checkboxWrapper = document.createElement('div');
+      checkboxWrapper.className = 'checkbox-wrapper';
 
-            providerList.appendChild(checkboxWrapper);
+      const label = document.createElement('label');
+      label.className = 'cbx';
+      label.setAttribute('for', itemName);
+      label.textContent = itemName;
+      checkboxWrapper.appendChild(label);
 
-            // Initialize the checkbox state for this provider
-            isProviderChecked.value[provider.name] = false;
-          });
-        });
-      })
-      .catch(error => console.error('Error:', error));
+      const checkbox = document.createElement('input');
+      checkbox.className = 'inp-cbx';
+      checkbox.id = itemName;
+      checkbox.type = 'checkbox';
+      checkbox.setAttribute('v-model', `${checkedRef}['${itemName}']`);
+      checkbox.addEventListener('change', changeHandler);
+      checkboxWrapper.appendChild(checkbox);
+
+      list.appendChild(checkboxWrapper);
+
+      // Initialize the checkbox state for this item
+      checkedRef.value[itemName] = false;
+    });
+  });
+}
+
+function getNestedProperty(obj, path) {
+  return path.split('.').reduce((obj, prop) => obj[prop], obj);
 }
 
 function createChildrenIdList() {
@@ -597,8 +584,10 @@ async function sortByCategory(event) {
 async function onProviderCheckboxChange(event) {
   let nameId = getCheckboxId(event);
   let provider = nameId.labelName;
-  let checkboxId = "provider " + nameId.checkboxId.split("provider")[1];
-  await sendApiRequest("GET", '/courses/provider/' + checkboxId.split(" ")[1], (data) => isMatch(data, checkboxId, false), onFailure);
+  let checkboxId = "provider " + nameId.checkboxId;
+  console.log(provider)
+  console.log(nameId.checkboxId)
+  await sendApiRequest("GET", '/courses/provider/' + provider, (data) => isMatch(data, checkboxId, false), onFailure);
 }
 
 async function sortByDifficulty(event) {
@@ -966,7 +955,7 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 #priceText,
-#categoryContainer,
+#categoryContainer1,
 #dateContainer,
 #difficultyContainer,
 #providerContainer,
