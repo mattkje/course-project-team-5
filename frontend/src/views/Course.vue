@@ -198,8 +198,9 @@ function populateCoursePage() {
               durationIcon.src = '/calendar.svg';
 
               const durationText = document.createElement('p');
-              const rawDate = `${data.course.closestCourseSession}`;
-              durationText.innerText += formatDate(rawDate);
+              const rawStartDate = `${data.course.startDate}`;
+              const rawEndDate = `${data.course.endDate}`;
+              durationText.innerText += formatDate(rawStartDate,rawEndDate);
               durationText.style.color ='#6c6c6c'
 
               const courseDurationElement = document.getElementById('closestCourseSession');
@@ -377,22 +378,17 @@ function getOrdinalSuffix(day) {
 }
 
 //Should format the date from DD.MM - DD.MM to "MMM DDth -> MMM DDth"
-function formatDate(closestCourseSession) {
-  let currentYear = new Date().getFullYear();
-  let dates = closestCourseSession.split(' - ');
-  let startDateComponents = dates[0].split('.');
-  let endDateComponents = dates[1].split('.');
-
-  let startDate = new Date(`${startDateComponents[1]}/${startDateComponents[0]}/${currentYear}`);
-  let endDate = new Date(`${endDateComponents[1]}/${endDateComponents[0]}/${currentYear}`);
-
+function formatDate(startDate, endDate) {
   let options = {month: 'short', day: 'numeric', timeZone: 'UTC'};
 
-  let formattedStartDate = startDate.toLocaleString('en-US', options);
-  let formattedEndDate = endDate.toLocaleString('en-US', options);
+  let start = new Date(startDate);
+  let end = new Date(endDate);
 
-  formattedStartDate = `${formattedStartDate.slice(0, -2)} ${getOrdinalSuffix(startDate.getDate())}`;
-  formattedEndDate = `${formattedEndDate.slice(0, -2)}${getOrdinalSuffix(endDate.getDate())}`;
+  let formattedStartDate = start.toLocaleString('en-US', options);
+  let formattedEndDate = end.toLocaleString('en-US', options);
+
+  formattedStartDate = `${formattedStartDate.slice(0, -2)} ${getOrdinalSuffix(start.getDate())}`;
+  formattedEndDate = `${formattedEndDate.slice(0, -2)}${getOrdinalSuffix(end.getDate())}`;
 
   return `${formattedStartDate} -> ${formattedEndDate}`;
 }

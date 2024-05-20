@@ -194,8 +194,9 @@
           zIndex: isDateVisible ? '0' : -100,
           'border-radius': isDateVisible ? '0 0 10px 10px' : '10px'
         }">
+
           <span>Start date - End Date</span>
-          <input id="datepicker" type="text" placeholder="Now - Forever"/>
+          <flat-pickr v-model="date" :config="config" class="form-control" placeholder="Select dates" name="date" @change="sortByDate"></flat-pickr>
         </div>
 
         <button class="price-ranger" @click="toggleShowProvider" :style="{
@@ -278,18 +279,15 @@
 <script setup>
 import {getCurrentInstance, onMounted, ref} from "vue";
 import {currency, setDefaultCurrency} from "@/js/currency";
-import Litepicker from 'litepicker';
-import {watch} from 'vue';
 import {createContentBox, fetchCourses, fetchCurrencies, fetchProviders} from "@/js/populationTools";
 import {sendApiRequest} from "@/js/requests";
+import flatPickr from 'vue-flatpickr-component';
+import 'flatpickr/dist/flatpickr.css';
+
 
 const {appContext} = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
 const searchQuery = ref('');
-const isItChecked = ref(false);
-const isDmChecked = ref(false);
-const isBeChecked = ref(false);
-const isDsChecked = ref(false);
 const creditValue = ref(0);
 const isBeginnerChecked = ref(false);
 const isIntermediateChecked = ref(false);
@@ -304,6 +302,8 @@ const isCreditVisible = ref(false);
 
 const minPrice = ref(null);
 const maxPrice = ref(null);
+
+const date = ref(null);
 
 const coursesData = ref(null);
 const currenciesData = ref(null);
@@ -323,41 +323,19 @@ let pricedChildren = new Map();
 
 let showFilters = ref(false);
 
+const config = ref({
+  mode: 'range',
+  dateFormat: 'd-m',
+  altFormat: 'd-m-Y',
+  minDate: 'today',
+  conjunction: ' to ',
+});
 
 onMounted(() => {
   courseContainer = document.querySelector('#courseContainer');
   children = courseContainer.children;
   populateCourses('.flexible-grid');
   currency(API_URL);
-
-  let picker;
-  document.addEventListener('DOMContentLoaded', function () {
-    picker = new Litepicker({
-      element: document.getElementById('datepicker'),
-      format: "DD MMM",
-      minDate: new Date() - 1,
-      useResetBtn: false,
-      buttonText: {
-        apply: 'Done',
-        reset: 'Reset'
-      },
-      TooltipText: {
-        one: 'day',
-        other: 'days'
-      },
-      mobileFriendly: true,
-      numberOfMonths: 2,
-      numberOfColumns: 2,
-      singleMode: false,
-      moduleNavKeyboard: true,
-      moduleRanges: false,
-    });
-    picker.on('hide', function (startDate, endDate) {
-      console.log(startDate, endDate)
-      sortByDate(startDate, endDate);
-    });
-  });
-
 });
 
 // Populate the courses in the given selector
@@ -667,6 +645,10 @@ function searchCourses() {
   updateView();
 }
 
+function sortByDate() {
+  console.log(date.value)
+}
+
 function onFailure() {
   console.log("Failed to fetch courses");
 }
@@ -808,7 +790,7 @@ function toggleFilters() {
   display: flex;
   justify-content: flex-start;
   padding: 5px;
-  min-height: 90%;
+  min-height: 1000px;
   width: 100%; /* Set width to 100% */
   max-width: 100%; /* Ensure it doesn't exceed 100% */
 }

@@ -1,5 +1,5 @@
 {
   "dependencies": {
-    "litepicker": "^2.0.12"
+    "vue-flatpickr-component": "^11.0.5"
   }
 }
