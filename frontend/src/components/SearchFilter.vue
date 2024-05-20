@@ -147,7 +147,7 @@
           'border-radius': isCategoryVisible ? '10px 10px 0 0' : '10px'
         }">Category
         </button>
-        <div class="wrapper" id="categoryContainer1" :style="{
+        <div class="wrapper" id="categoryContainer" :style="{
           height: isCategoryVisible ? '200px' : '0px',
           opacity: isCategoryVisible ? '1' : '0',
           zIndex: isCategoryVisible ? '0' : -100,
@@ -655,7 +655,7 @@ async function sortByPriceRange() {
   for (let child of children) {
     let childPrice = child.querySelector('.finalPriceBox').textContent;
     let price = parseFloat(childPrice.split(' ')[0]);
-    if (price < minPrice.value || price > max) {
+    if (price < min || price > max) {
       pricedChildren.set(child, 1);
     } else if (pricedChildren.has(child)) {
       pricedChildren.delete(child);
@@ -963,7 +963,7 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 #priceText,
-#categoryContainer1,
+#categoryContainer,
 #dateContainer,
 #difficultyContainer,
 #providerContainer,
