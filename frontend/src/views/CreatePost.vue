@@ -11,7 +11,7 @@
     <form @submit.prevent="createPost" class="post-form">
       <div class="form-group">
         <label for="title">Title:</label>
-        <input type="text" id="title" v-model="post.title" required maxlength="255">
+        <input type="text" id="title" v-model="post.title" required maxlength="100">
       </div>
       <div class="form-group">
         <label for="category">Category:</label>
