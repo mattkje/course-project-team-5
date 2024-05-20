@@ -8,6 +8,9 @@ import no.ntnu.api.provider.Provider;
 import no.ntnu.api.provider.ProviderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 
 import java.util.*;
 
@@ -251,5 +254,17 @@ public class CourseService {
 
   public Collection<Course> getCoursesByIds(List<Integer> ids) {
     return this.courseRepository.findAllByCourseId(ids);
+  }
+
+  public Collection<Course> getCoursesWithinDateRange(String startDate, String endDate) {
+    // Define the date format
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+    // Convert the startDate and endDate strings to LocalDate objects
+    LocalDate start = LocalDate.parse(startDate, formatter);
+    LocalDate end = LocalDate.parse(endDate, formatter);
+
+    // Call the repository method to get the courses within the date range
+    return courseRepository.findAllByStartDateGreaterThanEqualAndEndDateLessThanEqual(start, end);
   }
 }

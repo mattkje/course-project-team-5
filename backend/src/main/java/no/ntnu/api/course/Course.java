@@ -2,6 +2,7 @@ package no.ntnu.api.course;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import java.time.LocalDate;
 import no.ntnu.api.provider.Provider;
 
 import java.util.ArrayList;
@@ -22,8 +23,10 @@ public class Course {
     private String category;
     @Column(length = 50)
     private String level;
-    @Column(name = "closest_course_session")
-    private String closestCourseSession;
+    @Column(name = "start_date")
+    private LocalDate start_date;
+    @Column(name = "end_date")
+    private LocalDate end_date;
     @Column(name = "course_size", length = 5)
     private double courseSize;
     @Column(name = "hours_per_week")
@@ -61,9 +64,6 @@ public class Course {
         this.level = level;
     }
 
-    public void setClosestCourseSession(String closestCourseSession) {
-        this.closestCourseSession = closestCourseSession;
-    }
 
     public void setCourseSize(int courseSize) {
         this.courseSize = courseSize;
@@ -97,10 +97,6 @@ public class Course {
         return level;
     }
 
-    public String getClosestCourseSession() {
-        return closestCourseSession;
-    }
-
     public double getCourseSize() {
         return courseSize;
     }
@@ -131,5 +127,12 @@ public class Course {
 
     public String getName() {
         return title;
+    }
+
+    public LocalDate getStartDate() {
+        return start_date;
+    }
+    public LocalDate getEndDate() {
+        return end_date;
     }
 }

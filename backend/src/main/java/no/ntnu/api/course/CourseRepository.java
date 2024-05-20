@@ -1,5 +1,6 @@
 package no.ntnu.api.course;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -28,4 +29,7 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
 
   @Query("SELECT c FROM Course c JOIN c.providers p WHERE p.name = :providerName")
 Collection<Course> findAllByProviderName(@Param("providerName") String providerName);
+
+  @Query("SELECT c FROM Course c WHERE c.start_date >= :start AND c.end_date <= :end")
+  Collection<Course> findAllByStartDateGreaterThanEqualAndEndDateLessThanEqual(@Param("start") LocalDate start, @Param("end") LocalDate end);
 }
