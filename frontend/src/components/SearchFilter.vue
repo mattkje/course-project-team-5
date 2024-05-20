@@ -173,12 +173,12 @@
             <div class="price-input">
               <label for="min-price">Min Price:</label>
               <p>-</p>
-              <input type="number" id="min-price" v-model="minPrice" min="0" @change="sortByPriceRange">
+              <input type="number" id="min-price" v-model="minPrice" min="0" placeholder="Minimum Price" @change="sortByPriceRange">
             </div>
             <div class="price-input">
               <label for="max-price">Max Price:</label>
               <p>-</p>
-              <input type="number" id="max-price" v-model="maxPrice" min="1" @change="sortByPriceRange">
+              <input type="number" id="max-price" v-model="maxPrice" min="1" placeholder="Maximum Price" @change="sortByPriceRange">
             </div>
           </div>
         </div>
@@ -302,8 +302,8 @@ const isDifficultyVisible = ref(false);
 const isProviderVisible = ref(false);
 const isCreditVisible = ref(false);
 
-const minPrice = ref(0);
-const maxPrice = ref(7500);
+const minPrice = ref(null);
+const maxPrice = ref(null);
 
 const coursesData = ref(null);
 const currenciesData = ref(null);
@@ -366,7 +366,6 @@ async function populateCourses(selector) {
   try {
     const [data, currencies, providers] = await Promise.all([fetchCourses(API_URL), fetchCurrencies(API_URL), fetchProviders(API_URL)]);
 
-    // Store the data in the reactive properties
     coursesData.value = data;
     currenciesData.value = currencies;
     providerData.value = providers;
@@ -377,7 +376,6 @@ async function populateCourses(selector) {
         document.querySelector(selector).appendChild(contentBox.cloneNode(true));
       }
     });
-
     populateCheckboxes(['#categoryList1', '#categoryList2'],coursesData,'course.category',isCategoryChecked,sortByCategory);
     populateCheckboxes(['#providerList1', '#providerList2'],providerData,'name',isProviderChecked,onProviderCheckboxChange);
   } catch (error) {
@@ -646,10 +644,18 @@ async function sortByCredit(event) {
 }
 
 async function sortByPriceRange() {
+  let max = maxPrice.value;
+  let min = minPrice.value;
+  if (max === null || max === ''){
+    max = 1000000;
+  } else if (min === null || min === ''){
+    min = 0;
+  }
+
   for (let child of children) {
     let childPrice = child.querySelector('.finalPriceBox').textContent;
     let price = parseFloat(childPrice.split(' ')[0]);
-    if (price < minPrice.value || price > maxPrice.value) {
+    if (price < minPrice.value || price > max) {
       pricedChildren.set(child, 1);
     } else if (pricedChildren.has(child)) {
       pricedChildren.delete(child);
@@ -899,6 +905,8 @@ header h2 {
 
 .price-input input {
   min-height: 40px;
+  width: 100%;
+  text-align: center;
 }
 
 .price-input-container {
