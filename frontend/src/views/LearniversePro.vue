@@ -25,9 +25,10 @@ function handleAlert() {
   <div id="background" class="background">
     <img class="planet" src="/pro.svg">
     <h2>Learniverse Pro</h2>
+    <Alert v-show="showAlert" title="Missing user" message="You must create a user to access this functionality" :buttons="['OK', 'Cancel']" @buttonClicked="handleButtonClick"></Alert>
+    <Subscription  @show-alert="handleAlert"/>
   </div>
-  <Alert v-show="showAlert" title="Missing user" message="You must create a user to access this functionality" :buttons="['OK', 'Cancel']" @buttonClicked="handleButtonClick"></Alert>
-  <Subscription style="padding: 100px 0 200px 0" @show-alert="handleAlert"/>
+
 </template>
 
 <style scoped>
@@ -40,10 +41,9 @@ function handleAlert() {
 }
 
 .background {
-  top: 0;
   background: linear-gradient(180deg, rgba(21, 16, 82, 0.14) 0%, rgba(133, 132, 145, 0.14) 100%);
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   flex-direction: column;
   width: 100%;
@@ -51,28 +51,29 @@ function handleAlert() {
 }
 
 .background h2 {
+  font-family: "Bebas Neue", sans-serif;
   color: whitesmoke;
-  font-size: 40px;
+  font-size: 50px;
   margin: 0;
-  padding-bottom: 30px;
   animation: ease-in-out fadeIn 1.5s;
 }
 
 .planet {
-  height: 300px;
+  margin: 80px auto 10px auto;
+  height: 200px;
   animation: ease-out pulse 5s infinite;
 }
 
 
 @keyframes pulse {
   0% {
-    transform: scale(0.5);
+    transform: scale(1);
   }
   50% {
-    transform: scale(0.6);
+    transform: scale(1.1);
   }
   100% {
-    transform: scale(0.5);
+    transform: scale(1);
   }
 }
 

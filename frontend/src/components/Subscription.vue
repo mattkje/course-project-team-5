@@ -163,6 +163,7 @@ function error() {
   margin-top: 48px;
   margin-bottom: 16px;
   background: #f9f9f9;
+  border-radius: 20px;
 }
 
 .learniverse-membership h3 {
@@ -237,25 +238,27 @@ function error() {
 }
 
 .purchase-button {
+  font-family: 'Inter', sans-serif;
+  font-weight: bold;
+  color: #000000;
+  font-size: 20px;
+  background: #ffd042;
   border: none;
-  display: inline-block;
-  margin-left: auto;
-  margin-right: auto;
-  box-sizing: border-box;
-  border-radius: 2px;
-  cursor: pointer;
+  align-items: center;
+  justify-content: center;
   width: 260px;
   height: 44px;
-  font-size: 1rem;
-  margin-bottom: 0;
-  color: var(--dark-1);
-  background: #ffd042;
-  font-family: Lato, sans-serif;
+  border-radius: 15px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all .5s;
+
+  &:active {
+    transform: scale(0.95);
+    transition-duration: .5s;
+  }
 }
 
-.purchase-button span {
-  font-weight: 700;
-}
 
 .purchase-price-info {
   -webkit-box-ordinal-group: 3;
@@ -267,6 +270,7 @@ function error() {
 }
 
 .monthly-price-notice {
+
   background-color: #f0f0f0;
   padding: 8px 16px;
   font-size: 0.7rem;

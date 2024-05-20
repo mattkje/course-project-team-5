@@ -404,6 +404,7 @@ ul {
   justify-content: space-between;
   background: #f8f8ff;
   border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
   width: 100%;
   min-height: 550px;
   padding: 50px 30px;

@@ -786,7 +786,7 @@ function toggleFilters() {
 .flexible-grid-container {
   margin-top: 10px;
   background-color: var(--light-1);
-  border-radius: 10px;
+  border-radius: 20px;
   display: flex;
   justify-content: flex-start;
   padding: 5px;
