@@ -1,16 +1,7 @@
 <template>
-  <div class="background" id="background">
-    <img class ="planet" src="/whiteMoon.png">
-    </div>
-    <div class="course-section">
-
-      <div class="title">
-        <h1>Your cart:</h1>
-        <p class="itemCountText"> {{ cartText }}</p>
-      </div>
-
-      <ShoppingCart/>
-    </div>
+  <div class="course-section">
+    <ShoppingCart/>
+  </div>
 </template>
 
 <script setup>
@@ -39,7 +30,6 @@ const cartText = ref('Your cart is empty');
 }
 
 .course-section {
-  padding-top: 20px;
   background-color: var(--light-3);
   margin: 0;
 }

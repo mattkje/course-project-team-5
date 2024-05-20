@@ -6,26 +6,38 @@
       </li>
     </ul>
   <div class="parent-container">
-    <div class="flexible-grid-container">
-      <div class="course-table">
-        <h1>hei</h1>
-        <div class="courseContainer"></div>
-        <div class="cartTotal"></div>
+    <div class="left-items">
+      <div class="title">
+        <h1>Cart</h1>
+        <p class="itemCountText"> {{ cartText }}</p>
+      </div>
+      <div class="flexible-grid-container">
+        <div class="cart-label-box">
+          <p>Course</p>
+          <p>Price</p>
+        </div>
+        <div class="course-table">
+          <h2>Your cart is empty</h2>
+        </div>
       </div>
     </div>
     <div class="flex-couponCart-container">
       <div class="couponContainer">
-        <h2>Coupon Code</h2>
+        <h1>Coupon Code</h1>
         <p>You can apply a coupon code to get a discount on your purchase.</p>
-        <input type="text" placeholder="Enter coupon code here"/>
-        <br>
-        <button @click="applyCoupon">Apply</button>
+        <div class="options">
+          <input type="text" placeholder="Enter coupon code here"/>
+          <br>
+          <button @click="applyCoupon">Apply</button>
+        </div>
+
       </div>
-      <div class="cartTotalContainer">
-        <h2>Cart Total</h2>
+      <div class="couponContainer">
+        <h1>Cart Total</h1>
         <p>Here is the total cost of your cart.</p>
         <div class="totalAmount">{{ totalItems }}</div>
       </div>
+      <button class="checkout-button">Checkout</button>
   </div>
   </div>
 </template>
@@ -67,6 +79,8 @@ onMounted(async () => {
 function onProfileDataSuccess(data) {
   if (data.courses.length > 0) {
     addCourses(data.courses);
+  } else {
+
   }
 }
 
@@ -79,8 +93,6 @@ function addCourses(courses) {
   const courseBody = document.createElement("tbody");
   courseBody.classList.add("course-block");
   const line = document.createElement("hr");
-  line.style.maxWidth = "600px";
-  line.style.margin = "20px";
   courseBody.appendChild(line);
   courseList.appendChild(courseBody);
   console.log(courses);
@@ -128,31 +140,22 @@ function editCourseCard(object, course) {
 <style scoped>
 
 .title {
-  border: none;
-  border-radius: 15px;
-  width: 60%;
-  justify-content: center;
-  align-items: center;
   text-decoration: none;
-  margin: 0 auto;
+  margin: 50px auto 0 auto;
+  width: 100%;
 }
 
 .flexible-grid-container {
   background-color: var(--light-1);
   border-radius: 10px;
   display: flex;
-  justify-content: flex-start;
-  margin: 30px;
-  padding: 5px;
-  min-height: 90%;
-  min-width: 50%;
-  align-items: center;
-}
-
-.flex-couponCart-container {
-  display: flex;
   flex-direction: column;
-  background-color: DodgerBlue;
+  justify-content: flex-start;
+  margin: 50px auto;
+  padding: 5px;
+  height: 50%;
+  width: 100%;
+  align-items: center;
 }
 
 .flexible-grid {
@@ -195,8 +198,7 @@ function editCourseCard(object, course) {
 .course-table {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-end;
   width: 70%;
 }
 
@@ -241,64 +243,57 @@ function editCourseCard(object, course) {
 }
 
 .couponContainer {
-  border: 1px solid black;
-  border-radius: 10px;
-  background-color: #656565;
+  border: none;
+  border-radius: 20px;
+  background-color: #000000;
   padding: 20px;
-  margin-left: 20px;
-  margin-bottom: 50px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: space-between;
   text-align: center;
-  width: 50%;
-}
-
-.cartTotalContainer {
-  border: 1px solid black;
-  border-radius: 10px;
-  background-color: #656565;
-  padding: 20px;
-  margin-left: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  width: 50%;
+  margin: 30px auto 0 auto;
+  height: 40%;
+  width: 100%;
 }
 
 
+.couponContainer h1 {
+  color: white;
+  font-size: 30px;
+  text-align: left;
+}
+
+.couponContainer p {
+  font-size: 16px;
+  color: var(--light-2);
+  text-align: left;
+}
 
 .couponContainer button {
-  background-color: black;
-  color: white;
+  font-family: Inter, sans-serif;
+  font-weight: bold;
+  font-size: 16px;
+  background-color: #ffffff;
+  color: #000000;
   padding: 10px 20px;
   margin-top: 10px;
   cursor: pointer;
   width: 100%;
+  height: 60px;
   border-radius: 10px;
 }
 
+
 .couponContainer input {
+  font-size: 17px;
+  font-weight: bold;
   margin-top: 10px;
   padding: 10px 20px;
   width: 100%;
+  height: 60px;
   border-radius: 10px;
-}
-
-.cartTotalContainer {
-  border: 1px solid black;
-  border-radius: 10px;
-  background-color: #656565;
-  padding: 20px;
-  margin-left: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+  border: none;
 }
 
 .cartTotalContainer .totalAmount {
@@ -309,21 +304,72 @@ function editCourseCard(object, course) {
 }
 
 .parent-container {
+  margin: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 .flex-couponCart-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   background-color: var(--light-1);
   border-radius: 10px;
-  display: flex;
-  justify-content: flex-start;
-  margin: 30px;
-  padding: 5px;
-  min-height: 90%;
-  min-width: 20%;
+  margin: 0;
+  padding: 0 50px;
+  height: 93vh;
+  width: 500px;
   align-items: center;
 }
 
+.options{
+  width: 100%;
+}
+
+.left-items {
+  height: 93vh;
+  width: 1000px;
+  margin: 0 auto;
+}
+
+.checkout-button {
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+  color: white;
+  font-size: 20px;
+  background: #584BEB;
+  border: none;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 70px;
+  border-radius: 20px;
+  cursor: pointer;
+  margin: 30px auto;
+  transition: all .5s;
+}
+
+.checkout-button:hover {
+  background-color: #6E67FC;
+}
+
+.checkout-button:active {
+  transform: scale(0.95);
+  transition-duration: .5s;
+}
+
+.cart-label-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.cart-label-box p{
+  font-family: Inter, sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  margin: auto;
+}
 </style>

@@ -39,6 +39,27 @@ async function deleteCourse(courseProvider) {
   location.reload();
 }
 
+async function disableCourse(courseProvider) {
+  const token = getCookie('jwt');
+  const response = await fetch(API_URL + '/courses/' + courseProvider.course.courseId, {
+    method: 'PATCH',
+    headers: {
+      'Authorization': 'Bearer ' + token,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ enabled: false })
+  });
+
+  console.log(response);
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(`HTTP error! status: ${response.status}, message: ${errorData.message}`);
+  }
+
+  location.reload();
+}
+
+
 </script>
 
 <template>
@@ -57,12 +78,11 @@ async function deleteCourse(courseProvider) {
         <p>{{ courseProvider.course.title }}</p>
         <div class="right-content">
           <button class="fancy-button" @click="visitPage(courseProvider)">Review</button>
+          <button class="fancy-button" @click="disableCourse(courseProvider)">Disable</button>
           <button class="fancy-button" style="background-color: orangered; color: white" @click="deleteCourse(courseProvider)">Delete</button>
         </div>
-
       </div>
     </div>
-
   </div>
 </template>
 
