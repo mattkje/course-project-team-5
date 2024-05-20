@@ -1,5 +1,7 @@
 <template>
-
+  <Alert v-show="showAlert === true" title="Important Message" message="This website is a result of a university group project, performed in the course IDATA2301 Web
+  technologies, at NTNU. All the information provided here is a result of imagination. Any resemblance with real companies or products is a coincidence.
+  All the provided material is free to use for non-commercial purposes." :buttons="['OK']" @buttonClicked="handleButtonClick"></Alert>
   <!--- Show/hide hero section depending on user authenticated--->
   <HeroSection v-if="getAuthenticatedUser() === null"/>
   <WelcomeBack v-else/>
@@ -177,10 +179,21 @@ import {
   fetchCurrencies
 } from "@/js/populationTools";
 import WelcomeBack from "@/components/WelcomeBack.vue";
+import Alert from "@/components/Alert.vue";
+import {redirectTo} from "@/js/navigation";
+import {getCookie, setCookie} from "@/js/tools";
 
 
 const {appContext} = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
+const showAlert = ref(true);
+
+
+const showAlertCookie = getCookie('showAlert');
+if (showAlertCookie === 'false') {
+  showAlert.value = false;
+}
+
 
 
 // Initialize the page
@@ -194,6 +207,12 @@ onMounted(() => {
   loadButtons();
 });
 
+const handleButtonClick = (button) => {
+  if (button === 'OK') {
+    showAlert.value = false;
+    setCookie('showAlert', 'false', 168);
+  }
+};
 
 // Populate the courses in the given selector
 async function populateCourses(selector, filterFn) {

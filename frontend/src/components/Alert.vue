@@ -43,15 +43,16 @@ const buttonClicked = (button) => {
 #alertBox {
   position: fixed;
   display: block;
-  width: 400px;
-  height: 200px;
-  top: 50%;
-  left: 50%;
-  margin-top: -100px;
-  margin-left: -150px;
+  width: 500px;
+  height: max-content;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
   background: linear-gradient(#f3f3ff -0%, #ede9ff 100%);
   z-index: 3;
-  border-radius: 5px;
+  border-radius: 30px;
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
   padding: 20px;
 }
@@ -73,6 +74,7 @@ p {
 }
 
 #buttons {
+  margin-top: 60px;
   display: flex;
   justify-content: space-around;
 }
