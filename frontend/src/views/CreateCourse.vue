@@ -9,8 +9,8 @@
 
   const config = ref({
     mode: 'range',
-    dateFormat: 'd-m',
-    altFormat: 'd-m-Y',
+    dateFormat: 'Y-m-d',
+    altFormat: 'Y-m-d',
     minDate: 'today',
     conjunction: ' to ',
   });
@@ -20,10 +20,10 @@
   title: '',
   category: '',
   level: '',
-  start_date: '',
-  end_date: '',
-  hours_per_week: '',
-  related_certifications: '',
+  startDate: '',
+  endDate: '',
+  hoursPerWeek: '',
+  relatedCertifications: '',
   description: '',
   image: ''
 });
@@ -35,6 +35,13 @@
 }
 
   function createCourse() {
+    if(course.value.closestCourseSession) {
+      const dates = course.value.closestCourseSession.split(' to ');
+      course.value.startDate = dates[0];
+      course.value.endDate = dates[1];
+      console.log(course.value.startDate + course.value.endDate);
+      console.log(course.value);
+    }
   sendApiRequest('POST', '/courses', onSuccess, course.value, error);
 }
 
@@ -46,7 +53,7 @@
   const currentUser = getAuthenticatedUser();
   if (!currentUser) {
   redirectTo('/login');
-}
+  }
 }
 
   function onSuccess() {
@@ -98,7 +105,7 @@
       </div>
       <div class="form-group">
         <label for="closest-course-session">Closest course session:</label>
-        <flat-pickr id="closest-course-session" v-model="course.closestCourseSession" :config="config" class="form-control" required></flat-pickr>
+        <flat-pickr id="closest-course-session" v-model="course.closestCourseSession" :config="config" class="form-control" required ></flat-pickr>
       </div>
       <div class="form-group">
         <label for="closest-size">Course size:</label>

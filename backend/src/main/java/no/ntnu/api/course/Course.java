@@ -85,6 +85,14 @@ public class Course {
         this.image = image;
     }
 
+    public void setStartDate(LocalDate start_date) {
+        this.start_date = start_date;
+    }
+
+    public void setEndDate(LocalDate end_date) {
+        this.end_date = end_date;
+    }
+
     public String getTitle() {
         return title;
     }
