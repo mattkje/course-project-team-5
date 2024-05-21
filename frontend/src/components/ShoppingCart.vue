@@ -2,16 +2,16 @@
 import {getCurrentInstance, onMounted, ref} from 'vue';
 import {doLogout, getAuthenticatedUser, hasRole, removeRole} from "@/js/authentication";
 import {sendApiRequest, sendTokenRefreshRequest} from "@/js/requests";
-import {createContentBox, fetchCourseById, fetchCourses, fetchCurrencies, fetchProviders} from "@/js/populationTools";
+import {createContentBox, fetchCourseById, fetchPrice, fetchCourses, fetchCurrencies} from "@/js/populationTools";
 import {getCookie, isTokenAboutToExpire} from "@/js/tools";
 import {setDefaultCurrency} from "@/js/currency";
 
+let price = 0;
+let data = 0;
 
 const {appContext} = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
 
-let providerId = getCookie('courseProviderId');
-console.log(providerId);
 
 //Cookie test
 async function applyCoupon() {
@@ -19,7 +19,6 @@ async function applyCoupon() {
   getCookie('courseId');
   console.log("Applying coupon");
   console.log(document.cookie);
-  console.log(providerId);
 }
 
 async function loadShoppingCart() {
@@ -45,7 +44,7 @@ onMounted(async () => {
 
 function onProfileDataSuccess(data) {
   if (data.courses.length > 0) {
-    console.log(data.courses.length);;
+    console.log(data.courses.length);
   } else {
 
   }
@@ -56,6 +55,7 @@ async function populateCart() {
   const allCookies = document.cookie;
   const cookieArray = allCookies.split('; ');
   let courseIds = [];
+  let providerIds = [];
 
   for (let i = 0; i < cookieArray.length; i++) {
     const cookie = cookieArray[i].split('=');
@@ -63,6 +63,9 @@ async function populateCart() {
     const value = cookie[1];
     if (name.startsWith('courseId_')) {
       courseIds.push(value);
+    }
+    if (name.startsWith('providerId_')) {
+      providerIds.push(value);
     }
   }
 
@@ -74,15 +77,27 @@ async function populateCart() {
     courseList.removeChild(courseList.children[0]);
   }
 
-
-  console.log(courseIds.length);
+  if (courseIds.length === 0) {
+    const emptyCartMessage = document.createElement("h2");
+    emptyCartMessage.innerText = "Your cart is empty";
+    courseList.appendChild(emptyCartMessage);
+    return;
+  }
 
   // Loop through the course IDs
   for (let i = 0; i < courseIds.length; i++) {
     let courseId = courseIds[i];
-    console.log(courseId);
-    let providerId = getCookie('providerId');
+    let providerId = providerIds[i]; // Get the corresponding providerId
+
+    await sendApiRequest(API_URL,"GET", '/providers/api/courses/' + courseId + '/providers/' + providerId + '/price', (data) => showPrice(data), onFailure);
     const course = await fetchCourseById(API_URL, courseId);
+
+    course.forEach((courseProvider) => {
+      courseProvider
+    });
+
+    console.log(course);
+
 
     // Create a new tbody element for each course
     const courseBody = document.createElement("tbody");
@@ -95,6 +110,7 @@ async function populateCart() {
     const row = document.createElement("tr");
     const courseName = document.createElement("p");
     const coursePrice = document.createElement("p");
+    coursePrice.innerText = "PRICE HERE";
     const courseImg = document.createElement("img");
     courseImg.classList.add("course-image");
     row.classList.add("course-card");
@@ -104,8 +120,7 @@ async function populateCart() {
     courseImg.src = course.course.image || '/noImageCom.svg';
     row.appendChild(courseImg);
     row.appendChild(courseName);
-    //row.appendChild(coursePrice);
-    editCourseCard(row, course);
+    row.appendChild(coursePrice); // Append the price to the row
     courseBody.appendChild(row);
 
     // Create a remove button for each course
@@ -116,74 +131,6 @@ async function populateCart() {
       courseBody.remove();
     };
     courseBody.appendChild(removeButton);
-
-    const line2 = document.createElement("hr");
-    line2.style.maxWidth = "600px";
-    line2.style.margin = "20px";
-    line2.style.alignItems = "center";
-    courseBody.appendChild(line2);
-  }
-}
-
-
-//Temporary function to add courses to the shopping cart
-function addCourses(courses) {
-  let courseProviderId = getCookie('courseProviderId');
-  let courseId = getCookie('courseId');
-
-
-  console.log(courses);
-  const courseList = document.getElementsByClassName("course-table")[0];
-  courseList.children[0].remove();
-  const courseBody = document.createElement("tbody");
-  courseBody.classList.add("course-block");
-  const line = document.createElement("hr");
-  courseBody.appendChild(line);
-  courseList.appendChild(courseBody);
-  for (const course of courses) {
-    const row = document.createElement("tr");
-    const courseName = document.createElement("p");
-    const coursePrice = document.createElement("p");
-    const courseImg = document.createElement("img");
-    courseImg.classList.add("course-image");
-    row.classList.add("course-card");
-    row.style.cursor = "pointer";
-    courseName.innerText = course.course.title;
-    courseName.style.paddingLeft = "20px";
-    courseImg.src = course.course.image || '/noImageCom.svg';
-    row.appendChild(courseImg);
-    row.appendChild(courseName);
-    row.appendChild(coursePrice);
-    editCourseCard(row, course);
-    courseBody.appendChild(row);
-    const line = document.createElement("hr");
-    line.style.maxWidth = "600px";
-    line.style.margin = "20px";
-    line.style.alignItems = "center";
-    courseBody.appendChild(line);
-    console.log(courses.length);
-  }
-}
-
-async function populateCourses(selector) {
-  const courseId = getCookie('courseId');
-  //document.querySelector(selector).innerHTML = '';
-  const defaultCurrency = setDefaultCurrency() || 'USD';
-  try {
-    const [data, currencies, providers] = await Promise.all([fetchCourses(API_URL), fetchCurrencies(API_URL), fetchProviders(API_URL)]);
-    console.log("hello");
-    coursesData.value = data;
-    currenciesData.value = currencies;
-    providerData.value = providers;
-
-    data.forEach(courseProvider => {
-      if (courseProvider.course.title.toLowerCase().includes(searchQuery.value.toLowerCase()) || courseProvider.course.category.toLowerCase().includes(searchQuery.value.toLowerCase())) {
-        const contentBox = createContentBox(courseProvider, currencies, defaultCurrency);
-        document.querySelector(selector).appendChild(contentBox.cloneNode(true));
-      }
-    });
-  } catch (error) {
-    console.error('Error:', error);
   }
 }
 
@@ -196,6 +143,17 @@ function editCourseCard(object, course) {
 
 
 }
+
+function onFailure() {
+  console.log("Failed to fetch courses");
+}
+
+function showPrice(data) {
+  console.log(data);
+  return data;
+}
+
+
 
 </script>
 

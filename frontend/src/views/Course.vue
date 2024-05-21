@@ -220,10 +220,11 @@ function populateCoursePage() {
                     const urlParams = new URLSearchParams(window.location.search);
                     const courseId = urlParams.get('id');
                     const buyButton = document.getElementById('enrollButton');
-                    //Set cookie for the selected provider
-                    buyButton.addEventListener('click', function() {
-                      setCookie('courseId', courseId, 1);
-                    });
+                    const addCartButton = document.getElementById('cartButton');
+                    addCartButton.addEventListener('click', function() {
+                      setCookie('providerId_' + courseId, providerID, 1);
+                    })
+
                     //This is just a temporary solution to make the button work as it should
                     Object.assign(buyButton.style, {
                       fontFamily: 'Inter, sans-serif',
@@ -533,7 +534,7 @@ function activeFailed() {
           <div class="course-action-box">
 
             <router-link to="/payment" id="enrollButton" class="enroll-button">Buy now</router-link>
-            <button v-on:click="addCourseToCart()" class="cartBtn">
+            <button class="cartButton" id="cartButton">
                     <span class="IconContainer">
                         <img class="cart-icon-small" src="/cart-small.svg" alt="Cart">
                     </span>
@@ -1315,7 +1316,7 @@ button {
   margin-right: 10px;
 }
 
-.cartBtn {
+.cartButton {
   width: 40%;
   height: 50px;
   border-radius: 12px;
