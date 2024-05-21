@@ -119,9 +119,9 @@ public class CourseController {
     }
 
     @GetMapping("/api/courses/provider/{providerName}")
-public Collection<Course> getCoursesByProvider(@PathVariable String providerName) {
-    return courseService.getCoursesByProvider(providerName);
-}
+    public Collection<Course> getCoursesByProvider(@PathVariable String providerName) {
+        return courseService.getCoursesByProvider(providerName);
+    }
 
     @GetMapping("/api/courses/date-range")
     public Collection<Course> getCoursesWithinDateRange(@RequestParam String startDate, @RequestParam String endDate) {

@@ -1,6 +1,5 @@
 <script setup>
-import { ref } from 'vue';
-import {redirectTo} from "@/js/navigation";
+import {getCurrentInstance, ref} from 'vue';
 import {showFormError} from "@/js/tools";
 import {sendAuthenticationRequest} from "@/js/authentication";
 import Register from "@/components/Register.vue";
@@ -8,14 +7,16 @@ import Register from "@/components/Register.vue";
 const username = ref('');
 const password = ref('');
 let compo = ref('login');
+const { appContext } = getCurrentInstance();
+const API_URL = appContext.config.globalProperties.$apiAddress;
 
 const login = async () => {
-  sendAuthenticationRequest(username.value, password.value, onLoginSuccess, showFormError);
+  sendAuthenticationRequest(API_URL, username.value, password.value, onLoginSuccess, showFormError);
 };
 
 function onLoginSuccess() {
   console.log("Login successful");
-  redirectTo("/");
+  window.location.href = '/';
 }
 
 function changeCompo() {

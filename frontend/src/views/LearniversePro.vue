@@ -3,13 +3,12 @@
 import Subscription from "@/components/Subscription.vue";
 import Alert from "@/components/Alert.vue";
 import {ref} from "vue";
-import {redirectTo} from "@/js/navigation";
 
 const showAlert = ref(false);
 
 function handleButtonClick(button) {
   if (button === 'OK') {
-    redirectTo('/login');
+    window.location.href = ('/login');
   }
   if (button === 'Cancel') {
     showAlert.value = false;

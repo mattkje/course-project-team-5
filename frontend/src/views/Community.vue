@@ -1,9 +1,7 @@
 <script setup>
 import { getCurrentInstance, onMounted, ref } from "vue";
 import {getAuthenticatedUser} from "@/js/authentication";
-import createPost from "@/views/CreatePost.vue";
 import router from "@/router";
-import {redirectTo} from "@/js/navigation";
 import Alert from "@/components/Alert.vue";
 
 const { appContext } = getCurrentInstance();
@@ -86,7 +84,7 @@ function authenticatePost(){
 const handleButtonClick = (button) => {
   if (button === 'OK') {
     showAlert.value = false;
-    redirectTo('/login');
+    window.location.href = ('/login');
   }
   if (button === 'Cancel') {
     showAlert.value = false;

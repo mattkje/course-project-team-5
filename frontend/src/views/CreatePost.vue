@@ -47,12 +47,12 @@
 </template>
 
 <script>
-import {getAuthenticatedUser, hasRole, isAuthorized} from '@/js/authentication'; // Assuming the correct path
+import {getAuthenticatedUser} from '@/js/authentication'; // Assuming the correct path
 import Guidelines from "@/components/Guidelines.vue";
-import router from "@/router";
 import {getCookie} from "@/js/tools";
-import {redirectTo} from "@/js/navigation";
 import {sendApiRequest} from "@/js/requests";
+import {getCurrentInstance} from "vue";
+
 
 
 export default {
@@ -60,8 +60,12 @@ export default {
   mounted() {
     const currentUser = getAuthenticatedUser();
     if (!currentUser) {
-      redirectTo('/login');
+      window.location.href = ('/login');
     }
+  },
+  setup() {
+    const { appContext } = getCurrentInstance();
+    const API_URL = appContext.config.globalProperties.$apiAddress;
   },
   data() {
     return {
@@ -127,7 +131,7 @@ export default {
             console.log('Post created successfully');
             alert('Post created successfully!');
             this.resetForm();
-            sendApiRequest('GET', '/community/courses', success, error);
+            sendApiRequest(API_URL,'GET', '/community/courses', success, error);
           })
           .catch(error => {
             console.error('Error creating post:', error);
@@ -149,7 +153,7 @@ export default {
 
 function success(data) {
   let recentPost = data[data.length - 1];
-  redirectTo('/community/post/?id=' + recentPost.courseId);
+  window.location.href = ('/community/post/?id=' + recentPost.courseId);
 }
 
 function error() {

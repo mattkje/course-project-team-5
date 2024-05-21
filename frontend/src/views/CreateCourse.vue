@@ -1,7 +1,6 @@
 <script setup>
-  import { ref, computed, onMounted } from 'vue';
+import {ref, computed, onMounted, getCurrentInstance} from 'vue';
   import Guidelines from "@/components/Guidelines.vue";
-  import {redirectTo} from "@/js/navigation";
   import {getAuthenticatedUser, hasRole} from "@/js/authentication";
   import {sendApiRequest} from "@/js/requests";
   import flatPickr from 'vue-flatpickr-component';
@@ -28,6 +27,9 @@
   image: ''
 });
 
+const { appContext } = getCurrentInstance();
+const API_URL = appContext.config.globalProperties.$apiAddress;
+
   const remainingCharacters = computed(() => 6000 - course.value.description.length);
 
   function toggleGuidelinesModal() {
@@ -42,7 +44,7 @@
       console.log(course.value.startDate + course.value.endDate);
       console.log(course.value);
     }
-  sendApiRequest('POST', '/courses', onSuccess, course.value, error);
+  sendApiRequest(API_URL,'POST', '/courses', onSuccess, course.value, error);
 }
 
   onMounted(() => {
@@ -52,7 +54,7 @@
   function initSite() {
   const currentUser = getAuthenticatedUser();
   if (!currentUser || !hasRole('ROLE_ADMIN')) {
-    redirectTo('/no-access');
+    window.location.href = ('/no-access');
   }
 }
 

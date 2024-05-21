@@ -289,4 +289,14 @@ public class UserController {
             userService.removeExpiration(user);
         }
     }
+
+    @PostMapping("/add-course/{courseId}")
+    public ResponseEntity<?> addCourse(@PathVariable int courseId) {
+        UserWithCourses sessionUser = userService.getSessionUser();
+        if (sessionUser != null) {
+            userService.addUserCourse(sessionUser.user(), courseId);
+            return ResponseEntity.status(HttpStatus.OK).body("Course successfully added");
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Profile data accessible only to authenticated users");
+    }
 }

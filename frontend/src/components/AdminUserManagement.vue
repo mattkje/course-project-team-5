@@ -66,44 +66,86 @@ async function deleteUser(user) {
 </template>
 
 <style scoped>
-.page-background {
-  background-color: var(--light-1);
-  padding: 30px;
-  border-radius: 30px;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: left;
-  align-content: center;
-  width: 60%;
-  overflow: hidden;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+@media (max-width: 769px) {
+  .page-background {
+    background-color: var(--light-1);
+    padding: 30px 20px;
+    margin: 10px auto;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-content: center;
+    width: 400px;
+    overflow: hidden;
+    box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .page-highlight {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 20px 0;
+    grid-template-rows: auto;
+    justify-content: space-between;
+  }
+  .user-block {
+    width: 370px;
+    display: flex;
+    align-items: center;
+    height: 60px;
+    justify-content: space-between;
+    padding: 10px;
+    border: 1px solid var(--light-1);
+    border-radius: 10px;
+    margin-bottom: 5px;
+    background-color: var(--light-3);
+  }
+}
+@media (min-width: 769px) {
+  .page-background {
+    background-color: var(--light-1);
+    padding: 30px;
+    border-radius: 30px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-content: center;
+    width: 60%;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+  }
+
+  .page-highlight {
+    background-color: var(--light-1);
+    border-radius: 20px;
+    padding: 20px;
+    display: grid;
+    width: 100%;
+    min-height: 50vh;
+    grid-template-columns: repeat(2, 1fr);
+    margin: 20px 0;
+    line-height: 50px;
+    grid-template-rows: auto;
+    justify-content: space-between;
+  }
+
+  .user-block {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border: 1px solid var(--light-1);
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background-color: var(--light-3);
+  }
 }
 
-.page-highlight {
-  background-color: var(--light-1);
-  border-radius: 20px;
-  padding: 20px;
-  display: grid;
-  width: 100%;
-  min-height: 50vh;
-  grid-template-columns: repeat(2, 1fr);
-  margin: 20px 0;
-  line-height: 50px;
-  grid-template-rows: auto;
-  justify-content: space-between;
-}
 
-.user-block {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px;
-  border: 1px solid var(--light-1);
-  border-radius: 5px;
-  margin-bottom: 10px;
-  background-color: var(--light-3);
-}
+
+
 
 .right-content {
   display: flex;

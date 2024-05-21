@@ -19,16 +19,20 @@
         <p>Email</p>
         <label for="email" id="email"></label>
       </div>
+
       <div class="profile-item">
         <p>First name</p>
         <label for="firstName" id="firstName"></label>
       </div>
-      <div class="profile-item"><p>Last name</p>
-        <label for="lastName" id="lastName"></label></div>
+      <div class="profile-item">
+        <p>Last name</p>
+        <label for="lastName" id="lastName"></label>
+      </div>
       <div class="profile-item">
         <p>Phone number</p>
         <label for="phoneNumber" id="phoneNumber"></label>
       </div>
+
     </div>
     <hr>
     <div class="course-options">
@@ -52,17 +56,66 @@ export default defineComponent({
 </script>
 <style scoped>
 
-.profile-information {
-  background-color: var(--light-1);
-  display: grid;
-  width: 100%;
-  grid-template-columns: repeat(2, 1fr);
-  margin-bottom: 20px;
-  line-height: 50px;
-  grid-template-rows: auto;
-  justify-content: space-between;
-  grid-gap: 20px;
+@media (max-width: 769px) {
+  .profile-information {
+    background-color: var(--light-1);
+    width: 100%;
+    margin-bottom: 20px;
+    justify-content: space-between;
+  }
+  .profile-item {
+    width: 100%;
+    height: 90px;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .profile-item label {
+    padding: 5px 20px;
+    display: inline-block;
+    border-radius: 15px;
+    color: var(--dark-3);
+    width: 100%;
+    max-width: 100%;
+    align-content: center;
+    height: 60px;
+    border: 2px solid var(--light-2);
+    overflow: hidden;
+  }
+
 }
+
+@media (min-width: 769px) {
+  .profile-information {
+    background-color: var(--light-1);
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(2, 1fr);
+    margin-bottom: 20px;
+    line-height: 50px;
+    grid-template-rows: auto;
+    justify-content: space-between;
+    grid-gap: 20px;
+  }
+  .profile-item {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .profile-item label {
+    padding: 5px 20px;
+    display: inline-block;
+    border-radius: 15px;
+    color: var(--dark-3);
+    width: 100%;
+    max-width: 100%;
+    border: 2px solid var(--light-2);
+    overflow: hidden;
+  }
+
+}
+
+
+
 
 .courses tr:nth-child(odd) {
   background-color: #fff;
@@ -126,22 +179,7 @@ export default defineComponent({
   margin-left: 70px;
 }
 
-.profile-item {
-  width: 100%;
-  overflow: hidden;
-  white-space: nowrap;
-}
 
-.profile-item label {
-  padding: 5px 20px;
-  display: inline-block;
-  border-radius: 15px;
-  color: var(--dark-3);
-  width: 100%;
-  max-width: 100%;
-  border: 2px solid var(--light-2);
-  overflow: hidden;
-}
 
 .fancy-button {
   background-color: var(--light-3);
@@ -156,7 +194,7 @@ hr {
   margin: 20px;
 }
 
-.title{
+.title {
   margin-bottom: 20px;
 }
 

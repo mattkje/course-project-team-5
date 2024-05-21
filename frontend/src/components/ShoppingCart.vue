@@ -2,7 +2,6 @@
 import {getCurrentInstance, onMounted, ref} from 'vue';
 import {doLogout, getAuthenticatedUser, hasRole, removeRole} from "@/js/authentication";
 import {sendApiRequest, sendTokenRefreshRequest} from "@/js/requests";
-import {redirectTo} from "@/js/navigation";
 import {createContentBox, fetchCourseById, fetchCourses, fetchCurrencies, fetchProviders} from "@/js/populationTools";
 import {getCookie, isTokenAboutToExpire} from "@/js/tools";
 import {setDefaultCurrency} from "@/js/currency";
@@ -26,7 +25,7 @@ async function applyCoupon() {
 async function loadShoppingCart() {
   const user = getAuthenticatedUser();
   if (user) {
-    await sendApiRequest("GET", "/users/" + user.username, onProfileDataSuccess, onProfileDataError);
+    await sendApiRequest(API_URL,"GET", "/users/" + user.username, onProfileDataSuccess, onProfileDataError);
   }
 }
 
@@ -37,56 +36,93 @@ function onProfileDataError() {
 
 onMounted(async () => {
   console.log("hei");
+  populateCart();
   const user = getAuthenticatedUser();
   if (user) {
-    await sendApiRequest("GET", "/users/" + user.username, onProfileDataSuccess, onProfileDataError);
+    await sendApiRequest(API_URL,"GET", "/users/" + user.username, onProfileDataSuccess, onProfileDataError);
   }
 });
 
 function onProfileDataSuccess(data) {
   if (data.courses.length > 0) {
-    console.log(data.courses.length);
-    populateCart();
+    console.log(data.courses.length);;
   } else {
 
   }
 }
 
 async function populateCart() {
-  let courseId = getCookie('courseId');
-  let providerId = getCookie('providerId');
-  const course = await fetchCourseById(API_URL, courseId);
+  // Get all course IDs from cookies
+  const allCookies = document.cookie;
+  const cookieArray = allCookies.split('; ');
+  let courseIds = [];
+
+  for (let i = 0; i < cookieArray.length; i++) {
+    const cookie = cookieArray[i].split('=');
+    const name = cookie[0];
+    const value = cookie[1];
+    if (name.startsWith('courseId_')) {
+      courseIds.push(value);
+    }
+  }
+
+  // Get the course table element
   const courseList = document.getElementsByClassName("course-table")[0];
-  courseList.children[0].remove();
 
-  const courseBody = document.createElement("tbody");
-  courseBody.classList.add("course-block");
-  const line = document.createElement("hr");
-  courseBody.appendChild(line);
-  courseList.appendChild(courseBody);
+  // Remove "The cart is empty"
+  if (courseList.children.length > 0) {
+    courseList.removeChild(courseList.children[0]);
+  }
 
-  const row = document.createElement("tr");
-  const courseName = document.createElement("p");
-  const coursePrice = document.createElement("p");
-  const courseImg = document.createElement("img");
-  courseImg.classList.add("course-image");
-  row.classList.add("course-card");
-  row.style.cursor = "pointer";
-  courseName.innerText = course.course.title;
-  courseName.style.paddingLeft = "20px";
-  courseImg.src = course.course.image || '/noImageCom.svg';
-  row.appendChild(courseImg);
-  row.appendChild(courseName);
-  //row.appendChild(coursePrice);
-  editCourseCard(row, course);
-  courseBody.appendChild(row);
 
-  const line2 = document.createElement("hr");
-  line2.style.maxWidth = "600px";
-  line2.style.margin = "20px";
-  line2.style.alignItems = "center";
-  courseBody.appendChild(line2);
+  console.log(courseIds.length);
 
+  // Loop through the course IDs
+  for (let i = 0; i < courseIds.length; i++) {
+    let courseId = courseIds[i];
+    console.log(courseId);
+    let providerId = getCookie('providerId');
+    const course = await fetchCourseById(API_URL, courseId);
+
+    // Create a new tbody element for each course
+    const courseBody = document.createElement("tbody");
+    courseBody.classList.add("course-block");
+    const line = document.createElement("hr");
+    courseBody.appendChild(line);
+    courseList.appendChild(courseBody);
+
+    // Create a new row for each course
+    const row = document.createElement("tr");
+    const courseName = document.createElement("p");
+    const coursePrice = document.createElement("p");
+    const courseImg = document.createElement("img");
+    courseImg.classList.add("course-image");
+    row.classList.add("course-card");
+    row.style.cursor = "pointer";
+    courseName.innerText = course.course.title;
+    courseName.style.paddingLeft = "20px";
+    courseImg.src = course.course.image || '/noImageCom.svg';
+    row.appendChild(courseImg);
+    row.appendChild(courseName);
+    //row.appendChild(coursePrice);
+    editCourseCard(row, course);
+    courseBody.appendChild(row);
+
+    // Create a remove button for each course
+    const removeButton = document.createElement("button");
+    removeButton.innerText = "Remove";
+    removeButton.onclick = function() {
+      document.cookie = 'courseId_' + courseId + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+      courseBody.remove();
+    };
+    courseBody.appendChild(removeButton);
+
+    const line2 = document.createElement("hr");
+    line2.style.maxWidth = "600px";
+    line2.style.margin = "20px";
+    line2.style.alignItems = "center";
+    courseBody.appendChild(line2);
+  }
 }
 
 
@@ -155,7 +191,7 @@ function editCourseCard(object, course) {
   object.style.minWidth = "500px";
   object.style.minHeight = "50px";
   object.onclick = function () {
-    redirectTo("/courses/?id=" + course.course.courseId);
+    window.location.href = ("/courses/?id=" + course.course.courseId);
   };
 
 

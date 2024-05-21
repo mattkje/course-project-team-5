@@ -1,6 +1,13 @@
 // Fetch the courses from the API
+import {getAuthenticatedUser} from "@/js/authentication";
+import {getCookie} from "@/js/tools";
+
 export async function fetchCourses(API_URL) {
-    const response = await fetch(API_URL + '/courses');
+    const response = await fetch(API_URL + '/courses', {
+        headers: {
+            'Authorization': 'Bearer ' + getCookie('jwt'),
+        }
+    });
     return response.json();
 }
 

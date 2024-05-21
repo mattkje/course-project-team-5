@@ -7,15 +7,15 @@ import myStore from '@/js/store.js';
 import {createContentBox, fetchCourses, fetchCurrencies} from "@/js/populationTools";
 import { setCookie } from "@/js/tools";
 import {sendApiRequest} from "@/js/requests";
-import {redirectTo} from "@/js/navigation";
 
 const loading = ref(true);
 const addProvider = ref(false);
 
 //Test cookies
 function addCourseToCart() {
-  setCookie('courseId','2',1);
-  setCookie('providerId','1',1);
+  const urlParams = new URLSearchParams(window.location.search);
+  const courseId = urlParams.get('id');
+  setCookie('courseId_' + courseId, courseId, 1);
 }
 
 
@@ -52,7 +52,7 @@ function populateCoursePage() {
               if (!response.ok) {
                 if (response.status === 404) {
                   //Use custom course not found page?
-                  window.location.href = '/404';
+                  window.location.href = '/no-access';
                 } else {
                   throw new Error('Network response was not ok');
                 }
@@ -62,6 +62,9 @@ function populateCoursePage() {
             //Continuing if course exists
             .then(data => {
 
+              if(data.course.active === false && !hasRole('ROLE_ADMIN')) {
+                window.location.href = '/no-access';
+              }
               //Populating the similar courses box
               populateCourses('.featured');
 
@@ -254,6 +257,13 @@ function populateCoursePage() {
                 addProviderButton.addEventListener('click', function() {
                   changeProviderValue();
                 });
+
+                let active = document.getElementById('active');
+                if (data.course.active) {
+                  active.innerText = "True";
+                } else {
+                  active.innerText = "False";
+                }
               }
 
 
@@ -413,8 +423,8 @@ function changeProviderValue() {
 }
 
 function populateProviders() {
-  sendApiRequest('GET', '/providers', providerComplete, providerFailed);
-  sendApiRequest('GET', '/currency', currencyComplete, currencyFailed);
+  sendApiRequest(API_URL,'GET', '/providers', providerComplete, providerFailed);
+  sendApiRequest(API_URL,'GET', '/currency', currencyComplete, currencyFailed);
 }
 
 function currencyComplete(data) {
@@ -448,7 +458,7 @@ function addNewProvider() {
 
   console.log(providerData);
 
-  sendApiRequest('POST', '/providers/' + providerData.courseId, addProviderSuccess, providerData, addProviderFailed);
+  sendApiRequest(API_URL,'POST', '/providers/' + providerData.courseId, addProviderSuccess, providerData, addProviderFailed);
 
 }
 
@@ -459,6 +469,20 @@ function addProviderSuccess() {
 
 function addProviderFailed() {
   alert('Failed to add provider');
+}
+
+function changeActive() {
+  const urlParams = new URLSearchParams(window.location.search);
+  sendApiRequest(API_URL,'PUT', '/courses/active/' + urlParams.get('id'), activeSuccess, null, activeFailed);
+}
+
+function activeSuccess() {
+  alert('Course active status changed successfully');
+  window.location.reload();
+}
+
+function activeFailed() {
+  alert('Failed to change active status');
 }
 </script>
 
@@ -474,7 +498,16 @@ function addProviderFailed() {
     </div>
     <div v-show="!loading" class="providerList">
       <div class="administrator" v-show="hasRole('ROLE_ADMIN')">
-        <p>Admin View</p>
+        <div id="title">
+          <p>Admin View</p>
+          <hr>
+        </div>
+        <div class="administrator-content">
+          <div class="active-status">
+            <p>Active status: <span id="active"></span></p>
+            <button class="fancy-button" @click="changeActive">Change status</button>
+          </div>
+        </div>
       </div>
       <div class=""></div>
       <div class="course-image-box">
@@ -653,22 +686,6 @@ function addProviderFailed() {
     -ms-overflow-style: none;
   }
 
-  .administrator {
-    display: flex;
-    justify-content: center;
-    background-color: var(--light-1);
-    border-radius: 20px;
-    padding: 20px;
-    width: 400px;
-    margin: 10px auto;
-  }
-
-  .administrator p {
-    font-size: 20px;
-    font-weight: bold;
-    color: black;
-  }
-
   .provider-box {
     background-color: var(--light-1);
     border-radius: 20px;
@@ -807,9 +824,11 @@ function addProviderFailed() {
     padding: 20px;
     width: 1300px;
     margin: 50px auto;
+    flex-direction: column;
+    align-items: center;
   }
 
-  .administrator p {
+  .administrator #title p {
     font-size: 30px;
     font-weight: bold;
     color: black;
@@ -1369,5 +1388,28 @@ button {
   margin-bottom: 10px;
 }
 
+.administrator-content button {
+  background-color: #e8e8e8;
+}
+
+.administrator hr {
+  width: 100%;
+  margin: 10px 0 10px 0;
+  background-color: black;
+}
+
+.administrator-content {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 100%;
+}
+
+.active-status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
 
 </style>
