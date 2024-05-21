@@ -268,10 +268,10 @@ public class CourseService {
     return courseRepository.findAllByStartDateGreaterThanEqualAndEndDateLessThanEqual(start, end);
   }
 
-  public void changeActiveCourse(int id, Boolean active) {
+  public void changeActiveCourse(int id) {
     Course courseToChange = getCourseInfo(id);
     if (courseToChange != null) {
-      courseToChange.setActive(active);
+      courseToChange.setActive(!courseToChange.isActive());
       courseRepository.save(courseToChange);
     }
   }
