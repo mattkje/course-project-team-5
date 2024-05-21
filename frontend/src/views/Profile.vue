@@ -256,24 +256,173 @@ function cancelChangePassword() {
 </script>
 
 <style scoped>
-.background {
-  top: 0;
-  height: min-content;
-  background: linear-gradient(180deg, rgba(21, 16, 82, 0.14) 0%, rgba(158, 150, 255, 0.14) 100%);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-direction: column;
-  width: 100%;
-  margin: 0;
+@media (max-width: 769px) {
+  .background {
+    display: none;
+  }
 
+  .profile-display {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 0 50px 0;
+  }
+
+  .navigation-bar {
+    background-color: #d3d3d3;
+    display: flex;
+    border-radius: 20px;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    height: 70px;
+    width: 400px;
+    margin: 10px auto;
+    box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .navigation-bar p {
+    display: none;
+  }
+
+  .nav-button {
+    color: var(--dark-3);
+    background: none;
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: 12px;
+    padding: 5px;
+    text-decoration: none;
+    border-radius: 20px;
+    align-items: center;
+    display: flex;
+    border: none;
+    width: 33%;
+    height: 70px;
+    transition: all 0.15s ease-in-out;
+  }
+  .nav-button:hover {
+    background: var(--light-3);
+    cursor: pointer;
+  }
+
+  .nav-button:focus {
+    background: var(--light-3);
+    outline: none;
+  }
+
+  .nav-button:active {
+    background: var(--light-3);
+  }
+
+  .nav-icon {
+    width: 23px;
+    height: 23px;
+    margin-right: 13px;
+  }
+
+  .profile-background {
+    background-color: var(--light-3);
+    margin: 0;
+  }
+
+  .profile-box {
+    background-color: var(--light-1);
+    padding: 30px 20px;
+    margin: 10px auto;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-content: center;
+    width: 400px;
+    overflow: hidden;
+    box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
+  }
 }
 
-.profile-background {
-  background-color: var(--light-3);
-  margin: 0;
-  padding-top: 50px;
+@media (min-width: 769px) {
+  .background {
+    top: 0;
+    height: min-content;
+    background: linear-gradient(180deg, rgba(21, 16, 82, 0.14) 0%, rgba(158, 150, 255, 0.14) 100%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    margin: 0;
+
+  }
+
+  .profile-display {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 0 0 50px 0;
+  }
+
+  .navigation-bar {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+  }
+
+  .navigation-bar p {
+    font-weight: bold;
+    color: var(--light-2);
+    font-size: 17px;
+  }
+
+  .nav-button {
+    color: var(--dark-3);
+    background: none;
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: 23px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    align-items: center;
+    display: flex;
+    border: none;
+    margin-bottom: 5px;
+    padding-left: 50px;
+    width: 100%;
+    max-height: 50px;
+    min-height: 50px;
+    transition: all 0.15s ease-in-out;
+  }
+
+  .nav-icon {
+    width: 23px;
+    height: 23px;
+    margin-right: 13px;
+  }
+
+  .nav-button:hover {
+    background: var(--light-1);
+    cursor: pointer;
+  }
+
+  .nav-button:focus {
+    background: var(--light-1);
+    outline: none;
+  }
+
+  .nav-button:active {
+    background: var(--light-1);
+  }
+
+  .profile-background {
+    background-color: var(--light-3);
+    margin: 0;
+    padding-top: 50px;
+  }
 }
+
+
+
 
 #currentPassword {
   margin-bottom: 30px;
@@ -310,65 +459,6 @@ function cancelChangePassword() {
   font-size: 1.3em;
   margin: 0;
   padding: 0;
-}
-
-.profile-display {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  padding: 0 0 50px 0;
-}
-
-.navigation-bar {
-  display: flex;
-  flex-direction: column;
-  width: 40%;
-}
-
-.navigation-bar p {
-  font-weight: bold;
-  color: var(--light-2);
-  font-size: 17px;
-}
-
-.nav-button {
-  color: var(--dark-3);
-  background: none;
-  font-family: 'Inter', sans-serif;
-  font-weight: 900;
-  font-size: 23px;
-  padding: 10px 20px;
-  border-radius: 10px;
-  text-decoration: none;
-  align-items: center;
-  display: flex;
-  border: none;
-  margin-bottom: 5px;
-  padding-left: 50px;
-  width: 100%;
-  max-height: 50px;
-  min-height: 50px;
-  transition: all 0.15s ease-in-out;
-}
-
-.nav-icon {
-  width: 23px;
-  height: 23px;
-  margin-right: 13px;
-}
-
-.nav-button:hover {
-  background: var(--light-1);
-  cursor: pointer;
-}
-
-.nav-button:focus {
-  background: var(--light-1);
-  outline: none;
-}
-
-.nav-button:active {
-  background: var(--light-1);
 }
 
 .profile-item label {
