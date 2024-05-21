@@ -68,9 +68,8 @@ public class User {
     private String lastName;
 
     @Schema(description = "The profile picture of the user")
-    @Lob
-    @Column(name = "image", columnDefinition = "LONGBLOB")
-    private byte[] image;
+    @Column(name = "image")
+    private String image;
 
 
     private boolean active = true;
@@ -384,11 +383,11 @@ public class User {
         this.subscriptionExpire = subscriptionExpire;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 }

@@ -167,7 +167,7 @@ public class UserController {
     }
 
     @PutMapping("/{username}/change-image")
-    public ResponseEntity<?> changeProfilePicture(@PathVariable String username, @RequestBody byte[] image) {
+    public ResponseEntity<?> changeProfilePicture(@PathVariable String username, @RequestBody String image) {
         UserWithCourses sessionUser = userService.getSessionUser();
         if (sessionUser != null && sessionUser.user().getUsername().equals(username)) {
             userService.addImageToUser(image);

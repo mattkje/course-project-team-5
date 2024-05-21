@@ -10,6 +10,7 @@
       <p>Manage your profile</p>
     </div>
     <hr>
+    <img id="image"/>
     <div class="profile-information" v-show="!loading">
       <div class="profile-item">
         <p>Username</p>

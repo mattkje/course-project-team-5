@@ -6,16 +6,39 @@ import {computed} from "vue";
 import {useStore} from "vuex";
 
 import myStore from '@/js/store.js';
+import {getCookie, isTokenAboutToExpire} from "@/js/tools";
+import {sendApiRequest, sendTokenRefreshRequest} from "@/js/requests";
 
 const { appContext } = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
-
+const user = getAuthenticatedUser();
 
 const store = useStore();
 const cartItemCount = computed(() => myStore.getters.cartItemCount);
 
+function onTokenRefreshSuccess() {
+  console.log("Token has been refreshed.");
+  sendApiRequest(API_URL,"GET", "/users/" + user.username, onProfileDataSuccess);
+}
 
+function onTokenRefreshError(error) {
+  console.error("Error refreshing token: ", error);
+  window.location.href = ("/no-access");
+}
 
+async function loadProfileData() {
+  console.log("Loading profile data from API...");
+  const jwt = getCookie("jwt");
+  if (jwt && isTokenAboutToExpire(jwt)) {
+    sendTokenRefreshRequest(onTokenRefreshSuccess, onTokenRefreshError);
+  } else {
+    await sendApiRequest(API_URL,"GET", "/users/" + user.username, onProfileDataSuccess);
+  }
+}
+
+function onProfileDataSuccess(data) {
+  document.getElementById("profile-picture").src = 'data:image/jpeg;base64,' + data.user.image;
+}
 
 
 const integertest = 0;
@@ -24,6 +47,7 @@ const integertest = 0;
 
 
 onMounted(() => {
+  loadProfileData();
   currency();
 });
 
@@ -94,8 +118,8 @@ function setDefaultCurrency() {
             <span class="cart-count" v-if="integertest > 0">{{ integertest }}</span>
           </router-link>
           <router-link v-if="getAuthenticatedUser() === null" to="/login" class="fancy-button">Log&nbsp;in</router-link>
-          <router-link to="/profile" v-else class="fancy-button-round">
-            <img class="cart" src="/account.svg" alt="Cart">
+          <router-link to="/profile" v-else class="profile">
+            <img id="profile-picture" alt="Cart">
           </router-link>
         </div>
       </div>
@@ -299,6 +323,18 @@ function setDefaultCurrency() {
   padding: 0;
 }
 
+.profile {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.profile img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
 .cart-count {
 
   padding: 2px 2px;
@@ -445,5 +481,6 @@ function setDefaultCurrency() {
     padding: 0;
   }
 }
+
 
 </style>
