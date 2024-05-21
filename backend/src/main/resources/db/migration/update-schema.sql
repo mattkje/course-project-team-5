@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS keywords
 
 CREATE TABLE IF NOT EXISTS providers
 (
-    provider_id INT          NOT NULL,
+    provider_id INT         AUTO_INCREMENT,
     name        VARCHAR(255) NULL,
     CONSTRAINT pk_providers PRIMARY KEY (provider_id)
 );

@@ -33,4 +33,8 @@ public class ProviderService {
     }
     return Optional.empty();
   }
+
+  public void addProvider(Provider provider) {
+    providerRepository.save(provider);
+  }
 }

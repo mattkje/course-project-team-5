@@ -84,15 +84,15 @@ const API_URL = appContext.config.globalProperties.$apiAddress;
 
 <template>
   <div class="course-section">
-    <div class="post-form">
+    <div class="course-form">
       <p>Please ensure that your course adheres to our guidelines.</p>
       <button class="guideline-button" @click="toggleGuidelinesModal">Guidelines</button>
       <p>If you're unsure about any aspect of our guidelines, please take a moment to review them. We appreciate your cooperation in maintaining a positive and constructive community.</p>
     </div>
 
-    <guidelines class="post-form" v-if="showGuidelinesModal" @close="showGuidelinesModal = false" />
+    <guidelines class="course-form" v-if="showGuidelinesModal" @close="showGuidelinesModal = false" />
 
-    <form @submit.prevent="createCourse" class="post-form">
+    <form @submit.prevent="createCourse" class="course-form">
       <div class="form-group">
         <label for="title">Title:</label>
         <input type="text" id="title" v-model="course.title" required maxlength="100">
@@ -144,7 +144,7 @@ const API_URL = appContext.config.globalProperties.$apiAddress;
   padding: 50px 0;
 }
 
-.post-form {
+.course-form {
   max-width: 900px;
   margin: auto auto 50px auto;
   padding: 20px;

@@ -81,4 +81,19 @@ public class ProviderController {
     }
     return ResponseEntity.status(HttpStatus.OK).body(price);
   }
+
+  @PostMapping
+  public ResponseEntity<Provider> postProvider(@RequestBody Provider provider) {
+    for (Provider p : providerService.getAllProviders()) {
+      if (p.getName().equals(provider.getName())) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+      }
+    }
+    if(provider == null && userService.isAdmin()) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }else {
+      providerService.addProvider(provider);
+      return ResponseEntity.status(HttpStatus.CREATED).body(provider);
+    }
+  }
 }
