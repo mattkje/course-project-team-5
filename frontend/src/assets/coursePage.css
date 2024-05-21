@@ -84,4 +84,13 @@
     outline: none;
 }
 
+#add-provider {
+    border: 2px solid black;
+    color: black;
+}
 
+#add-provider:hover {
+    background-color: black;
+    color: white;
+    transition: ease-in-out 0.1s;
+}
