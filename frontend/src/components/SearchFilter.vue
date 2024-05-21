@@ -1,146 +1,3 @@
-<template>
-  <div class="search-container">
-
-    <div class="search-bar">
-      <input class="search-prompt" type="text" id="myTextBox" name="myTextBox"
-             placeholder="Search for courses to boost your skills" v-model="searchQuery" @input="searchCourses">
-      <img class="search-icon" src="/search.png" alt="Connect">
-    </div>
-  </div>
-  <div class="dark-overlay" @click="toggleFilters" v-show="isDarkOverlayVisible"></div>
-  <div class="filter-wrapper">
-    <div class="active-filter-container">
-      <button @click="toggleFilters">
-        <img src="https://www.svgrepo.com/show/472431/bars-filter.svg" alt="Filter Icon">
-        <p>Filters</p>
-      </button>
-    </div>
-
-    <div class="filter-container">
-      <div class="range-container" v-show="isRangeContainerVisible">
-        <div class="mobile-filter-header">
-          <h3 class="mobile-h3">Filters</h3>
-          <h2 class="mobile-h3" id="exitButton" @click="toggleFilters">x</h2>
-        </div>
-        <div class="separator" id="headerSeparator"></div>
-
-        <div class="overflowContainer">
-        <button class="price-ranger" @click="toggleShowCategory" :style="{
-          'border-radius': isCategoryVisible ? '10px 10px 0 0' : '10px'
-        }">Category
-        </button>
-
-        <div class="separator"></div>
-
-        <div class="wrapper" id="categoryContainer" :class="{'visible': isCategoryVisible, 'hidden': !isCategoryVisible}">
-          <div class="category-list" id="categoryList"></div>
-        </div>
-
-        <button class="price-ranger" @click="toggleShowPrice" :style="{
-          'border-radius': isPriceVisible ? '10px 10px 0 0' : '10px'
-        }">Price
-        </button>
-
-        <div class="separator"></div>
-
-        <div class="wrapper" id="priceText" :class="{'visible': isPriceVisible, 'hidden': !isPriceVisible}">
-          <div class="price-input-container">
-            <div class="price-input">
-              <label for="min-price">Min Price:</label>
-              <p>-</p>
-              <input type="number" id="min-price" v-model="minPrice" min="0" placeholder="Minimum Price" @change="sortByPriceRange">
-            </div>
-            <div class="price-input">
-              <label for="max-price">Max Price:</label>
-              <p>-</p>
-              <input type="number" id="max-price" v-model="maxPrice" min="1" placeholder="Maximum Price" @change="sortByPriceRange">
-            </div>
-          </div>
-        </div>
-
-        <button class="price-ranger" @click="toggleShowDate" :style="{
-          'border-radius': isDateVisible ? '10px 10px 0 0' : '10px'
-        }">Date
-        </button>
-
-        <div class="separator"></div>
-
-        <div class="wrapper" id="dateContainer" :class="{'visible': isDateVisible, 'hidden': !isDateVisible}">
-          <span>Start date - End Date</span>
-          <flat-pickr v-model="date" :config="config" class="form-control" placeholder="Select dates" name="date" @change="getDate" ref="flatpickr"></flat-pickr>
-        </div>
-
-        <button class="price-ranger" @click="toggleShowProvider" :style="{
-          'border-radius': isProviderVisible ? '10px 10px 0 0' : '10px'
-        }">Provider
-        </button>
-
-        <div class="separator"></div>
-
-        <div class="wrapper" id="providerContainer" :class="{'visible': isProviderVisible, 'hidden': !isProviderVisible}">
-            <div id="providerList"></div>
-        </div>
-
-        <button class="price-ranger" @click="toggleShowDifficulty" :style="{
-          'border-radius': isDifficultyVisible ? '10px 10px 0 0' : '10px'
-        }">Difficulty
-        </button>
-
-        <div class="separator"></div>
-
-        <div class="wrapper" :class="{'visible': isDifficultyVisible, 'hidden': !isDifficultyVisible}" id="difficultyContainer">
-          <header>
-            <div class="checkbox-wrapper">
-              <label class="cbx" for="beginnerBox">Beginner</label>
-              <input class="inp-cbx" id="beginnerBox" type="checkbox" v-model="isBeginnerChecked"
-                     @change="sortByDifficulty">
-            </div>
-
-            <div class="checkbox-wrapper">
-              <label class="cbx" for="intermediateBox">Intermediate</label>
-              <input class="inp-cbx" id="intermediateBox" type="checkbox" v-model="isIntermediateChecked"
-                     @change="sortByDifficulty">
-            </div>
-
-            <div class="checkbox-wrapper">
-              <label class="cbx" for="expertBox">Expert</label>
-              <input class="inp-cbx" id="expertBox" type="checkbox" v-model="isExpertChecked"
-                     @change="sortByDifficulty">
-            </div>
-          </header>
-        </div>
-
-        <button class="price-ranger" @click="toggleShowCredit" :style="{
-          'border-radius': isCreditVisible ? '10px 10px 0 0' : '10px'
-        }">Credit
-        </button>
-
-        <div class="separator"></div>
-
-        <div class="wrapper" id="creditContainer" :class="{'visible': isCreditVisible, 'hidden': !isCreditVisible}">
-          <header>
-            <div class="slider-container">
-              <input type="range" min="0" max="5" class="slider" id="creditSlider" v-model="creditValue"
-                     @change="sortByCredit">
-              <div style="display: flex; justify-content: space-between;">
-                <p>Minimum Credit:</p>
-                <p>{{ creditValue }}</p>
-              </div>
-            </div>
-          </header>
-        </div>
-
-      </div>
-      </div>
-      <div class="flexible-grid-container">
-        <div class="flexible-grid" id="courseContainer">
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
-
-
 <script setup>
 import {getCurrentInstance, onMounted, ref, watchEffect} from "vue";
 import {currency, setDefaultCurrency} from "@/js/currency";
@@ -263,12 +120,18 @@ function populateCheckboxes(selector, data,dataType,checkedRef, changeHandler) {
       label.textContent = itemName;
       checkboxWrapper.appendChild(label);
 
+      const label = document.createElement('label');
+      label.className = 'lbl-cbx'
       const checkbox = document.createElement('input');
+      const div = document.createElement('div');
+      div
       checkbox.className = 'inp-cbx';
       checkbox.id = itemName;
       checkbox.type = 'checkbox';
       checkbox.setAttribute('v-model', `${checkedRef}['${itemName}']`);
       checkbox.addEventListener('change', changeHandler);
+
+
       checkboxWrapper.appendChild(checkbox);
 
       list.appendChild(checkboxWrapper);
@@ -565,7 +428,7 @@ function toggleFilters() {
 }
 
 watchEffect(() => {
-  if (isRangeContainerVisible.value) {
+  if (isRangeContainerVisible.value && window.innerWidth < 1250) {
     // If isRangeContainerVisible is true, set body overflow to hidden
     document.body.style.overflow = 'hidden';
   } else {
@@ -574,6 +437,153 @@ watchEffect(() => {
   }
 });
 </script>
+
+<template>
+  <div class="search-container">
+
+    <div class="search-bar">
+      <input class="search-prompt" type="text" id="myTextBox" name="myTextBox"
+             placeholder="Search for courses to boost your skills" v-model="searchQuery" @input="searchCourses">
+      <img class="search-icon" src="/search.png" alt="Connect">
+    </div>
+  </div>
+  <div class="dark-overlay" @click="toggleFilters" v-show="isDarkOverlayVisible"></div>
+  <div class="filter-wrapper">
+    <div class="active-filter-container">
+      <button @click="toggleFilters">
+        <img src="https://www.svgrepo.com/show/472431/bars-filter.svg" alt="Filter Icon">
+        <p>Filters</p>
+      </button>
+    </div>
+
+    <div class="filter-container">
+      <div class="range-container" v-show="isRangeContainerVisible">
+        <div class="mobile-filter-header">
+          <h3 class="mobile-h3">Filters</h3>
+          <button type="button" class="exitButton">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 50 50">
+              <line x1="10" y1="10" x2="30" y2="30" stroke="black" stroke-width="2"/>
+              <line x1="30" y1="10" x2="10" y2="30" stroke="black" stroke-width="2"/>
+            </svg>
+          </button>
+        </div>
+        <div class="separator" id="headerSeparator"></div>
+
+        <div class="overflowContainer">
+          <button class="price-ranger" @click="toggleShowCategory" :style="{
+          'border-radius': isCategoryVisible ? '10px 10px 0 0' : '10px'
+        }">Category
+          </button>
+
+          <div class="separator"></div>
+
+          <div class="wrapper" id="categoryContainer" :class="{'visible': isCategoryVisible, 'hidden': !isCategoryVisible}">
+            <div class="category-list" id="categoryList"></div>
+          </div>
+
+          <button class="price-ranger" @click="toggleShowPrice" :style="{
+          'border-radius': isPriceVisible ? '10px 10px 0 0' : '10px'
+        }">Price
+          </button>
+
+          <div class="separator"></div>
+
+          <div class="wrapper" id="priceText" :class="{'visible': isPriceVisible, 'hidden': !isPriceVisible}">
+            <div class="price-input-container">
+              <div class="price-input">
+                <label for="min-price">Min Price:</label>
+                <p>-</p>
+                <input type="number" id="min-price" v-model="minPrice" min="0" placeholder="Minimum Price" @change="sortByPriceRange">
+              </div>
+              <div class="price-input">
+                <label for="max-price">Max Price:</label>
+                <p>-</p>
+                <input type="number" id="max-price" v-model="maxPrice" min="1" placeholder="Maximum Price" @change="sortByPriceRange">
+              </div>
+            </div>
+          </div>
+
+          <button class="price-ranger" @click="toggleShowDate" :style="{
+          'border-radius': isDateVisible ? '10px 10px 0 0' : '10px'
+        }">Date
+          </button>
+
+          <div class="separator"></div>
+
+          <div class="wrapper" id="dateContainer" :class="{'visible': isDateVisible, 'hidden': !isDateVisible}">
+            <span>Start date - End Date</span>
+            <flat-pickr v-model="date" :config="config" class="form-control" placeholder="Select dates" name="date" @change="getDate" ref="flatpickr"></flat-pickr>
+          </div>
+
+          <button class="price-ranger" @click="toggleShowProvider" :style="{
+          'border-radius': isProviderVisible ? '10px 10px 0 0' : '10px'
+        }">Provider
+          </button>
+
+          <div class="separator"></div>
+
+          <div class="wrapper" id="providerContainer" :class="{'visible': isProviderVisible, 'hidden': !isProviderVisible}">
+            <div id="providerList"></div>
+          </div>
+
+          <button class="price-ranger" @click="toggleShowDifficulty" :style="{
+          'border-radius': isDifficultyVisible ? '10px 10px 0 0' : '10px'
+        }">Difficulty
+          </button>
+
+          <div class="separator"></div>
+
+          <div class="wrapper" :class="{'visible': isDifficultyVisible, 'hidden': !isDifficultyVisible}" id="difficultyContainer">
+            <header>
+              <div class="checkbox-wrapper">
+                <label class="cbx" for="beginnerBox">Beginner</label>
+                <input class="inp-cbx" id="beginnerBox" type="checkbox" v-model="isBeginnerChecked"
+                       @change="sortByDifficulty">
+              </div>
+
+              <div class="checkbox-wrapper">
+                <label class="cbx" for="intermediateBox">Intermediate</label>
+                <input class="inp-cbx" id="intermediateBox" type="checkbox" v-model="isIntermediateChecked"
+                       @change="sortByDifficulty">
+              </div>
+
+              <div class="checkbox-wrapper">
+                <label class="cbx" for="expertBox">Expert</label>
+                <input class="inp-cbx" id="expertBox" type="checkbox" v-model="isExpertChecked"
+                       @change="sortByDifficulty">
+              </div>
+            </header>
+          </div>
+
+          <button class="price-ranger" @click="toggleShowCredit" :style="{
+          'border-radius': isCreditVisible ? '10px 10px 0 0' : '10px'
+        }">Credit
+          </button>
+
+          <div class="separator"></div>
+
+          <div class="wrapper" id="creditContainer" :class="{'visible': isCreditVisible, 'hidden': !isCreditVisible}">
+            <header>
+              <div class="slider-container">
+                <input type="range" min="0" max="5" class="slider" id="creditSlider" v-model="creditValue"
+                       @change="sortByCredit">
+                <div style="display: flex; justify-content: space-between;">
+                  <p>Minimum Credit:</p>
+                  <p>{{ creditValue }}</p>
+                </div>
+              </div>
+            </header>
+          </div>
+
+        </div>
+      </div>
+      <div class="flexible-grid-container">
+        <div class="flexible-grid" id="courseContainer">
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
 
 <style scoped>
 
@@ -971,7 +981,7 @@ body, html {
   }
 
   .mobile-filter-header {
-    padding: 20px;
+    padding: 20px 20px 10px 20px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -987,12 +997,14 @@ body, html {
   .filter-container {
     flex-direction: column;
     max-width: 90%;
-
     padding: 0;
+
   }
 
-  #exitButton{
-    transform: rotate(90deg);
+  .exitButton{
+    display: inline-block;
+    border: none;
+    background-color: transparent;
   }
 
   .range-container {
@@ -1023,6 +1035,7 @@ body, html {
   .price-ranger {
     margin: 0;
     padding: 0;
+    text-align: left;
   }
 
   .wrapper {
