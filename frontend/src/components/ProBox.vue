@@ -40,11 +40,15 @@ export default {
 </script>
 
 <style scoped>
-@media (max-width: 600px) {
+@media (max-width: 769px) {
   #pro-icon {
     height: 100px;
     width: 100px;
     animation: orbit 5s infinite;
+  }
+
+  h2 {
+    font-size: 20px;
   }
 }
 

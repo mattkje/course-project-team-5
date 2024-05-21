@@ -1,110 +1,3 @@
-
-
-<template>
-  <div class="course-page-background" v-show="!addProvider">
-
-    <div v-show="!loading" class="courseLinkElement">
-      <a href="/">Courses</a>
-      <p>&nbsp;->&nbsp;</p>
-      <a href="#" id="courseCategoryLink"></a>
-      <p>&nbsp;->&nbsp;</p>
-      <a href="#" id="courseTitleLink"></a>
-    </div>
-    <div v-show="!loading" class="providerList">
-      <div class="administrator" v-show="hasRole('ROLE_ADMIN')">
-        <p>Admin View</p>
-      </div>
-      <div class=""></div>
-      <div class="course-image-box">
-        <img id="courseImage" class="course-image" alt="Course Image">
-        <div class="course-image-blur"></div>
-        <div class="course-info">
-          <h1 id="courseTitle"></h1>
-          <hr>
-          <h3>Providers</h3>
-          <div class="content-hbox" id="providerList">
-            <!-- Providers will be added here by JavaScript -->
-          </div>
-          <hr>
-          <div id="courseInformation">
-            <div class="courseInfoElement" id="courseSize"></div>
-            <div class="courseInfoElement" id="closestCourseSession"></div>
-            <div class="courseInfoElement" id="hoursPerWeek"></div>
-            <div class="courseInfoElement" id="relatedCertifications"></div>
-            <div class="courseInfoElement" id="difficulty"></div>
-            <div class="courseInfoElement" id="location"></div>
-          </div>
-          <hr>
-          <div class="course-action-box">
-
-            <button id="enrollButton" class="enroll-button">Buy now</button>
-            <button v-on:click="addCourseToCart()" class="cartBtn">
-                    <span class="IconContainer">
-                        <img class="cart-icon-small" src="/cart-small.svg" alt="Cart">
-                    </span>
-              <p class="text">Add to Cart</p>
-            </button>
-          </div>
-        </div>
-      </div>
-      <div class="course-description-box">
-        <h3>Description</h3>
-        <p id="courseKeywords"></p>
-        <p id="courseDescription"></p>
-      </div>
-    </div>
-    <div class="course-description-box">
-      <h3>Location</h3>
-      <p id="notShowingLocationText">Please select a provider to show location</p>
-      <div id="map-container" class="map-container" style="display: none">
-        <div id="map" ></div>
-      </div>
-  </div>
-
-
-    <div v-show="!loading"class="greeting">
-      <h2>Similar Courses</h2>
-    </div>
-
-    <div v-show="!loading" class="featured">
-      <!--- Featured courses will be appended here --->
-    </div>
-    <div v-show="!loading" class="greeting">
-    </div>
-  </div>
-  <div class="addProvider" v-show="addProvider">
-    <div class="provider-box">
-      <div class="provider-box-content">
-        <h1>Add Provider</h1>
-        <form @submit.prevent="addNewProvider">
-          <div class="provider-form">
-            <label for="provider-name">Provider name:</label>
-            <select name="providers" id="provider-name" v-model="singleProvider.providerId">
-              <option v-for="provider in providers" :key="provider.providerId" :value="provider.providerId">
-                {{ provider.name }}
-              </option>
-            </select>
-          </div>
-          <div class="provider-form">
-            <label for="provider-price">Price:</label>
-            <input type="text" id="provider-price" required v-model="singleProvider.price">
-          </div>
-          <div class="provider-form">
-            <label for="provider-currency">Currency:</label>
-            <select type="text" id="provider-currency" required v-model="singleProvider.currency">
-              <option v-for="currency in currencies" :key="currency.code" :value="currency.code">
-                {{ currency.code }} - {{ currency.symbol }}
-              </option>
-            </select>
-          </div>
-          <button type="submit" class="fancy-button">Add Provider</button>
-          <button @click="changeProviderValue" class="fancy-button">Cancel</button>
-          </form>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script setup>
 import {getCurrentInstance, onMounted, ref} from 'vue';
 import "@/assets/coursePage.css"
@@ -569,6 +462,114 @@ function addProviderFailed() {
 }
 </script>
 
+<template>
+  <div class="course-page-background" v-show="!addProvider">
+
+    <div v-show="!loading" class="courseLinkElement">
+      <a href="/">Courses</a>
+      <p>&nbsp;->&nbsp;</p>
+      <a href="#" id="courseCategoryLink"></a>
+      <p>&nbsp;->&nbsp;</p>
+      <a href="#" id="courseTitleLink"></a>
+    </div>
+    <div v-show="!loading" class="providerList">
+      <div class="administrator" v-show="hasRole('ROLE_ADMIN')">
+        <p>Admin View</p>
+      </div>
+      <div class=""></div>
+      <div class="course-image-box">
+        <img id="courseImage" class="course-image" alt="Course Image">
+        <div class="course-image-blur"></div>
+        <div class="course-info">
+          <h1 id="courseTitle"></h1>
+          <hr>
+          <h3>Providers</h3>
+          <div class="content-hbox" id="providerList">
+            <!-- Providers will be added here by JavaScript -->
+          </div>
+          <hr>
+          <div id="courseInformation">
+            <div class="courseInfoElement" id="courseSize"></div>
+            <div class="courseInfoElement" id="closestCourseSession"></div>
+            <div class="courseInfoElement" id="hoursPerWeek"></div>
+            <div class="courseInfoElement" id="relatedCertifications"></div>
+            <div class="courseInfoElement" id="difficulty"></div>
+            <div class="courseInfoElement" id="location"></div>
+          </div>
+          <hr>
+          <div class="course-action-box">
+
+            <button id="enrollButton" class="enroll-button">Buy now</button>
+            <button v-on:click="addCourseToCart()" class="cartBtn">
+                    <span class="IconContainer">
+                        <img class="cart-icon-small" src="/cart-small.svg" alt="Cart">
+                    </span>
+              <p class="text">Add to Cart</p>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="course-description-box">
+        <h3>Description</h3>
+        <p id="courseKeywords"></p>
+        <p id="courseDescription"></p>
+      </div>
+    </div>
+    <div class="course-description-box">
+      <h3>Location</h3>
+      <p id="notShowingLocationText">Please select a provider to show location</p>
+      <div id="map-container" class="map-container" style="display: none">
+        <div id="map" ></div>
+      </div>
+  </div>
+
+
+    <div v-show="!loading"class="greeting">
+      <h2>Similar Courses</h2>
+    </div>
+
+    <div v-show="!loading" class="featured">
+      <!--- Featured courses will be appended here --->
+    </div>
+    <div v-show="!loading" class="greeting">
+    </div>
+  </div>
+  <div class="addProvider" v-show="addProvider">
+    <div class="provider-box">
+      <div class="provider-box-content">
+        <h1>Add Provider</h1>
+        <form @submit.prevent="addNewProvider">
+          <div class="provider-form">
+            <label for="provider-name">Provider name:</label>
+            <select name="providers" id="provider-name" v-model="singleProvider.providerId">
+              <option v-for="provider in providers" :key="provider.providerId" :value="provider.providerId">
+                {{ provider.name }}
+              </option>
+            </select>
+          </div>
+          <div class="provider-form">
+            <label for="provider-price">Price:</label>
+            <input type="text" id="provider-price" required v-model="singleProvider.price">
+          </div>
+          <div class="provider-form">
+            <label for="provider-currency">Currency:</label>
+            <select type="text" id="provider-currency" required v-model="singleProvider.currency">
+              <option v-for="currency in currencies" :key="currency.code" :value="currency.code">
+                {{ currency.code }} - {{ currency.symbol }}
+              </option>
+            </select>
+          </div>
+          <div class="provider-options">
+            <button type="submit" >Add Provider</button>
+            <button @click="changeProviderValue">Cancel</button>
+          </div>
+          </form>
+      </div>
+    </div>
+  </div>
+</template>
+
+
 <style scoped>
 
 @media (max-width: 769px) {
@@ -668,6 +669,55 @@ function addProviderFailed() {
     color: black;
   }
 
+  .provider-box {
+    background-color: var(--light-1);
+    border-radius: 20px;
+    padding: 20px;
+    margin: auto;
+    width: 400px;
+    height: max-content;
+    box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
+  }
+  .provider-form {
+    display: flex;
+    flex-direction: column;
+  }
+  .provider-form input, .provider-form select {
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: white;
+  }
+
+  .provider-options {
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+  }
+
+  .provider-options button {
+
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    color: #ffffff;
+    font-size: 20px;
+    background: #000000;
+    border: none;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 70px;
+    border-radius: 15px;
+    cursor: pointer;
+    margin: 0 10px;
+    transition: all .5s;
+
+    &:active {
+      transform: scale(0.95);
+      transition-duration: .5s;
+    }
+  }
+
 }
 
 @media (min-width: 769px) {
@@ -763,6 +813,15 @@ function addProviderFailed() {
     font-size: 30px;
     font-weight: bold;
     color: black;
+  }
+
+  .provider-box {
+    background-color: var(--light-1);
+    border-radius: 20px;
+    padding: 20px;
+    width: 50%;
+    height: 50%;
+    box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
   }
 }
 
@@ -1306,15 +1365,6 @@ button {
   align-items: center;
   height: 60vh;
   width: 100%;
-}
-
-.provider-box {
-  background-color: var(--light-1);
-  border-radius: 20px;
-  padding: 20px;
-  width: 50%;
-  height: 50%;
-  box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
 }
 
 .provider-form {

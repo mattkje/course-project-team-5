@@ -35,7 +35,14 @@
   </div>
 
   <!--- Hide pro ad if user is already of type pro--->
-  <ProBox v-if="!hasRole('ROLE_PRO')"/>
+  <div class="pro-simple-container">
+    <ProBoxSimple v-if="!hasRole('ROLE_PRO')"/>
+  </div>
+  <div class="pro-container">
+    <ProBox v-if="!hasRole('ROLE_PRO')"/>
+  </div>
+
+
 
   <div class="course-section">
 
@@ -162,6 +169,7 @@
 </template>
 
 <script setup>
+import ProBoxSimple from "@/components/ProBoxSimple.vue";
 import ProBox from "@/components/ProBox.vue";
 import HeroSection from "@/components/HeroSection.vue";
 
@@ -341,6 +349,10 @@ function loadButtons() {
     text-align: center;
     font-size: 30px;
   }
+
+  .pro-container {
+    display: none;
+  }
 }
 
 @media (min-width: 769px) {
@@ -373,6 +385,11 @@ function loadButtons() {
     display: flex;
     margin: 0 auto;
   }
+
+  .pro-simple-container {
+    display: none;
+  }
+
 }
 
 

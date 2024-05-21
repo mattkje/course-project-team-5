@@ -136,8 +136,10 @@ function setDefaultCurrency() {
 @media (max-width: 769px) {
   #menubar {
     background-color: #f4f6f8;
-    border-bottom: 1px solid #a8a8a8;
+    border-bottom: 1px solid #d3d3d3;
     backdrop-filter: none;
+    box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
+
   }
 
   #desktop {
