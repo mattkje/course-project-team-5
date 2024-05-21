@@ -81,8 +81,8 @@ async function disableCourse(courseProvider) {
         <p>{{ courseProvider.course.title }}</p>
         <div class="right-content">
           <button class="fancy-button" @click="visitPage(courseProvider)">Review</button>
-          <button class="fancy-button" @click="disableCourse(courseProvider)" v-if="courseProvider.course.active">Disable</button>
-          <button class="fancy-button" @click="disableCourse(courseProvider)" v-if="!courseProvider.course.active">Enable</button>
+          <button class="fancy-button" style="background-color: lightgreen;" @click="disableCourse(courseProvider)" v-if="courseProvider.course.active">Enabled</button>
+          <button class="fancy-button" style="background-color: brown; color: white" @click="disableCourse(courseProvider)" v-if="!courseProvider.course.active">Disabled</button>
           <button class="fancy-button" style="background-color: orangered; color: white" @click="deleteCourse(courseProvider)">Delete</button>
         </div>
       </div>
