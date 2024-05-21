@@ -13,9 +13,7 @@ const addProvider = ref(false);
 
 //Test cookies
 function addCourseToCart() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const courseId = urlParams.get('id');
-  setCookie('courseId_' + courseId, courseId, 1);
+  console.log("lol");
 }
 
 
@@ -222,6 +220,7 @@ function populateCoursePage() {
                     const buyButton = document.getElementById('enrollButton');
                     const addCartButton = document.getElementById('cartButton');
                     addCartButton.addEventListener('click', function() {
+                      setCookie('courseId' + courseId, courseId, 1);
                       setCookie('providerId_' + courseId, providerID, 1);
                     })
 
