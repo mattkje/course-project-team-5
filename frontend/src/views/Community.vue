@@ -107,7 +107,9 @@ const handleButtonClick = (button) => {
         <h1>Community</h1>
         <p class="description">Connect with other learners, share your knowledge, and grow together.</p>
       </div>
-      <button class="fancy-button" @click="authenticatePost">Create Post</button>
+      <button class="fancy-button" @click="authenticatePost">
+        <p>Create Post</p>
+      </button>
     </div>
     <div class="search-container">
 
@@ -126,35 +128,123 @@ const handleButtonClick = (button) => {
 
 
 <style scoped>
-@media (max-width: 600px) {
+@media (max-width: 769px) {
+  .background {
+    display: none;
 
-  #planet {
-    height: 120px;
-    animation: ease-in-out pulse 5s infinite;
+  }
+
+  .search-container {
+    position: relative;
+    width: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding-top: 20px;
+  }
+
+  .search-bar {
+    box-sizing: border-box;
+    width: 100%;
+    background-color: var(--light-1);
+    border-radius: 20px;
+    position: relative;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+  }
+
+  .community-title-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .course-block p:nth-child(2) {
+    display: none;
+  }
+
+  .fancy-button {
+
+    padding: 10px;
+    border-radius: 20px;
+    text-decoration: none;
+    width: 400px;
+    text-align: center;
+    align-content: center;
+    min-height: 60px;
+    background: #0C0C0C;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
+
+    &:active {
+      background-color: #262626;
+    }
+  }
+  .fancy-button p {
+    color: #EAEAEA;
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+    margin: auto;
   }
 }
 
-.shrink-enter-active, .shrink-leave-active {
-  transition: height 0.5s;
+@media (min-width: 769px) {
+  .background {
+    top: 0;
+    height: min-content;
+    background: linear-gradient(180deg, rgba(21, 16, 82, 0.14) 0%, rgba(158, 150, 255, 0.14) 100%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    margin: 0;
+
+  }
+
+  .search-container {
+    position: relative;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding-top: 20px;
+  }
+
+  .search-bar {
+    box-sizing: border-box;
+    width: 60%;
+    background-color: var(--light-1);
+    border-radius: 20px;
+    position: relative;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+  }
+
+  .fancy-button {
+    color: #EAEAEA;
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 10px;
+    border-radius: 10px;
+    text-decoration: none;
+    display: flex;
+    min-width: 100px;
+    background: #0C0C0C;
+    border: 0.5px solid #252525;
+    transition: all 0.3s ease-in-out;
+    white-space: nowrap;
+    &:hover {
+      background-color: #262626;
+      box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
+    }
+  }
 }
 
-.shrink-enter, .shrink-leave-to /* .shrink-leave-active in <2.1.8 */
-{
-  height: 840px;
-}
 
-.background {
-  top: 0;
-  height: min-content;
-  background: linear-gradient(180deg, rgba(21, 16, 82, 0.14) 0%, rgba(158, 150, 255, 0.14) 100%);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-direction: column;
-  width: 100%;
-  margin: 0;
 
-}
+
 
 .hero-container {
   display: flex;
@@ -177,15 +267,21 @@ const handleButtonClick = (button) => {
 }
 
 .title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  width: 100%;
   border: none;
   text-decoration: none;
   padding-bottom: 5%;
 }
 
 .description {
+  max-width: 400px;
   color: #282828;
   font-size: 20px;
-  margin: 0 auto;
+  margin: auto;
 }
 
 .course-section {
@@ -194,24 +290,7 @@ const handleButtonClick = (button) => {
   margin: 0;
 }
 
-.search-container {
-  position: relative;
-  width: 80%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  padding-top: 20px;
-}
 
-.search-bar {
-  box-sizing: border-box;
-  width: 60%;
-  background-color: var(--light-1);
-  border-radius: 20px;
-  position: relative; /* Make it a positioning context for the absolute position of the button */
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
-}
 
 .search-icon {
   position: absolute;
@@ -251,21 +330,6 @@ const handleButtonClick = (button) => {
 @media (max-width: 1320px) {
   .course-block {
     grid-template-columns: repeat(1, 1fr);
-  }
-}
-
-@media (max-width: 768px) {
-  .community-title-container {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .community-title-container .fancy-button {
-    margin-top: 20px;
-  }
-
-  .course-block p:nth-child(2) {
-    display: none;
   }
 }
 
@@ -322,26 +386,6 @@ const handleButtonClick = (button) => {
 }
 
 
-.fancy-button {
-  color: #EAEAEA;
-  font-family: 'Inter', sans-serif;
-  font-weight: bold;
-  font-size: 14px;
-  padding: 10px;
-  border-radius: 10px;
-  text-decoration: none;
-  display: flex;
-  min-width: 100px;
-  background: #0C0C0C;
-  border: 0.5px solid #252525;
-  transition: all 0.3s ease-in-out;
-  white-space: nowrap;
-}
-
-.fancy-button:hover {
-  background-color: #262626;
-  box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
-}
 
 
 .community-title-container {

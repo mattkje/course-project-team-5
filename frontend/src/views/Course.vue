@@ -499,7 +499,7 @@ function addProviderFailed() {
           <hr>
           <div class="course-action-box">
 
-            <button id="enrollButton" class="enroll-button">Buy now</button>
+            <router-link to="/payment" id="enrollButton" class="enroll-button">Buy now</router-link>
             <button v-on:click="addCourseToCart()" class="cartBtn">
                     <span class="IconContainer">
                         <img class="cart-icon-small" src="/cart-small.svg" alt="Cart">

@@ -1,16 +1,16 @@
 <template>
   <div class="course-page-background">
     <div class="providerList">
-      <div class="course-image-box">
-        <img id="courseImage" class="course-image" alt="Course Image">
-        <div class="course-image-blur"></div>
-      </div>
       <div class="courseLinkElement">
         <a href="/community">Community</a>
         <p>&nbsp;->&nbsp;</p>
         <p id="courseCategoryLink"></p>
         <p>&nbsp;->&nbsp;</p>
         <p id="courseTitleLink"></p>
+      </div>
+      <div class="course-image-box">
+        <img id="courseImage" class="course-image" alt="Course Image">
+        <div class="course-image-blur"></div>
       </div>
       <div class="course">
         <div class="course-description-box">
@@ -239,6 +239,23 @@ function setDefaultCurrency() {
 
 <style scoped>
 
+@media (max-width: 769px) {
+  .course-image-box {
+    height: 400px;
+    width: 400px;
+    margin: auto;
+  }
+}
+
+@media (min-width: 769px) {
+  .course-image-box {
+    position: absolute;
+    height: 400px;
+    width: 100%;
+    margin: 0;
+  }
+}
+
 .course-page-background {
   font-family: Inter, sans-serif;
   background-color: var(--light-3);
@@ -458,12 +475,7 @@ input:focus {
   background: linear-gradient(to top, rgba(15, 16, 19, 0.68) 0%, transparent 20%);
 }
 
-.course-image-box {
-  position: absolute;
-  height: 400px;
-  width: 100%;
-  margin: 0;
-}
+
 
 .course {
   padding: 10px 20px;

@@ -212,40 +212,7 @@ hr {
     border: none;
 }
 
-@media (max-width: 768px) {
-    .course-block p:nth-child(2) {
-        display: none;
-    }
-}
 
-@media (max-width: 500px) {
-    .course-block .course-card.course-card {
-        height: 200px;
-        width: 300px;
-    }
-
-    .course-block .course-card.course-card img {
-        width: 60%;
-        height: 50%;
-    }
-
-    .course-block .course-card-description.course-card-description {
-        max-width: 100%;
-    }
-
-    .course-block .course-card.course-card-description p{
-        overflow: hidden;
-        text-overflow: ellipsis;
-        max-width: 100px;
-    }
-
-    .course-block .course-card.course-card p:nth-child(3) {
-        display: none;
-    }
-    .course-block .course-card.course-card {
-        flex-direction: column;
-    }
-}
 
 .profile-box {
     background-color: var(--light-1);
@@ -281,51 +248,108 @@ hr {
 
 .course-block {
 
-    .course-card {
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
-        margin: 20px;
-        padding: 20px;
-        background: var(--light-1);
-        border: 0.5px solid #ffffff;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        width: 100%;
-        height: 200px;
-        text-decoration: none;
+    @media (max-width: 769px) {
+        .course-card {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            margin: 10px auto;
+            padding: 20px;
+            background: var(--light-1);
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            height: 200px;
+            text-decoration: none;
 
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-        &:hover {
-            box-shadow: 0 4px 5px rgba(0, 0, 0, 0.33);
-            transform: scale(1.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            &:hover {
+                box-shadow: 0 4px 5px rgba(0, 0, 0, 0.33);
+                transform: scale(1.05);
+            }
+        }
+
+        .course-card-description {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            margin: 10px;
+            max-height: 150px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .course-card img {
+            border-radius: 10px;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .course-card h3 {
+            font-size: 17px;
+            margin: 0 0 10px 0;
+        }
+
+        .course-card p {
+            color: #606060;
+            font-size: 14px;
+            margin: 0 0 10px 0;
+            width: 100%;
+            height: 100%;
+            text-overflow: ellipsis;
+        }
+    }
+    @media (min-width: 769px) {
+        .course-card {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            margin: 20px;
+            padding: 20px;
+            background: var(--light-1);
+            border: 0.5px solid #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            height: 200px;
+            text-decoration: none;
+
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            &:hover {
+                box-shadow: 0 4px 5px rgba(0, 0, 0, 0.33);
+                transform: scale(1.05);
+            }
+        }
+
+        .course-card-description {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            margin: 10px;
+            overflow: hidden;
+        }
+
+        .course-card img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .course-card h3 {
+            font-size: 20px;
+            margin: 10px 0;
+        }
+
+        .course-card p {
+            color: #606060;
+            font-size: 16px;
+            margin: 10px 0;
         }
     }
 
-    .course-card-description {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
-        margin: 10px;
-        overflow: hidden;
-    }
-
-    .course-card img {
-        width: 150px;
-        height: 150px;
-        object-fit: cover;
-    }
-
-    .course-card h3 {
-        font-size: 20px;
-        margin: 10px 0;
-    }
-
-    .course-card p {
-        color: #606060;
-        font-size: 16px;
-        margin: 10px 0;
-    }
 
 }
