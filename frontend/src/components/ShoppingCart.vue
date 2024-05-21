@@ -68,6 +68,13 @@ async function populateCart() {
 
   // Get the course table element
   const courseList = document.getElementsByClassName("course-table")[0];
+
+  // Remove "The cart is empty"
+  if (courseList.children.length > 0) {
+    courseList.removeChild(courseList.children[0]);
+  }
+
+
   console.log(courseIds.length);
 
   // Loop through the course IDs
