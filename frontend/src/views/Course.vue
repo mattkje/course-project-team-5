@@ -13,8 +13,9 @@ const addProvider = ref(false);
 
 //Test cookies
 function addCourseToCart() {
-  setCookie('courseId','2',1);
-  setCookie('providerId','1',1);
+  const urlParams = new URLSearchParams(window.location.search);
+  const courseId = urlParams.get('id');
+  setCookie('courseId_' + courseId, courseId, 1);
 }
 
 
