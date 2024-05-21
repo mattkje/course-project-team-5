@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import no.ntnu.api.course.Course;
+import no.ntnu.api.course.CourseRepository;
 import no.ntnu.api.user.*;
 import no.ntnu.api.role.Role;
 import no.ntnu.api.role.RoleRepository;
@@ -34,6 +36,8 @@ public class AccessUserService implements UserDetailsService {
   RoleRepository roleRepository;
   @Autowired
   UserCoursesRepository userCoursesRepository;
+  @Autowired
+  CourseRepository courseRepository;
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -316,5 +320,16 @@ public class AccessUserService implements UserDetailsService {
 
   public void unsubscribe(User user) {
     deleteProRole(user.getUsername());
+  }
+
+  public void addUserCourse(User user, int courseId) {
+    for (Course course : courseRepository.findAll()) {
+        if (course.getCourseId() == courseId) {
+            UserCourses userCourse = new UserCourses();
+            userCourse.setUserId(user.getUserId());
+            userCourse.setCourse(course);
+            userCoursesRepository.save(userCourse);
+        }
+    }
   }
 }
