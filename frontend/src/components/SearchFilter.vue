@@ -148,7 +148,7 @@
         }">Category
         </button>
         <div class="wrapper" id="categoryContainer" :style="{
-          height: isCategoryVisible ? '200px' : '0px',
+          height: isCategoryVisible ? '150px' : '0px',
           opacity: isCategoryVisible ? '1' : '0',
           zIndex: isCategoryVisible ? '0' : -100,
           'border-radius': isCategoryVisible ? '0 0 10px 10px' : '10px'
@@ -189,14 +189,15 @@
         </button>
 
         <div class="wrapper" id="dateContainer" :style="{
-          height: isDateVisible ? '50px' : '0px',
+          height: isDateVisible ? '80px' : '0px',
           opacity: isDateVisible ? '1' : '0',
           zIndex: isDateVisible ? '0' : -100,
-          'border-radius': isDateVisible ? '0 0 10px 10px' : '10px'
+          'border-radius': isDateVisible ? '0 0 10px 10px' : '10px',
+          textAlign: 'center'
         }">
 
           <span>Start date - End Date</span>
-          <flat-pickr v-model="date" :config="config" class="form-control" placeholder="Select dates" name="date" @change="sortByDate"></flat-pickr>
+          <flat-pickr v-model="date" :config="config" class="form-control" placeholder="Select dates" name="date" @change="getDate" ref="flatpickr"></flat-pickr>
         </div>
 
         <button class="price-ranger" @click="toggleShowProvider" :style="{
@@ -303,8 +304,6 @@ const isCreditVisible = ref(false);
 const minPrice = ref(null);
 const maxPrice = ref(null);
 
-const date = ref(null);
-
 const coursesData = ref(null);
 const currenciesData = ref(null);
 const providerData = ref(null);
@@ -323,13 +322,26 @@ let pricedChildren = new Map();
 
 let showFilters = ref(false);
 
+const date = ref(null);
+
 const config = ref({
   mode: 'range',
-  dateFormat: 'd-m',
-  altFormat: 'd-m-Y',
+  dateFormat: 'J of F',
+  altInput: true,
+  altFormat: 'Y-m-d',
   minDate: 'today',
-  conjunction: ' to ',
 });
+
+
+const flatpickr = ref(null);
+
+ const getDate = () => {
+  const flatpickerInstance = flatpickr.value.fp;
+  const AltInputValue = flatpickerInstance.altInput.value.split(' to ');
+  const [startDate, endDate] = AltInputValue;
+
+  sortByDate(startDate, endDate);
+};
 
 onMounted(() => {
   courseContainer = document.querySelector('#courseContainer');
@@ -511,16 +523,7 @@ function isMatch(courses, checkboxId, isSlider) {
     createChildrenIdList();
   }
 
-  if (activeFilters.has("credit") && checkboxId.includes("credit")) {
-    console.log(activeFilters.size)
-    for (let key of filterMap.keys()) {
-      let existingFilter = filterMap.get(key);
-      if (existingFilter.has("credit")) {
-        console.log("check")
-        existingFilter.delete("credit");
-      }
-    }
-  }
+ checkActiveFilters(checkboxId)
   Matching = [];
 
   for (let course of courses) {
@@ -530,9 +533,22 @@ function isMatch(courses, checkboxId, isSlider) {
   }
   filterCourse(Matching, checkboxId, isSlider);
   updateView();
-
   console.log(activeFilters)
+}
 
+function checkActiveFilters(checkboxId) {
+  if (activeFilters.has("credit") && checkboxId.includes("credit") || activeFilters.has("date") && checkboxId.includes("date")) {
+    console.log(activeFilters.size)
+    for (let key of filterMap.keys()) {
+      let existingFilter = filterMap.get(key);
+      if (existingFilter.has("credit")) {
+        console.log("check")
+      }
+      if (existingFilter.has("date")) {
+        existingFilter.delete("date");
+      }
+    }
+  }
 }
 
 async function sortByCategory(event) {
@@ -541,8 +557,13 @@ async function sortByCategory(event) {
   let checkboxId = "category " + nameId.labelName;
   onCheckboxChange(checkboxId, category);
   await sendApiRequest("GET", '/courses/category/' + category, (data) => isMatch(data, checkboxId, false), onFailure);
+}
 
-
+async function sortByDate(startDate, endDate) {
+  let checkboxId = "date " + startDate + " to " + endDate;
+  onCheckboxChange(checkboxId, startDate + " to " + endDate);
+  await sendApiRequest("GET", '/courses/date-range?startDate=' + startDate + '&endDate=' + endDate, (data) =>
+    isMatch(data, checkboxId, true), onFailure);
 }
 
 async function onProviderCheckboxChange(event) {
@@ -643,10 +664,6 @@ function searchCourses() {
     }
   }
   updateView();
-}
-
-function sortByDate() {
-  console.log(date.value)
 }
 
 function onFailure() {
@@ -1061,16 +1078,20 @@ body, html {
   overflow-y: auto;
 }
 
+.form-control input {
+  width: 100%;
+  font-family: sans-serif;
+  min-height: 40px;
+  text-align: center;
+}
+
+
 @media (max-width: 1250px) {
   .filter-container {
     flex-direction: column;
     max-width: 90%;
     margin: 0 5% 0 5%;
     padding: 0;
-  }
-
-  .search-bar {
-    width: 70%;
   }
 
   .range-container {
@@ -1098,9 +1119,8 @@ body, html {
     margin: 0 5% 0 5%;
   }
 
-  .search-prompt {
+  .search-prompt { 
     padding: 20px 20px 20px 70px;
   }
-
 }
 </style>
