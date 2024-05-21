@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from 'vue';
-import {redirectTo} from "@/js/navigation";
 import {showFormError} from "@/js/tools";
 import {sendAuthenticationRequest} from "@/js/authentication";
 import Register from "@/components/Register.vue";
@@ -15,7 +14,7 @@ const login = async () => {
 
 function onLoginSuccess() {
   console.log("Login successful");
-  redirectTo("/");
+  window.location.href = '/';
 }
 
 function changeCompo() {

@@ -1,4 +1,3 @@
-import {redirectTo} from "@/js/navigation";
 
 const API_BASE_URL = `https://localhost:8443/api`;
 import {getCookie, setCookie} from "../js/tools.js";

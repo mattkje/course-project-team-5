@@ -51,7 +51,6 @@ import {getAuthenticatedUser, hasRole, isAuthorized} from '@/js/authentication';
 import Guidelines from "@/components/Guidelines.vue";
 import router from "@/router";
 import {getCookie} from "@/js/tools";
-import {redirectTo} from "@/js/navigation";
 import {sendApiRequest} from "@/js/requests";
 
 
@@ -60,7 +59,7 @@ export default {
   mounted() {
     const currentUser = getAuthenticatedUser();
     if (!currentUser) {
-      redirectTo('/login');
+      window.location.href = ('/login');
     }
   },
   data() {
@@ -149,7 +148,7 @@ export default {
 
 function success(data) {
   let recentPost = data[data.length - 1];
-  redirectTo('/community/post/?id=' + recentPost.courseId);
+  window.location.href = ('/community/post/?id=' + recentPost.courseId);
 }
 
 function error() {

@@ -1,6 +1,5 @@
 import {deleteCookie, getCookie, setCookie} from "@/js/tools";
 import {sendApiRequest} from "@/js/requests";
-import {redirectTo} from "@/js/navigation";
 
 function getAuthenticatedUser() {
     let user = null;

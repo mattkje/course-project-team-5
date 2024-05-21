@@ -5,7 +5,6 @@ import {onMounted, ref} from "vue";
 import {getAuthenticatedUser, hasRole} from "@/js/authentication";
 import AdminUserManagement from "@/components/AdminUserManagement.vue";
 import AdminCourseManagement from "@/components/AdminCourseManagement.vue";
-import {redirectTo} from "@/js/navigation";
 import AdminPostManagement from "@/components/AdminPostManagement.vue";
 
 
@@ -16,7 +15,7 @@ let navigate = ref("userManage");
 
 async function loadProfileData() {
   if(!hasRole('ROLE_ADMIN')) {
-    redirectTo("/no-access");
+    window.location.href = ('/no-access');
   }
 
   navigate.value = "userManage";
@@ -49,7 +48,7 @@ function courseManage() {
 }
 
 function createCourse() {
-  redirectTo("/create-course");
+  window.location.href = ("/create-course");
 }
 
 </script>

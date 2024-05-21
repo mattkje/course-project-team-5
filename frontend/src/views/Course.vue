@@ -7,7 +7,6 @@ import myStore from '@/js/store.js';
 import {createContentBox, fetchCourses, fetchCurrencies} from "@/js/populationTools";
 import { setCookie } from "@/js/tools";
 import {sendApiRequest} from "@/js/requests";
-import {redirectTo} from "@/js/navigation";
 
 const loading = ref(true);
 const addProvider = ref(false);

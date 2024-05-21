@@ -2,7 +2,6 @@
 import {getCurrentInstance, onMounted, ref} from 'vue';
 import {doLogout, getAuthenticatedUser, hasRole, removeRole} from "@/js/authentication";
 import {sendApiRequest, sendTokenRefreshRequest} from "@/js/requests";
-import {redirectTo} from "@/js/navigation";
 import {createContentBox, fetchCourseById, fetchCourses, fetchCurrencies, fetchProviders} from "@/js/populationTools";
 import {getCookie, isTokenAboutToExpire} from "@/js/tools";
 import {setDefaultCurrency} from "@/js/currency";
@@ -155,7 +154,7 @@ function editCourseCard(object, course) {
   object.style.minWidth = "500px";
   object.style.minHeight = "50px";
   object.onclick = function () {
-    redirectTo("/courses/?id=" + course.course.courseId);
+    window.location.href = ("/courses/?id=" + course.course.courseId);
   };
 
 

@@ -45,7 +45,7 @@
           </div>
           <div class="subscription-box-pro" v-show="!loading && hasRole('ROLE_PRO')">
             <p>You have a Learniverse Pro subscription<br>Your subscription ends <span></span></p>
-            <button class="fancy-button" @click="redirectTo('/pro')">Learniverse Pro</button>
+            <button class="fancy-button" @click="window.location.href = ('/pro')">Learniverse Pro</button>
             <button class="fancy-button" @click="endSubscription">End your subscription</button>
           </div>
         </div>
@@ -65,7 +65,6 @@
 import {onMounted, ref} from 'vue';
 import {doLogout, getAuthenticatedUser, hasRole, removeRole} from "@/js/authentication";
 import {sendApiRequest, sendTokenRefreshRequest} from "@/js/requests";
-import {redirectTo} from "@/js/navigation";
 import {getCookie, isTokenAboutToExpire} from "@/js/tools";
 import PasswordChange from "@/components/PasswordChange.vue";
 import AccountDetails from "@/components/AccountDetails.vue";
@@ -90,7 +89,7 @@ async function loadProfileData() {
       await sendApiRequest("GET", "/users/" + user.username, onProfileDataSuccess, onProfileDataError);
     }
   } else {
-    redirectTo("/no-access");
+    window.location.href = ("/no-access");
   }
 }
 
@@ -125,7 +124,7 @@ function myCourses() {
 
 function onTokenRefreshError(error) {
   console.error("Error refreshing token: ", error);
-  redirectTo("/no-access");
+  window.location.href = ("/no-access");
 }
 
 function onProfileDataSuccess(data) {
@@ -148,7 +147,7 @@ function onProfileDataSuccess(data) {
 
 function onProfileDataError(error) {
   console.error("Error loading profile data: ", error);
-  redirectTo("/no-access");
+  window.location.href = ("/no-access");
 }
 
 function newPassword() {
@@ -191,7 +190,7 @@ function endSubscription() {
   sendApiRequest("PUT", "/users/unsubscribe", onEndSubscriptionSuccess, onEndSubscriptionError);
   removeRole('ROLE_PRO');
   alert('You have successfully ended you subscription');
-  redirectTo('/profile');
+  window.location.href = ('/profile');
 }
 
 function onEndSubscriptionSuccess(data) {
@@ -241,13 +240,13 @@ function editCourseCard(object, course) {
   object.style.Width = "100%"
   object.style.minHeight = "50px";
   object.onclick = function () {
-    redirectTo("/courses/?id=" + course.course.courseId);
+    window.location.href = ("/courses/?id=" + course.course.courseId);
   };
 }
 
 function doLogoutToHome() {
   doLogout();
-  redirectTo("/");
+  window.location.href = ("/");
 }
 
 function cancelChangePassword() {

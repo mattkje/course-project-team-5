@@ -187,7 +187,6 @@ import {
 } from "@/js/populationTools";
 import WelcomeBack from "@/components/WelcomeBack.vue";
 import Alert from "@/components/Alert.vue";
-import {redirectTo} from "@/js/navigation";
 import {getCookie, setCookie} from "@/js/tools";
 
 
