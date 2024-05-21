@@ -13,11 +13,16 @@
         <div class="course-info-box">
           <div class="course-info">
             <div class="author-and-time">
-              <p id="postAuthor"></p>
+              <div class="user-view">
+                <p>Written By</p>
+                <img id="postProfilePicture"/>
+                <p id="postAuthor"></p>
+              </div>
               <p id="postDate"></p>
             </div>
           </div>
           <div class="course-info">
+            <hr>
             <h2 id="courseTitle"></h2>
             <hr>
             <p id="courseDescription"></p>
@@ -49,6 +54,8 @@ import {getCurrentInstance, onMounted} from 'vue';
 import "@/assets/coursePage.css"
 import MarkdownIt from 'markdown-it';
 import {hasRole} from "@/js/authentication";
+import {sendApiRequest, sendTokenRefreshRequest} from "@/js/requests";
+import {getCookie, isTokenAboutToExpire} from "@/js/tools";
 
 onMounted(() => {
   populateCoursePage();
@@ -57,6 +64,32 @@ onMounted(() => {
 
 const {appContext} = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
+
+const user = '';
+
+function onTokenRefreshSuccess() {
+  console.log("Token has been refreshed.");
+  sendApiRequest(API_URL,"GET", "/users/" + user.username, onProfileDataSuccess);
+}
+
+function onTokenRefreshError(error) {
+  console.error("Error refreshing token: ", error);
+  window.location.href = ("/no-access");
+}
+
+async function loadProfileData(user) {
+  console.log("Loading profile data from API...");
+  const jwt = getCookie("jwt");
+  if (jwt && isTokenAboutToExpire(jwt)) {
+    sendTokenRefreshRequest(onTokenRefreshSuccess, onTokenRefreshError);
+  } else {
+    await sendApiRequest(API_URL,"GET", "/users/" + user, onProfileDataSuccess);
+  }
+}
+
+function onProfileDataSuccess(data) {
+  document.getElementById("postProfilePicture").src = 'data:image/jpeg;base64,' + data.user.image;
+}
 
 
 // Function to populate the course page with the course data
@@ -80,10 +113,20 @@ function populateCoursePage() {
       //Continuing if course exists
       .then(data => {
 
+        loadProfileData(data.author);
+
         //Populating the similar courses box
         populatePosts('.featured');
 
         const dateText = formatDate(data.postDate)
+
+        // Convert the original date string to a Date object
+        const date = new Date(dateText);
+
+        // Format the date to a more readable format
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        const formattedDate = date.toLocaleDateString(undefined, options);
+
 
         const markdownText = data.content;
         const md = new MarkdownIt();
@@ -93,7 +136,7 @@ function populateCoursePage() {
         document.getElementById('courseCategoryLink').innerText = data.category;
         document.getElementById('courseTitleLink').innerText = data.title;
         document.getElementById('postAuthor').innerText = data.author;
-        document.getElementById('postDate').innerText = 'Posted: '+ dateText;
+        document.getElementById('postDate').innerText = 'Posted: '+ formattedDate;
         document.getElementById('courseDescription').innerText = data.description;
         document.getElementById('postContent').innerHTML = htmlContent;
         document.getElementById('courseImage').src = data.image || '/noImageCom.svg';
@@ -321,6 +364,11 @@ function setDefaultCurrency() {
     -ms-overflow-style: none;
   }
 
+  .author-and-time{
+    display: flex;
+    justify-content: space-between;
+  }
+
 }
 
 @media (min-width: 769px) {
@@ -435,6 +483,19 @@ function setDefaultCurrency() {
     height: 50%;
     box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
   }
+
+  .author-and-time{
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+  }
+}
+
+.user-view {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
 }
 
 .course-page-background {
@@ -686,12 +747,24 @@ input:focus {
 }
 
 #courseDescription,
-#postAuthor,
 #postContent,
 #postDate{
   color: #282828;
+  margin: auto 0;
 }
 
+#postProfilePicture {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin: auto;
+}
+
+#postAuthor {
+  font-weight: bold;
+  color: #282828;
+  margin: auto;
+}
 
 .hbox {
   display: flex;
@@ -909,10 +982,7 @@ button {
   width: 90%;
 }
 
-.author-and-time{
-  display: flex;
-  justify-content: space-between;
-}
+
 
 .post-content {
   line-height: 30px;
