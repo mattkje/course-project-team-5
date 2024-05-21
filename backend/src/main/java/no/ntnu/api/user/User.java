@@ -11,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import no.ntnu.api.course.Course;
@@ -66,6 +67,11 @@ public class User {
     @Column(name = "last_name", length = 20)
     private String lastName;
 
+    @Schema(description = "The profile picture of the user")
+    @Lob
+    @Column(name = "image", columnDefinition = "LONGBLOB")
+    private byte[] image;
+
 
     private boolean active = true;
 
@@ -119,7 +125,7 @@ public class User {
      * @param lastName The last name of the user.
      * @param phoneNumber The phone number of the user.
      */
-    public User(String username, String password, String email, String firstName, String lastName, String phoneNumber) {
+    public User(String username, String password, String email, String firstName, String lastName,String phoneNumber) {
         this.username = username;
         this.email = email;
         this.password = password;
@@ -376,5 +382,13 @@ public class User {
      */
     public void setSubscriptionExpire(LocalDate subscriptionExpire) {
         this.subscriptionExpire = subscriptionExpire;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 }

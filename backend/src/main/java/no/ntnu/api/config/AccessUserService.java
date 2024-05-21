@@ -332,4 +332,10 @@ public class AccessUserService implements UserDetailsService {
         }
     }
   }
+
+  public void addImageToUser(byte[] image) {
+    if (getSessionUser() != null && image != null) {
+      getSessionUser().user().setImage(image);
+    }
+  }
 }
