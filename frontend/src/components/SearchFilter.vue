@@ -7,6 +7,7 @@
       <img class="search-icon" src="/search.png" alt="Connect">
     </div>
   </div>
+  <div class="dark-overlay" @click="toggleFilters" v-show="isDarkOverlayVisible"></div>
   <div class="filter-wrapper">
     <div class="active-filter-container">
       <button @click="toggleFilters">
@@ -17,10 +18,17 @@
 
     <div class="filter-container">
       <div class="range-container" v-show="isRangeContainerVisible">
+        <h3 class="mobile-filter-header">Filters</h3>
+
+        <div class="separator"></div>
+
         <button class="price-ranger" @click="toggleShowCategory" :style="{
           'border-radius': isCategoryVisible ? '10px 10px 0 0' : '10px'
         }">Category
         </button>
+
+        <div class="separator"></div>
+
         <div class="wrapper" id="categoryContainer" :class="{'visible': isCategoryVisible, 'hidden': !isCategoryVisible}">
           <div class="category-list" id="categoryList"></div>
         </div>
@@ -29,6 +37,9 @@
           'border-radius': isPriceVisible ? '10px 10px 0 0' : '10px'
         }">Price
         </button>
+
+        <div class="separator"></div>
+
         <div class="wrapper" id="priceText" :class="{'visible': isPriceVisible, 'hidden': !isPriceVisible}">
           <div class="price-input-container">
             <div class="price-input">
@@ -49,6 +60,8 @@
         }">Date
         </button>
 
+        <div class="separator"></div>
+
         <div class="wrapper" id="dateContainer" :class="{'visible': isDateVisible, 'hidden': !isDateVisible}">
           <span>Start date - End Date</span>
           <flat-pickr v-model="date" :config="config" class="form-control" placeholder="Select dates" name="date" @change="getDate" ref="flatpickr"></flat-pickr>
@@ -58,6 +71,9 @@
           'border-radius': isProviderVisible ? '10px 10px 0 0' : '10px'
         }">Provider
         </button>
+
+        <div class="separator"></div>
+
         <div class="wrapper" id="providerContainer" :class="{'visible': isProviderVisible, 'hidden': !isProviderVisible}">
             <div id="providerList"></div>
         </div>
@@ -66,6 +82,9 @@
           'border-radius': isDifficultyVisible ? '10px 10px 0 0' : '10px'
         }">Difficulty
         </button>
+
+        <div class="separator"></div>
+
         <div class="wrapper" :class="{'visible': isDifficultyVisible, 'hidden': !isDifficultyVisible}" id="difficultyContainer">
           <header>
             <div class="checkbox-wrapper">
@@ -87,10 +106,14 @@
             </div>
           </header>
         </div>
+
         <button class="price-ranger" @click="toggleShowCredit" :style="{
           'border-radius': isCreditVisible ? '10px 10px 0 0' : '10px'
         }">Credit
         </button>
+
+        <div class="separator"></div>
+
         <div class="wrapper" id="creditContainer" :class="{'visible': isCreditVisible, 'hidden': !isCreditVisible}">
           <header>
             <div class="slider-container">
@@ -133,9 +156,11 @@ const isExpertChecked = ref(false);
 
 
 const isRangeContainerVisible = ref(window.innerWidth > 1250);
+const isDarkOverlayVisible = ref(false);
 
 const updateVisibility = () => {
   isRangeContainerVisible.value = window.innerWidth > 1250;
+  isDarkOverlayVisible.value = window.innerWidth < 1250 && isRangeContainerVisible.value;
 };
 
 const isCategoryVisible = ref(false);
@@ -525,6 +550,13 @@ function toggleShowCredit() {
 function toggleFilters() {
   if (window.innerWidth < 1250) {
     isRangeContainerVisible.value = !isRangeContainerVisible.value;
+    isDarkOverlayVisible.value = !isDarkOverlayVisible.value;
+    isCategoryVisible.value = true;
+    isPriceVisible.value = true;
+    isDateVisible.value = true;
+    isDifficultyVisible.value = true;
+    isProviderVisible.value = true;
+    isCreditVisible.value = true;
   }
 }
 
@@ -554,36 +586,12 @@ function toggleFilters() {
   align-content: center;
 }
 
-
-.filter-popup {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  max-width: 100%;
-  height: 60%;
-  background-color: var(--light-1);
-  z-index: 100;
-  overflow-y: auto;
-  overflow-x: hidden;
-  transition: bottom 0.3s ease;
-}
-
-.mobile-filter {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 10px;
-  width: 100%;
-}
-
 .dark-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 40%;
+  height: 100%;
   background-color: rgb(88, 75, 235, 0.1);
   z-index: 99;
 }
@@ -621,11 +629,13 @@ function toggleFilters() {
 }
 
 .separator {
-  height: 1px;
-  width: 100%;
+  display: none;
+  min-height: 2px;
+  width: 40%;
   background-color: grey;
-  margin: 10px 0 0 0;
+  margin: 10px 0;
   padding: 0 40px;
+  text-align: center;
 }
 
 .flexible-grid-container {
@@ -701,11 +711,6 @@ function toggleFilters() {
 }
 
 @media (max-width: 769px) {
-  .filter-container {
-    flex-direction: column;
-    max-width: 90%;
-    margin: 0 5% 0 5%;
-  }
 
   .flexible-grid {
     margin: 0;
@@ -924,9 +929,20 @@ body, html {
   text-align: center;
 }
 
+.mobile-filter-header {
+  display: none;
+}
 
 
 @media (max-width: 1250px) {
+
+  .mobile-filter-header {
+    display: block;
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--dark-3);
+  }
+
   .filter-container {
     flex-direction: column;
     max-width: 90%;
@@ -935,10 +951,47 @@ body, html {
   }
 
   .range-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    max-width: 90%;
+    height: 60%;
+
+    margin: 0 5% 0 5%;
+    padding: 20px 0 0 20px;
+
+    border-radius: 20px 20px 0 0;
+
+    background-color: var(--light-1);
+
+    z-index: 100;
+    overflow-y: auto;
+    overflow-x: hidden;
+    transition: bottom 0.3s ease;
+
     display: flex;
-    align-content: flex-start;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: flex-start;
-    min-width: 100%;
+
+    gap: 5px;
+  }
+
+  .price-ranger {
+    margin: 0;
+    padding: 0;
+  }
+
+  .wrapper {
+    padding: 0;
+    width: 40%;
+  }
+
+  .checkbox-wrapper {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
   }
 
   .active-filter-container {
@@ -958,6 +1011,10 @@ body, html {
 
   .search-prompt {
     padding: 20px 20px 20px 70px;
+  }
+
+  .separator {
+    display: block;
   }
 
 }

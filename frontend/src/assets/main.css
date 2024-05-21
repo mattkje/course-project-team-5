@@ -231,16 +231,20 @@ p {
   max-height: 20px;
 }
 
-#range-vertical-container .inp-cbx {
-  min-height: 14px;
-  min-width: 14px;
+
+@media (max-width: 1250px) {
+  .range-container .inp-cbx {
+    min-height: 14px;
+    min-width: 14px;
+  }
+
+  .range-container  .checkbox-wrapper {
+    font-size: 14px;
+    display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+  }
 }
 
-#range-vertical-container .checkbox-wrapper {
-  font-size: 14px;
-  display: flex;
-  flex-direction: row-reverse;
-  flex-wrap: nowrap;
-  justify-content: flex-end;
-}
 
