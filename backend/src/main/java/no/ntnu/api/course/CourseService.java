@@ -267,4 +267,12 @@ public class CourseService {
     // Call the repository method to get the courses within the date range
     return courseRepository.findAllByStartDateGreaterThanEqualAndEndDateLessThanEqual(start, end);
   }
+
+  public void changeActiveCourse(int id, Boolean active) {
+    Course courseToChange = getCourseInfo(id);
+    if (courseToChange != null) {
+      courseToChange.setActive(active);
+      courseRepository.save(courseToChange);
+    }
+  }
 }

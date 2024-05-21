@@ -37,6 +37,9 @@ public class Course {
     private String description;
     @Column
     private String image;
+    @Column
+    private boolean active;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "course_providers",
             joinColumns = @JoinColumn(name = "course_id"),
@@ -142,5 +145,13 @@ public class Course {
     }
     public LocalDate getEndDate() {
         return end_date;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

@@ -1,5 +1,6 @@
 package no.ntnu.api.course;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import no.ntnu.api.config.AccessUserService;
@@ -45,7 +46,17 @@ public class CourseController {
 
     @GetMapping("/api/courses")
     public Collection<CourseWithProvidersAndKeywords> getCourses() {
-        return courseService.getAllCourses();
+        if(userService.isAdmin()) {
+            return courseService.getAllCourses();
+        } else {
+            ArrayList<CourseWithProvidersAndKeywords> courses = new ArrayList<>();
+            for (CourseWithProvidersAndKeywords course : courseService.getAllCourses()) {
+                if(course.course().isActive()) {
+                    courses.add(course);
+                }
+            }
+            return courses;
+        }
     }
 
     /**
@@ -101,6 +112,7 @@ public class CourseController {
         return courseService.getLowestPrice();
     }
 
+
     @GetMapping("/api/courses/ids")
     public Collection<Course> getCoursesByIds(@RequestParam List<Integer> ids) {
         return courseService.getCoursesByIds(ids);
@@ -116,4 +128,13 @@ public Collection<Course> getCoursesByProvider(@PathVariable String providerName
         return courseService.getCoursesWithinDateRange(startDate, endDate);
     }
 
+    @PutMapping("/api/courses/active/{id}")
+    public ResponseEntity<?> changeActiveCourse(@PathVariable int id, @RequestBody Boolean active) {
+        if(courseService.getCourseInfo(id) == null && !userService.isAdmin()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } else {
+            courseService.changeActiveCourse(id, active);
+            return ResponseEntity.status(HttpStatus.OK).body(courseService.getCourseInfo(id));
+        }
+    }
 }

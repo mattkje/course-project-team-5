@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS courses
     related_certifications VARCHAR(255)  NULL,
     description            VARCHAR(6000) NULL,
     image                  VARCHAR(255)  NULL,
+    active                 BIT(1)        NOT NULL DEFAULT 1,
     CONSTRAINT pk_courses PRIMARY KEY (course_id)
 );
 
