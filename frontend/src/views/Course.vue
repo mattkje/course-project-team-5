@@ -1257,18 +1257,16 @@ button {
   font-weight: bold;
   color: white;
   font-size: 1.04em;
-  background: #584BEB;
   background-color: grey;
+  text-decoration: none;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 70%;
   height: 50px;
   border-radius: 12px;
-  cursor: pointer;
   transition: all .5s;
   margin-right: 10px;
-  cursor: not-allowed;
 }
 
 .enroll-button:hover {

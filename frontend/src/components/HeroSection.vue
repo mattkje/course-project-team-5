@@ -53,6 +53,7 @@
 }
 
 .hero-container {
+  max-width: 100%;
   display: flex;
   justify-content: center;
 }
@@ -100,10 +101,9 @@
 
 .bend {
   width: 100%;
-  transform: scaleX(1.01) translateY(2px);
+  transform: translateY(2px);
   margin: 0;
   padding: 0;
-
 }
 
 @keyframes pulse {

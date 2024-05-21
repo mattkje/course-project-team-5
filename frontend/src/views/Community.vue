@@ -258,14 +258,6 @@ const handleButtonClick = (button) => {
   align-items: center;
 }
 
-
-.bend {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-
-}
-
 .title {
   display: flex;
   flex-direction: column;

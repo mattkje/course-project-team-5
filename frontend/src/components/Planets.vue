@@ -175,12 +175,6 @@
   transform: translateX(-1100px) translateY(-220px) scale(0.6);
 }
 
-.bend {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-
-}
 
 @keyframes pulse {
   0% {

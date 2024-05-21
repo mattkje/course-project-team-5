@@ -423,16 +423,15 @@ ul {
 
 
 .bend {
-  width: 100%;
+  max-width: 100%;
   transform: translateY(2px);
   margin: 0;
   padding: 0;
-
 }
 
 .bend-bottom {
   rotate: 180deg;
-  width: 100%;
+  max-width: 100%;
   transform: translateY(2px);
   margin: 0;
   padding: 0;

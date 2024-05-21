@@ -151,13 +151,6 @@ function createCourse() {
   align-items: center;
 }
 
-.bend {
-  width: 100%;
-  transform: scaleX(1.01) translateY(2px);
-  margin: 0;
-  padding: 0;
-}
-
 .planet {
   height: 300px;
   animation: ease-out pulse 5s infinite;
