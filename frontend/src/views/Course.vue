@@ -118,7 +118,7 @@ const addProvider = ref(false);
 //Test cookies
 function addCourseToCart() {
   setCookie('courseProviderId','1',1);
-  setCookie('courseId','1',1);
+  setCookie('providerId','1',1);
 }
 
 
@@ -280,6 +280,7 @@ function populateCoursePage() {
 
                 const priceInDefaultCurrency = provider.price / rate;
                 const providerID = provider.courseProviderId; //244
+                addCourseToCart(providerID);
 
 
                 for (let i = 0; i < currencies.length; i++) {

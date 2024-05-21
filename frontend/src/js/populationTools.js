@@ -4,6 +4,12 @@ export async function fetchCourses(API_URL) {
     return response.json();
 }
 
+// Fetch the course by id from the API
+export async function fetchCourseById(API_URL, courseId) {
+    const response = await fetch(API_URL + `/courses/${courseId}`);
+    return response.json();
+}
+
 // Fetch the currencies from the API
 export async function fetchCurrencies(API_URL) {
     const response = await fetch(API_URL + '/currency');
