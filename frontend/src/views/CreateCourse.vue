@@ -2,7 +2,7 @@
   import { ref, computed, onMounted } from 'vue';
   import Guidelines from "@/components/Guidelines.vue";
   import {redirectTo} from "@/js/navigation";
-  import {getAuthenticatedUser} from "@/js/authentication";
+  import {getAuthenticatedUser, hasRole} from "@/js/authentication";
   import {sendApiRequest} from "@/js/requests";
   import flatPickr from 'vue-flatpickr-component';
   import 'flatpickr/dist/flatpickr.css';
@@ -51,8 +51,8 @@
 
   function initSite() {
   const currentUser = getAuthenticatedUser();
-  if (!currentUser) {
-  redirectTo('/login');
+  if (!currentUser || !hasRole('ROLE_ADMIN')) {
+    redirectTo('/no-access');
   }
 }
 

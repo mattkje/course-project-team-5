@@ -48,6 +48,10 @@ function courseManage() {
   navigate.value = "courseManage";
 }
 
+function createCourse() {
+  redirectTo("/create-course");
+}
+
 </script>
 
 <template>
@@ -65,6 +69,7 @@ function courseManage() {
         <button class="nav-button" @click="userManage()"><img class="nav-icon" src="/settingsaccount.svg">User Management</button>
         <button class="nav-button" @click="courseManage()"><img class="nav-icon" src="/settingscourses.svg">Course Management</button>
         <button class="nav-button" @click="postManage()"><img class="nav-icon"src="/settingsPost.svg">Post Management</button>
+        <button class="nav-button" @click="createCourse()"><img class="nav-icon" src="/settingscoursesplus.svg">Add Course</button>
       </div>
       <AdminUserManagement v-show="navigate === 'userManage' && !loading"/>
       <AdminCourseManagement v-show="navigate === 'courseManage' && !loading"/>
