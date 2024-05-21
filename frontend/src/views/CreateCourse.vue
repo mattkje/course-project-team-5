@@ -15,6 +15,8 @@ import {ref, computed, onMounted, getCurrentInstance} from 'vue';
   });
 
   const showGuidelinesModal = ref(false);
+  const keywords = ref([]);
+  const activatedKeywords = ref([]);
   const course = ref({
   title: '',
   category: '',
@@ -36,7 +38,7 @@ const API_URL = appContext.config.globalProperties.$apiAddress;
   showGuidelinesModal.value = !showGuidelinesModal.value;
 }
 
-  function createCourse() {
+async function createCourse() {
     if(course.value.closestCourseSession) {
       const dates = course.value.closestCourseSession.split(' to ');
       course.value.startDate = dates[0];
@@ -44,7 +46,7 @@ const API_URL = appContext.config.globalProperties.$apiAddress;
       console.log(course.value.startDate + course.value.endDate);
       console.log(course.value);
     }
-  sendApiRequest(API_URL,'POST', '/courses', onSuccess, course.value, error);
+  await sendApiRequest(API_URL,'POST', '/courses', onSuccess, course.value, error);
 }
 
   onMounted(() => {
@@ -56,11 +58,40 @@ const API_URL = appContext.config.globalProperties.$apiAddress;
   if (!currentUser || !hasRole('ROLE_ADMIN')) {
     window.location.href = ('/no-access');
   }
+  sendApiRequest(API_URL, 'GET', '/keywords', getCoursesSuccess, getCoursesError);
 }
 
-  function onSuccess() {
+function getCoursesSuccess(data) {
+  keywords.value = data;
+}
+
+function getCoursesError() {
+  alert('There was an error retrieving the courses. Please try again.');
+}
+
+async  function onSuccess() {
+    await sendApiRequest(API_URL, 'GET', '/courses/newest' , newestSuccess, newestError);
   alert('Course created successfully!');
   resetForm();
+}
+
+function newestError() {
+    alert('There was an error retrieving the newest course. Please try again.');
+}
+
+async function newestSuccess(data) {
+    for (let keyword of activatedKeywords.value) {
+      console.log(keyword);
+      await sendApiRequest(API_URL, 'POST', '/courses/keyword/' + data.id + '/' + keyword.id, keywordSuccess, keywordError);
+    }
+}
+
+function keywordSuccess() {
+  console.log('Keyword added successfully');
+}
+
+function keywordError() {
+  alert('There was an error adding the keyword. Please try again.');
 }
 
   function error() {
@@ -79,6 +110,32 @@ const API_URL = appContext.config.globalProperties.$apiAddress;
     description: '',
     image: ''
   }
+}
+
+function addKeyword() {
+  const keywordName = document.getElementById("keywords").value;
+  if (keywordName) {
+    // Find the keyword object from the keywords array
+    const keyword = keywords.value.find(k => k.keyword === keywordName);
+    if (keyword) {
+      // Push the keyword object to the activatedKeywords array
+      activatedKeywords.value.push(keyword);
+    }
+    // Clear the input field
+    document.getElementById("keywords").value = '';
+  }
+}
+
+function removeKeyword(keyword) {
+  activatedKeywords.value = activatedKeywords.value.filter(item => item !== keyword);
+}
+
+function validateKeywordInput(event) {
+    const value = event.target.value;
+    if (!keywords.value.map(k => k.keyword).includes(value)) {
+      event.target.value = '';
+      alert('Please select a keyword from the list.');
+    }
 }
 </script>
 
@@ -111,11 +168,29 @@ const API_URL = appContext.config.globalProperties.$apiAddress;
       </div>
       <div class="form-group">
         <label for="closest-size">Course size:</label>
-        <input type="text" id="closest-size" v-model="course.courseSize" required maxlength="100">
+        <input type="number" id="closest-size" v-model="course.courseSize" required maxlength="100">
       </div>
       <div class="form-group">
         <label for="hours-per-week">Hours per week:</label>
-        <input type="text" id="hours-per-week" v-model="course.hoursPerWeek" required maxlength="100">
+        <input type="number" id="hours-per-week" v-model="course.hoursPerWeek" required maxlength="100" >
+      </div>
+      <div>
+        <div>
+          <label for="keywords">Keywords:</label>
+            <input type="text" id="keywords" list="keywordList" @input="validateKeywordInput">
+            <datalist id="keywordList">
+              <option v-for="keyword in keywords">{{keyword.keyword}}</option>
+            </datalist>
+          <button type="button" class="fancy-button" @click="addKeyword">Add keyword</button>
+        </div>
+        <div>
+          <p>Activated keywords:</p>
+          <ul>
+            <li v-for="keyword in activatedKeywords">{{keyword.keyword}}
+              <button type="button" @click="removeKeyword(keyword)">x</button>
+            </li>
+          </ul>
+        </div>
       </div>
       <div class="form-group">
         <label for="related-certifications">Related certifications:</label>

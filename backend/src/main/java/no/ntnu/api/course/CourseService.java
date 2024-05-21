@@ -316,4 +316,18 @@ public class CourseService {
     courseKeyword.setKeywordObj(keywordRepository.findById((long) keywordId).orElse(null));
     courseKeywordRepository.save(courseKeyword);
   }
+
+  public Collection<Keywords> getAllKeywords() {
+    return keywordRepository.findAll();
+  }
+
+  public Course getNewestCourse() {
+    int highestId = 0;
+    for (Course course : courseRepository.findAll()) {
+      if(course.getCourseId() > highestId) {
+        highestId = course.getCourseId();
+      }
+    }
+    return getCourseInfo(highestId);
+  }
 }

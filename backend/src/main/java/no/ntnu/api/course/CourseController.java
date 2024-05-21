@@ -1,8 +1,7 @@
 package no.ntnu.api.course;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 import no.ntnu.api.config.AccessUserService;
 import no.ntnu.api.keywords.CourseKeywords;
 import no.ntnu.api.keywords.Keywords;
@@ -10,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Collection;
 
 @RestController
 public class CourseController {
@@ -169,4 +166,18 @@ public class CourseController {
         }
     }
 
+    @GetMapping("/api/keywords")
+    public Collection<Keywords> getKeywords() {
+        return courseService.getAllKeywords();
+    }
+
+    @GetMapping("/api/courses/newest")
+    public ResponseEntity<?> getNewestCourse() {
+        Course newestCourse = courseService.getNewestCourse();
+        if(userService.isAdmin()) {
+            return ResponseEntity.status(HttpStatus.OK).body(newestCourse);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
 }
