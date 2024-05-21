@@ -38,6 +38,7 @@ async function loadProfileData() {
 
 function onProfileDataSuccess(data) {
   document.getElementById("profile-picture").src = 'data:image/jpeg;base64,' + data.user.image;
+  document.getElementById("mobile-profile-picture").src = 'data:image/jpeg;base64,' + data.user.image;
 }
 
 
@@ -143,8 +144,8 @@ function setDefaultCurrency() {
               <span class="cart-count" v-if="integertest > 0">{{ integertest }}</span>
             </router-link>
             <router-link v-if="getAuthenticatedUser() === null" to="/login" class="mobile-login-button">Log&nbsp;in</router-link>
-            <router-link to="/profile" v-else class="mobile-header-button">
-              <img src="/account.svg" alt="Cart">
+            <router-link to="/profile" v-else class="mobile-profile">
+              <img id="mobile-profile-picture" src="/account.svg">
             </router-link>
           </div>
         </div>
@@ -330,6 +331,19 @@ function setDefaultCurrency() {
 }
 
 .profile img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.mobile-profile {
+  margin: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.mobile-profile img {
   width: 40px;
   height: 40px;
   border-radius: 50%;
