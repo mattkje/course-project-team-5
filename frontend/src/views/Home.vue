@@ -19,11 +19,57 @@
       <div v-show="!loading" id="featured" class="featured">
         <!--- Featured courses will be appended here --->
       </div>
+
       <div v-show="loading" class="featured">
-        <div class="three-body">
-          <div class="three-body__dot"></div>
-          <div class="three-body__dot"></div>
-          <div class="three-body__dot"></div>
+        <div class="loader">
+          <div class="wrapper">
+            <div class="circle"></div>
+            <div class="line-1"></div>
+            <div class="line-2"></div>
+            <div class="line-3"></div>
+            <div class="line-4"></div>
+            <div class="line-5"></div>
+          </div>
+        </div>
+        <div class="loader">
+          <div class="wrapper">
+            <div class="circle"></div>
+            <div class="line-1"></div>
+            <div class="line-2"></div>
+            <div class="line-3"></div>
+            <div class="line-4"></div>
+            <div class="line-5"></div>
+          </div>
+        </div>
+        <div class="loader">
+          <div class="wrapper">
+            <div class="circle"></div>
+            <div class="line-1"></div>
+            <div class="line-2"></div>
+            <div class="line-3"></div>
+            <div class="line-4"></div>
+            <div class="line-5"></div>
+          </div>
+        </div>
+        <div class="loader">
+          <div class="wrapper">
+            <div class="circle"></div>
+            <div class="line-1"></div>
+            <div class="line-2"></div>
+            <div class="line-3"></div>
+            <div class="line-4"></div>
+            <div class="line-5"></div>
+          </div>
+        </div>
+        <div class="loader">
+          <div class="wrapper">
+            <div class="circle"></div>
+            <div class="line-1"></div>
+            <div class="line-2"></div>
+            <div class="line-3"></div>
+            <div class="line-4"></div>
+            <div class="line-5"></div>
+          </div>
         </div>
       </div>
       <button id="scrollRightButton">
@@ -58,10 +104,55 @@
 
       </div>
       <div v-show="loading" class="data-Science">
-        <div class="three-body">
-          <div class="three-body__dot"></div>
-          <div class="three-body__dot"></div>
-          <div class="three-body__dot"></div>
+        <div class="loader">
+          <div class="wrapper">
+            <div class="circle"></div>
+            <div class="line-1"></div>
+            <div class="line-2"></div>
+            <div class="line-3"></div>
+            <div class="line-4"></div>
+            <div class="line-5"></div>
+          </div>
+        </div>
+        <div class="loader">
+          <div class="wrapper">
+            <div class="circle"></div>
+            <div class="line-1"></div>
+            <div class="line-2"></div>
+            <div class="line-3"></div>
+            <div class="line-4"></div>
+            <div class="line-5"></div>
+          </div>
+        </div>
+        <div class="loader">
+          <div class="wrapper">
+            <div class="circle"></div>
+            <div class="line-1"></div>
+            <div class="line-2"></div>
+            <div class="line-3"></div>
+            <div class="line-4"></div>
+            <div class="line-5"></div>
+          </div>
+        </div>
+        <div class="loader">
+          <div class="wrapper">
+            <div class="circle"></div>
+            <div class="line-1"></div>
+            <div class="line-2"></div>
+            <div class="line-3"></div>
+            <div class="line-4"></div>
+            <div class="line-5"></div>
+          </div>
+        </div>
+        <div class="loader">
+          <div class="wrapper">
+            <div class="circle"></div>
+            <div class="line-1"></div>
+            <div class="line-2"></div>
+            <div class="line-3"></div>
+            <div class="line-4"></div>
+            <div class="line-5"></div>
+          </div>
         </div>
       </div>
       <button id="scrollRightButton-ds">
@@ -82,10 +173,55 @@
 
       </div>
       <div v-show="loading" class="digital-marketing">
-        <div class="three-body">
-          <div class="three-body__dot"></div>
-          <div class="three-body__dot"></div>
-          <div class="three-body__dot"></div>
+        <div class="loader">
+          <div class="wrapper">
+            <div class="circle"></div>
+            <div class="line-1"></div>
+            <div class="line-2"></div>
+            <div class="line-3"></div>
+            <div class="line-4"></div>
+            <div class="line-5"></div>
+          </div>
+        </div>
+        <div class="loader">
+          <div class="wrapper">
+            <div class="circle"></div>
+            <div class="line-1"></div>
+            <div class="line-2"></div>
+            <div class="line-3"></div>
+            <div class="line-4"></div>
+            <div class="line-5"></div>
+          </div>
+        </div>
+        <div class="loader">
+          <div class="wrapper">
+            <div class="circle"></div>
+            <div class="line-1"></div>
+            <div class="line-2"></div>
+            <div class="line-3"></div>
+            <div class="line-4"></div>
+            <div class="line-5"></div>
+          </div>
+        </div>
+        <div class="loader">
+          <div class="wrapper">
+            <div class="circle"></div>
+            <div class="line-1"></div>
+            <div class="line-2"></div>
+            <div class="line-3"></div>
+            <div class="line-4"></div>
+            <div class="line-5"></div>
+          </div>
+        </div>
+        <div class="loader">
+          <div class="wrapper">
+            <div class="circle"></div>
+            <div class="line-1"></div>
+            <div class="line-2"></div>
+            <div class="line-3"></div>
+            <div class="line-4"></div>
+            <div class="line-5"></div>
+          </div>
         </div>
       </div>
       <button id="scrollRightButton-dm">
@@ -128,10 +264,55 @@
 
       </div>
       <div v-show="loading" class="information-technologies">
-        <div class="three-body">
-          <div class="three-body__dot"></div>
-          <div class="three-body__dot"></div>
-          <div class="three-body__dot"></div>
+        <div class="loader">
+          <div class="wrapper">
+            <div class="circle"></div>
+            <div class="line-1"></div>
+            <div class="line-2"></div>
+            <div class="line-3"></div>
+            <div class="line-4"></div>
+            <div class="line-5"></div>
+          </div>
+        </div>
+        <div class="loader">
+          <div class="wrapper">
+            <div class="circle"></div>
+            <div class="line-1"></div>
+            <div class="line-2"></div>
+            <div class="line-3"></div>
+            <div class="line-4"></div>
+            <div class="line-5"></div>
+          </div>
+        </div>
+        <div class="loader">
+          <div class="wrapper">
+            <div class="circle"></div>
+            <div class="line-1"></div>
+            <div class="line-2"></div>
+            <div class="line-3"></div>
+            <div class="line-4"></div>
+            <div class="line-5"></div>
+          </div>
+        </div>
+        <div class="loader">
+          <div class="wrapper">
+            <div class="circle"></div>
+            <div class="line-1"></div>
+            <div class="line-2"></div>
+            <div class="line-3"></div>
+            <div class="line-4"></div>
+            <div class="line-5"></div>
+          </div>
+        </div>
+        <div class="loader">
+          <div class="wrapper">
+            <div class="circle"></div>
+            <div class="line-1"></div>
+            <div class="line-2"></div>
+            <div class="line-3"></div>
+            <div class="line-4"></div>
+            <div class="line-5"></div>
+          </div>
         </div>
       </div>
       <button id="scrollRightButton-it">
@@ -151,10 +332,55 @@
 
       </div>
       <div v-show="loading" class="learniverse-pro">
-        <div class="three-body">
-          <div class="three-body__dot"></div>
-          <div class="three-body__dot"></div>
-          <div class="three-body__dot"></div>
+        <div class="loader">
+          <div class="wrapper">
+            <div class="circle"></div>
+            <div class="line-1"></div>
+            <div class="line-2"></div>
+            <div class="line-3"></div>
+            <div class="line-4"></div>
+            <div class="line-5"></div>
+          </div>
+        </div>
+        <div class="loader">
+          <div class="wrapper">
+            <div class="circle"></div>
+            <div class="line-1"></div>
+            <div class="line-2"></div>
+            <div class="line-3"></div>
+            <div class="line-4"></div>
+            <div class="line-5"></div>
+          </div>
+        </div>
+        <div class="loader">
+          <div class="wrapper">
+            <div class="circle"></div>
+            <div class="line-1"></div>
+            <div class="line-2"></div>
+            <div class="line-3"></div>
+            <div class="line-4"></div>
+            <div class="line-5"></div>
+          </div>
+        </div>
+        <div class="loader">
+          <div class="wrapper">
+            <div class="circle"></div>
+            <div class="line-1"></div>
+            <div class="line-2"></div>
+            <div class="line-3"></div>
+            <div class="line-4"></div>
+            <div class="line-5"></div>
+          </div>
+        </div>
+        <div class="loader">
+          <div class="wrapper">
+            <div class="circle"></div>
+            <div class="line-1"></div>
+            <div class="line-2"></div>
+            <div class="line-3"></div>
+            <div class="line-4"></div>
+            <div class="line-5"></div>
+          </div>
         </div>
       </div>
       <button id="scrollRightButton-lp">
@@ -352,6 +578,91 @@ function loadButtons() {
   .pro-container {
     display: none;
   }
+
+  .loader {
+    position: relative;
+    min-width: 300px;
+    height: 340px;
+    margin: 30px;
+    border: 1px solid #ffffff;
+    border-radius: 20px;
+    padding: 20px 20px 40px 20px;
+    background-color: #ffffff;
+    overflow: hidden;
+  }
+
+  .loader:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: linear-gradient(110deg, rgba(227, 227, 227, 0) 0%, rgba(227, 227, 227, 0) 40%, rgba(255, 255, 255, 0.5) 50%, rgba(227, 227, 227, 0) 60%, rgba(227, 227, 227, 0) 100%);
+    animation: gradient-animation_2 1.2s linear infinite;
+  }
+
+  .loader .wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .loader .wrapper > div {
+    background-color: #ececec;
+  }
+
+  .loader .circle {
+    border-radius: 10px;
+    height: 150px;
+    width: 100%;
+  }
+
+  .loader .button {
+    display: inline-block;
+    height: 32px;
+    width: 75px;
+  }
+
+  .loader .line-1 {
+    position: absolute;
+    top: 190px;
+    left: 0;
+    height: 10px;
+    width: 100%;
+  }
+
+  .loader .line-2 {
+    position: absolute;
+    top: 210px;
+    left: 0;
+    height: 10px;
+    width: 64%;
+  }
+
+  .loader .line-3 {
+    position: absolute;
+    top: 230px;
+    left: 0px;
+    height: 10px;
+    width: 60%;
+  }
+
+  .loader .line-4 {
+    position: absolute;
+    top: 280px;
+    left: 0px;
+    height: 10px;
+    width: 92%;
+  }
+
+  .loader .line-5 {
+    position: absolute;
+    top: 340px;
+    left: 70px;
+    height: 10px;
+    width: 90px;
+  }
 }
 
 @media (min-width: 769px) {
@@ -387,6 +698,89 @@ function loadButtons() {
 
   .pro-simple-container {
     display: none;
+  }
+
+  .loader {
+    position: relative;
+    height: 390px;
+    width: 270px;
+    margin: 30px;
+    border: 1px solid #ffffff;
+    padding: 20px 20px 40px 20px;
+    background-color: #ffffff;
+    overflow: hidden;
+  }
+
+  .loader:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: linear-gradient(110deg, rgba(227, 227, 227, 0) 0%, rgba(227, 227, 227, 0) 40%, rgba(255, 255, 255, 0.5) 50%, rgba(227, 227, 227, 0) 60%, rgba(227, 227, 227, 0) 100%);
+    animation: gradient-animation_2 1.2s linear infinite;
+  }
+
+  .loader .wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  .loader .wrapper > div {
+    background-color: #ececec;
+  }
+
+  .loader .circle {
+    height: 170px;
+    width: 230px
+  }
+
+  .loader .button {
+    display: inline-block;
+    height: 32px;
+    width: 75px;
+  }
+
+  .loader .line-1 {
+    position: absolute;
+    top: 211px;
+    left: 0;
+    height: 10px;
+    width: 100%;
+  }
+
+  .loader .line-2 {
+    position: absolute;
+    top: 234px;
+    left: 0;
+    height: 10px;
+    width: 64%;
+  }
+
+  .loader .line-3 {
+    position: absolute;
+    top: 257px;
+    left: 0px;
+    height: 10px;
+    width: 60%;
+  }
+
+  .loader .line-4 {
+    position: absolute;
+    top: 280px;
+    left: 0px;
+    height: 10px;
+    width: 92%;
+  }
+
+  .loader .line-5 {
+    position: absolute;
+    top: 340px;
+    left: 70px;
+    height: 10px;
+    width: 90px;
   }
 
 }
@@ -602,105 +996,14 @@ button {
 }
 
 
-.three-body {
-  --uib-size: 35px;
-  --uib-speed: 0.8s;
-  --uib-color: #5D3FD3;
-  position: relative;
-  display: inline-block;
-  height: var(--uib-size);
-  width: var(--uib-size);
-  animation: spin78236 calc(var(--uib-speed) * 2.5) infinite linear;
-}
 
-.three-body__dot {
-  position: absolute;
-  height: 100%;
-  width: 30%;
-}
-
-.three-body__dot:after {
-  content: '';
-  position: absolute;
-  height: 0;
-  width: 100%;
-  padding-bottom: 100%;
-  background-color: var(--uib-color);
-  border-radius: 50%;
-}
-
-.three-body__dot:nth-child(1) {
-  bottom: 5%;
-  left: 0;
-  transform: rotate(60deg);
-  transform-origin: 50% 85%;
-}
-
-.three-body__dot:nth-child(1)::after {
-  bottom: 0;
-  left: 0;
-  animation: wobble1 var(--uib-speed) infinite ease-in-out;
-  animation-delay: calc(var(--uib-speed) * -0.3);
-}
-
-.three-body__dot:nth-child(2) {
-  bottom: 5%;
-  right: 0;
-  transform: rotate(-60deg);
-  transform-origin: 50% 85%;
-}
-
-.three-body__dot:nth-child(2)::after {
-  bottom: 0;
-  left: 0;
-  animation: wobble1 var(--uib-speed) infinite calc(var(--uib-speed) * -0.15) ease-in-out;
-}
-
-.three-body__dot:nth-child(3) {
-  bottom: -5%;
-  left: 0;
-  transform: translateX(116.666%);
-}
-
-.three-body__dot:nth-child(3)::after {
-  top: 0;
-  left: 0;
-  animation: wobble2 var(--uib-speed) infinite ease-in-out;
-}
-
-@keyframes spin78236 {
+@keyframes gradient-animation_2 {
   0% {
-    transform: rotate(0deg);
+    transform: translateX(-100%);
   }
 
   100% {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes wobble1 {
-  0%,
-  100% {
-    transform: translateY(0%) scale(1);
-    opacity: 1;
-  }
-
-  50% {
-    transform: translateY(-66%) scale(0.65);
-    opacity: 0.8;
-  }
-}
-
-@keyframes wobble2 {
-  0%,
-  100% {
-    transform: translateY(0%) scale(1);
-    opacity: 1;
-  }
-
-  50% {
-    transform: translateY(66%) scale(0.65);
-    opacity: 0.8;
+    transform: translateX(100%);
   }
 }
 

@@ -166,6 +166,19 @@ public class UserController {
         }
     }
 
+    @PutMapping("/{username}/change-image")
+    public ResponseEntity<?> changeProfilePicture(@PathVariable String username, @RequestBody byte[] image) {
+        UserWithCourses sessionUser = userService.getSessionUser();
+        if (sessionUser != null && sessionUser.user().getUsername().equals(username)) {
+            userService.addImageToUser(image);
+            return new ResponseEntity<>("", HttpStatus.OK);
+        } else if (sessionUser == null){
+            return new ResponseEntity<>("Profile data accessible only to authenticated users", HttpStatus.UNAUTHORIZED);
+        } else {
+            return new ResponseEntity<>("Profile data for other users not accessible!", HttpStatus.FORBIDDEN);
+        }
+    }
+
     /**
      * Delete a user.
      *
