@@ -21,13 +21,30 @@ function error() {
 </script>
 
 <template>
-  <CourseSlide/>
+  <div class="show-slide">
+    <CourseSlide/>
+  </div>
   <div id="background" class="background">
     <h1>Welcome Back <span></span></h1>
   </div>
 </template>
 
 <style scoped>
+
+@media (max-width: 769px) {
+  .show-slide {
+    display: none;
+  }
+
+  .background h1 {
+    font-size: 30px;
+    margin: 20px 0;
+  }
+}
+
+@media (min-width: 769px) {
+
+}
 
 span {
   font-weight: 900;

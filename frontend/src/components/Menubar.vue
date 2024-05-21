@@ -118,7 +118,7 @@ function setDefaultCurrency() {
               <img src="/cart.svg" alt="Cart">
               <span class="cart-count" v-if="integertest > 0">{{ integertest }}</span>
             </router-link>
-            <router-link v-if="getAuthenticatedUser() === null" to="/login" class="mobile-header-button">Log&nbsp;in</router-link>
+            <router-link v-if="getAuthenticatedUser() === null" to="/login" class="mobile-login-button">Log&nbsp;in</router-link>
             <router-link to="/profile" v-else class="mobile-header-button">
               <img src="/account.svg" alt="Cart">
             </router-link>
@@ -360,6 +360,20 @@ function setDefaultCurrency() {
   opacity: 0.5;
 }
 
+.mobile-login-button {
+  font-family: Inter, sans-serif;
+  font-weight: bold;
+  color: black;
+  text-decoration: none;
+  background-color: var(--light-1);
+  border: 1px solid var(--light-2);
+  border-radius: 7px;
+  text-align: center;
+  align-content: center;
+  margin: 10px;
+  width: 80px;
+  height: 40px;
+}
 
 .standard-button {
   background-color: #584BEB;

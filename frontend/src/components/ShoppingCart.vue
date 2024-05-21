@@ -1,47 +1,3 @@
-<template>
-    <h1></h1>
-    <ul>
-      <li class="title" v-for="course in courses" :key="course.id">
-        {{ course.name }}
-      </li>
-    </ul>
-  <div class="parent-container">
-    <div class="left-items">
-      <div class="title">
-        <h1>Cart</h1>
-        <p class="itemCountText"> {{ cartText }}</p>
-      </div>
-      <div class="flexible-grid-container">
-        <div class="cart-label-box">
-          <p>Course</p>
-          <p>Price</p>
-        </div>
-        <div class="course-table">
-          <h2>Your cart is empty</h2>
-        </div>
-      </div>
-    </div>
-    <div class="flex-couponCart-container">
-      <div class="couponContainer">
-        <h1>Coupon Code</h1>
-        <p>You can apply a coupon code to get a discount on your purchase.</p>
-        <div class="options">
-          <input type="text" placeholder="Enter coupon code here"/>
-          <br>
-          <button @click="applyCoupon">Apply</button>
-        </div>
-
-      </div>
-      <div class="couponContainer">
-        <h1>Cart Total</h1>
-        <p>Here is the total cost of your cart.</p>
-        <div class="totalAmount">{{ totalItems }}</div>
-      </div>
-      <button class="checkout-button">Checkout</button>
-  </div>
-  </div>
-</template>
-
 <script setup>
 import {getCurrentInstance, onMounted, ref} from 'vue';
 import {doLogout, getAuthenticatedUser, hasRole, removeRole} from "@/js/authentication";
@@ -103,35 +59,35 @@ async function populateCart() {
   const courseList = document.getElementsByClassName("course-table")[0];
   courseList.children[0].remove();
 
-    const courseBody = document.createElement("tbody");
-    courseBody.classList.add("course-block");
-    const line = document.createElement("hr");
-    courseBody.appendChild(line);
-    courseList.appendChild(courseBody);
+  const courseBody = document.createElement("tbody");
+  courseBody.classList.add("course-block");
+  const line = document.createElement("hr");
+  courseBody.appendChild(line);
+  courseList.appendChild(courseBody);
 
-    const row = document.createElement("tr");
-    const courseName = document.createElement("p");
-    const coursePrice = document.createElement("p");
-    const courseImg = document.createElement("img");
-    courseImg.classList.add("course-image");
-    row.classList.add("course-card");
-    row.style.cursor = "pointer";
-    courseName.innerText = course.course.title;
-    courseName.style.paddingLeft = "20px";
-    courseImg.src = course.course.image || '/noImageCom.svg';
-    row.appendChild(courseImg);
-    row.appendChild(courseName);
-    //row.appendChild(coursePrice);
-    editCourseCard(row, course);
-    courseBody.appendChild(row);
+  const row = document.createElement("tr");
+  const courseName = document.createElement("p");
+  const coursePrice = document.createElement("p");
+  const courseImg = document.createElement("img");
+  courseImg.classList.add("course-image");
+  row.classList.add("course-card");
+  row.style.cursor = "pointer";
+  courseName.innerText = course.course.title;
+  courseName.style.paddingLeft = "20px";
+  courseImg.src = course.course.image || '/noImageCom.svg';
+  row.appendChild(courseImg);
+  row.appendChild(courseName);
+  //row.appendChild(coursePrice);
+  editCourseCard(row, course);
+  courseBody.appendChild(row);
 
-    const line2 = document.createElement("hr");
-    line2.style.maxWidth = "600px";
-    line2.style.margin = "20px";
-    line2.style.alignItems = "center";
-    courseBody.appendChild(line2);
+  const line2 = document.createElement("hr");
+  line2.style.maxWidth = "600px";
+  line2.style.margin = "20px";
+  line2.style.alignItems = "center";
+  courseBody.appendChild(line2);
 
-};
+}
 
 
 //Temporary function to add courses to the shopping cart
@@ -149,28 +105,28 @@ function addCourses(courses) {
   courseBody.appendChild(line);
   courseList.appendChild(courseBody);
   for (const course of courses) {
-      const row = document.createElement("tr");
-      const courseName = document.createElement("p");
-      const coursePrice = document.createElement("p");
-      const courseImg = document.createElement("img");
-      courseImg.classList.add("course-image");
-      row.classList.add("course-card");
-      row.style.cursor = "pointer";
-      courseName.innerText = course.course.title;
-      courseName.style.paddingLeft = "20px";
-      courseImg.src = course.course.image || '/noImageCom.svg';
-      row.appendChild(courseImg);
-      row.appendChild(courseName);
-      row.appendChild(coursePrice);
-      editCourseCard(row, course);
-      courseBody.appendChild(row);
-      const line = document.createElement("hr");
-      line.style.maxWidth = "600px";
-      line.style.margin = "20px";
-      line.style.alignItems = "center";
-      courseBody.appendChild(line);
-      console.log(courses.length);
-    }
+    const row = document.createElement("tr");
+    const courseName = document.createElement("p");
+    const coursePrice = document.createElement("p");
+    const courseImg = document.createElement("img");
+    courseImg.classList.add("course-image");
+    row.classList.add("course-card");
+    row.style.cursor = "pointer";
+    courseName.innerText = course.course.title;
+    courseName.style.paddingLeft = "20px";
+    courseImg.src = course.course.image || '/noImageCom.svg';
+    row.appendChild(courseImg);
+    row.appendChild(courseName);
+    row.appendChild(coursePrice);
+    editCourseCard(row, course);
+    courseBody.appendChild(row);
+    const line = document.createElement("hr");
+    line.style.maxWidth = "600px";
+    line.style.margin = "20px";
+    line.style.alignItems = "center";
+    courseBody.appendChild(line);
+    console.log(courses.length);
+  }
 }
 
 async function populateCourses(selector) {
@@ -207,25 +163,134 @@ function editCourseCard(object, course) {
 
 </script>
 
+<template>
+    <h1></h1>
+    <ul>
+      <li class="title" v-for="course in courses" :key="course.id">
+        {{ course.name }}
+      </li>
+    </ul>
+  <div class="parent-container">
+    <div class="left-items">
+      <div class="title">
+        <h1>Cart</h1>
+        <p class="itemCountText"> {{ cartText }}</p>
+      </div>
+      <div class="flexible-grid-container">
+        <div class="cart-label-box">
+          <p>Course</p>
+          <p>Price</p>
+        </div>
+        <div class="course-table">
+          <h2>Your cart is empty</h2>
+        </div>
+      </div>
+    </div>
+    <div class="flex-couponCart-container">
+      <div class="couponContainer">
+        <h1>Coupon Code</h1>
+        <p>You can apply a coupon code to get a discount on your purchase.</p>
+        <div class="options">
+          <input type="text" placeholder="Enter coupon code here"/>
+          <br>
+          <button @click="applyCoupon">Apply</button>
+        </div>
+
+      </div>
+      <div class="couponContainer">
+        <h1>Cart Total</h1>
+        <p>Here is the total cost of your cart.</p>
+        <div class="totalAmount">{{ totalItems }}</div>
+      </div>
+      <button class="checkout-button">Checkout</button>
+  </div>
+  </div>
+</template>
+
 <style scoped>
+
+@media (max-width: 769px) {
+  .parent-container {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .flexible-grid-container {
+    background-color: var(--light-1);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin: 50px auto;
+    padding: 5px;
+    height: 50%;
+    width: 400px;
+    align-items: center;
+  }
+
+  .left-items {
+    width: 400px;
+    margin: 0 auto;
+  }
+
+  .flex-couponCart-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 0;
+    width: 400px;
+    align-items: center;
+  }
+}
+
+@media (min-width: 769px) {
+  .parent-container {
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .flexible-grid-container {
+    background-color: var(--light-1);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin: 50px auto;
+    padding: 5px;
+    height: 50%;
+    width: 100%;
+    align-items: center;
+  }
+
+  .left-items {
+    height: 93vh;
+    width: 1000px;
+    margin: 0 auto;
+  }
+
+  .flex-couponCart-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: var(--light-1);
+    border-radius: 10px;
+    margin: 0;
+    padding: 0 50px;
+    height: 93vh;
+    width: 500px;
+    align-items: center;
+  }
+}
 
 .title {
   text-decoration: none;
   margin: 50px auto 0 auto;
   width: 100%;
-}
-
-.flexible-grid-container {
-  background-color: var(--light-1);
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  margin: 50px auto;
-  padding: 5px;
-  height: 50%;
-  width: 100%;
-  align-items: center;
 }
 
 .flexible-grid {
@@ -382,35 +447,12 @@ function editCourseCard(object, course) {
   border-radius: 10px;
 }
 
-.parent-container {
-  margin: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.flex-couponCart-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  background-color: var(--light-1);
-  border-radius: 10px;
-  margin: 0;
-  padding: 0 50px;
-  height: 93vh;
-  width: 500px;
-  align-items: center;
-}
 
 .options{
   width: 100%;
 }
 
-.left-items {
-  height: 93vh;
-  width: 1000px;
-  margin: 0 auto;
-}
+
 
 .checkout-button {
   font-family: 'Inter', sans-serif;

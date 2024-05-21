@@ -180,7 +180,7 @@ function createPrice(courseProviders, currencies, defaultCurrency) {
         price.textContent = symbol + finalPrice.toFixed(2) + "/month";
     } else {
         const startsAt = document.createElement('p');
-        startsAt.className = 'content-box-text';
+        startsAt.className = 'starts-text';
         startsAt.textContent = 'Starts at';
         priceBox.appendChild(startsAt);
         price.textContent = symbol + finalPrice.toFixed(2);

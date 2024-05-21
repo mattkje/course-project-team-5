@@ -6,12 +6,25 @@
     font-weight: bold;
     color: #282828;
 }
-#relatedCertifications p{
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: 200px;
+
+@media (max-width: 769px) {
+    #relatedCertifications p{
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 120px;
+    }
 }
+
+@media (min-width: 769px) {
+    #relatedCertifications p{
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 200px;
+    }
+}
+
 #courseInformation {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -75,7 +88,6 @@
     margin: 5px 0;
 }
 
-.provider-choose:hover,
 .provider-choose:active,
 .provider-choose:focus {
     border: 2px solid #584BEB;

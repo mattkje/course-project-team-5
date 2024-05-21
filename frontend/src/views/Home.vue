@@ -294,7 +294,7 @@ function loadButtons() {
 </script>
 
 <style scoped>
-@media (max-width: 600px) {
+@media (max-width: 769px) {
 
   #scrollLeftButton,
   #scrollRightButton,
@@ -309,10 +309,69 @@ function loadButtons() {
     display: none;
   }
 
-  #featured {
-    display: flow;
+  .featured,
+  .data-Science,
+  .digital-marketing,
+  .information-technologies,
+  .learniverse-pro {
+
+    border-radius: 20px;
+    justify-content: flex-start;
+    align-content: center;
+    width: 100%;
+    height: min-content;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    overflow: auto;
+
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .greeting {
+    border: none;
+    width: 100%;
     justify-content: center;
     align-content: center;
+    text-decoration: none;
+    display: flex;
+    margin: 0 auto;
+  }
+  .greeting h1 {
+    text-align: center;
+    font-size: 30px;
+  }
+}
+
+@media (min-width: 769px) {
+  .featured,
+  .data-Science,
+  .digital-marketing,
+  .information-technologies,
+  .learniverse-pro {
+    justify-content: space-between;
+    background: #f8f8ff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 20px;
+    width: 100%;
+    min-height: 550px;
+    padding: 50px 30px;
+    margin: 30px 0;
+    display: flex;
+    overflow: auto;
+
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .greeting {
+    border: none;
+    border-radius: 15px;
+    width: 60%;
+    justify-content: flex-start;
+    align-content: center;
+    text-decoration: none;
+    display: flex;
+    margin: 0 auto;
   }
 }
 
@@ -395,27 +454,7 @@ ul {
   margin: 0;
 }
 
-.featured,
-.data-Science,
-.digital-marketing,
-.information-technologies,
-.learniverse-pro {
-  justify-content: space-between;
-  background: #f8f8ff;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 20px;
-  width: 100%;
-  min-height: 550px;
-  padding: 50px 30px;
-  margin: 30px 0;
-  display: flex;
-  overflow: auto;
 
-
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-
-}
 
 .featured::-webkit-scrollbar,
 .data-Science::-webkit-scrollbar,
@@ -489,16 +528,7 @@ input:focus {
 }
 
 
-.greeting {
-  border: none;
-  border-radius: 15px;
-  width: 60%;
-  justify-content: flex-start;
-  align-content: center;
-  text-decoration: none;
-  display: flex;
-  margin: 0 auto;
-}
+
 
 .pro-text {
   color: white;
