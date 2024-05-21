@@ -55,19 +55,17 @@ import {setDefaultCurrency} from "@/js/currency";
 const {appContext} = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
 
+let providerId = getCookie('courseProviderId');
+console.log(providerId);
 
 //Cookie test
 async function applyCoupon() {
   getCookie('courseProviderId');
   getCookie('courseId');
-  console.log(course);
   console.log("Applying coupon");
   console.log(document.cookie);
-}
-
-let courseProviderId = getCookie('courseProviderId');
-let courseId = getCookie('courseId');
-
+  console.log(providerId);
+};
 
 async function loadShoppingCart() {
   const user = getAuthenticatedUser();
@@ -99,38 +97,40 @@ function onProfileDataSuccess(data) {
 }
 
 async function populateCart() {
-  const course = await fetchCourseById(API_URL, 2);
-
+  let courseId = getCookie('courseId');
+  let providerId = getCookie('providerId');
+  const course = await fetchCourseById(API_URL, courseId);
   const courseList = document.getElementsByClassName("course-table")[0];
   courseList.children[0].remove();
 
-  const courseBody = document.createElement("tbody");
-  courseBody.classList.add("course-block");
-  const line = document.createElement("hr");
-  courseBody.appendChild(line);
-  courseList.appendChild(courseBody);
+    const courseBody = document.createElement("tbody");
+    courseBody.classList.add("course-block");
+    const line = document.createElement("hr");
+    courseBody.appendChild(line);
+    courseList.appendChild(courseBody);
 
-  const row = document.createElement("tr");
-  const courseName = document.createElement("p");
-  const coursePrice = document.createElement("p");
-  const courseImg = document.createElement("img");
-  courseImg.classList.add("course-image");
-  row.classList.add("course-card");
-  row.style.cursor = "pointer";
-  courseName.innerText = course.course.title;
-  courseName.style.paddingLeft = "20px";
-  courseImg.src = course.course.image || '/noImageCom.svg';
-  row.appendChild(courseImg);
-  row.appendChild(courseName);
-  row.appendChild(coursePrice);
-  editCourseCard(row, course);
-  courseBody.appendChild(row);
+    const row = document.createElement("tr");
+    const courseName = document.createElement("p");
+    const coursePrice = document.createElement("p");
+    const courseImg = document.createElement("img");
+    courseImg.classList.add("course-image");
+    row.classList.add("course-card");
+    row.style.cursor = "pointer";
+    courseName.innerText = course.course.title;
+    courseName.style.paddingLeft = "20px";
+    courseImg.src = course.course.image || '/noImageCom.svg';
+    row.appendChild(courseImg);
+    row.appendChild(courseName);
+    //row.appendChild(coursePrice);
+    editCourseCard(row, course);
+    courseBody.appendChild(row);
 
-  const line2 = document.createElement("hr");
-  line2.style.maxWidth = "600px";
-  line2.style.margin = "20px";
-  line2.style.alignItems = "center";
-  courseBody.appendChild(line2);
+    const line2 = document.createElement("hr");
+    line2.style.maxWidth = "600px";
+    line2.style.margin = "20px";
+    line2.style.alignItems = "center";
+    courseBody.appendChild(line2);
+
 };
 
 

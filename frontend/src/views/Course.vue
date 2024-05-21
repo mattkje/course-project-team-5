@@ -35,7 +35,7 @@
           <div class="course-action-box">
 
             <button id="enrollButton" class="enroll-button">Buy now</button>
-            <button v-on:click="addCourseToCart()" class="CartBtn" :class="{ 'button-disabled': !selectedProvider }">
+            <button v-on:click="addCourseToCart()" class="cartBtn">
                     <span class="IconContainer">
                         <img class="cart-icon-small" src="/cart-small.svg" alt="Cart">
                     </span>
@@ -112,12 +112,13 @@ import {createContentBox, fetchCourses, fetchCurrencies} from "@/js/populationTo
 import { setCookie } from "@/js/tools";
 import {sendApiRequest} from "@/js/requests";
 import {redirectTo} from "@/js/navigation";
+
 const loading = ref(true);
 const addProvider = ref(false);
 
 //Test cookies
 function addCourseToCart() {
-  setCookie('courseProviderId','1',1);
+  setCookie('courseId','2',1);
   setCookie('providerId','1',1);
 }
 
@@ -317,7 +318,13 @@ function populateCoursePage() {
                     document.getElementById('notShowingLocationText').innerText = 'Showing location for provider ' + provider.name
                     initMap(provider.latitude, provider.longitude);
 
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const courseId = urlParams.get('id');
                     const buyButton = document.getElementById('enrollButton');
+                    //Set cookie for the selected provider
+                    buyButton.addEventListener('click', function() {
+                      setCookie('courseId', courseId, 1);
+                    });
                     //This is just a temporary solution to make the button work as it should
                     Object.assign(buyButton.style, {
                       fontFamily: 'Inter, sans-serif',
@@ -1043,8 +1050,6 @@ button {
   opacity: 1;
 }
 
-
-
 .enroll-button {
   font-family: 'Inter', sans-serif;
   font-weight: bold;
@@ -1091,7 +1096,7 @@ button {
   margin-right: 10px;
 }
 
-.CartBtn {
+.cartBtn {
   width: 40%;
   height: 50px;
   border-radius: 12px;
