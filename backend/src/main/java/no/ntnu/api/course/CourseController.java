@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import no.ntnu.api.config.AccessUserService;
+import no.ntnu.api.keywords.CourseKeywords;
+import no.ntnu.api.keywords.Keywords;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,6 +58,35 @@ public class CourseController {
                 }
             }
             return courses;
+        }
+    }
+
+    @PostMapping("/api/courses/keyword")
+    public ResponseEntity<?> postKeyword(@RequestBody Keywords keyword) {
+        if(userService.isAdmin() && keyword != null) {
+            courseService.postKeyword(keyword);
+            return ResponseEntity.status(HttpStatus.CREATED).body(keyword);
+        } else {
+            return null;
+        }
+    }
+
+    @PostMapping("/api/courses/keyword/{courseId}/{keywordId}")
+    public ResponseEntity<?> postKeywordToCourse(@PathVariable int courseId, @PathVariable int keywordId) {
+        for(CourseWithProvidersAndKeywords course : courseService.getAllCourses()) {
+            if(course.course().getId() == courseId) {
+                for(CourseKeywords keyword : course.keywords()) {
+                    if(keyword.getKeywordId() == keywordId) {
+                        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+                    }
+                }
+            }
+        }
+        if(userService.isAdmin()) {
+            courseService.postKeywordToCourse(courseId, keywordId);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        } else {
+            return null;
         }
     }
 

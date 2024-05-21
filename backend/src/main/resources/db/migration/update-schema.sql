@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS currencies
 
 CREATE TABLE IF NOT EXISTS keywords
 (
-    keyword_id   INT          NOT NULL,
+    keyword_id   INT    AUTO_INCREMENT      NOT NULL,
     keyword_name VARCHAR(255) NULL,
     CONSTRAINT pk_keywords PRIMARY KEY (keyword_id)
 );

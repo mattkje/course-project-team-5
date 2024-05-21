@@ -2,6 +2,8 @@ package no.ntnu.api.course;
 
 import no.ntnu.api.keywords.CourseKeywords;
 import no.ntnu.api.keywords.CourseKeywordsRepository;
+import no.ntnu.api.keywords.Keywords;
+import no.ntnu.api.keywords.KeywordsRepository;
 import no.ntnu.api.provider.CourseProvider;
 import no.ntnu.api.provider.CourseProviderRepository;
 import no.ntnu.api.provider.Provider;
@@ -23,7 +25,8 @@ public class CourseService {
   private final CourseRepository courseRepository;
   private final CourseProviderRepository courseProviderRepository;
   private final ProviderRepository providerRepository;
-  private final CourseKeywordsRepository keywordRepository;
+  private final CourseKeywordsRepository courseKeywordRepository;
+  private final KeywordsRepository keywordRepository;
 
   /**
    * Constructor for the CourseService class.
@@ -34,12 +37,14 @@ public class CourseService {
   @Autowired
   public CourseService(CourseRepository courseRepository,
                        CourseProviderRepository courseProviderRepository,
-                       CourseKeywordsRepository keywordRepository,
-                       ProviderRepository providerRepository) {
+                       CourseKeywordsRepository courseKeywordRepository,
+                       ProviderRepository providerRepository,
+                       KeywordsRepository keywordRepository) {
     this.courseRepository = courseRepository;
     this.courseProviderRepository = courseProviderRepository;
-    this.keywordRepository = keywordRepository;
+    this.courseKeywordRepository = courseKeywordRepository;
     this.providerRepository = providerRepository;
+    this.keywordRepository = keywordRepository;
   }
 
   /**
@@ -81,7 +86,7 @@ public class CourseService {
    */
   public List<CourseKeywords> getKeywords(Integer courseId) {
     List<CourseKeywords> keywords = new ArrayList<>();
-    for (CourseKeywords keyword : keywordRepository.findAll()) {
+    for (CourseKeywords keyword : courseKeywordRepository.findAll()) {
       if (courseId == keyword.getCourseId()) {
         keywords.add(keyword);
       }
@@ -133,7 +138,7 @@ public class CourseService {
       providerMap.put(provider.getCourseProviderId(), provider);
     }
 
-    for (CourseKeywords keyword : keywordRepository.findAll()) {
+    for (CourseKeywords keyword : courseKeywordRepository.findAll()) {
       keywordMap.put(keyword.getKeywordId(), keyword);
     }
 
@@ -298,4 +303,17 @@ public class CourseService {
     // Return the price of the course for the provider
     return courseProvider.getPrice();
 }
+
+  public void postKeyword(Keywords keyword) {
+    if(keyword != null) {
+      keywordRepository.save(keyword);
+    }
+  }
+
+  public void postKeywordToCourse(int courseId, int keywordId) {
+    CourseKeywords courseKeyword = new CourseKeywords();
+    courseKeyword.setCourseId(courseId);
+    courseKeyword.setKeywordObj(keywordRepository.findById((long) keywordId).orElse(null));
+    courseKeywordRepository.save(courseKeyword);
+  }
 }
