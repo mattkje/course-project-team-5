@@ -20,7 +20,7 @@ const buttonClicked = (button) => {
       <h2>{{ title }}</h2>
       <p>{{ message }}</p>
       <div id="buttons">
-        <button class="fancy-button" v-for="(button, index) in buttons" :key="index" @click="buttonClicked(button)"> {{ button }}</button>
+        <button v-for="(button, index) in buttons" :key="index" @click="buttonClicked(button)"> {{ button }}</button>
       </div>
     </div>
   </div>
@@ -50,17 +50,34 @@ const buttonClicked = (button) => {
   top: 0;
   bottom: 0;
   margin: auto;
-  background: linear-gradient(#f3f3ff -0%, #ede9ff 100%);
+  background: white;
   z-index: 3;
   border-radius: 30px;
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
   padding: 20px;
 }
 
-.fancy-button{
-  display: inline-block;
-  width: 100px;
-  height: 40px;
+button {
+
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+  color: #ffffff;
+  font-size: 20px;
+  background: #000000;
+  border: none;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 70px;
+  border-radius: 15px;
+  cursor: pointer;
+  margin: 0 10px;
+  transition: all .5s;
+
+  &:active {
+    transform: scale(0.95);
+    transition-duration: .5s;
+  }
 }
 
 h2 {

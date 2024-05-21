@@ -80,6 +80,11 @@ const routes = [
         path: '/create-course',
         name: 'CreateCourse',
         component: () => import('@/views/CreateCourse.vue')
+    },
+    {
+        path: '/payment',
+        name: 'Payment',
+        component: () => import('@/views/Payment.vue')
     }
 ]
 

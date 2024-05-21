@@ -106,7 +106,6 @@
            alt="Provider"/>
     </div>
     <p class="pro-text">Learniverse offers courses from top providers like Microsoft, Apple, Pearson, and Amazon.</p>
-    <button class="fancy-button">Learn More</button>
     <img class="bend" src="/bend.svg" alt="Connect">
   </div>
   <div class="course-section">

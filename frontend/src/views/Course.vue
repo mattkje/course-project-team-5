@@ -556,6 +556,140 @@ function addProviderFailed() {
 
 <style scoped>
 
+@media (max-width: 769px) {
+  .course-image-box {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    width: 100%;
+    margin: 0;
+  }
+
+  .course-image {
+    border-radius: 20px;
+    background-color: #3c3c3c;
+    height: auto;
+    width: 400px;
+    object-fit: cover;
+    margin: 10px auto;
+    box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .courseLinkElement {
+    display: flex;
+    max-width: 400px;
+    margin: 0 auto;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    white-space: nowrap;
+  }
+  .courseLinkElement p {
+    font-weight: bold;
+    font-size: 10px;
+    color: #5d5d5d;
+  }
+
+  .courseLinkElement a {
+    font-weight: bold;
+    font-size: 12px;
+    color: #5d5d5d;
+    text-decoration: none;
+  }
+
+  .course-info {
+    background-color: var(--light-1);
+    border-radius: 20px;
+    padding: 20px;
+    margin: 10px auto;
+    width: 400px;
+    height: max-content;
+    box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .course-description-box {
+    background-color: var(--light-1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    width: 400px;
+    margin: 10px auto;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
+  }
+
+}
+
+@media (min-width: 769px) {
+  .course-image-box {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    width: 100%;
+    margin: 0;
+  }
+
+  .course-image {
+    border-radius: 20px 0 0 20px;
+    background-color: #3c3c3c;
+    height: auto;
+    width: 700px;
+    object-fit: cover;
+    margin: 0;
+    box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .courseLinkElement {
+    padding: 30px 7px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: 100px;
+    width: min-content;
+    white-space: nowrap;
+  }
+
+  .courseLinkElement p {
+    font-weight: bold;
+    color: #5d5d5d;
+  }
+
+  .courseLinkElement a {
+    font-weight: bold;
+    color: #5d5d5d;
+    text-decoration: none;
+  }
+
+  .course-info {
+    background-color: var(--light-1);
+    border-radius: 0 20px 20px 0;
+    padding: 20px;
+    width: 600px;
+    height: max-content;
+    box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .course-description-box {
+    background-color: var(--light-1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    width: 1300px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
+  }
+
+}
+
+
+
 .course-page-background {
   font-family: Inter, sans-serif;
   background-color: var(--light-3);
@@ -769,46 +903,6 @@ input:focus {
   margin: auto;
 }
 
-.course-image {
-  border-radius: 20px 0 0 20px;
-  background-color: #3c3c3c;
-  height: auto;
-  width: 700px;
-  object-fit: cover;
-  margin: 0;
-  box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
-}
-
-
-.course-image-box {
-  display: flex;
-  align-content: center;
-  justify-content: center;
-  width: 100%;
-  margin: 0;
-}
-
-.course-info {
-  background-color: var(--light-1);
-  border-radius: 0 20px 20px 0;
-  padding: 20px;
-  width: 600px;
-  height: max-content;
-  box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
-}
-
-.course-description-box {
-  background-color: var(--light-1);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-content: center;
-  width: 1300px;
-  margin: 50px auto;
-  padding: 20px;
-  border-radius: 20px;
-  box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
-}
 
 .course-description-box h3{
   font-size: 20px;
@@ -885,27 +979,8 @@ hr {
   color: #575757;
 }
 
-.courseLinkElement {
-  padding: 30px 7px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  margin-left: 100px;
-  width: min-content;
-  white-space: nowrap;
-}
 
-.courseLinkElement p {
-  font-weight: bold;
-  color: #5d5d5d;
-}
 
-.courseLinkElement a {
-  font-weight: bold;
-  color: #5d5d5d;
-  text-decoration: none;
-}
 
 .course-action-box {
   display: flex;

@@ -103,45 +103,29 @@ function setDefaultCurrency() {
     <div id="mobile">
       <div class="header">
         <div class="content-mobile">
-          <router-link to="/" id="mobileHeader" class="header-button">
-            <img class="logo" src="/logo.svg" alt="Connect">
-            <h4 class="logo-top">Learniverse&nbsp;</h4>
-            <h4 class="logo-bottom">Connect</h4>
-          </router-link>
+          <div class="left-content">
+            <button class="mobile-header-button">
+              <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-three-bars Button-visual">
+                <path d="M1 2.75A.75.75 0 0 1 1.75 2h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 2.75Zm0 5A.75.75 0 0 1 1.75 7h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 7.75ZM1.75 12h12.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1 0-1.5Z"></path>
+              </svg>
+            </button>
+            <router-link to="/" id="mobileHeader" class="header-button">
+              <img class="logo" src="/logo.svg" alt="Connect">
+            </router-link>
+          </div>
+          <div class="right-content">
+            <router-link to="/cart" class="mobile-header-button" v-show="isAuthorized()">
+              <img src="/cart.svg" alt="Cart">
+              <span class="cart-count" v-if="integertest > 0">{{ integertest }}</span>
+            </router-link>
+            <router-link v-if="getAuthenticatedUser() === null" to="/login" class="mobile-header-button">Log&nbsp;in</router-link>
+            <router-link to="/profile" v-else class="mobile-header-button">
+              <img src="/account.svg" alt="Cart">
+            </router-link>
+          </div>
         </div>
       </div>
-      <div class="button-container">
-        <router-link to="/" class="button">
-          <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 1024 1024" stroke-width="0"
-               fill="currentColor" stroke="currentColor" class="icon">
-            <path
-                d="M946.5 505L560.1 118.8l-25.9-25.9a31.5 31.5 0 0 0-44.4 0L77.5 505a63.9 63.9 0 0 0-18.8 46c.4 35.2 29.7 63.3 64.9 63.3h42.5V940h691.8V614.3h43.4c17.1 0 33.2-6.7 45.3-18.8a63.6 63.6 0 0 0 18.7-45.3c0-17-6.7-33.1-18.8-45.2zM568 868H456V664h112v204zm217.9-325.7V868H632V640c0-22.1-17.9-40-40-40H432c-22.1 0-40 17.9-40 40v228H238.1V542.3h-96l370-369.7 23.1 23.1L882 542.3h-96.1z"></path>
-          </svg>
-        </router-link>
-        <router-link to="/explore" class="button">
-          <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" aria-hidden="true" viewBox="0 0 24 24"
-               stroke-width="2" fill="none" stroke="currentColor" class="icon">
-            <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linejoin="round" stroke-linecap="round"></path>
-          </svg>
-        </router-link>
-        <router-link to="/community" class="button">
-          <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" stroke-width="0"
-               fill="currentColor" stroke="currentColor" class="icon">
-            <path
-                d="M12 2.5a5.5 5.5 0 0 1 3.096 10.047 9.005 9.005 0 0 1 5.9 8.181.75.75 0 1 1-1.499.044 7.5 7.5 0 0 0-14.993 0 .75.75 0 0 1-1.5-.045 9.005 9.005 0 0 1 5.9-8.18A5.5 5.5 0 0 1 12 2.5ZM8 8a4 4 0 1 0 8 0 4 4 0 0 0-8 0Z"></path>
-          </svg>
-        </router-link>
 
-        <router-link to="/cart" class="button">
-          <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" stroke-linejoin="round"
-               stroke-linecap="round" viewBox="0 0 24 24" stroke-width="2" fill="none" stroke="currentColor"
-               class="icon">
-            <circle r="1" cy="21" cx="9"></circle>
-            <circle r="1" cy="21" cx="20"></circle>
-            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-          </svg>
-        </router-link>
-      </div>
     </div>
 
   </div>
@@ -151,9 +135,9 @@ function setDefaultCurrency() {
 <style scoped>
 @media (max-width: 769px) {
   #menubar {
-    background-color: #614fff;
+    background-color: #f4f6f8;
+    border-bottom: 1px solid #a8a8a8;
     backdrop-filter: none;
-    border: none;
   }
 
   #desktop {
@@ -168,6 +152,23 @@ function setDefaultCurrency() {
     justify-content: center;
     align-content: center;
   }
+
+  .logo {
+    width: 50px;
+    height: 50px;
+  }
+
+  .left-content {
+    display: flex;
+    align-items: center;
+  }
+
+  .right-content {
+    display: flex;
+    max-width: min-content;
+    align-items: center;
+  }
+
 }
 
 @media (min-width: 769px) {
@@ -185,6 +186,28 @@ function setDefaultCurrency() {
   #mobile {
     display: none;
   }
+
+  .logo {
+    width: 60px;
+    height: 60px;
+    padding-left: 20px;
+    transform: translateY(-3px);
+  }
+
+  .left-content {
+    max-height: 70px;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+  }
+
+  .right-content {
+    max-height: 70px;
+    margin: 10px;
+    display: flex;
+    max-width: min-content;
+    align-items: center;
+  }
 }
 
 .menubar {
@@ -201,20 +224,7 @@ function setDefaultCurrency() {
   width: 100%;
 }
 
-.left-content {
-  max-height: 70px;
-  padding: 0 10px;
-  display: flex;
-  align-items: center;
-}
 
-.right-content {
-  max-height: 70px;
-  margin: 10px;
-  display: flex;
-  max-width: min-content;
-  align-items: center;
-}
 
 .logo-button {
   height: 70px;
@@ -262,12 +272,7 @@ function setDefaultCurrency() {
 
 }
 
-.logo {
-  width: 60px;
-  height: 60px;
-  padding-left: 20px;
-  transform: translateY(-3px);
-}
+
 
 .logo-top {
   font-weight: 900;
@@ -323,6 +328,38 @@ function setDefaultCurrency() {
     box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
   }
 }
+
+.content-mobile {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+}
+
+.mobile-header-button {
+  background-color: var(--light-1);
+  border: 1px solid var(--light-2);
+  border-radius: 7px;
+  margin: 10px;
+  width: 40px;
+  height: 40px;
+}
+
+.mobile-header-button img {
+  filter: brightness(0);
+  opacity: 0.7;
+  margin: 9px;
+  width: 20px;
+  height: 20px;
+}
+
+.mobile-header-button svg {
+  margin: 3px auto auto auto;
+  width: 20px;
+  height: 20px;
+  opacity: 0.5;
+}
+
 
 .standard-button {
   background-color: #584BEB;
@@ -384,7 +421,7 @@ function setDefaultCurrency() {
   .logo-button {
     margin: 0;
   }
-  .left-content {
+  .tent {
     gap: 10px;
     padding: 0 4%;
   }

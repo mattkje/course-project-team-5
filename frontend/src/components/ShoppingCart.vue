@@ -65,7 +65,7 @@ async function applyCoupon() {
   console.log("Applying coupon");
   console.log(document.cookie);
   console.log(providerId);
-};
+}
 
 async function loadShoppingCart() {
   const user = getAuthenticatedUser();
