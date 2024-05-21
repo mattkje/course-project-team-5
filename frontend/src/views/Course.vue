@@ -652,6 +652,22 @@ function addProviderFailed() {
     -ms-overflow-style: none;
   }
 
+  .administrator {
+    display: flex;
+    justify-content: center;
+    background-color: var(--light-1);
+    border-radius: 20px;
+    padding: 20px;
+    width: 400px;
+    margin: 10px auto;
+  }
+
+  .administrator p {
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+  }
+
 }
 
 @media (min-width: 769px) {
@@ -731,6 +747,22 @@ function addProviderFailed() {
 
     scrollbar-width: none;
     -ms-overflow-style: none;
+  }
+
+  .administrator {
+    display: flex;
+    justify-content: center;
+    background-color: var(--light-1);
+    border-radius: 20px;
+    padding: 20px;
+    width: 1300px;
+    margin: 50px auto;
+  }
+
+  .administrator p {
+    font-size: 30px;
+    font-weight: bold;
+    color: black;
   }
 }
 
@@ -1289,19 +1321,5 @@ button {
   margin-bottom: 10px;
 }
 
-.administrator {
-  display: flex;
-  justify-content: center;
-  background-color: var(--light-1);
-  border-radius: 20px;
-  padding: 20px;
-  width: 1300px;
-  margin: 50px auto;
-}
 
-.administrator p {
-  font-size: 30px;
-  font-weight: bold;
-  color: black;
-}
 </style>
