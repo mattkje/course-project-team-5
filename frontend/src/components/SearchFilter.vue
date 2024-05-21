@@ -120,19 +120,21 @@ function populateCheckboxes(selector, data,dataType,checkedRef, changeHandler) {
       label.textContent = itemName;
       checkboxWrapper.appendChild(label);
 
-      const label = document.createElement('label');
-      label.className = 'lbl-cbx'
+      const labelCbx = document.createElement('label');
+      labelCbx.className = 'lbl-cbx'
       const checkbox = document.createElement('input');
       const div = document.createElement('div');
-      div
+      div.className = 'div-cbx'
       checkbox.className = 'inp-cbx';
       checkbox.id = itemName;
       checkbox.type = 'checkbox';
       checkbox.setAttribute('v-model', `${checkedRef}['${itemName}']`);
       checkbox.addEventListener('change', changeHandler);
 
+      labelCbx.appendChild(checkbox);
+      labelCbx.appendChild(div);
 
-      checkboxWrapper.appendChild(checkbox);
+      checkboxWrapper.appendChild(labelCbx);
 
       list.appendChild(checkboxWrapper);
 
@@ -654,7 +656,7 @@ watchEffect(() => {
 .separator {
   display: none;
   min-height: 1px;
-  width: 40%;
+  width: 100%;
   background-color: grey;
   margin: 10px 0;
   padding: 0 40px;
@@ -977,7 +979,7 @@ body, html {
   .overflowContainer {
     overflow-y: scroll;
     overflow-x: hidden;
-    padding: 20px;
+    padding: 20px 20px 100px 20px;
   }
 
   .mobile-filter-header {
@@ -998,7 +1000,6 @@ body, html {
     flex-direction: column;
     max-width: 90%;
     padding: 0;
-
   }
 
   .exitButton{
@@ -1040,13 +1041,14 @@ body, html {
 
   .wrapper {
     padding: 0;
-    width: 40%;
+    width: 100%;
   }
 
   .checkbox-wrapper {
     display: flex;
     flex-direction: row-reverse;
     justify-content: flex-end;
+    width: 100%;
   }
 
   .active-filter-container {
