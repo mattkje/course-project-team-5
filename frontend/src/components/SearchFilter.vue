@@ -18,8 +18,11 @@
 
     <div class="filter-container">
       <div class="range-container" v-show="isRangeContainerVisible">
-        <h3 class="mobile-filter-header">Filters</h3>
-        <div class="separator"></div>
+        <div class="mobile-filter-header">
+          <h3 class="mobile-h3">Filters</h3>
+          <h2 class="mobile-h3" id="exitButton" @click="toggleFilters">x</h2>
+        </div>
+        <div class="separator" id="headerSeparator"></div>
 
         <div class="overflowContainer">
         <button class="price-ranger" @click="toggleShowCategory" :style="{
@@ -640,12 +643,19 @@ watchEffect(() => {
 
 .separator {
   display: none;
-  min-height: 2px;
+  min-height: 1px;
   width: 40%;
   background-color: grey;
   margin: 10px 0;
   padding: 0 40px;
   text-align: center;
+}
+
+#headerSeparator {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  min-height: 2px;
 }
 
 .flexible-grid-container {
@@ -955,12 +965,20 @@ body, html {
 @media (max-width: 1250px) {
 
   .overflowContainer {
-    overflow-y: auto;
+    overflow-y: scroll;
     overflow-x: hidden;
+    padding: 20px;
   }
 
   .mobile-filter-header {
-    display: block;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .mobile-h3 {
     font-size: 24px;
     font-weight: bold;
     color: var(--dark-3);
@@ -969,8 +987,12 @@ body, html {
   .filter-container {
     flex-direction: column;
     max-width: 90%;
-    margin: 0 5% 0 5%;
+
     padding: 0;
+  }
+
+  #exitButton{
+    transform: rotate(90deg);
   }
 
   .range-container {
@@ -980,10 +1002,7 @@ body, html {
     width: 100%;
     max-width: 90%;
     height: 60%;
-
     margin: 0 5% 0 5%;
-    padding: 20px 0 0 20px;
-
     border-radius: 20px 20px 0 0;
 
     background-color: var(--light-1);
