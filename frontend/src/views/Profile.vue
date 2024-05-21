@@ -62,19 +62,20 @@
 </template>
 
 <script setup>
-import {onMounted, ref} from 'vue';
+import {getCurrentInstance, onMounted, ref} from 'vue';
 import {doLogout, getAuthenticatedUser, hasRole, removeRole} from "@/js/authentication";
 import {sendApiRequest, sendTokenRefreshRequest} from "@/js/requests";
 import {getCookie, isTokenAboutToExpire} from "@/js/tools";
 import PasswordChange from "@/components/PasswordChange.vue";
 import AccountDetails from "@/components/AccountDetails.vue";
-import Subscription from "@/components/Subscription.vue";
 
 onMounted(loadProfileData);
 const loading = ref(true);
 const user = getAuthenticatedUser();
 const changePassword = ref(false);
 let navigate = ref("accountDetails");
+const { appContext } = getCurrentInstance();
+const API_URL = appContext.config.globalProperties.$apiAddress;
 
 async function loadProfileData() {
   navigate.value = "accountDetails";
@@ -86,7 +87,7 @@ async function loadProfileData() {
     if (jwt && isTokenAboutToExpire(jwt)) {
       sendTokenRefreshRequest(onTokenRefreshSuccess, onTokenRefreshError);
     } else {
-      await sendApiRequest("GET", "/users/" + user.username, onProfileDataSuccess, onProfileDataError);
+      await sendApiRequest(API_URL,"GET", "/users/" + user.username, onProfileDataSuccess, onProfileDataError);
     }
   } else {
     window.location.href = ("/no-access");
@@ -95,7 +96,7 @@ async function loadProfileData() {
 
 function onTokenRefreshSuccess() {
   console.log("Token has been refreshed.");
-  sendApiRequest("GET", "/users/" + user.username, onProfileDataSuccess, onProfileDataError);
+  sendApiRequest(API_URL,"GET", "/users/" + user.username, onProfileDataSuccess, onProfileDataError);
 }
 
 function subscription() {
@@ -172,7 +173,7 @@ function changePasswordRequest() {
     newPassword: newPassword
   };
 
-  sendApiRequest("PUT", "/users/" + user.username + "/change-password", onChangePasswordSuccess, data, onChangePasswordError);
+  sendApiRequest(API_URL,"PUT", "/users/" + user.username + "/change-password", onChangePasswordSuccess, data, onChangePasswordError);
 }
 
 function onChangePasswordSuccess(data) {
@@ -187,7 +188,7 @@ function onChangePasswordError(error) {
 }
 
 function endSubscription() {
-  sendApiRequest("PUT", "/users/unsubscribe", onEndSubscriptionSuccess, onEndSubscriptionError);
+  sendApiRequest(API_URL,"PUT", "/users/unsubscribe", onEndSubscriptionSuccess, onEndSubscriptionError);
   removeRole('ROLE_PRO');
   alert('You have successfully ended you subscription');
   window.location.href = ('/profile');

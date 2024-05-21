@@ -43,13 +43,13 @@ export function isAuthorized() {
     return (hasRole('ROLE_USER') || hasRole('ROLE_PRO') || hasRole('ROLE_ADMIN'));
 }
 
-function sendAuthenticationRequest(username, password, successCallback, errorCallback) {
+function sendAuthenticationRequest(API_URL, username, password, successCallback, errorCallback) {
     const postData = {
         "username": username,
         "password": password
     };
     sendApiRequest(
-        "POST", "/users/login",
+        API_URL, "POST", "/users/login",
         function (jwtResponse) {
             setCookie("jwt", jwtResponse.jwt, 24);
             setCookie("refresh_token", jwtResponse.refreshToken);

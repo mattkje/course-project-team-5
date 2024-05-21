@@ -1,7 +1,6 @@
 <script setup>
 import { getCurrentInstance, onMounted, ref } from "vue";
 import {getAuthenticatedUser} from "@/js/authentication";
-import createPost from "@/views/CreatePost.vue";
 import router from "@/router";
 import Alert from "@/components/Alert.vue";
 

@@ -412,13 +412,13 @@ async function sortByCategory(event) {
   let category = nameId.labelName
   let checkboxId = "category " + nameId.labelName;
   onCheckboxChange(checkboxId, category);
-  await sendApiRequest("GET", '/courses/category/' + category, (data) => isMatch(data, checkboxId, false), onFailure);
+  await sendApiRequest(API_URL,"GET", '/courses/category/' + category, (data) => isMatch(data, checkboxId, false), onFailure);
 }
 
 async function sortByDate(startDate, endDate) {
   let checkboxId = "date " + startDate + " to " + endDate;
   onCheckboxChange(checkboxId, startDate + " to " + endDate);
-  await sendApiRequest("GET", '/courses/date-range?startDate=' + startDate + '&endDate=' + endDate, (data) =>
+  await sendApiRequest(API_URL,"GET", '/courses/date-range?startDate=' + startDate + '&endDate=' + endDate, (data) =>
     isMatch(data, checkboxId, true), onFailure);
 }
 
@@ -426,14 +426,14 @@ async function onProviderCheckboxChange(event) {
   let nameId = getCheckboxId(event);
   let provider = nameId.labelName;
   let checkboxId = "provider " + nameId.checkboxId;
-  await sendApiRequest("GET", '/courses/provider/' + provider, (data) => isMatch(data, checkboxId, false), onFailure);
+  await sendApiRequest(API_URL,"GET", '/courses/provider/' + provider, (data) => isMatch(data, checkboxId, false), onFailure);
 }
 
 async function sortByDifficulty(event) {
   let nameId = getCheckboxId(event);
   let difficulty = nameId.labelName;
   let checkboxId = "difficulty " + nameId.checkboxId;
-  await sendApiRequest("GET", '/courses/level/' + difficulty, (data) => isMatch(data, checkboxId, false), onFailure);
+  await sendApiRequest(API_URL,"GET", '/courses/level/' + difficulty, (data) => isMatch(data, checkboxId, false), onFailure);
 }
 
 function getSliderValues(event) {
@@ -481,7 +481,7 @@ async function sortByCredit(event) {
   let nameId = getSliderValues(event);
   let credit = nameId.sliderValue;
   let checkboxId = "credit " + "credit";
-  await sendApiRequest("GET", '/courses/course_size/' + credit, (data) => isMatch(data, checkboxId, true), onFailure);
+  await sendApiRequest(API_URL,"GET", '/courses/course_size/' + credit, (data) => isMatch(data, checkboxId, true), onFailure);
 }
 
 async function sortByPriceRange() {

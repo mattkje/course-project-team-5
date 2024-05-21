@@ -1,5 +1,5 @@
 <script setup>
-  import { ref, computed, onMounted } from 'vue';
+import {ref, computed, onMounted, getCurrentInstance} from 'vue';
   import Guidelines from "@/components/Guidelines.vue";
   import {getAuthenticatedUser, hasRole} from "@/js/authentication";
   import {sendApiRequest} from "@/js/requests";
@@ -27,6 +27,9 @@
   image: ''
 });
 
+const { appContext } = getCurrentInstance();
+const API_URL = appContext.config.globalProperties.$apiAddress;
+
   const remainingCharacters = computed(() => 6000 - course.value.description.length);
 
   function toggleGuidelinesModal() {
@@ -41,7 +44,7 @@
       console.log(course.value.startDate + course.value.endDate);
       console.log(course.value);
     }
-  sendApiRequest('POST', '/courses', onSuccess, course.value, error);
+  sendApiRequest(API_URL,'POST', '/courses', onSuccess, course.value, error);
 }
 
   onMounted(() => {

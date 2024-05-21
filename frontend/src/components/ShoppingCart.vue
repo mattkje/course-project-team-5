@@ -25,7 +25,7 @@ async function applyCoupon() {
 async function loadShoppingCart() {
   const user = getAuthenticatedUser();
   if (user) {
-    await sendApiRequest("GET", "/users/" + user.username, onProfileDataSuccess, onProfileDataError);
+    await sendApiRequest(API_URL,"GET", "/users/" + user.username, onProfileDataSuccess, onProfileDataError);
   }
 }
 
@@ -38,7 +38,7 @@ onMounted(async () => {
   console.log("hei");
   const user = getAuthenticatedUser();
   if (user) {
-    await sendApiRequest("GET", "/users/" + user.username, onProfileDataSuccess, onProfileDataError);
+    await sendApiRequest(API_URL,"GET", "/users/" + user.username, onProfileDataSuccess, onProfileDataError);
   }
 });
 

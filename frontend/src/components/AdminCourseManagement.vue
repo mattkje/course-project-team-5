@@ -8,7 +8,11 @@ const {appContext} = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
 
 onMounted(async () => {
-  const response = await fetch(API_URL + '/courses');
+  const response = await fetch(API_URL + '/courses', {
+    headers: {
+      'Authorization': 'Bearer ' + getCookie('jwt'),
+    }
+  });
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }
@@ -41,8 +45,8 @@ async function deleteCourse(courseProvider) {
 
 async function disableCourse(courseProvider) {
   const token = getCookie('jwt');
-  const response = await fetch(API_URL + '/courses/' + courseProvider.course.courseId, {
-    method: 'PATCH',
+  const response = await fetch(API_URL + '/courses/active/' + courseProvider.course.courseId, {
+    method: 'PUT',
     headers: {
       'Authorization': 'Bearer ' + token,
       'Content-Type': 'application/json'
@@ -58,7 +62,6 @@ async function disableCourse(courseProvider) {
 
   location.reload();
 }
-
 
 </script>
 
@@ -78,7 +81,8 @@ async function disableCourse(courseProvider) {
         <p>{{ courseProvider.course.title }}</p>
         <div class="right-content">
           <button class="fancy-button" @click="visitPage(courseProvider)">Review</button>
-          <button class="fancy-button" @click="disableCourse(courseProvider)">Disable</button>
+          <button class="fancy-button" @click="disableCourse(courseProvider)" v-if="courseProvider.course.active">Disable</button>
+          <button class="fancy-button" @click="disableCourse(courseProvider)" v-if="!courseProvider.course.active">Enable</button>
           <button class="fancy-button" style="background-color: orangered; color: white" @click="deleteCourse(courseProvider)">Delete</button>
         </div>
       </div>

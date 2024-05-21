@@ -70,7 +70,10 @@
 import {sendApiRequest} from "@/js/requests";
 import {addRole, getAuthenticatedUser} from "@/js/authentication";
 import Alert from "@/components/Alert.vue";
+import {getCurrentInstance} from "vue";
 
+const { appContext } = getCurrentInstance();
+const API_URL = appContext.config.globalProperties.$apiAddress;
 export default {
   name: 'Subscription',
   components: {Alert},
@@ -82,17 +85,17 @@ export default {
 }
 
 async function add1MonthSubscription() {
-  if(getAuthenticatedUser()) await sendApiRequest('PUT', '/users/purchase-pro/1-month', successfulExecution, error);
+  if(getAuthenticatedUser()) await sendApiRequest(API_URL,'PUT', '/users/purchase-pro/1-month', successfulExecution, error);
   else this.$emit('show-alert');
 }
 
 async function add3MonthsSubscription() {
-  if(getAuthenticatedUser()) await sendApiRequest('PUT', '/users/purchase-pro/3-month', successfulExecution, error);
+  if(getAuthenticatedUser()) await sendApiRequest(API_URL,'PUT', '/users/purchase-pro/3-month', successfulExecution, error);
   else this.$emit('show-alert');
 }
 
 async function add12MonthsSubscription() {
-  if(getAuthenticatedUser()) await sendApiRequest('PUT', '/users/purchase-pro/12-month', successfulExecution, error);
+  if(getAuthenticatedUser()) await sendApiRequest(API_URL,'PUT', '/users/purchase-pro/12-month', successfulExecution, error);
   else this.$emit('show-alert');
 }
 

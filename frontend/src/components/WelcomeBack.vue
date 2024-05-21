@@ -1,14 +1,17 @@
 <script setup>
 
-import {onMounted, ref} from "vue";
+import {getCurrentInstance, onMounted, ref} from "vue";
 import {getAuthenticatedUser} from "@/js/authentication";
 import {sendApiRequest} from "@/js/requests";
 import CourseSlide from "@/components/CourseSlide.vue";
 
 onMounted(putUsername)
 
+const { appContext } = getCurrentInstance();
+const API_URL = appContext.config.globalProperties.$apiAddress;
+
 function putUsername() {
-  sendApiRequest('GET', '/users/' + getAuthenticatedUser().username, success, error)
+  sendApiRequest(API_URL,'GET', '/users/' + getAuthenticatedUser().username, success, error)
 }
 
 function success(data) {

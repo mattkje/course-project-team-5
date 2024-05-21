@@ -1,7 +1,7 @@
 <script setup>
 
 
-import { ref } from 'vue';
+import {getCurrentInstance, ref} from 'vue';
 import { sendApiRequest } from '../js/requests.js';
 import Alert from "@/components/Alert.vue";
 
@@ -16,6 +16,8 @@ const repeatPassword = ref('');
 const isUserCreated = ref(false);
 const errorMessage = ref('');
 const showAlert = ref(false);
+const { appContext } = getCurrentInstance();
+const API_URL = appContext.config.globalProperties.$apiAddress;
 
 const register = async () => {
   if(repeatPassword.value === password.value) {
@@ -27,7 +29,7 @@ const register = async () => {
       "lastName": lastName.value,
       "phoneNumber": phoneNumber.value
     };
-    await sendApiRequest('POST', '/users/register', onSignupSuccess, signupData, onSignUpError);
+    await sendApiRequest(API_URL,'POST', '/users/register', onSignupSuccess, signupData, onSignUpError);
   } else {
     alert("The password must match!")
   }
