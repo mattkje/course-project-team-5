@@ -21,28 +21,15 @@
           'border-radius': isCategoryVisible ? '10px 10px 0 0' : '10px'
         }">Category
         </button>
-        <div class="wrapper" id="categoryContainer" :style="{
-          height: isCategoryVisible ? '150px' : '0px',
-          opacity: isCategoryVisible ? '1' : '0',
-          zIndex: isCategoryVisible ? '0' : -100,
-          'border-radius': isCategoryVisible ? '0 0 10px 10px' : '10px'
-        }">
-          <div class="category-list" id="categoryList">
-
-          </div>
+        <div class="wrapper" id="categoryContainer" :class="{'visible': isCategoryVisible, 'hidden': !isCategoryVisible}">
+          <div class="category-list" id="categoryList"></div>
         </div>
-
 
         <button class="price-ranger" @click="toggleShowPrice" :style="{
           'border-radius': isPriceVisible ? '10px 10px 0 0' : '10px'
         }">Price
         </button>
-        <div class="wrapper" id="priceText" :style="{
-          height: isPriceVisible ? '150px' : '0px',
-          opacity: isPriceVisible ? '1' : '0',
-          zIndex: isPriceVisible ? '0' : -100,
-          'border-radius': isPriceVisible ? '0 0 10px 10px' : '10px'
-        }">
+        <div class="wrapper" id="priceText" :class="{'visible': isPriceVisible, 'hidden': !isPriceVisible}">
           <div class="price-input-container">
             <div class="price-input">
               <label for="min-price">Min Price:</label>
@@ -62,14 +49,7 @@
         }">Date
         </button>
 
-        <div class="wrapper" id="dateContainer" :style="{
-          height: isDateVisible ? '80px' : '0px',
-          opacity: isDateVisible ? '1' : '0',
-          zIndex: isDateVisible ? '0' : -100,
-          'border-radius': isDateVisible ? '0 0 10px 10px' : '10px',
-          textAlign: 'center'
-        }">
-
+        <div class="wrapper" id="dateContainer" :class="{'visible': isDateVisible, 'hidden': !isDateVisible}">
           <span>Start date - End Date</span>
           <flat-pickr v-model="date" :config="config" class="form-control" placeholder="Select dates" name="date" @change="getDate" ref="flatpickr"></flat-pickr>
         </div>
@@ -78,15 +58,8 @@
           'border-radius': isProviderVisible ? '10px 10px 0 0' : '10px'
         }">Provider
         </button>
-        <div class="wrapper" id="providerContainer" :style="{
-          height: isProviderVisible ? '320px' : '0px',
-          opacity: isProviderVisible ? '1' : '0',
-          zIndex: isProviderVisible ? '0' : -100,
-          'border-radius': isProviderVisible ? '0 0 10px 10px' : '10px'
-        }">
-          <header>
+        <div class="wrapper" id="providerContainer" :class="{'visible': isProviderVisible, 'hidden': !isProviderVisible}">
             <div id="providerList"></div>
-          </header>
         </div>
 
         <button class="price-ranger" @click="toggleShowDifficulty" :style="{
@@ -118,12 +91,7 @@
           'border-radius': isCreditVisible ? '10px 10px 0 0' : '10px'
         }">Credit
         </button>
-        <div class="wrapper" id="creditContainer" :style="{
-          height: isCreditVisible ? '70px' : '0px',
-          opacity: isCreditVisible ? '1' : '0',
-          zIndex: isCreditVisible ? '0' : -100,
-          'border-radius': isCreditVisible ? '0 0 10px 10px' : '10px'
-        }">
+        <div class="wrapper" id="creditContainer" :class="{'visible': isCreditVisible, 'hidden': !isCreditVisible}">
           <header>
             <div class="slider-container">
               <input type="range" min="0" max="5" class="slider" id="creditSlider" v-model="creditValue"
