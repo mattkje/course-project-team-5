@@ -129,11 +129,11 @@ public Collection<Course> getCoursesByProvider(@PathVariable String providerName
     }
 
     @PutMapping("/api/courses/active/{id}")
-    public ResponseEntity<?> changeActiveCourse(@PathVariable int id, @RequestBody Boolean active) {
+    public ResponseEntity<?> changeActiveCourse(@PathVariable int id) {
         if(courseService.getCourseInfo(id) == null && !userService.isAdmin()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         } else {
-            courseService.changeActiveCourse(id, active);
+            courseService.changeActiveCourse(id);
             return ResponseEntity.status(HttpStatus.OK).body(courseService.getCourseInfo(id));
         }
     }
