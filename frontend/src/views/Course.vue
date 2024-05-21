@@ -2,7 +2,6 @@
 
 <template>
   <div class="course-page-background" v-show="!addProvider">
-    <button v-show="hasRole('ROLE_ADMIN')" class="fancy-button" @click="changeProviderValue">Add provider</button>
 
     <div v-show="!loading" class="courseLinkElement">
       <a href="/">Courses</a>
@@ -12,6 +11,10 @@
       <a href="#" id="courseTitleLink"></a>
     </div>
     <div v-show="!loading" class="providerList">
+      <div class="administrator" v-show="hasRole('ROLE_ADMIN')">
+        <p>Admin View</p>
+      </div>
+      <div class=""></div>
       <div class="course-image-box">
         <img id="courseImage" class="course-image" alt="Course Image">
         <div class="course-image-blur"></div>
@@ -348,6 +351,18 @@ function populateCoursePage() {
                 }
 
               });
+
+              if (hasRole("ROLE_ADMIN")) {
+                let addProviderButton = document.createElement("button");
+                addProviderButton.innerHTML = "Add Provider";
+                addProviderButton.classList.add("provider-choose");
+                addProviderButton.id = "add-provider";
+                document.getElementById('providerList').appendChild(addProviderButton);
+                addProviderButton.addEventListener('click', function() {
+                  changeProviderValue();
+                });
+              }
+
 
               if (`${data.course.relatedCertifications}` === "null") {
                 courseCertElement.style.display = "none";
@@ -1251,5 +1266,21 @@ button {
 
 .provider-form {
   margin-bottom: 10px;
+}
+
+.administrator {
+  display: flex;
+  justify-content: center;
+  background-color: var(--light-1);
+  border-radius: 20px;
+  padding: 20px;
+  width: 1300px;
+  margin: 50px auto;
+}
+
+.administrator p {
+  font-size: 30px;
+  font-weight: bold;
+  color: black;
 }
 </style>
