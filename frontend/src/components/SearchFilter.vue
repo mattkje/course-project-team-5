@@ -18,7 +18,6 @@ const isExpertChecked = ref(false);
 
 const isRangeContainerVisible = ref(window.innerWidth > 1250);
 const isDarkOverlayVisible = ref(false);
-
 const updateVisibility = () => {
   isRangeContainerVisible.value = window.innerWidth > 1250;
   isDarkOverlayVisible.value = window.innerWidth < 1250 && isRangeContainerVisible.value;
@@ -73,7 +72,6 @@ onMounted(() => {
   children = courseContainer.children;
   populateCourses('.flexible-grid');
   currency(API_URL);
-
   window.addEventListener('resize', updateVisibility);
   updateVisibility();
 });
@@ -268,6 +266,7 @@ function checkActiveFilters(checkboxId) {
     for (let key of filterMap.keys()) {
       let existingFilter = filterMap.get(key);
       if (existingFilter.has("credit")) {
+        existingFilter.delete("credit");
       }
       if (existingFilter.has("date")) {
         existingFilter.delete("date");
@@ -452,9 +451,11 @@ watchEffect(() => {
   <div class="dark-overlay" @click="toggleFilters" v-show="isDarkOverlayVisible"></div>
   <div class="filter-wrapper">
     <div class="active-filter-container">
-      <button @click="toggleFilters">
-        <img src="https://www.svgrepo.com/show/472431/bars-filter.svg" alt="Filter Icon">
-        <p>Filters</p>
+      <button @click="toggleFilters" class="filterButton">
+        <svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 24 24" fill="none">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M3 7C3 6.44772 3.44772 6 4 6H20C20.5523 6 21 6.44772 21 7C21 7.55228 20.5523 8 20 8H4C3.44772 8 3 7.55228 3 7ZM6 12C6 11.4477 6.44772 11 7 11H17C17.5523 11 18 11.4477 18 12C18 12.5523 17.5523 13 17 13H7C6.44772 13 6 12.5523 6 12ZM9 17C9 16.4477 9.44772 16 10 16H14C14.5523 16 15 16.4477 15 17C15 17.5523 14.5523 18 14 18H10C9.44772 18 9 17.5523 9 17Z" fill="#000000"/>
+        </svg>
+        <span style="font-weight: bold">Filters</span>
       </button>
     </div>
 
@@ -462,8 +463,8 @@ watchEffect(() => {
       <div class="range-container" v-show="isRangeContainerVisible">
         <div class="mobile-filter-header">
           <h3 class="mobile-h3">Filters</h3>
-          <button type="button" class="exitButton">
-            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 50 50">
+          <button type="button" class="exitButton" @click="toggleFilters">
+            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 50 50">
               <line x1="10" y1="10" x2="30" y2="30" stroke="black" stroke-width="2"/>
               <line x1="30" y1="10" x2="10" y2="30" stroke="black" stroke-width="2"/>
             </svg>
@@ -822,7 +823,9 @@ input[type="number"]::-webkit-inner-spin-button {
   transition: background 0.3s;
 
   &:hover {
-    color: #727272;
+    color: #5565fd;
+    border: none;
+    transform: scale(1);
   }
 }
 
@@ -974,6 +977,24 @@ body, html {
   align-content: center;
 }
 
+Button {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  transform : scale(1.1);
+  border: #5666ff solid 1px;
+  path {
+    fill: #5666ff;
+  };
+  color: #5666ff;
+}
+
+Button:active {
+  transform: scale(0.8);
+}
+
 @media (max-width: 1250px) {
 
   .overflowContainer {
@@ -987,6 +1008,7 @@ body, html {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
     width: 100%;
   }
 
@@ -1006,9 +1028,18 @@ body, html {
     display: inline-block;
     border: none;
     background-color: transparent;
+    text-align: center;
   }
 
-  .range-container {
+  .exitButton:hover {
+    line {
+      stroke: #5666ff;
+    }
+    transform: scale(1.1);
+    border: none;
+  }
+
+  .range-container  {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -1023,7 +1054,6 @@ body, html {
     z-index: 100;
     overflow-y: auto;
     overflow-x: hidden;
-    transition: bottom 0.3s ease;
 
     display: flex;
     flex-direction: column;
@@ -1031,7 +1061,9 @@ body, html {
     align-items: flex-start;
 
     gap: 5px;
+
   }
+
 
   .price-ranger {
     margin: 0;
