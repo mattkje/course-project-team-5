@@ -69,4 +69,16 @@ public class ProviderController {
       return ResponseEntity.status(HttpStatus.CREATED).body(provider);
     }
   }
+
+  @GetMapping("/api/courses/{courseId}/providers/{providerId}/price")
+  public ResponseEntity<Double> getCoursePriceByProviderIdAndCourseId(@PathVariable int courseId, @PathVariable int providerId) {
+    double price;
+    try {
+      price = courseService.getCoursePriceByProviderIdAndCourseId(providerId, courseId);
+    } catch (Exception e) {
+      // Handle the exception based on your application's requirements
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+    return ResponseEntity.status(HttpStatus.OK).body(price);
+  }
 }

@@ -275,4 +275,27 @@ public class CourseService {
       courseRepository.save(courseToChange);
     }
   }
+
+  public double getCoursePriceByProviderIdAndCourseId(int providerId, int courseId) {
+    // Retrieve the course by id
+    Course course = getCourseInfo(courseId);
+    if (course == null) {
+        throw new NoSuchElementException("No course found with id: " + courseId);
+    }
+
+    // Retrieve the provider of the course by id
+    Provider provider = providerRepository.findById((long) providerId).orElse(null);
+    if (provider == null) {
+        throw new NoSuchElementException("No provider found with id: " + providerId);
+    }
+
+    // Retrieve the course provider
+    CourseProvider courseProvider = courseProviderRepository.findByCourseIdAndProviderId(courseId, providerId);
+    if (courseProvider == null) {
+        throw new NoSuchElementException("No course provider found with course id: " + courseId + " and provider id: " + providerId);
+    }
+
+    // Return the price of the course for the provider
+    return courseProvider.getPrice();
+}
 }
