@@ -7,131 +7,6 @@
       <img class="search-icon" src="/search.png" alt="Connect">
     </div>
   </div>
-  <div class="filter-popup" v-show="showFilters">
-    <div class="dark-overlay"></div>
-    <div class="mobile-filter">
-      <div class="styledHeader">
-        <h3 id="filters">Filters</h3>
-
-      </div>
-      <div class="separator"></div>
-      <div class="range-container" id="range-vertical-container">
-
-        <button class="price-ranger" @click="toggleShowCategory" :style="{
-          'border-radius': isCategoryVisible ? '10px 10px 0 0' : '10px'
-        }">Category
-        </button>
-        <div class="wrapper" id="categoryContainer" :style="{
-          height: isCategoryVisible ? '0px' : '120px',
-          opacity: isCategoryVisible ? '0' : '1',
-          zIndex: isCategoryVisible ? -100 : '0',
-          'border-radius': isCategoryVisible ? '0 0 10px 10px' : '10px'
-        }">
-          <div class="category-list" id="categoryList2">
-          </div>
-        </div>
-
-        <div class="separator"></div>
-
-        <button class="price-ranger" @click="toggleShowPrice" :style="{
-          'border-radius': isPriceVisible ? '10px 10px 0 0' : '10px'
-        }">Price
-        </button>
-        <div class="wrapper" id="priceText" :style="{
-          height: isPriceVisible ? '0px' : '100px',
-          opacity: isPriceVisible ? '0' : '1',
-          zIndex: isPriceVisible ? -100 :  '0',
-          'border-radius': isPriceVisible ? '0 0 10px 10px' : '10px'
-        }">
-          <div class="price-input-container">
-          </div>
-        </div>
-
-        <button class="price-ranger" @click="toggleShowDate" :style="{
-          'border-radius': isDateVisible ? '10px 10px 0 0' : '10px'
-        }">Date
-        </button>
-
-        <div class="wrapper" id="dateContainer" :style="{
-          height: isDateVisible ? '0px' : '50px',
-          opacity: isDateVisible ? '0' : '1',
-          zIndex: isDateVisible ? -100 : '0',
-          'border-radius': isDateVisible ? '0 0 10px 10px' : '10px'
-        }">
-          <span>Start date - End Date</span>
-          <input id="datepicker" type="text" placeholder="Now - Forever"/>
-        </div>
-
-        <button class="price-ranger" @click="toggleShowProvider" :style="{
-          'border-radius': isProviderVisible ? '10px 10px 0 0' : '10px'
-        }">Provider
-        </button>
-        <div class="wrapper" id="providerContainer" :style="{
-          height: isProviderVisible ? '0px' : '400px',
-          opacity: isProviderVisible ? '0' : '1',
-          zIndex: isProviderVisible ?  -100 : '0',
-          'border-radius': isProviderVisible ? '0 0 10px 10px' : '10px'
-        }">
-          <header>
-            <div id="providerList1"></div>
-          </header>
-        </div>
-
-        <button class="price-ranger" @click="toggleShowDifficulty" :style="{
-          'border-radius': isDifficultyVisible ? '10px 10px 0 0' : '10px'
-        }">Difficulty
-        </button>
-        <div class="wrapper" id="difficultyContainer" :style="{
-          height: isDifficultyVisible ? '0px' : '150px',
-          opacity: isDifficultyVisible ? '0' : '1',
-          zIndex: isDifficultyVisible ? -100 : '0',
-          'border-radius': isDifficultyVisible ? '0 0 10px 10px' : '10px'
-        }">
-          <header>
-            <div class="checkbox-wrapper">
-              <label class="cbx" for="beginnerBox">Beginner</label>
-              <input class="inp-cbx" id="beginnerBox" type="checkbox" v-model="isBeginnerChecked"
-                     @change="sortByDifficulty">
-            </div>
-
-            <div class="checkbox-wrapper">
-              <label class="cbx" for="intermediateBox">Intermediate</label>
-              <input class="inp-cbx" id="intermediateBox" type="checkbox" v-model="isIntermediateChecked"
-                     @change="sortByDifficulty">
-            </div>
-
-            <div class="checkbox-wrapper">
-              <label class="cbx" for="expertBox">Expert</label>
-              <input class="inp-cbx" id="expertBox" type="checkbox" v-model="isExpertChecked"
-                     @change="sortByDifficulty">
-            </div>
-          </header>
-        </div>
-        <button class="price-ranger" @click="toggleShowCredit" :style="{
-          'border-radius': isCreditVisible ? '10px 10px 0 0' : '10px'
-        }">Credit
-        </button>
-        <div class="wrapper" id="creditContainer" :style="{
-          height: isCreditVisible ? '0px' : '200px',
-          opacity: isCreditVisible ? '0' : '1',
-          zIndex: isCreditVisible ? -100 : '0',
-          'border-radius': isCreditVisible ? '0 0 10px 10px' : '10px'
-        }">
-          <header>
-            <div class="slider-container">
-              <input type="range" min="0" max="5" class="slider" id="creditSlider" v-model="creditValue"
-                     @change="sortByCredit">
-              <div style="display: flex; justify-content: space-between;">
-                <p>Minimum Credit:</p>
-                <p>{{ creditValue }}</p>
-              </div>
-            </div>
-          </header>
-        </div>
-
-      </div>
-    </div>
-  </div>
   <div class="filter-wrapper">
     <div class="active-filter-container">
       <button @click="toggleFilters">
@@ -141,8 +16,7 @@
     </div>
 
     <div class="filter-container">
-      <div class="range-container">
-
+      <div class="range-container" v-show="isRangeContainerVisible">
         <button class="price-ranger" @click="toggleShowCategory" :style="{
           'border-radius': isCategoryVisible ? '10px 10px 0 0' : '10px'
         }">Category
@@ -153,7 +27,7 @@
           zIndex: isCategoryVisible ? '0' : -100,
           'border-radius': isCategoryVisible ? '0 0 10px 10px' : '10px'
         }">
-          <div class="category-list" id="categoryList1">
+          <div class="category-list" id="categoryList">
 
           </div>
         </div>
@@ -211,7 +85,7 @@
           'border-radius': isProviderVisible ? '0 0 10px 10px' : '10px'
         }">
           <header>
-            <div id="providerList2"></div>
+            <div id="providerList"></div>
           </header>
         </div>
 
@@ -219,12 +93,7 @@
           'border-radius': isDifficultyVisible ? '10px 10px 0 0' : '10px'
         }">Difficulty
         </button>
-        <div class="wrapper" id="difficultyContainer" :style="{
-          height: isDifficultyVisible ? '80px' : '0px',
-          opacity: isDifficultyVisible ? '1' : '0',
-          zIndex: isDifficultyVisible ? '0' : -100,
-          'border-radius': isDifficultyVisible ? '0 0 10px 10px' : '10px'
-        }">
+        <div class="wrapper" :class="{'visible': isDifficultyVisible, 'hidden': !isDifficultyVisible}" id="difficultyContainer">
           <header>
             <div class="checkbox-wrapper">
               <label class="cbx" for="beginnerBox">Beginner</label>
@@ -294,6 +163,13 @@ const isBeginnerChecked = ref(false);
 const isIntermediateChecked = ref(false);
 const isExpertChecked = ref(false);
 
+
+const isRangeContainerVisible = ref(window.innerWidth > 1250);
+
+const updateVisibility = () => {
+  isRangeContainerVisible.value = window.innerWidth > 1250;
+};
+
 const isCategoryVisible = ref(false);
 const isPriceVisible = ref(false);
 const isDateVisible = ref(false);
@@ -320,10 +196,7 @@ let activeFilters = new Map();
 let searchedChildren = new Map();
 let pricedChildren = new Map();
 
-let showFilters = ref(false);
-
 const date = ref(null);
-
 const config = ref({
   mode: 'range',
   dateFormat: 'J of F',
@@ -332,14 +205,12 @@ const config = ref({
   minDate: 'today',
 });
 
-
 const flatpickr = ref(null);
 
  const getDate = () => {
   const flatpickerInstance = flatpickr.value.fp;
   const AltInputValue = flatpickerInstance.altInput.value.split(' to ');
   const [startDate, endDate] = AltInputValue;
-
   sortByDate(startDate, endDate);
 };
 
@@ -348,6 +219,9 @@ onMounted(() => {
   children = courseContainer.children;
   populateCourses('.flexible-grid');
   currency(API_URL);
+
+  window.addEventListener('resize', updateVisibility);
+  updateVisibility();
 });
 
 // Populate the courses in the given selector
@@ -367,20 +241,17 @@ async function populateCourses(selector) {
         document.querySelector(selector).appendChild(contentBox.cloneNode(true));
       }
     });
-    populateCheckboxes(['#categoryList1', '#categoryList2'],coursesData,'course.category',isCategoryChecked,sortByCategory);
-    populateCheckboxes(['#providerList1', '#providerList2'],providerData,'name',isProviderChecked,onProviderCheckboxChange);
+    populateCheckboxes('#categoryList',coursesData,'course.category',isCategoryChecked,sortByCategory);
+    populateCheckboxes('#providerList',providerData,'name',isProviderChecked,onProviderCheckboxChange);
   } catch (error) {
     console.error('Error:', error);
   }
 }
 
-function populateCheckboxes(selectors, data,dataType,checkedRef, changeHandler) {
+function populateCheckboxes(selector, data,dataType,checkedRef, changeHandler) {
   const uniqueItems = new Set();
 
-  selectors.forEach(selector => {
     const list = document.querySelector(selector);
-
-    console.log(dataType)
     data.value.forEach(item => {
       uniqueItems.add(getNestedProperty(item, dataType));
     });
@@ -408,7 +279,6 @@ function populateCheckboxes(selectors, data,dataType,checkedRef, changeHandler) 
       // Initialize the checkbox state for this item
       checkedRef.value[itemName] = false;
     });
-  });
 }
 
 function getNestedProperty(obj, path) {
@@ -453,7 +323,6 @@ function addFilterToCourse(id, checkboxId) {
   }
 }
 
-
 function updateActiveFilters(checkboxId,isSlider) {
   let key = checkboxId.split(" ")[0];
 
@@ -480,7 +349,6 @@ function filterCourse(Matching, checkboxId, isSlider) {
 
   for (let id of childrenIdList) {
     if (Matching.includes(id)) {
-      console.log("addfilter")
       addFilterToCourse(id, checkboxId);
     }
   }
@@ -522,10 +390,8 @@ function isMatch(courses, checkboxId, isSlider) {
   if (childrenIdList.length === 0) {
     createChildrenIdList();
   }
-
  checkActiveFilters(checkboxId)
   Matching = [];
-
   for (let course of courses) {
     if (childrenIdList.includes(course.courseId)) {
       Matching.push(course.courseId);
@@ -533,16 +399,13 @@ function isMatch(courses, checkboxId, isSlider) {
   }
   filterCourse(Matching, checkboxId, isSlider);
   updateView();
-  console.log(activeFilters)
 }
 
 function checkActiveFilters(checkboxId) {
   if (activeFilters.has("credit") && checkboxId.includes("credit") || activeFilters.has("date") && checkboxId.includes("date")) {
-    console.log(activeFilters.size)
     for (let key of filterMap.keys()) {
       let existingFilter = filterMap.get(key);
       if (existingFilter.has("credit")) {
-        console.log("check")
       }
       if (existingFilter.has("date")) {
         existingFilter.delete("date");
@@ -570,8 +433,6 @@ async function onProviderCheckboxChange(event) {
   let nameId = getCheckboxId(event);
   let provider = nameId.labelName;
   let checkboxId = "provider " + nameId.checkboxId;
-  console.log(provider)
-  console.log(nameId.checkboxId)
   await sendApiRequest("GET", '/courses/provider/' + provider, (data) => isMatch(data, checkboxId, false), onFailure);
 }
 
@@ -651,7 +512,6 @@ async function sortByPriceRange() {
   updateView();
 }
 
-
 function searchCourses() {
   for (let child of children) {
     let childTitle = child.querySelector('.content-box-title').textContent.toLowerCase();
@@ -669,7 +529,6 @@ function searchCourses() {
 function onFailure() {
   console.log("Failed to fetch courses");
 }
-
 
 function toggleShowPrice() {
   isPriceVisible.value = !isPriceVisible.value;
@@ -696,8 +555,9 @@ function toggleShowCredit() {
 }
 
 function toggleFilters() {
-  console.log(showFilters)
-  showFilters.value = !showFilters.value;
+  if (window.innerWidth < 1250) {
+    isRangeContainerVisible.value = !isRangeContainerVisible.value;
+  }
 }
 
 </script>
@@ -796,7 +656,7 @@ function toggleFilters() {
   height: 1px;
   width: 100%;
   background-color: grey;
-  margin: 5px 0;
+  margin: 10px 0 0 0;
   padding: 0 40px;
 }
 
@@ -850,22 +710,33 @@ function toggleFilters() {
 }
 
 .wrapper {
-  max-width: 300px;
   background: var(--light-1);
   border-radius: 10px;
   padding: 0 20px;
 }
 
+.wrapper.visible {
+  height: auto;
+  padding-bottom: 20px;
+  opacity: 1;
+  z-index: 0;
+  border-radius: 0 0 10px 10px;
+}
+
+.wrapper.hidden {
+  height: 0;
+  opacity: 0;
+  z-index: -100;
+  border-radius: 10px;
+  padding-bottom: 0px;
+
+}
 
 @media (max-width: 769px) {
   .filter-container {
     flex-direction: column;
     max-width: 90%;
     margin: 0 5% 0 5%;
-  }
-
-  .range-container {
-    display: none;
   }
 
   .flexible-grid {
@@ -967,14 +838,14 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .active-filter-container {
   margin-top: 20px;
-  margin-left: 19%;
-  width: 81%;
+  width: 100%;
   min-height: 40px;
   display: flex;
   flex-direction: row;
   align-content: flex-start;
   justify-content: flex-start;
   flex-wrap: wrap;
+  padding: 0 11% 0 calc(250px + 13%);
 }
 
 .filter-wrapper {
@@ -1086,6 +957,7 @@ body, html {
 }
 
 
+
 @media (max-width: 1250px) {
   .filter-container {
     flex-direction: column;
@@ -1095,23 +967,20 @@ body, html {
   }
 
   .range-container {
-    display: none;
+    display: flex;
+    align-content: flex-start;
+    align-items: flex-start;
+    min-width: 100%;
   }
 
   .active-filter-container {
     width: 90%;
     margin: 0 5% 0 5%;
+    padding: 0;
   }
 
   .active-filter-container button {
     display: flex;
-  }
-
-  #range-vertical-container {
-    display: flex;
-    align-content: flex-start;
-    align-items: flex-start;
-    min-width: 100%;
   }
 
   .search-bar {
@@ -1119,8 +988,9 @@ body, html {
     margin: 0 5% 0 5%;
   }
 
-  .search-prompt { 
+  .search-prompt {
     padding: 20px 20px 20px 70px;
   }
+
 }
 </style>
