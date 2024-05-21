@@ -62,9 +62,11 @@ const flatpickr = ref(null);
 
  const getDate = () => {
   const flatpickerInstance = flatpickr.value.fp;
+  const InputValue = flatpickerInstance.input.value.split(' to ');
   const AltInputValue = flatpickerInstance.altInput.value.split(' to ');
+  const [startDateText, endDateText] = InputValue;
   const [startDate, endDate] = AltInputValue;
-  sortByDate(startDate, endDate);
+  sortByDate(startDate, endDate, startDateText, endDateText);
 };
 
 onMounted(() => {
@@ -279,21 +281,26 @@ async function sortByCategory(event) {
   let nameId = getCheckboxId(event);
   let category = nameId.labelName
   let checkboxId = "category " + nameId.labelName;
-  onCheckboxChange(checkboxId, category);
+  onCheckboxChange(checkboxId, category,false);
   await sendApiRequest(API_URL,"GET", '/courses/category/' + category, (data) => isMatch(data, checkboxId, false), onFailure);
 }
 
-async function sortByDate(startDate, endDate) {
-  let checkboxId = "date " + startDate + " to " + endDate;
-  onCheckboxChange(checkboxId, startDate + " to " + endDate);
-  await sendApiRequest(API_URL,"GET", '/courses/date-range?startDate=' + startDate + '&endDate=' + endDate, (data) =>
-    isMatch(data, checkboxId, true), onFailure);
+async function sortByDate(startDate, endDate, startDateText, endDateText) {
+  let checkboxId = "date ";
+  if (startDate === undefined || endDate === undefined) {
+    return;
+  } else {
+    onCheckboxChange(checkboxId, startDateText + " to " + endDateText,true);
+    await sendApiRequest(API_URL,"GET", '/courses/date-range?startDate=' + startDate + '&endDate=' + endDate, (data) =>
+        isMatch(data, checkboxId, true), onFailure);
+  }
 }
 
 async function onProviderCheckboxChange(event) {
   let nameId = getCheckboxId(event);
   let provider = nameId.labelName;
   let checkboxId = "provider " + nameId.checkboxId;
+  onCheckboxChange(checkboxId, provider,false);
   await sendApiRequest(API_URL,"GET", '/courses/provider/' + provider, (data) => isMatch(data, checkboxId, false), onFailure);
 }
 
@@ -301,6 +308,7 @@ async function sortByDifficulty(event) {
   let nameId = getCheckboxId(event);
   let difficulty = nameId.labelName;
   let checkboxId = "difficulty " + nameId.checkboxId;
+  onCheckboxChange(checkboxId, difficulty,false);
   await sendApiRequest(API_URL,"GET", '/courses/level/' + difficulty, (data) => isMatch(data, checkboxId, false), onFailure);
 }
 
@@ -310,16 +318,17 @@ function getSliderValues(event) {
   return {sliderValue, checkboxId};
 }
 
-function onCheckboxChange(checkboxid, type) {
+function onCheckboxChange(checkboxid,type,isSlider) {
   // Create a new div element
   const newElement = document.createElement('div');
 
-  // Set the text content
+  console.log(checkboxid)
   newElement.textContent = `${type}`;
+  newElement.id = checkboxid;
 
   // Apply CSS style
   newElement.style.display = 'inline-block';
-  newElement.style.padding = '7px';
+  newElement.style.padding = '7px 15px';
   newElement.style.backgroundColor = '#270e98';
   newElement.style.color = '#fafaff';
   newElement.style.textAlign = 'center';
@@ -334,11 +343,15 @@ function onCheckboxChange(checkboxid, type) {
   // Append the new element to the active-filter-container
   const activeFilterContainer = document.querySelector('.active-filter-container');
 
-  const existingElement = Array.from(activeFilterContainer.children).find(child => child.textContent === newElement.textContent);
+  const existingElement = Array.from(activeFilterContainer.children).find(child => child.id === newElement.id);
 
   if (existingElement) {
     // If it exists, remove it
+    console.log(existingElement)
     activeFilterContainer.removeChild(existingElement);
+    if (isSlider) {
+      onCheckboxChange(checkboxid,type,false);
+    }
   } else {
     // If it doesn't exist, append it
     activeFilterContainer.appendChild(newElement);
@@ -349,6 +362,7 @@ async function sortByCredit(event) {
   let nameId = getSliderValues(event);
   let credit = nameId.sliderValue;
   let checkboxId = "credit " + "credit";
+  onCheckboxChange(checkboxId, "Minimum Credit: " + credit,true);
   await sendApiRequest(API_URL,"GET", '/courses/course_size/' + credit, (data) => isMatch(data, checkboxId, true), onFailure);
 }
 
@@ -356,7 +370,7 @@ async function sortByPriceRange() {
   let max = maxPrice.value;
   let min = minPrice.value;
   if (max === null || max === ''){
-    max = 1000000;
+    max = Infinity;
   } else if (min === null || min === ''){
     min = 0;
   }
@@ -369,6 +383,19 @@ async function sortByPriceRange() {
     } else if (pricedChildren.has(child)) {
       pricedChildren.delete(child);
     }
+  }
+  switch (true) {
+    case min === 0 && max === Infinity:
+      onCheckboxChange("price", "All Prices",true);
+      break;
+    case min === 0:
+      onCheckboxChange("price", "Up to: " + max,true);
+      break;
+    case max === Infinity:
+      onCheckboxChange("price", "From: " + min,true);
+      break;
+    default:
+      onCheckboxChange("price", "From: " +  min + " - To: " + max,true);
   }
   updateView();
 }
