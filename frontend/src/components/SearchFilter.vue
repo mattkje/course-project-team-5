@@ -19,9 +19,9 @@
     <div class="filter-container">
       <div class="range-container" v-show="isRangeContainerVisible">
         <h3 class="mobile-filter-header">Filters</h3>
-
         <div class="separator"></div>
 
+        <div class="overflowContainer">
         <button class="price-ranger" @click="toggleShowCategory" :style="{
           'border-radius': isCategoryVisible ? '10px 10px 0 0' : '10px'
         }">Category
@@ -128,6 +128,7 @@
         </div>
 
       </div>
+      </div>
       <div class="flexible-grid-container">
         <div class="flexible-grid" id="courseContainer">
         </div>
@@ -138,7 +139,7 @@
 
 
 <script setup>
-import {getCurrentInstance, onMounted, ref} from "vue";
+import {getCurrentInstance, onMounted, ref, watchEffect} from "vue";
 import {currency, setDefaultCurrency} from "@/js/currency";
 import {createContentBox, fetchCourses, fetchCurrencies, fetchProviders} from "@/js/populationTools";
 import {sendApiRequest} from "@/js/requests";
@@ -560,6 +561,15 @@ function toggleFilters() {
   }
 }
 
+watchEffect(() => {
+  if (isRangeContainerVisible.value) {
+    // If isRangeContainerVisible is true, set body overflow to hidden
+    document.body.style.overflow = 'hidden';
+  } else {
+    // If isRangeContainerVisible is false, set body overflow to auto
+    document.body.style.overflow = 'auto';
+  }
+});
 </script>
 
 <style scoped>
@@ -775,6 +785,7 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .price-ranger {
+  width: 100%;
   max-width: 300px;
   background-color: var(--light-1);
   padding: 5px 10px;
@@ -933,8 +944,20 @@ body, html {
   display: none;
 }
 
+.overflowContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: center;
+}
 
 @media (max-width: 1250px) {
+
+  .overflowContainer {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 
   .mobile-filter-header {
     display: block;
