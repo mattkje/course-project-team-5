@@ -89,16 +89,21 @@ async function populateCart() {
     let courseId = courseIds[i];
     let providerId = providerIds[i]; // Get the corresponding providerId
 
+
     await sendApiRequest(API_URL,"GET", '/providers/api/courses/' + courseId + '/providers/' + providerId + '/price', (data) => showPrice(data), onFailure);
     const course = await fetchCourseById(API_URL, courseId);
 
-    course.forEach((courseProvider) => {
-      courseProvider
+    let providers = course.providers;
+
+    let finalPrice = 0;
+
+    providers.forEach(providers => {
+
+     if (Number(providers.courseProviderId) === Number(providerId)){
+       finalPrice = providers.price;
+     }
     });
-
-    console.log(course);
-
-
+    
     // Create a new tbody element for each course
     const courseBody = document.createElement("tbody");
     courseBody.classList.add("course-block");
@@ -110,7 +115,7 @@ async function populateCart() {
     const row = document.createElement("tr");
     const courseName = document.createElement("p");
     const coursePrice = document.createElement("p");
-    coursePrice.innerText = "PRICE HERE";
+    coursePrice.innerText = finalPrice;
     const courseImg = document.createElement("img");
     courseImg.classList.add("course-image");
     row.classList.add("course-card");
