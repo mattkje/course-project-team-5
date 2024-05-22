@@ -131,7 +131,7 @@ function getCourseAndProviderIds(allCookies) {
 }
 
 async function addCourseToCartTotal(course, price, symbol) {
-  const cartTotal = document.getElementsByClassName("right-content")[0];
+  const cartTotal = document.getElementsByClassName("totalItems")[0];
   const courseInfo = document.createElement("p");
   courseInfo.innerText = course.course.title + ": " + symbol + " " + price.toFixed(2);
   cartTotal.appendChild(courseInfo);
@@ -241,6 +241,7 @@ async function updateCartTotal() {
   </div>
   <div class="right-content">
     <p>cart items</p>
+    <p class="totalItems"></p>
     <p class="totalPrice"></p>
   </div>
 </div>
