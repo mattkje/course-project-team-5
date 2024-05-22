@@ -1,17 +1,19 @@
 package no.ntnu.api.config;
 
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Optional;
 import no.ntnu.api.course.Course;
 import no.ntnu.api.course.CourseRepository;
-import no.ntnu.api.user.*;
-import no.ntnu.api.role.Role;
-import no.ntnu.api.role.RoleRepository;
 import no.ntnu.api.course.userCourses.UserCourses;
 import no.ntnu.api.course.userCourses.UserCoursesRepository;
+import no.ntnu.api.role.Role;
+import no.ntnu.api.role.RoleRepository;
+import no.ntnu.api.user.User;
+import no.ntnu.api.user.UserProfileDto;
+import no.ntnu.api.user.UserRepository;
+import no.ntnu.api.user.UserWithCourses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -22,11 +24,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
-import java.util.Optional;
-
 /**
- * Provides AccessUserDetails needed for authentication
+ * Provides AccessUserDetails needed for authentication.
  */
 @Service
 public class AccessUserService implements UserDetailsService {
@@ -102,15 +101,14 @@ public class AccessUserService implements UserDetailsService {
    * @param password Plaintext password of the new user
    * @return Error message if the user could not be created, null otherwise
    */
-  public String tryCreateNewUser(String username, String password, String email, String firstName, String lastName, String phoneNumber) {
+  public String tryCreateNewUser(String username, String password, String email, String firstName,
+                                 String lastName, String phoneNumber) {
     String errorMessage;
     if ("".equals(username)) {
       errorMessage = "Username cannot be empty";
     } else if (userExists(username)) {
       errorMessage = "Username already taken";
-    }
-
-    else {
+    } else {
       errorMessage = checkPasswordRequirements(password);
       if (errorMessage == null) {
         createUser(username, password, email, firstName, lastName, phoneNumber);
@@ -150,7 +148,8 @@ public class AccessUserService implements UserDetailsService {
    * @param username The username of the new user
    * @param password The plaintext password of the new user
    */
-  public void createUser(String username, String password, String email, String firstName, String lastName, String phoneNumber) {
+  public void createUser(String username, String password, String email, String firstName,
+                         String lastName, String phoneNumber) {
     Role userRole = roleRepository.findOneByName("ROLE_USER");
     if (userRole != null) {
       User user = new User(username, createHash(password), email, firstName, lastName, phoneNumber);
@@ -169,6 +168,12 @@ public class AccessUserService implements UserDetailsService {
     return BCrypt.hashpw(password, BCrypt.gensalt());
   }
 
+  /**
+   * Update the profile of the currently logged in user.
+   *
+   * @param profileData The new profile data
+   * @return True if the profile was updated, false otherwise
+   */
   public boolean updateProfile(UserWithCourses sessionUser, UserProfileDto profileData) {
     sessionUser.user().setFirstName(profileData.getFirstName());
     sessionUser.user().setLastName(profileData.getLastName());
@@ -178,11 +183,17 @@ public class AccessUserService implements UserDetailsService {
     return true;
   }
 
+  /**
+   * Change the password of the currently logged in user.
+   *
+   * @param oldPassword The old password
+   * @param newPassword The new password
+   */
   public void changePassword(UserWithCourses sessionUser, String oldPassword, String newPassword) {
     String currentPasswordHash = sessionUser.user().getPassword();
 
     if (BCrypt.checkpw(oldPassword, currentPasswordHash)) {
-      if(newPassword.length() < 8) {
+      if (newPassword.length() < 8) {
         throw new IllegalArgumentException("Password must be at least 8 characters long");
       }
       sessionUser.user().setPassword(createHash(newPassword));
@@ -192,6 +203,11 @@ public class AccessUserService implements UserDetailsService {
     }
   }
 
+  /**
+   * Get the courses of the currently logged in user.
+   *
+   * @return List of courses
+   */
   public List<UserCourses> getCourses(String username) {
     List<UserCourses> courses = new ArrayList<>();
     for (UserCourses userCourse : userCoursesRepository.findAll()) {
@@ -202,14 +218,22 @@ public class AccessUserService implements UserDetailsService {
     return courses;
   }
 
+  /**
+   * Delete the currently logged in user.
+   */
   public void deleteUser(String username) {
-    for(User user : userRepository.findAll()) {
-      if(user.getUsername().equals(username)) {
+    for (User user : userRepository.findAll()) {
+      if (user.getUsername().equals(username)) {
         userRepository.delete(user);
       }
     }
   }
 
+  /**
+   * Check if the currently logged in user is an admin.
+   *
+   * @return True if the user is an admin, false otherwise
+   */
   public boolean isAdmin() {
     UserWithCourses sessionUser = getSessionUser();
     if (sessionUser != null) {
@@ -222,6 +246,12 @@ public class AccessUserService implements UserDetailsService {
     return false;
   }
 
+  /**
+   * Add a role to the user with the given username.
+   *
+   * @param username The username of the user
+   * @param role     The role to add
+   */
   public void addRole(String username, String role) {
     Optional<User> userOptional = userRepository.findByUsername(username);
     if (userOptional.isPresent()) {
@@ -231,6 +261,12 @@ public class AccessUserService implements UserDetailsService {
     }
   }
 
+  /**
+   * Delete a role from the user with the given username.
+   *
+   * @param username The username of the user
+   * @param role     The role to delete
+   */
   public void deleteRole(String username, String role) {
     Optional<User> userOptional = userRepository.findByUsername(username);
     if (userOptional.isPresent()) {
@@ -240,15 +276,20 @@ public class AccessUserService implements UserDetailsService {
     }
   }
 
+  /**
+   * Purchase a pro subscription for the currently logged in user.
+   *
+   * @param subscriptionType The type of subscription to purchase
+   */
   public void purchasePro(User user, String subscriptionType) {
     LocalDate today = LocalDate.now();
     LocalDate endDate;
 
-    if(subscriptionType.equals("1-month")) {
+    if (subscriptionType.equals("1-month")) {
       endDate = today.plusMonths(1);
-    } else if(subscriptionType.equals("3-months")) {
+    } else if (subscriptionType.equals("3-months")) {
       endDate = today.plusMonths(3);
-    } else if(subscriptionType.equals("12-months")) {
+    } else if (subscriptionType.equals("12-months")) {
       endDate = today.plusMonths(12);
     } else {
       throw new IllegalArgumentException("Invalid subscription type");
@@ -259,22 +300,33 @@ public class AccessUserService implements UserDetailsService {
     userRepository.save(user);
   }
 
+  /**
+   * Get all users with a pro subscription that has expired.
+   *
+   * @param now The current date
+   * @return List of users with expired pro subscriptions
+   */
   public List<User> findBySubscriptionEndDateBefore(LocalDate now) {
     List<User> users = new ArrayList<>();
-    for(User user : userRepository.findAll()) {
-      if(user.getSubscriptionExpire().isBefore(now)) {
+    for (User user : userRepository.findAll()) {
+      if (user.getSubscriptionExpire().isBefore(now)) {
         users.add(user);
       }
     }
     return users;
   }
 
-
+  /**
+   * Remove the expiration date from the currently logged in user.
+   */
   public void removeExpiration(User user) {
     user.setSubscriptionExpire(null);
     userRepository.save(user);
   }
 
+  /**
+   * Delete the pro role from the currently logged in user.
+   */
   public void deleteProRole(String username) {
     Optional<User> userOptional = userRepository.findByUsername(username);
     if (userOptional.isPresent()) {
@@ -284,55 +336,84 @@ public class AccessUserService implements UserDetailsService {
     }
   }
 
-    public boolean isPro() {
-        UserWithCourses sessionUser = getSessionUser();
-        if (sessionUser != null) {
-            for (Role role : sessionUser.user().getRoles()) {
-                if (role.getName().equals("ROLE_PRO")) {
-                    return true;
-                }
-            }
+  /**
+   * Check if the currently logged in user is a pro user.
+   *
+   * @return True if the user is a pro user, false otherwise
+   */
+  public boolean isPro() {
+    UserWithCourses sessionUser = getSessionUser();
+    if (sessionUser != null) {
+      for (Role role : sessionUser.user().getRoles()) {
+        if (role.getName().equals("ROLE_PRO")) {
+          return true;
         }
-        return false;
+      }
     }
+    return false;
+  }
 
-    public boolean isUser() {
-        UserWithCourses sessionUser = getSessionUser();
-        if (sessionUser != null) {
-            for (Role role : sessionUser.user().getRoles()) {
-                if (role.getName().equals("ROLE_USER")) {
-                    return true;
-                }
-            }
+  /**
+   * Checks if the role is user.
+   *
+   * @return True if the user is a user, false otherwise
+   */
+  public boolean isUser() {
+    UserWithCourses sessionUser = getSessionUser();
+    if (sessionUser != null) {
+      for (Role role : sessionUser.user().getRoles()) {
+        if (role.getName().equals("ROLE_USER")) {
+          return true;
         }
-        return false;
+      }
     }
+    return false;
+  }
 
-    public UserWithCourses getUser(String username) {
-        Optional<User> userOptional = userRepository.findByUsername(username);
-        if (userOptional.isPresent()) {
-            User user = userRepository.findByUsername(username).get();
-            List<UserCourses> courses = getCourses(username);
-            return new UserWithCourses(user, courses);
-        }
-        return null;
+  /**
+   * Get the user with their courses.
+   *
+   * @param username The username of the user
+   * @return The user with the given username
+   */
+  public UserWithCourses getUser(String username) {
+    Optional<User> userOptional = userRepository.findByUsername(username);
+    if (userOptional.isPresent()) {
+      User user = userRepository.findByUsername(username).get();
+      List<UserCourses> courses = getCourses(username);
+      return new UserWithCourses(user, courses);
     }
+    return null;
+  }
 
+  /**
+   * Unsubscribe the currently logged in user from the pro subscription.
+   */
   public void unsubscribe(User user) {
     deleteProRole(user.getUsername());
   }
 
+  /**
+   * Add a course to the currently logged in user.
+   *
+   * @param courseId The ID of the course to add
+   */
   public void addUserCourse(User user, int courseId) {
     for (Course course : courseRepository.findAll()) {
-        if (course.getCourseId() == courseId) {
-            UserCourses userCourse = new UserCourses();
-            userCourse.setUserId(user.getUserId());
-            userCourse.setCourse(course);
-            userCoursesRepository.save(userCourse);
-        }
+      if (course.getCourseId() == courseId) {
+        UserCourses userCourse = new UserCourses();
+        userCourse.setUserId(user.getUserId());
+        userCourse.setCourse(course);
+        userCoursesRepository.save(userCourse);
+      }
     }
   }
 
+  /**
+   * Adds a profile image to the user.
+   *
+   * @param image The image to add
+   */
   public void addImageToUser(String image) {
     if (getSessionUser() != null && image != null) {
       getSessionUser().user().setImage(image);
