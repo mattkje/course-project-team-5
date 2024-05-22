@@ -16,40 +16,12 @@ const API_URL = appContext.config.globalProperties.$apiAddress;
 
 //Cookie test
 async function applyCoupon() {
-  getCookie('courseProviderId');
-  getCookie('courseId');
-  console.log("Applying coupon");
-  console.log(document.cookie);
-}
-
-async function loadShoppingCart() {
-  const user = getAuthenticatedUser();
-  if (user) {
-    await sendApiRequest(API_URL,"GET", "/users/" + user.username, onProfileDataSuccess, onProfileDataError);
-  }
-}
-
-
-function onProfileDataError() {
-  console.log("Error fetching user data");
 }
 
 onMounted(async () => {
-  console.log("hei");
   populateCart();
-  const user = getAuthenticatedUser();
-  if (user) {
-    await sendApiRequest(API_URL,"GET", "/users/" + user.username, onProfileDataSuccess, onProfileDataError);
-  }
 });
 
-function onProfileDataSuccess(data) {
-  if (data.courses.length > 0) {
-    console.log(data.courses.length);
-  } else {
-
-  }
-}
 
 async function populateCart() {
   const allCookies = document.cookie;
@@ -60,19 +32,15 @@ async function populateCart() {
   cartTotal.innerText = "";
 
   let symbol = '';
-  console.log(currencies.length);
   let rate = 0;
 
   for (let i = 0; i < currencies.length; i++) {
     if (currencies[i].code === defaultCurrency) {
       symbol = currencies[i].symbol;
       rate = currencies[i].rate;
-      console.log(rate + symbol);
       break;
     }
   }
-
-  console.log(defaultCurrency);
 
   const courseList = document.getElementsByClassName("course-table")[0];
   clearCart(courseList);
@@ -124,7 +92,6 @@ function getCourseAndProviderIds(allCookies) {
     }
   });
 
-  console.log(courseIds);
   return { courseIds, providerIds, prices };
 }
 
@@ -139,6 +106,7 @@ function displayEmptyCartMessage(courseList) {
   emptyCartMessage.innerText = "Your cart is empty";
   courseList.appendChild(emptyCartMessage);
 }
+
 
 function getFinalPrice(providers, providerId) {
   let finalPrice = 0;
@@ -166,21 +134,6 @@ async function addCourseToCartTotal(course, price, symbol) {
       break;
     }
   }
-}
-
-function calculateTotalCost(rate) {
-  const allCookies = document.cookie;
-  const { prices } = getCourseAndProviderIds(allCookies);
-
-  let totalCost = 0;
-
-  prices.forEach(price => {
-    totalCost += price;
-  });
-
-  totalCost *= rate;
-
-  return totalCost.toFixed(2);
 }
 
 
@@ -232,10 +185,6 @@ async function addCourseToCart(courseList, course, price, courseId, name, symbol
   courseBody.append(rightSection)
 
   editCourseCard(row, course);
-
-
-
-
 
   await updateCartTotal(); // Update total cost whenever a course is added or removed xd
 }
@@ -355,17 +304,6 @@ function editCourseCard(object, course) {
 
 
 }
-
-function onFailure() {
-  console.log("Failed to fetch courses");
-}
-
-function showPrice(data) {
-  console.log(data);
-  return data;
-}
-
-
 
 </script>
 
