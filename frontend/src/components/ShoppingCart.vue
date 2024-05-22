@@ -108,23 +108,24 @@ async function populateCart() {
 
     });
 
-    // Create a new tbody element for each course
+
     const courseBody = document.createElement("tbody");
     courseBody.classList.add("course-block");
     const line = document.createElement("hr");
     courseBody.appendChild(line);
     courseList.appendChild(courseBody);
 
-    // Create a new row for each course
+
     const row = document.createElement("tr");
     const courseName = document.createElement("p");
     const coursePrice = document.createElement("p");
-    coursePrice.innerText = finalPrice;
     const courseImg = document.createElement("img");
     courseImg.classList.add("course-image");
     row.classList.add("course-card");
     row.style.cursor = "pointer";
     courseName.innerText = course.course.title;
+    coursePrice.innerText = finalPrice;
+    coursePrice.style.paddingLeft = "100px"; //Pls help
     courseName.style.paddingLeft = "20px";
     courseImg.src = course.course.image || '/noImageCom.svg';
     row.appendChild(courseImg);

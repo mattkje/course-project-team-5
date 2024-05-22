@@ -1339,7 +1339,6 @@ button {
   border-radius: 12px;
   border: none;
   background-color: grey;
-  //background-color: #090909;
   display: flex;
   align-items: center;
   justify-content: center;
