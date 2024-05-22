@@ -1,6 +1,6 @@
 <script setup>
 import
-{getCurrentInstance, onMounted} from "vue";
+{getCurrentInstance, onMounted, ref, watch} from "vue";
 import {getAuthenticatedUser, hasRole, isAuthorized} from "@/js/authentication";
 import {computed} from "vue";
 import {useStore} from "vuex";
@@ -15,6 +15,7 @@ const user = getAuthenticatedUser();
 
 const store = useStore();
 const cartItemCount = computed(() => myStore.getters.cartItemCount);
+
 
 function onTokenRefreshSuccess() {
   console.log("Token has been refreshed.");
@@ -81,6 +82,13 @@ function currency(){
 
 }
 
+const isMenuOpen = ref(true);
+
+function toggleMenu() {
+  isMenuOpen.value = !isMenuOpen.value;
+}
+
+
 function setDefaultCurrency() {
   const cookies = document.cookie.split('; ');
   const defaultCurrencyCookie = cookies.find(row => row.startsWith('defaultCurrency='));
@@ -132,7 +140,7 @@ function setDefaultCurrency() {
       <div class="header">
         <div class="content-mobile">
           <div class="left-content">
-            <button class="mobile-header-button">
+            <button @click="toggleMenu" class="mobile-header-button">
               <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-three-bars Button-visual">
                 <path d="M1 2.75A.75.75 0 0 1 1.75 2h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 2.75Zm0 5A.75.75 0 0 1 1.75 7h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 7.75ZM1.75 12h12.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1 0-1.5Z"></path>
               </svg>
@@ -156,6 +164,33 @@ function setDefaultCurrency() {
 
     </div>
 
+  </div>
+
+  <div class="side-menu" v-if="!isMenuOpen">
+    <div class="solid-background">
+      <div class="side-menu-top">
+        <router-link to="/" id="mobileHeader" class="header-button">
+          <img class="logo" src="/logo.svg" alt="Connect">
+        </router-link>
+        <button @click="toggleMenu" class="mobile-header-button">
+          <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-x">
+            <path d="M3.72 3.72a.75.75 0 0 1 1.06 0L8 6.94l3.22-3.22a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734L9.06 8l3.22 3.22a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L8 9.06l-3.22 3.22a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042L6.94 8 3.72 4.78a.75.75 0 0 1 0-1.06Z"></path>
+          </svg>
+        </button>
+      </div>
+      <ul>
+        <li><router-link @click="toggleMenu" to="/">Home</router-link></li>
+        <li><router-link @click="toggleMenu" to="/explore">Explore</router-link></li>
+        <li><router-link @click="toggleMenu" to="/community">Community</router-link></li>
+        <li><router-link @click="toggleMenu" to="/about">About</router-link></li>
+      </ul>
+
+      <ul>
+        <li><router-link @click="toggleMenu" to="/profile">Account</router-link></li>
+        <li><router-link @click="toggleMenu" to="/profile">My Courses</router-link></li>
+        <li><router-link v-if="hasRole('ROLE_ADMIN')" @click="toggleMenu" to="/admin">Admin</router-link></li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -198,6 +233,51 @@ function setDefaultCurrency() {
     max-width: min-content;
     align-items: center;
   }
+
+  .side-menu {
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0));
+    position: fixed;
+    top: 0;
+    z-index: 200;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  .side-menu-top {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+  }
+
+  .solid-background {
+    background-color: var(--light-3);
+    height: 100vh;
+    width: 300px;
+  }
+
+  .side-menu .solid-background ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .side-menu .solid-background ul li a {
+    color: var(--dark-1);
+    font-size: 15px;
+    font-weight: bold;
+    padding: 10px;
+    text-decoration: none;
+    display: block;
+  }
+
+  .side-menu .solid-background ul li a:hover {
+    color: var(--dark-3);
+  }
+
+  .side-menu .solid-background ul {
+    margin-bottom: 60px;
+  }
+
 
 }
 
