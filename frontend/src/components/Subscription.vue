@@ -125,6 +125,10 @@ function error() {
     border-radius: 0 0 15px 15px;
     margin-top: 8px;
   }
+
+  .learniverse-membership h3 {
+    border-radius: 10px 10px 0 0;
+  }
 }
 
 .background h2 {
