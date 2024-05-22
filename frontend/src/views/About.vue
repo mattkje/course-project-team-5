@@ -184,4 +184,14 @@ h1 {
   color: var(--dark-1);
   margin: 0;
 }
+
+@media (max-width: 768px) {
+  .greeting-box {
+    flex-direction: column;
+  }
+
+  .greeting-box img.about-us-icon {
+    margin: 20px auto;
+  }
+}
 </style>
