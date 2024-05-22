@@ -8,12 +8,11 @@ Exam project for the IDATA2301 and IDATA2306 courses
 
 ## About the project
 
-A simplified price
-aggregator web-shop in groups.
+This projects aim to create a price aggregator for courses within the computer industry. The project currently offers IT, digital marketing, business, data science, and software-development-courses from a range of providers. This project also features in-house courses with a subscription model attached.
 
 The website is currently hosted [here](http://connect.learniverse.store/)
 
-According to:
+The website is designed according to:
 - Requirements from a customer
 - Design guidelines
 - Accessibility rules
@@ -21,9 +20,7 @@ According to:
 - Javascript for interaction and dynamic updates
 - Communication with a backend API
 
-An example of such webshop is: https://athotel.com/
-
-
+An example of a competitor website: https://www.coursera.org
 
 ## Technologies Used
 
