@@ -288,7 +288,7 @@ function onProfilePictureError(error) {
 </script>
 
 <style scoped>
-@media (max-width: 769px) {
+@media (max-width: 1001px) {
   .background {
     display: none;
   }
@@ -308,7 +308,7 @@ function onProfilePictureError(error) {
     justify-content: center;
     align-content: center;
     height: 70px;
-    width: 400px;
+    width: 93%;
     margin: 10px auto;
     box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
   }
@@ -367,13 +367,14 @@ function onProfilePictureError(error) {
     flex-direction: column;
     justify-content: left;
     align-content: center;
-    width: 400px;
+    width: 93%;
     overflow: hidden;
     box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
   }
+
 }
 
-@media (min-width: 769px) {
+@media (min-width: 1001px) {
   .background {
     top: 0;
     height: min-content;
@@ -392,12 +393,14 @@ function onProfilePictureError(error) {
     flex-direction: row;
     justify-content: center;
     padding: 0 0 50px 0;
+    gap: 1.5%;
   }
 
   .navigation-bar {
     display: flex;
     flex-direction: column;
-    width: 40%;
+    width: 20%;
+    max-width: 350px;
   }
 
   .navigation-bar p {

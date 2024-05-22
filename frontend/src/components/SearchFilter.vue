@@ -801,6 +801,10 @@ watchEffect(() => {
     align-items: center;
     gap: 10px;
   }
+
+  .flexible-grid-container {
+    align-items: center;
+  }
 }
 
 header h2 {
