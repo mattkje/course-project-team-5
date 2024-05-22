@@ -17,8 +17,6 @@ function addCourseToCart() {
 
 }
 
-
-
 onMounted(() => {
   populateCoursePage();
   populateProviders();
@@ -65,6 +63,11 @@ function populateCoursePage() {
               if(data.course.active === false && !hasRole('ROLE_ADMIN')) {
                 window.location.href = '/no-access';
               }
+              if (data.course.active === false) {
+                document.getElementById('enrollButton').textContent = "Course is inactive";
+                document.getElementById('enrollButton').style.backgroundColor = '#d3d3d3';
+                document.getElementById('enrollButton').style.pointerEvents = 'none';
+              }
               //Populating the similar courses box
               populateCourses('.featured');
 
@@ -79,7 +82,6 @@ function populateCoursePage() {
               document.getElementById('courseDescription').innerHTML = htmlContent
               document.getElementById('courseImage').src = data.course.image || '/noImage.svg';
               document.getElementById('courseTitle').innerText = data.course.title;
-
               const sizeIcon = document.createElement('img');
               sizeIcon.className = 'content-box-icon';
               sizeIcon.src = '/credits.svg';
