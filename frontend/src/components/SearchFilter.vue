@@ -531,13 +531,13 @@ watchEffect(() => {
                 <div class="price-input" id="min-price-input">
                   <label for="min-price">Min Price</label>
                   <p style="color:#5666ff">-</p>
-                  <input type="number" id="min-price" v-model="minPrice" min="0" placeholder="Minimum Price" @change="sortByPriceRange">
+                  <input type="number" id="min-price" v-model="minPrice" min="0" placeholder="Minimum Price" @change="sortByPriceRange" @input="minPrice = $event.target.value.replace(/\D/g, '')">
                 </div>
                 <p id ="mobile-separator">-</p>
                 <div class="price-input" id="max-price-input">
                   <label for="max-price">Max Price</label>
                   <p style="color:#5666ff">-</p>
-                  <input type="number" id="max-price" v-model="maxPrice" min="1" placeholder="Maximum Price" @change="sortByPriceRange">
+                  <input type="number" id="max-price" v-model="maxPrice" min="1" placeholder="Maximum Price" @change="sortByPriceRange" @input="maxPrice = $event.target.value.replace(/\D/g, '')">
                 </div>
               </div>
             </div>
@@ -668,7 +668,7 @@ watchEffect(() => {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   background: linear-gradient(180deg, rgba(21, 16, 82, 0.14) 0%, rgba(158, 150, 255, 0.14) 100%);
   z-index: 99;
 }
@@ -821,6 +821,7 @@ header h2 {
 .price-input input {
   min-height: 40px;
   width: 100%;
+  font-size: 16px;
   text-align: center;
   border: 1px solid #5666ff;
   border-radius: 5px;
@@ -1140,7 +1141,7 @@ Button:active {
     left: 0;
     width: 100%;
     max-width: 90%;
-    height: 60%;
+    height: 50vh;
     margin: 0 5% 0 5%;
     border-radius: 20px 20px 0 0;
 
@@ -1157,6 +1158,7 @@ Button:active {
 
     gap: 5px;
   }
+
   .slide-enter-active, .slide-leave-active {
     transition: transform 0.7s;
   }
