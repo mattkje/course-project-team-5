@@ -101,7 +101,14 @@ async function populateCart() {
 
     price = price * rate;
     addCourseToCart(courseList, course, price, courseId, name, symbol);
+    addCourseToCartTotal(course, price, symbol);
   }
+  const cartTotal = document.getElementsByClassName("cartTotal")[0];
+  const totalCost = calculateTotalCost(rate);
+  const totalCostElement = document.createElement("p");
+  totalCostElement.innerText = " " + "Total: " + symbol + " " + totalCost;
+  totalCostElement.style.fontWeight = "bold";
+  cartTotal.appendChild(totalCostElement);
 }
 
 function getCourseAndProviderIds(allCookies) {
@@ -148,6 +155,42 @@ function getFinalPrice(providers, providerId) {
   });
   return finalPrice;
 }
+
+async function addCourseToCartTotal(course, price, symbol) {
+  const cartTotal = document.getElementsByClassName("cartTotal")[0];
+
+  const courseInfo = document.createElement("p");
+  courseInfo.innerText = course.course.title + ": " + symbol + " " + price.toFixed(2);
+  cartTotal.appendChild(courseInfo);
+
+  const defaultCurrency = setDefaultCurrency() || 'USD';
+  const currencies = await fetchCurrencies(API_URL);
+  let rate = 0;
+
+  for (let i = 0; i < currencies.length; i++) {
+    if (currencies[i].code === defaultCurrency) {
+      rate = currencies[i].rate;
+      break;
+    }
+  }
+}
+
+function calculateTotalCost(rate) {
+  const allCookies = document.cookie;
+  const { prices } = getCourseAndProviderIds(allCookies);
+
+  let totalCost = 0;
+
+  prices.forEach(price => {
+    totalCost += price;
+  });
+
+  totalCost *= rate;
+
+  return totalCost.toFixed(2);
+}
+
+
 function addCourseToCart(courseList, course, price, courseId, name, symbol) {
   const courseBody = document.createElement("tbody");
   courseBody.classList.add("course-block");
@@ -260,7 +303,7 @@ function showPrice(data) {
       </div>
       <div class="couponContainer">
         <h1>Cart Total</h1>
-        <p>Here is the total cost of your cart.</p>
+        <p class="cartTotal">Here is the total cost of your cart.</p>
         <div class="totalAmount">{{ totalItems }}</div>
       </div>
       <button class="checkout-button">Checkout</button>
