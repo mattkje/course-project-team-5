@@ -579,14 +579,12 @@ function activeFailed() {
   </div>
 
 
-    <div v-show="!loading"class="greeting">
+    <div v-show="!loading"class="similarCourses">
       <h2>Similar Courses</h2>
     </div>
 
     <div v-show="!loading" class="featured">
       <!--- Featured courses will be appended here --->
-    </div>
-    <div v-show="!loading" class="greeting">
     </div>
   </div>
   <div class="addProvider" v-show="addProvider">
@@ -630,6 +628,9 @@ function activeFailed() {
 @media (max-width:769px){
   #courseInformation{
     margin: 15px 0;
+  }
+  .courseLinkElement {
+    padding-top: 20px;
   }
 }
 
@@ -762,6 +763,9 @@ function activeFailed() {
       transform: scale(0.95);
       transition-duration: .5s;
     }
+  }
+  .similarCourses {
+
   }
 
 }
@@ -1079,15 +1083,16 @@ input:focus {
 }
 
 
-.greeting {
+.similarCourses {
   border: none;
-  padding: 10px 20px;
   border-radius: 15px;
-  width: 70%;
   align-content: center;
   text-decoration: none;
   display: flex;
-  margin: auto;
+  margin: 10px auto;
+  width: 93%;
+  padding: 10px;
+  max-width: 1300px;
 }
 
 
