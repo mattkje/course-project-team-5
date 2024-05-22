@@ -90,7 +90,6 @@ async function populateCart() {
     if (currencies[i].code === defaultCurrency) {
       symbol = currencies[i].symbol;
       rate = currencies[i].rate;
-      console.log(rate + symbol);
       break;
     }
   }
@@ -123,7 +122,6 @@ function getCourseAndProviderIds(allCookies) {
     }
   });
 
-  console.log(courseIds);
   return { courseIds, providerIds, prices };
 }
 
