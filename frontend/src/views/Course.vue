@@ -768,6 +768,24 @@ function activeFailed() {
 
   }
 
+  .administrator {
+    display: flex;
+    justify-content: center;
+    background-color: var(--light-1);
+    border-radius: 20px;
+    padding: 20px;
+    width: 300px;
+    margin: 50px auto;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .administrator #title p {
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+  }
+
 }
 
 @media (min-width: 1100px) {
@@ -859,7 +877,7 @@ function activeFailed() {
     background-color: var(--light-1);
     border-radius: 20px;
     padding: 20px;
-    width: 1300px;
+    width: 1000px;
     margin: 50px auto;
     flex-direction: column;
     align-items: center;

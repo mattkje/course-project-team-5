@@ -10,9 +10,9 @@
     <div class="profile-display">
       <div class="navigation-bar">
         <p>General</p>
-        <button class="nav-button" @click="accountDetails()"><img class="nav-icon" src="/settingsaccount.svg">Account Details</button>
-        <button class="nav-button" @click="myCourses()"><img class="nav-icon" src="/settingscourses.svg">My Courses</button>
-        <button class="nav-button" @click="subscription()"><img class="nav-icon"src="/settingswallet.svg">Subscription</button>
+        <button class="nav-button" @click="accountDetails()"><img alt="Account Details" class="nav-icon" src="/settingsaccount.svg">Account Details</button>
+        <button class="nav-button" @click="myCourses()"><img alt="My Courses" class="nav-icon" src="/settingscourses.svg">My Courses</button>
+        <button class="nav-button" @click="subscription()"><img alt="Subscription" class="nav-icon"src="/settingswallet.svg">Subscription</button>
       </div>
       <AccountDetails v-show="navigate === 'accountDetails' && !loading && !changePassword" @newPassword="newPassword()"
                       @doLogoutToHome="doLogoutToHome()"/>
@@ -27,7 +27,9 @@
           <p>Manage your courses</p>
         </div>
         <table class="course-table">
-          <p>You have no courses</p>
+          <th>
+            <p>You have no courses</p>
+          </th>
         </table>
       </div>
       <div class ="profile-box" id="profileInformation" v-show="navigate === 'subscription' && !loading">
@@ -68,6 +70,7 @@ import {sendApiRequest, sendTokenRefreshRequest} from "@/js/requests";
 import {getCookie, isTokenAboutToExpire} from "@/js/tools";
 import PasswordChange from "@/components/PasswordChange.vue";
 import AccountDetails from "@/components/AccountDetails.vue";
+import Subscription from "@/components/Subscription.vue";
 
 onMounted(loadProfileData);
 const loading = ref(true);
