@@ -12,19 +12,19 @@
         <img id="courseImage" class="course-image" alt="Course Image">
         <div class="course-info-box">
           <div class="course-info">
+            <h2 id="courseTitle"></h2>
+            <p>By User</p>
             <div class="author-and-time">
               <div class="user-view">
-                <p>Written By</p>
                 <img id="postProfilePicture"/>
-                <p id="postAuthor"></p>
               </div>
-              <p id="postDate"></p>
+              <div>
+                <p id="postAuthor"></p>
+                <p id="postDate"></p>
+              </div>
             </div>
           </div>
           <div class="course-info">
-            <hr>
-            <h2 id="courseTitle"></h2>
-            <hr>
             <p id="courseDescription"></p>
           </div>
         </div>
@@ -372,6 +372,14 @@ function setDefaultCurrency() {
     justify-content: space-between;
   }
 
+  .course-block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 0 auto;
+  }
+
 }
 
 @media (min-width: 769px) {
@@ -490,7 +498,16 @@ function setDefaultCurrency() {
   .author-and-time{
     display: flex;
     align-content: center;
-    justify-content: space-between;
+    justify-content: flex-start;
+  }
+
+  .course-block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    width: 90%;
   }
 }
 
@@ -749,10 +766,15 @@ input:focus {
 
 }
 
-#courseDescription,
-#postContent,
-#postDate{
+#courseDescription {
   color: #282828;
+  margin: 20px auto;
+}
+
+
+#postDate{
+  font-size: 12px;
+  color: var(--dark-3);
   margin: auto 0;
 }
 
@@ -760,7 +782,7 @@ input:focus {
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  margin: auto;
+  margin-right: 10px;
 }
 
 #postAuthor {
@@ -930,14 +952,7 @@ hr {
   border-radius: 17px;
 }
 
-.featured {
-  background-color: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(5px);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 17px;
-  width: 90%;
-  margin: auto;
-}
+
 
 
 .map-container {
@@ -976,14 +991,7 @@ button {
   opacity: 1;
 }
 
-.course-block {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  margin: 0 auto;
-  width: 90%;
-}
+
 
 
 

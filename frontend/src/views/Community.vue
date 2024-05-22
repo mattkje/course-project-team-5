@@ -36,12 +36,16 @@ function populateCourses() {
             courseCard.className = 'course-card';
             courseCard.href = `/community/post?id=${course.courseId}`;
             let imageData = '/nopfp.svg';
-            const response = await fetch(API_URL + '/users/' + course.author + '/image');
-            const imageString = await response.text();
-
-            if (isValidBase64(imageString)) {
-              imageData = 'data:image/jpeg;base64,' + imageString;
-              console.log(imageData);
+            const authorExistsResponse = await fetch(API_URL + '/users/' + course.author);
+            if (authorExistsResponse.ok) {
+              const response = await fetch(API_URL + '/users/' + course.author + '/image');
+              const imageString = await response.text();
+              if (isValidBase64(imageString)) {
+                imageData = 'data:image/jpeg;base64,' + imageString;
+                console.log(imageData);
+              }
+            } else {
+              console.log('User does not exist');
             }
 
             const formattedDate = formatDate(course.postDate)
