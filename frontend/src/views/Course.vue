@@ -185,7 +185,6 @@ function populateCoursePage() {
 
                 const priceInDefaultCurrency = provider.price / rate;
                 pricesInDefaultCurrency.set(provider.courseProviderId, priceInDefaultCurrency);
-                console.log(pricesInDefaultCurrency)
                 const providerID = provider.courseProviderId;
                 addCourseToCart(providerID);
 
@@ -460,8 +459,6 @@ function addNewProvider() {
     price: singleProvider.value.price,
     currency: singleProvider.value.currency,
   };
-
-  console.log(providerData);
 
   sendApiRequest(API_URL,'POST', '/providers/' + providerData.courseId, addProviderSuccess, providerData, addProviderFailed);
 
