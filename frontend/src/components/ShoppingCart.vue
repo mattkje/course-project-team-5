@@ -103,12 +103,6 @@ async function populateCart() {
     addCourseToCart(courseList, course, price, courseId, name, symbol);
     addCourseToCartTotal(course, price, symbol);
   }
-  const cartTotal = document.getElementsByClassName("cartTotal")[0];
-  const totalCost = calculateTotalCost(rate);
-  const totalCostElement = document.createElement("p");
-  totalCostElement.innerText = " " + "Total: " + symbol + " " + totalCost;
-  totalCostElement.style.fontWeight = "bold";
-  cartTotal.appendChild(totalCostElement);
 }
 
 function getCourseAndProviderIds(allCookies) {
@@ -173,6 +167,11 @@ async function addCourseToCartTotal(course, price, symbol) {
       break;
     }
   }
+  //const totalCost = calculateTotalCost(rate);
+  //const totalCostElement = document.createElement("p");
+  //totalCostElement.innerText = " " + "Total: " + symbol + " " + totalCost;
+  //totalCostElement.style.fontWeight = "bold";
+  //cartTotal.appendChild(totalCostElement)
 }
 
 function calculateTotalCost(rate) {
@@ -191,7 +190,7 @@ function calculateTotalCost(rate) {
 }
 
 
-function addCourseToCart(courseList, course, price, courseId, name, symbol) {
+async function addCourseToCart(courseList, course, price, courseId, name, symbol) {
   const courseBody = document.createElement("tbody");
   courseBody.classList.add("course-block");
   const line = document.createElement("hr");
@@ -218,8 +217,6 @@ function addCourseToCart(courseList, course, price, courseId, name, symbol) {
   courseImg.classList.add("course-image");
   courseImg.src = course.course.image || '/noImageCom.svg';
 
-
-
   row.appendChild(courseImg);
   row.appendChild(courseName);
   row.appendChild(providerName);
@@ -230,18 +227,63 @@ function addCourseToCart(courseList, course, price, courseId, name, symbol) {
 
   const removeButton = createRemoveButton(courseId, courseBody);
   courseBody.appendChild(removeButton);
+
+  await updateCartTotal(); // Update total cost whenever a course is added or removed xd
 }
 
 function createRemoveButton(courseId, courseBody) {
   const removeButton = document.createElement("button");
   removeButton.innerText = "Remove";
-  removeButton.onclick = function() {
+  removeButton.onclick = async function() {
     document.cookie = 'courseId_' + courseId + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     document.cookie = 'providerId_' + courseId + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     document.cookie = 'price_' + courseId + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     courseBody.remove();
+
+    const allCookies = document.cookie;
+    const { courseIds } = getCourseAndProviderIds(allCookies);
+    if (courseIds.length === 0) {
+      const courseList = document.getElementsByClassName("course-table")[0];
+      displayEmptyCartMessage(courseList);
+    }
+
+    await updateCartTotal();
   };
   return removeButton;
+}
+
+async function updateCartTotal() {
+  const totalPrice = document.getElementsByClassName("totalPrice")[0];
+  while (totalPrice.firstChild) {
+    totalPrice.removeChild(totalPrice.firstChild);
+  }
+
+  const allCookies = document.cookie;
+  const { prices } = getCourseAndProviderIds(allCookies);
+  const defaultCurrency = setDefaultCurrency() || 'USD';
+  const currencies = await fetchCurrencies(API_URL);
+  let symbol = '';
+  let rate = 0;
+
+  for (let i = 0; i < currencies.length; i++) {
+    if (currencies[i].code === defaultCurrency) {
+      symbol = currencies[i].symbol;
+      rate = currencies[i].rate;
+      break;
+    }
+  }
+
+  let totalCost = 0;
+
+  for (let i = 0; i < prices.length; i++) {
+    let price = prices[i] * rate;
+    totalCost += price;
+  }
+
+  const totalCostElement = document.createElement("p");
+  totalCostElement.innerText = "Total: " + symbol + " " + totalCost.toFixed(2);
+  totalCostElement.style.fontWeight = "bold";
+  totalPrice.appendChild(totalCostElement);
 }
 
 function editCourseCard(object, course) {
@@ -304,7 +346,8 @@ function showPrice(data) {
       <div class="couponContainer">
         <h1>Cart Total</h1>
         <p class="cartTotal">Here is the total cost of your cart.</p>
-        <div class="totalAmount">{{ totalItems }}</div>
+        <p class="totalPrice"></p>
+        <div class="totalAmount"></div>
       </div>
       <button class="checkout-button">Checkout</button>
   </div>
