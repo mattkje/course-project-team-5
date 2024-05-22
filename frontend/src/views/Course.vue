@@ -223,6 +223,11 @@ function populateCoursePage() {
                     const urlParams = new URLSearchParams(window.location.search);
                     const courseId = urlParams.get('id');
                     const buyButton = document.getElementById('enrollButton');
+                    buyButton.addEventListener('click', function() {
+                      setCookie('courseId_' + courseId, courseId, 1);
+                      setCookie('providerId_' + courseId, providerID, 1);
+                      setCookie('price_' + courseId, pricesInDefaultCurrency.get(providerID), 1);
+                    })
                     const addCartButton = document.getElementById('cartButton');
                     addCartButton.addEventListener('click', function() {
                       setCookie('courseId_' + courseId, courseId, 1);
