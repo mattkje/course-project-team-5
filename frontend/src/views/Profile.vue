@@ -214,45 +214,57 @@ function addCourses(data) {
   courseBody.classList.add("course-block");
   courseBody.style.width= "80%";
   courseBody.style.margin = "auto";
-  courseBody.style.maxWidth = "600px";
-  const line = document.createElement("hr");
-  line.style.Width = "100%";
-  line.style.margin = "20px";
-  line.style.paddingLeft = "20px";
-  courseBody.appendChild(line);
+  courseBody.style.maxWidth = "800px";
   courseList.appendChild(courseBody);
   for (const element of data.courses) {
     const course = element;
     const row = document.createElement("tr");
     const courseName = document.createElement("p");
     const courseImg = document.createElement("img");
+    const courseDiv = document.createElement("div");
+    courseDiv.append(courseImg, courseName);
+    courseDiv.style.display = "flex";
+    courseDiv.style.flexDirection = "flex-start"
     courseImg.classList.add("course-image");
     row.classList.add("course-card");
-    row.style.cursor = "pointer";
-    row.style.justifyContent = "flex-start";
+    const button = document.createElement("button");
+    button.classList.add("fancy-button");
+    button.style.backgroundColor = "orangered";
+    button.style.color = "white";
+    button.innerText = "Delete";
+    button.onclick = function() {
+      sendApiRequest(API_URL, 'DELETE', '/users/delete-course/' + course.course.id, onCourseDeleteSuccess, null, onCourseDeleteError);
+    };
+    button.style.cursor = "pointer";
+    row.style.justifyContent = "space-between";
+    row.style.backgroundColor = "var(--light-3)";
+    row.style.padding = "10px"
     courseName.innerText = course.course.title;
     courseName.style.paddingLeft = "20px";
     courseImg.src = course.course.image || '/noImageCom.svg';
     courseImg.style.borderRadius = "0";
     courseImg.style.margin = "0 10px 0 10px";
-    row.appendChild(courseImg);
-    row.appendChild(courseName);
-    editCourseCard(row, course);
+    row.append(courseDiv);
+    row.append(button);
+    editCourseCard(row);
     courseBody.appendChild(row);
-    const line = document.createElement("hr");
-    line.style.Width = "100%";
-    line.style.margin = "20px";
-    line.style.paddingLeft = "20px";
-    courseBody.appendChild(line);
   }
 }
 
-function editCourseCard(object, course) {
+function onCourseDeleteSuccess(data) {
+  console.log("Course deleted: ", data);
+  alert("Course deleted successfully.");
+  window.location.href = ("/profile");
+}
+
+function onCourseDeleteError(error) {
+  console.error("Error deleting course: ", error);
+  alert("Error deleting course. Please try again.");
+}
+
+function editCourseCard(object) {
   object.style.Width = "100%"
   object.style.minHeight = "50px";
-  object.onclick = function () {
-    window.location.href = ("/courses/?id=" + course.course.courseId);
-  };
 }
 
 function doLogoutToHome() {
@@ -286,6 +298,7 @@ function changeProfilePicture() {
 function onProfilePictureSuccess(data) {
   console.log("Profile picture changed: ", data);
   alert("Profile picture changed successfully.");
+  location.reload();
 }
 
 function onProfilePictureError(error) {

@@ -317,4 +317,14 @@ public class UserController {
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Profile data accessible only to authenticated users");
     }
+
+    @DeleteMapping("/delete-course/{courseId}")
+    public ResponseEntity<?> deleteCourse(@PathVariable int courseId) {
+        UserWithCourses sessionUser = userService.getSessionUser();
+        if (sessionUser != null) {
+            userService.deleteUserCourse(sessionUser.user(), courseId);
+            return ResponseEntity.status(HttpStatus.OK).body("Course successfully deleted");
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Profile data accessible only to authenticated users");
+    }
 }

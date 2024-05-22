@@ -427,4 +427,12 @@ public class AccessUserService implements UserDetailsService {
   public String getImage(String username) {
     return getUser(username).user().getImage();
   }
+
+    public void deleteUserCourse(User user, int courseId) {
+        for (UserCourses userCourse : userCoursesRepository.findAll()) {
+        if (userCourse.getUserId() == user.getUserId() && userCourse.getCourse().getCourseId() == courseId) {
+            userCoursesRepository.delete(userCourse);
+        }
+        }
+    }
 }
