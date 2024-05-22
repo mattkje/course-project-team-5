@@ -11,11 +11,6 @@ const {appContext} = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
 const searchQuery = ref('');
 const creditValue = ref(0);
-const isBeginnerChecked = ref(false);
-const isIntermediateChecked = ref(false);
-const isExpertChecked = ref(false);
-
-
 const isRangeContainerVisible = ref(window.innerWidth > 1250);
 const isDarkOverlayVisible = ref(false);
 const updateVisibility = () => {
@@ -221,34 +216,40 @@ function filterCourse(Matching, checkboxId, isSlider) {
   updateActiveFilters(checkboxId,isSlider);
 }
 
-function updateView() {
+function setChildrenDisplay(children, display) {
+  for (let child of children) {
+    child.style.display = display;
+  }
+}
 
-  if (activeFilters.size === 0) {
-    for (let child of children) {
-      child.style.display = 'block';
-    }
-  } else {
-    for (let child of children) {
-      child.style.display = 'none';
-    }
-    for (let key of filterMap.keys()) {
-      let existingFilter = filterMap.get(key);
-      for (let filter of existingFilter.keys()) {
-        let filterList = existingFilter.get(filter);
-        if (filterList.length > 0 && existingFilter.size === activeFilters.size) {
-          children[key - 1].style.display = 'block';
-        }
+function updateChildrenDisplayForActiveFilters() {
+  for (let key of filterMap.keys()) {
+    let existingFilter = filterMap.get(key);
+    for (let filter of existingFilter.keys()) {
+      let filterList = existingFilter.get(filter);
+      if (filterList.length > 0 && existingFilter.size === activeFilters.size) {
+        children[key - 1].style.display = 'block';
       }
     }
   }
+}
+
+function hideSearchedAndPricedChildren() {
   for (let child of children) {
-    if (searchedChildren.has(child)) {
-      child.style.display = 'none';
-    }
-    if (pricedChildren.has(child)) {
+    if (searchedChildren.has(child) || pricedChildren.has(child)) {
       child.style.display = 'none';
     }
   }
+}
+
+function updateView() {
+  if (activeFilters.size === 0) {
+    setChildrenDisplay(children, 'block');
+  } else {
+    setChildrenDisplay(children, 'none');
+    updateChildrenDisplayForActiveFilters();
+  }
+  hideSearchedAndPricedChildren();
 }
 
 function isMatch(courses, checkboxId, isSlider) {
@@ -413,9 +414,7 @@ function searchCourses() {
     let childTitle = child.querySelector('.content-box-title').textContent.toLowerCase();
     if (!childTitle.includes(searchQuery.value.toLowerCase())) {
       searchedChildren.set(child, 1);
-      console.log("test 2")
     } else if (searchedChildren.has(child)) {
-      console.log("test 3")
       searchedChildren.delete(child);
     }
   }
@@ -581,7 +580,7 @@ watchEffect(() => {
             <div class="wrapper" :class="{'visible': isDifficultyVisible, 'hidden': !isDifficultyVisible}" id="difficultyContainer">
               <div class="checkbox-wrapper">
                 <label class="cbx" for="beginner">Beginner</label>
-                <label class="lbl-cbx">
+                <label class="lbl-cbx" >
                   <input class="inp-cbx" id="beginner" type="checkbox" @change="sortByDifficulty">
                   <div class="div-cbx"></div>
                 </label>
