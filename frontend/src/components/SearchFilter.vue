@@ -316,6 +316,7 @@ async function onProviderCheckboxChange(event) {
 
 async function sortByDifficulty(event) {
   let nameId = getCheckboxId(event);
+  console.log(nameId)
   let difficulty = nameId.labelName;
   let checkboxId = "difficulty " + nameId.checkboxId;
   onCheckboxChange(checkboxId, difficulty,false);
@@ -577,25 +578,34 @@ watchEffect(() => {
           <div class="separator"></div>
 
           <div class="wrapper" :class="{'visible': isDifficultyVisible, 'hidden': !isDifficultyVisible}" id="difficultyContainer">
-            <header>
-              <div class="checkbox-wrapper" id="difficultyWrapper">
-                <label class="cbx" for="beginnerBox">Beginner</label>
-                <input class="inp-cbx" id="beginnerBox" type="checkbox" v-model="isBeginnerChecked"
-                       @change="sortByDifficulty">
-              </div>
-
-              <div class="checkbox-wrapper">
-                <label class="cbx" for="intermediateBox">Intermediate</label>
-                <input class="inp-cbx" id="intermediateBox" type="checkbox" v-model="isIntermediateChecked"
-                       @change="sortByDifficulty">
-              </div>
-
-              <div class="checkbox-wrapper">
-                <label class="cbx" for="expertBox">Expert</label>
-                <input class="inp-cbx" id="expertBox" type="checkbox" v-model="isExpertChecked"
-                       @change="sortByDifficulty">
-              </div>
-            </header>
+            <div class="checkbox-wrapper">
+              <label class="cbx" for="beginner">Beginner</label>
+              <label class="lbl-cbx">
+                <input class="inp-cbx" id="beginner" type="checkbox" @change="sortByDifficulty">
+                <div class="div-cbx"></div>
+              </label>
+            </div>
+            <div class="checkbox-wrapper">
+              <label class="cbx" for="intermediate">Intermediate</label>
+              <label class="lbl-cbx">
+                <input class="inp-cbx" id="intermediate" type="checkbox" @change="sortByDifficulty">
+                <div class="div-cbx"></div>
+              </label>
+            </div>
+            <div class="checkbox-wrapper">
+              <label class="cbx" for="advanced">Advanced</label>
+              <label class="lbl-cbx">
+                <input class="inp-cbx" id="advanced" type="checkbox" @change="sortByDifficulty">
+                <div class="div-cbx"></div>
+              </label>
+            </div>
+            <div class="checkbox-wrapper">
+              <label class="cbx" for="expert">Expert</label>
+              <label class="lbl-cbx">
+                <input class="inp-cbx" id="expert" type="checkbox" @change="sortByDifficulty">
+                <div class="div-cbx"></div>
+              </label>
+            </div>
           </div>
 
           <button class="price-ranger" @click="toggleShowCredit" :style="{

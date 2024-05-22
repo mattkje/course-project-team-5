@@ -224,6 +224,10 @@ p {
   background-color: #eee;
 }
 
+#difficultyContainer .inp-cbx {
+  border: 1px solid #5666ff;
+  border-radius: 0.25em;
+}
 
 
 .cbx {
