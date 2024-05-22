@@ -1,5 +1,5 @@
 <script setup>
-import {ref, computed, onMounted, getCurrentInstance} from 'vue';
+import {ref, computed, onMounted, getCurrentInstance, defineEmits} from 'vue';
   import Guidelines from "@/components/Guidelines.vue";
   import {getAuthenticatedUser, hasRole} from "@/js/authentication";
   import {sendApiRequest} from "@/js/requests";
@@ -17,6 +17,8 @@ import {ref, computed, onMounted, getCurrentInstance} from 'vue';
   const showGuidelinesModal = ref(false);
   const keywords = ref([]);
   const activatedKeywords = ref([]);
+  const emit = defineEmits(['navigate']);
+  const id = ref(0);
   const course = ref({
   title: '',
   category: '',
@@ -69,10 +71,8 @@ function getCoursesError() {
   alert('There was an error retrieving the courses. Please try again.');
 }
 
-async  function onSuccess() {
-    await sendApiRequest(API_URL, 'GET', '/courses/newest' , newestSuccess, newestError);
-  alert('Course created successfully!');
-  resetForm();
+function onSuccess() {
+    sendApiRequest(API_URL, 'GET', '/courses/newest' , newestSuccess, newestError);
 }
 
 function newestError() {
@@ -80,14 +80,15 @@ function newestError() {
 }
 
 async function newestSuccess(data) {
-    for (let keyword of activatedKeywords.value) {
-      console.log(keyword);
-      await sendApiRequest(API_URL, 'POST', '/courses/keyword/' + data.id + '/' + keyword.id, keywordSuccess, keywordError);
-    }
+  id.value = data.id;
+  const keywordIds = activatedKeywords.value.map(keyword => keyword.id);
+  console.log(keywordIds);
+  await sendApiRequest(API_URL, 'POST', '/courses/keywords/' + data.id, keywordSuccess, keywordIds, keywordError);
 }
 
-function keywordSuccess() {
-  console.log('Keyword added successfully');
+async function keywordSuccess() {
+  console.log('Course created successfully!');
+  window.location.href = ('/courses?id=' + id.value);
 }
 
 function keywordError() {
@@ -129,14 +130,19 @@ function addKeyword() {
 function removeKeyword(keyword) {
   activatedKeywords.value = activatedKeywords.value.filter(item => item !== keyword);
 }
+
+function removeCourse() {
+  emit('navigateBack', 'courseManage');
+}
 </script>
 
 <template>
   <div class="course-section">
-
-    <guidelines class="course-form" v-if="showGuidelinesModal" @close="showGuidelinesModal = false" />
-
     <form @submit.prevent="createCourse" class="course-form">
+      <button type="button" class="back" @click="removeCourse">
+        <img class="nav-icon" src="/angle-small-left.svg">
+        <p>Back</p>
+      </button>
       <div class="form-group">
         <label for="title">Title:</label>
         <input type="text" id="title" v-model="course.title" required maxlength="100">
@@ -292,5 +298,19 @@ button {
   display: flex;
   font-size: 14px;
   color: var(--dark-1);
+}
+
+.nav-icon {
+  width: 23px;
+  height: 23px;
+}
+
+.back {
+  display: flex;
+  background: none;
+  flex-direction: row;
+  justify-content: start;
+  width: 10%;
+  color: black;
 }
 </style>

@@ -84,11 +84,6 @@ public class ProviderController {
 
   @PostMapping
   public ResponseEntity<Provider> postProvider(@RequestBody Provider provider) {
-    for (Provider p : providerService.getAllProviders()) {
-      if (p.getName().equals(provider.getName())) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-      }
-    }
     if(provider == null && userService.isAdmin()) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }else {

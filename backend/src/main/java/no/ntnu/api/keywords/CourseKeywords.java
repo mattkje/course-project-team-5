@@ -21,9 +21,8 @@ public class CourseKeywords {
     @Column(name = "course_id")
     private int courseId;
 
-    @ManyToOne
-    @JoinColumn(name = "keyword_id")
-    private Keywords keyword;
+    @Column(name = "keyword_id")
+    private int keyword;
 
     /**
      * Empty constructor needed for JPA.
@@ -36,7 +35,7 @@ public class CourseKeywords {
      *
      * @param keyword The id of the keyword
      */
-    public void setKeywordObj(Keywords keyword) {
+    public void setKeywordObj(int keyword) {
         this.keyword = keyword;
     }
 
@@ -45,7 +44,7 @@ public class CourseKeywords {
      *
      * @return The id of the keyword
      */
-    public Keywords getKeywordObj() {
+    public int getKeywordObj() {
         return keyword;
     }
 
@@ -74,15 +73,5 @@ public class CourseKeywords {
      */
     public Integer getCourseKeywordId() {
         return courseKeywordId;
-    }
-
-    /**
-     * get the keyword id.
-     *
-     * @return The keyword id
-     */
-    @JsonIgnore
-    public Integer getKeywordId() {
-        return keyword.getId();
     }
 }
