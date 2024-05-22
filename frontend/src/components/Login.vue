@@ -29,7 +29,7 @@ function changeCompo() {
 </script>
 
 <template>
-
+<meta name="login page">
   <form @submit.prevent="login" id="loginForm" method="post">
     <div class="login-container">
       <div class="login-box" v-show="compo === 'login'">
@@ -49,18 +49,18 @@ function changeCompo() {
           </div>
           <div class="login-text-field">
             <label for="username">Username:</label>
-            <input v-model="username" class="login-prompt" type="text" id="username" name="username"
+            <input v-model="username" class="login-prompt" type="text" id="loginUsername" name="username"
                    placeholder="username" required autofocus/>
           </div>
           <div class="login-text-field">
             <label for="password">Password:</label>
-            <input v-model="password" class="login-prompt" type="password" id="password" name="password"
+            <input v-model="password" class="login-prompt" type="password" id="loginPassword" name="password"
                    placeholder="password" required/>
           </div>
           <p id="result-message" class="hidden"></p>
           <button class="standard-button" type="submit">Login</button>
           <p>No account?</p>
-          <a class="standard-button" @click="changeCompo" type="submit">Sign up here</a>
+          <button class="standard-button" @click="changeCompo" type="submit">Sign up here</button>
         </div>
       </div>
       <register @change-compo="changeCompo" v-show="compo === 'register'"/>
