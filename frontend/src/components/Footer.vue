@@ -3,6 +3,7 @@
 </script>
 
 <template>
+  <meta name="description" content="footer element of all pages.">
   <footer class="footer">
     <div class="footer-content">
       <div class="footer-section">

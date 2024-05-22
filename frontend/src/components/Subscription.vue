@@ -1,4 +1,5 @@
 <template>
+  <meta name="description" content="Prices of different subscription possibilities for Learniverse users">
   <div class="membership-wrap">
     <div class="learniverse-membership">
       <h3>Learniverse Pro Membership</h3>

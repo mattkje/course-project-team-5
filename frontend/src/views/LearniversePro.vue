@@ -21,8 +21,9 @@ function handleAlert() {
 </script>
 
 <template>
+  <meta name="description" content="Showcases all possible subscription that Learniverse provides">
   <div id="background" class="background">
-    <img class="planet" src="/pro.svg">
+    <img alt="planet" class="planet" src="/pro.svg">
     <h2>Learniverse Pro</h2>
     <Alert v-show="showAlert" title="Missing user" message="You must create a user to access this functionality" :buttons="['OK', 'Cancel']" @buttonClicked="handleButtonClick"></Alert>
     <Subscription  @show-alert="handleAlert"/>

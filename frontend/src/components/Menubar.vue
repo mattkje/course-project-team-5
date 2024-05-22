@@ -91,6 +91,7 @@ function setDefaultCurrency() {
 </script>
 
 <template>
+  <meta name="description" content="Menubar that includes explore, community, pro, profile and login page">
   <div id="menubar" class="menubar">
     <div id="desktop" class="header">
       <div class="content">
@@ -114,8 +115,8 @@ function setDefaultCurrency() {
         </div>
 
         <div class="right-content">
-          <select class="fancy-button" id="currencySelect">
-          </select>
+            <select aria-label="Currency" class="fancy-button" id="currencySelect">
+            </select>
           <router-link to="/cart" class="fancy-button-round" v-show="isAuthorized()">
             <img class="cart" src="/cart.svg" alt="Cart">
             <span class="cart-count" v-if="integertest > 0">{{ integertest }}</span>
