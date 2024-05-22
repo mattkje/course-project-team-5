@@ -13,6 +13,7 @@ const {appContext} = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
 
 
+
 //Cookie test
 async function applyCoupon() {
   getCookie('courseProviderId');
@@ -52,8 +53,24 @@ function onProfileDataSuccess(data) {
 
 async function populateCart() {
   const allCookies = document.cookie;
-  const { courseIds, providerIds } = getCourseAndProviderIds(allCookies);
-  const defaultCurrency = setDefaultCurrency() || 'USD';
+  const { courseIds, providerIds, prices } = getCourseAndProviderIds(allCookies);
+
+  const defaultCurrency = setDefaultCurrency() || 'NOK';
+
+  const currencies = await fetchCurrencies(API_URL);
+
+  let symbol = '';
+  console.log(currencies.length);
+  let rate = 0;
+
+  for (let i = 0; i < currencies.length; i++) {
+    if (currencies[i].code === defaultCurrency) {
+      symbol = currencies[i].symbol;
+      rate = currencies[i].rate;
+      console.log(rate + symbol);
+      break;
+    }
+  }
 
   console.log(defaultCurrency);
 
@@ -65,34 +82,25 @@ async function populateCart() {
     return;
   }
 
-  let conversionRate = 0;
-  const currencies = await fetchCurrencies(API_URL);
-  if (currencies && currencies[defaultCurrency]) {
-    conversionRate = currencies[defaultCurrency];
-  }
-  console.log(currencies);
-
 
   for (let i = 0; i < courseIds.length; i++) {
     const courseId = courseIds[i];
     const providerId = providerIds[i];
+    let price = prices[i];
+
+
 
     const course = await fetchCourseById(API_URL, courseId);
     let provider = course.providers;
     let name = "";
-    let priceDefaultCurrency = 0;
     provider.forEach(prov => {
       if (Number(prov.courseProviderId) === Number(providerId)) {
         name = prov.name;
-        priceDefaultCurrency = prov.currency;
       }
     });
 
-    //const providers = course.providers;
-    
-    let finalPrice = getFinalPrice(course.providers, providerId);
-    console.log(finalPrice);
-    addCourseToCart(courseList, course, finalPrice, courseId, name, priceDefaultCurrency);
+    price = price * rate;
+    addCourseToCart(courseList, course, price, courseId, name, symbol);
   }
 }
 
@@ -100,6 +108,7 @@ function getCourseAndProviderIds(allCookies) {
   const cookieArray = allCookies.split('; ');
   let courseIds = [];
   let providerIds = [];
+  let prices = [];
 
   cookieArray.forEach(cookieStr => {
     const [name, value] = cookieStr.split('=');
@@ -109,10 +118,13 @@ function getCourseAndProviderIds(allCookies) {
     if (name.startsWith('providerId_')) {
       providerIds.push(value);
     }
+    if (name.startsWith('price_')) {
+      prices.push(parseFloat(value));
+    }
   });
 
   console.log(courseIds);
-  return { courseIds, providerIds };
+  return { courseIds, providerIds, prices };
 }
 
 function clearCart(courseList) {
@@ -136,7 +148,7 @@ function getFinalPrice(providers, providerId) {
   });
   return finalPrice;
 }
-function addCourseToCart(courseList, course, finalPrice, courseId, name, priceDefaultCurrency) {
+function addCourseToCart(courseList, course, price, courseId, name, symbol) {
   const courseBody = document.createElement("tbody");
   courseBody.classList.add("course-block");
   const line = document.createElement("hr");
@@ -156,7 +168,7 @@ function addCourseToCart(courseList, course, finalPrice, courseId, name, priceDe
   providerName.style.paddingLeft = "20px";
 
   const coursePrice = document.createElement("p");
-  coursePrice.innerText = priceDefaultCurrency + " " + finalPrice;
+  coursePrice.innerText = symbol + " " + price.toFixed(2);
   coursePrice.style.paddingLeft = "100px";
 
   const courseImg = document.createElement("img");
