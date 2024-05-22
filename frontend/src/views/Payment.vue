@@ -80,13 +80,10 @@ const validateForm = () => {
 async function populateCart() {
   const allCookies = document.cookie;
   const { courseIds, providerIds, prices } = getCourseAndProviderIds(allCookies);
-
   const defaultCurrency = setDefaultCurrency() || 'USD';
-
   const currencies = await fetchCurrencies(API_URL);
 
   let symbol = '';
-  console.log(currencies.length);
   let rate = 0;
 
   for (let i = 0; i < currencies.length; i++) {

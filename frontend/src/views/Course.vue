@@ -12,6 +12,9 @@ const loadingSimilar = ref(true);
 const addProvider = ref(false);
 const pricesInDefaultCurrency = new Map();
 
+
+const isActive = ref(false);
+
 //Test cookies
 function addCourseToCart() {
 
@@ -223,6 +226,9 @@ function populateCoursePage() {
                     const urlParams = new URLSearchParams(window.location.search);
                     const courseId = urlParams.get('id');
                     const buyButton = document.getElementById('enrollButton');
+
+                    isActive.value = true;
+
                     buyButton.addEventListener('click', function() {
                       setCookie('courseId_' + courseId, courseId, 1);
                       setCookie('providerId_' + courseId, providerID, 1);
@@ -234,44 +240,6 @@ function populateCoursePage() {
                       setCookie('providerId_' + courseId, providerID, 1);
                       setCookie('price_' + courseId, pricesInDefaultCurrency.get(providerID), 1);
                     })
-
-                    //This is just a temporary solution to make the button work as it should
-                    Object.assign(buyButton.style, {
-                      fontFamily: 'Inter, sans-serif',
-                      fontWeight: 'bold',
-                      color: 'white',
-                      backgroundColor: '#584BEB',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      width: '70%',
-                      height: '50px',
-                      borderRadius: '12px',
-                      cursor: 'pointer',
-                      transition: 'all .5s',
-                      marginRight: '10px',
-                      pointerEvents: 'all',
-                    });
-
-                    Object.assign(addCartButton.style, {
-                      width: '40%',
-                      height: '50px',
-                      borderRadius: '12px',
-                      border: 'none',
-                      backgroundColor: '#090909',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      cursor: 'pointer',
-                      transitionDuration: '.5s',
-                      overflow: 'hidden',
-                      boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.103)',
-                      position: 'relative',
-                      pointerEvents: 'all',
-                    });
-
-
-
                   });
                 }
 
@@ -567,8 +535,8 @@ function activeFailed() {
           <hr>
           <div class="course-action-box">
 
-            <router-link to="/payment" id="enrollButton" class="enroll-button">Buy now</router-link>
-            <button class="cartButton" id="cartButton">
+            <router-link to="/payment" id="enrollButton" :class="{'enroll-button': !isActive, 'enroll-button-active': isActive}">Buy now</router-link>
+            <button :class="{'cartButton': !isActive, 'cartButton-active': isActive}" id="cartButton">
                     <span class="IconContainer">
                         <img class="cart-icon-small" src="/cart-small.svg" alt="Cart">
                     </span>
@@ -1355,6 +1323,23 @@ button {
   pointer-events: none;
 }
 
+.enroll-button-active {
+  font-family: 'Inter', sans-serif;
+  font-weight: bold;
+  color: white;
+  background-color: #584BEB;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70%;
+  height: 50px;
+  border-radius: 12px;
+  transition: all .5s;
+  margin-right: 10px;
+  pointer-events: all;
+  text-decoration: none;
+}
+
 .enroll-button:hover {
   background-color: #6E67FC;
   box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
@@ -1397,6 +1382,23 @@ button {
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.103);
   position: relative;
   pointer-events: none;
+}
+
+.cartButton-active {
+  width: 40%;
+  height: 50px;
+  border-radius: 12px;
+  border: none;
+  background-color: #090909;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition-duration: .5s;
+  overflow: hidden;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.103);
+  position: relative;
+  pointer-events: all;
 }
 
 .IconContainer {
