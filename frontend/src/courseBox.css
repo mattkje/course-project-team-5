@@ -88,7 +88,8 @@ hr {
 
 .content-box-image-banner {
     margin: auto;
-    right: 20px;
+    right: 0 !important;
+    left: 50px;
 }
 
 }

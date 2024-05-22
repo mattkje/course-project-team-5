@@ -288,7 +288,13 @@ function onProfilePictureError(error) {
 </script>
 
 <style scoped>
-@media (max-width: 1001px) {
+@media (min-width: 599px){
+  .nav-button {
+    gap: 4%;
+    justify-content: space-evenly;
+  }
+}
+@media (max-width: 1201px) {
   .background {
     display: none;
   }
@@ -327,11 +333,13 @@ function onProfilePictureError(error) {
     text-decoration: none;
     border-radius: 20px;
     align-items: center;
+    justify-content: center;
     display: flex;
     border: none;
     width: 33%;
     height: 70px;
     transition: all 0.15s ease-in-out;
+    word-break: break-word;
   }
   .nav-button:hover {
     background: var(--light-3);
@@ -350,7 +358,6 @@ function onProfilePictureError(error) {
   .nav-icon {
     width: 23px;
     height: 23px;
-    margin-right: 13px;
   }
 
   .profile-background {
@@ -374,7 +381,7 @@ function onProfilePictureError(error) {
 
 }
 
-@media (min-width: 1001px) {
+@media (min-width: 1201px) {
   .background {
     top: 0;
     height: min-content;
@@ -407,6 +414,7 @@ function onProfilePictureError(error) {
     font-weight: bold;
     color: var(--light-2);
     font-size: 17px;
+    padding-left: 50px;
   }
 
   .nav-button {
@@ -423,6 +431,7 @@ function onProfilePictureError(error) {
     border: none;
     margin-bottom: 5px;
     padding-left: 50px;
+    justify-content: flex-start ;
     width: 100%;
     max-height: 50px;
     min-height: 50px;
@@ -455,8 +464,6 @@ function onProfilePictureError(error) {
     padding-top: 50px;
   }
 }
-
-
 
 
 #currentPassword {

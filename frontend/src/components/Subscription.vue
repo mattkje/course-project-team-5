@@ -15,7 +15,7 @@
                   </div>
                 </div>
                 <div class="ind-membership-purchase-button">
-                  <button class="purchase-button" @click="add1MonthSubscription">
+                  <button class="purchase-button" id="monthly-purchase-button" @click="add1MonthSubscription">
                     <span>Purchase Now</span>
                   </button>
                 </div>
@@ -31,8 +31,6 @@
                   <button class="purchase-button" @click="add3MonthsSubscription">
                     <span>Purchase Now</span>
                   </button>
-                </div>
-                <div class="purchase-price-info">
                   <div class="monthly-price-notice">
                     <p class="monthly-price-notice__monthly-price">
                       <span>Equivalent to: 26,00 kr/month</span>
@@ -40,7 +38,7 @@
                   </div>
                 </div>
               </div>
-              <div class="ind-membership-purchase">
+              <div class="ind-membership-purchase" id="bottom-ind-membership-purchase">
                 <div class="ind-membership-purchase-col">
                   <div class="ind-membership-purchase-name">12 months (365 days)</div>
                   <div class="ind-membership-purchase-price">
@@ -51,8 +49,6 @@
                   <button class="purchase-button" @click="add12MonthsSubscription">
                     <span>Purchase Now</span>
                   </button>
-                </div>
-                <div class="purchase-price-info">
                   <div class="monthly-price-notice">
                     <p class="monthly-price-notice__monthly-price">
                       <span>Equivalent to: 16,00 kr/month</span>
@@ -103,8 +99,32 @@ function error() {
 }
 </script>
 <style scoped>
-@media (max-width: 600px) {
+@media (max-width: 1201px) {
 
+  .membership-wrap {
+    border-radius: 5px;
+  }
+
+  .ind-membership-purchase {
+    flex-direction: column !important;
+    padding-bottom: 32px !important;
+  }
+
+  .ind-membership-purchase-col {
+    padding-right: 0;
+    text-align: center;
+  }
+  .purchase-button {
+    border-radius: 15px 15px 0 0 !important;
+  }
+  #monthly-purchase-button {
+    border-radius: 15px !important;
+    min-width: 188px;
+  }
+  .monthly-price-notice {
+    border-radius: 0 0 15px 15px;
+    margin-top: 8px;
+  }
 }
 
 .background h2 {
@@ -167,26 +187,22 @@ function error() {
   font-size: 1.5rem;
   text-align: left;
   font-weight: 500;
-  background-color: hsla(0, 0%, 45.1%, 0.2);
+  background-color: hsl(44, 93%, 66%);
 }
 
 .membership-wrap {
   margin-left: auto;
   margin-right: auto;
-  max-width: 1024px;
+  width: 93%;
+  max-width: 900px;
   box-sizing: border-box;
   line-height: 1.5;
-
+  border-radius: 10px ;
 }
 
 .membership-plans {
-  padding: 0 32px 16px;
   box-shadow: inset 0 0 20px 0 rgba(0, 0, 0, 0.075);
-}
-
-.list-of-prices {
-  padding-left: 72px;
-  padding-right: 72px;
+  border-radius: 0 0 20px 20px;
 }
 
 .ind-membership {
@@ -196,12 +212,12 @@ function error() {
 .ind-membership-purchase {
   font-size: 1rem;
   margin: 0 auto;
-  max-width: none;
   width: 100%;
+  max-width: 900px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 0 16px 0;
+  padding: 16px 7% 16px 7%;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
   -webkit-box-pack: justify;
@@ -240,11 +256,9 @@ function error() {
   font-size: 20px;
   background: #ffd042;
   border: none;
-  align-items: center;
-  justify-content: center;
-  width: 260px;
+  width: 100%;
+  max-width: 260px;
   height: 44px;
-  border-radius: 15px;
   cursor: pointer;
   margin-top: 10px;
   transition: all .5s;
@@ -254,25 +268,24 @@ function error() {
     transition-duration: .5s;
   }
 }
-
-
-.purchase-price-info {
-  -webkit-box-ordinal-group: 3;
-  order: 2;
-  width: 100%;
-  margin-top: 8px;
-  margin-bottom: 0;
-  text-align: left;
+#monthly-purchase-button {;
+  min-width: 188px;
 }
+
 
 .monthly-price-notice {
 
   background-color: #f0f0f0;
   padding: 8px 16px;
   font-size: 0.7rem;
+  border-radius: 0 0 10px 10px;
 }
 
 .monthly-price-notice__monthly-price {
   margin-bottom: 0;
+}
+
+#bottom-ind-membership-purchase {
+  border-bottom: none;
 }
 </style>
