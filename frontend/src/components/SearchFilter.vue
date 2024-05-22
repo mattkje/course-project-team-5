@@ -669,7 +669,7 @@ watchEffect(() => {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgb(88, 75, 235, 0.1);
+  background: linear-gradient(180deg, rgba(21, 16, 82, 0.14) 0%, rgba(158, 150, 255, 0.14) 100%);
   z-index: 99;
 }
 
@@ -799,6 +799,7 @@ watchEffect(() => {
     margin: 0;
     justify-content: center;
     align-items: center;
+    gap: 10px;
   }
 }
 
@@ -1157,7 +1158,7 @@ Button:active {
     gap: 5px;
   }
   .slide-enter-active, .slide-leave-active {
-    transition: transform 1s;
+    transition: transform 0.7s;
   }
 
   .slide-enter, .slide-leave-to {
@@ -1184,7 +1185,7 @@ Button:active {
 
   .active-filter-container {
     width: 90%;
-    margin: 0 5% 0 5%;
+    margin: 1.5% 5% auto 5%;
     padding: 0;
   }
 
@@ -1233,7 +1234,7 @@ Button:active {
   }
 
   .price-input input {
-    width: 70%;
+    width: 85%;
     border: 1px solid #5666ff;
     border-radius: 5px;
   }

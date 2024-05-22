@@ -663,6 +663,7 @@ function activeFailed() {
     align-items: center;
     justify-content: flex-start;
     white-space: nowrap;
+    overflow-x: hidden;
   }
   .courseLinkElement p {
     font-weight: bold;
