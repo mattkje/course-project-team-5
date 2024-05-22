@@ -1,12 +1,21 @@
 <script setup>
 import Alert from "@/components/Alert.vue";
-import { ref } from "vue";
+import {getCurrentInstance, ref} from "vue";
+import {setDefaultCurrency} from "@/js/currency";
+import {fetchCourseById, fetchCurrencies} from "@/js/populationTools";
+
+const {appContext} = getCurrentInstance();
 
 const showAlert = ref(true);
 const cardNumber = ref("");
 const cardHolder = ref("");
 const expiryDate = ref("");
 const cvv = ref("");
+
+
+const API_URL = appContext.config.globalProperties.$apiAddress;
+
+populateCart();
 
 const handleButtonClick = () => {
   showAlert.value = false;
@@ -67,6 +76,113 @@ const validateForm = () => {
   alert("Payment details are valid");
   // Further form submission logic goes here
 };
+
+async function populateCart() {
+  const allCookies = document.cookie;
+  const { courseIds, providerIds, prices } = getCourseAndProviderIds(allCookies);
+
+  const defaultCurrency = setDefaultCurrency() || 'USD';
+
+  const currencies = await fetchCurrencies(API_URL);
+
+  let symbol = '';
+  console.log(currencies.length);
+  let rate = 0;
+
+  for (let i = 0; i < currencies.length; i++) {
+    if (currencies[i].code === defaultCurrency) {
+      symbol = currencies[i].symbol;
+      rate = currencies[i].rate;
+      console.log(rate + symbol);
+      break;
+    }
+  }
+
+  for (let i = 0; i < courseIds.length; i++) {
+    const courseId = courseIds[i];
+    let price = prices[i];
+    const course = await fetchCourseById(API_URL, courseId);
+    price = price * rate;
+    addCourseToCartTotal(course, price, symbol);
+  }
+}
+
+function getCourseAndProviderIds(allCookies) {
+  const cookieArray = allCookies.split('; ');
+  let courseIds = [];
+  let providerIds = [];
+  let prices = [];
+
+  cookieArray.forEach(cookieStr => {
+    const [name, value] = cookieStr.split('=');
+    if (name.startsWith('courseId_')) {
+      courseIds.push(value);
+    }
+    if (name.startsWith('providerId_')) {
+      providerIds.push(value);
+    }
+    if (name.startsWith('price_')) {
+      prices.push(parseFloat(value));
+    }
+  });
+
+  console.log(courseIds);
+  return { courseIds, providerIds, prices };
+}
+
+async function addCourseToCartTotal(course, price, symbol) {
+  const cartTotal = document.getElementsByClassName("right-content")[0];
+  const courseInfo = document.createElement("p");
+  courseInfo.innerText = course.course.title + ": " + symbol + " " + price.toFixed(2);
+  cartTotal.appendChild(courseInfo);
+
+  const defaultCurrency = setDefaultCurrency() || 'USD';
+  const currencies = await fetchCurrencies(API_URL);
+  let rate = 0;
+
+  for (let i = 0; i < currencies.length; i++) {
+    if (currencies[i].code === defaultCurrency) {
+      rate = currencies[i].rate;
+      break;
+    }
+  }
+  await updateCartTotal();
+}
+
+async function updateCartTotal() {
+  const totalPrice = document.getElementsByClassName("totalPrice")[0];
+  while (totalPrice.firstChild) {
+    totalPrice.removeChild(totalPrice.firstChild);
+  }
+
+  const allCookies = document.cookie;
+  const { prices } = getCourseAndProviderIds(allCookies);
+  const defaultCurrency = setDefaultCurrency() || 'USD';
+  const currencies = await fetchCurrencies(API_URL);
+  let symbol = '';
+  let rate = 0;
+
+  for (let i = 0; i < currencies.length; i++) {
+    if (currencies[i].code === defaultCurrency) {
+      symbol = currencies[i].symbol;
+      rate = currencies[i].rate;
+      break;
+    }
+  }
+
+  let totalCost = 0;
+
+  for (let i = 0; i < prices.length; i++) {
+    let price = prices[i] * rate;
+    totalCost += price;
+  }
+
+  const totalCostElement = document.createElement("p");
+  totalCostElement.innerText = "Total: " + symbol + " " + totalCost.toFixed(2);
+  totalCostElement.style.fontWeight = "bold";
+  totalPrice.appendChild(totalCostElement);
+}
+
 </script>
 
 <template>
@@ -125,6 +241,7 @@ const validateForm = () => {
   </div>
   <div class="right-content">
     <p>cart items</p>
+    <p class="totalPrice"></p>
   </div>
 </div>
 </template>
@@ -163,7 +280,7 @@ h5 {
 
 .right-content {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   background-color: white;
   width: 600px;
 }
