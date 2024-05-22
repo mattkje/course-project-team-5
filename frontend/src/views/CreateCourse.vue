@@ -113,6 +113,14 @@ function removeKeyword(keyword) {
 function removeCourse() {
   emit('navigateBack', 'courseManage');
 }
+
+function createKeyword() {
+    sendApiRequest(API_URL, 'POST', '/courses/keyword', onPostKeywordSuccess, {keyword: document.getElementById("keywords").value}, error);
+}
+
+function onPostKeywordSuccess() {
+    sendApiRequest(API_URL, 'GET', '/keywords', getCoursesSuccess, error);
+}
 </script>
 
 <template>
@@ -153,7 +161,10 @@ function removeCourse() {
             <datalist id="keywordList">
               <option v-for="keyword in keywords">{{keyword.keyword}}</option>
             </datalist>
-          <button type="button" style="height: 40px" @click="addKeyword">Add keyword</button>
+          <div class="keyword-buttons">
+            <button type="button" style="height: 40px" @click="addKeyword">Add keyword</button>
+            <button type="button" style="height: 40px" @click="createKeyword">Create keyword</button>
+          </div>
         </div>
         <div>
           <p>Activated keywords:</p>
@@ -291,5 +302,14 @@ button {
   justify-content: start;
   width: 10%;
   color: black;
+}
+
+.keyword-buttons {
+  display: flex;
+  flex-direction: row;
+}
+
+.keyword-buttons button {
+  margin-left: 10px;
 }
 </style>
