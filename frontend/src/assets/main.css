@@ -224,6 +224,8 @@ p {
   background-color: #eee;
 }
 
+
+
 .cbx {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -274,7 +276,7 @@ p {
   content: "";
   position: absolute;
   transform: rotate(0deg);
-  border: 0.05em solid black;
+  border: 0.05em solid #5666ff;
   left: 0;
   top: 0;
   width: 20px;
@@ -283,6 +285,18 @@ p {
   transition: all 0.25s, border-width 0.1s;
 }
 
+.form-control{
+  width: 100%;
+  font-family: sans-serif;
+  min-height: 40px;
+  text-align: center;
+  border: 1px solid #5666ff;
+  border-left: none;
+}
+
+.form-control input.active {
+  border:none;
+}
 
 
 

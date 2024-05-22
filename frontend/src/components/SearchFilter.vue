@@ -56,6 +56,7 @@ const config = ref({
   altInput: true,
   altFormat: 'Y-m-d',
   minDate: 'today',
+  wrap: true,
 });
 
 const flatpickr = ref(null);
@@ -66,6 +67,8 @@ const flatpickr = ref(null);
   const AltInputValue = flatpickerInstance.altInput.value.split(' to ');
   const [startDateText, endDateText] = InputValue;
   const [startDate, endDate] = AltInputValue;
+
+
   sortByDate(startDate, endDate, startDateText, endDateText);
 };
 
@@ -271,6 +274,7 @@ function checkActiveFilters(checkboxId) {
         existingFilter.delete("credit");
       }
       if (existingFilter.has("date")) {
+        console.log("pepepopop")
         existingFilter.delete("date");
       }
     }
@@ -288,12 +292,18 @@ async function sortByCategory(event) {
 async function sortByDate(startDate, endDate, startDateText, endDateText) {
   let checkboxId = "date ";
   if (startDate === undefined || endDate === undefined) {
-    return;
-  } else {
+    if (startDate === "" && endDate === undefined) {
+      onCheckboxChange(checkboxId, "All Dates",false);
+      startDate = '1900-01-01'
+      endDate = '2100-01-01'
+    } else {
+      return;
+    }
+  } else{
     onCheckboxChange(checkboxId, startDateText + " to " + endDateText,true);
-    await sendApiRequest(API_URL,"GET", '/courses/date-range?startDate=' + startDate + '&endDate=' + endDate, (data) =>
-        isMatch(data, checkboxId, true), onFailure);
   }
+  await sendApiRequest(API_URL,"GET", '/courses/date-range?startDate=' + startDate + '&endDate=' + endDate, (data) =>
+      isMatch(data, checkboxId, true), onFailure);
 }
 
 async function onProviderCheckboxChange(event) {
@@ -321,15 +331,13 @@ function getSliderValues(event) {
 function onCheckboxChange(checkboxid,type,isSlider) {
   // Create a new div element
   const newElement = document.createElement('div');
-
-  console.log(checkboxid)
   newElement.textContent = `${type}`;
   newElement.id = checkboxid;
 
   // Apply CSS style
   newElement.style.display = 'inline-block';
   newElement.style.padding = '7px 15px';
-  newElement.style.backgroundColor = '#270e98';
+  newElement.style.backgroundColor = '#5666ff';
   newElement.style.color = '#fafaff';
   newElement.style.textAlign = 'center';
   newElement.style.textDecoration = 'none';
@@ -347,7 +355,6 @@ function onCheckboxChange(checkboxid,type,isSlider) {
 
   if (existingElement) {
     // If it exists, remove it
-    console.log(existingElement)
     activeFilterContainer.removeChild(existingElement);
     if (isSlider) {
       onCheckboxChange(checkboxid,type,false);
@@ -542,8 +549,13 @@ watchEffect(() => {
           <div class="separator"></div>
 
           <div class="wrapper" id="dateContainer" :class="{'visible': isDateVisible, 'hidden': !isDateVisible}">
-            <span>Start date - End Date</span>
-            <flat-pickr v-model="date" :config="config" class="form-control" placeholder="Select dates" name="date" @change="getDate" ref="flatpickr"></flat-pickr>
+            <div class="dateBoxContainer">
+              <div class="svgContainer" data-toggle>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25"><path d="M22.5 3H21V2a1 1 0 0 0-1-1h-1a1 1 0 0 0-1 1v1h-4V2a1 1 0 0 0-1-1h-1a1 1 0 0 0-1 1v1H7V2a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v1H2.5A1.5 1.5 0 0 0 1 4.5v18A1.5 1.5 0 0 0 2.5 24h20a1.5 1.5 0 0 0 1.5-1.5v-18A1.5 1.5 0 0 0 22.5 3zM19 2h1v3h-1zm-7 0h1v3h-1zM5 2h1v3H5zM2.5 4H4v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1V4h4v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1V4h4v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1V4h1.5a.5.5 0 0 1 .5.5V8H2V4.5a.5.5 0 0 1 .5-.5zm20 19h-20a.5.5 0 0 1-.5-.5V9h21v13.5a.5.5 0 0 1-.5.5z" style="fill:#5666ff"/></svg>
+              </div>
+              <flat-pickr data-input v-model="date" :config="config" class="form-control" placeholder="Select dates" name="date" @change="getDate" ref="flatpickr"></flat-pickr>
+              <button id="clearButton" type="button" title="clear" data-clear @change="getDate">Clear</button>
+            </div>
           </div>
 
           <button class="price-ranger" @click="toggleShowProvider" :style="{
@@ -566,7 +578,7 @@ watchEffect(() => {
 
           <div class="wrapper" :class="{'visible': isDifficultyVisible, 'hidden': !isDifficultyVisible}" id="difficultyContainer">
             <header>
-              <div class="checkbox-wrapper">
+              <div class="checkbox-wrapper" id="difficultyWrapper">
                 <label class="cbx" for="beginnerBox">Beginner</label>
                 <input class="inp-cbx" id="beginnerBox" type="checkbox" v-model="isBeginnerChecked"
                        @change="sortByDifficulty">
@@ -932,11 +944,34 @@ input[type="number"]::-webkit-inner-spin-button {
   font-size: 16px;
 }
 
-#dateContainer {
+.dateBoxContainer {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: left;
   align-content: center;
+}
+
+#dateContainer svg {
+  width: 20px;
+  height: 20px;
+}
+
+#clearButton {
+  background-color: #5666ff;
+  color: white;
+  border: none;
+}
+.svgContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: 1px solid #5666ff;
+  border-right:none;
+
+  min-height: 40px;
+  padding-left: 5px;
+
 }
 
 #creditSlider {
@@ -1026,6 +1061,7 @@ Button:active {
   display: none;
 }
 
+
 @media (max-width: 1250px) {
 
   .overflowContainer {
@@ -1094,7 +1130,6 @@ Button:active {
     gap: 5px;
 
   }
-
 
   .price-ranger {
     margin: 0;
