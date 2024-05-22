@@ -27,12 +27,14 @@ function onTokenRefreshError(error) {
 }
 
 async function loadProfileData() {
-  console.log("Loading profile data from API...");
-  const jwt = getCookie("jwt");
-  if (jwt && isTokenAboutToExpire(jwt)) {
-    sendTokenRefreshRequest(onTokenRefreshSuccess, onTokenRefreshError);
-  } else {
-    await sendApiRequest(API_URL,"GET", "/users/" + user.username, onProfileDataSuccess);
+  if(getAuthenticatedUser()) {
+    console.log("Loading profile data from API...");
+    const jwt = getCookie("jwt");
+    if (jwt && isTokenAboutToExpire(jwt)) {
+      sendTokenRefreshRequest(onTokenRefreshSuccess, onTokenRefreshError);
+    } else {
+      await sendApiRequest(API_URL,"GET", "/users/" + user.username, onProfileDataSuccess);
+    }
   }
 }
 
@@ -94,7 +96,7 @@ function setDefaultCurrency() {
       <div class="content">
         <div class="left-content">
           <router-link to="/" class="logo-button">
-            <img id="logo" class="logo" src="/logo.svg">
+            <img alt="logo" id="logo" class="logo" src="/logo.svg">
             <h4 class="logo-top">Learniverse&nbsp;</h4>
             <h4 class="logo-bottom">Connect</h4>
           </router-link>

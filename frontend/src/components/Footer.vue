@@ -27,7 +27,7 @@
         </div>
       </div>
     </div>
-    <img class="rocket" src="/rocket.svg"/>
+    <img alt="rocket" class="rocket" src="/rocket.svg"/>
   </footer>
 </template>
 

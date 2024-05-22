@@ -48,6 +48,9 @@ function handleButtonClick() {
   showAlert.value = false;
 }
 
+function goToLogin() {
+  window.location.href = '/login';
+}
 </script>
 
 <template>
@@ -93,12 +96,12 @@ function handleButtonClick() {
           <button class="standard-button" type="submit" id="signup-button">Create user</button>
 
           <p>Already have an account?</p>
-          <a class="standard-button" @click="$emit('change-compo')" type="submit">Log in here</a>
+          <button class="standard-button" @click="$emit('change-compo')" type="submit">Log in here</button>
         </div>
       </div>
     </div>
   </form>
-  <div v-else class="sign-up-confirmation"><p>User created successfully!</p><a @click="$emit('change-compo')" class="standard-button">Log in</a></div>
+  <Alert v-else title="User created!" message="Try logging in" :buttons="[ 'Login' ]" @buttonClicked="goToLogin"></Alert>
 </template>
 
 <style scoped>
