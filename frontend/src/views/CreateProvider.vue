@@ -50,11 +50,6 @@ function resetForm() {
 
 <template>
   <div class="provider-section">
-    <div class="provider-form">
-      <p>Please ensure that your course adheres to our guidelines.</p>
-      <button class="guideline-button" @click="toggleGuidelinesModal">Guidelines</button>
-      <p>If you're unsure about any aspect of our guidelines, please take a moment to review them. We appreciate your cooperation in maintaining a positive and constructive community.</p>
-    </div>
 
     <guidelines class="provider-form" v-if="showGuidelinesModal" @close="showGuidelinesModal = false" />
 
@@ -63,7 +58,7 @@ function resetForm() {
         <label for="name">Name:</label>
         <input type="text" id="name" v-model="provider.name" required maxlength="255">
       </div>
-      <button type="submit">Create Post</button>
+      <button type="submit">Create Provider</button>
     </form>
   </div>
 </template>

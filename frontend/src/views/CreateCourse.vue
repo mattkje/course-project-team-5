@@ -129,23 +129,10 @@ function addKeyword() {
 function removeKeyword(keyword) {
   activatedKeywords.value = activatedKeywords.value.filter(item => item !== keyword);
 }
-
-function validateKeywordInput(event) {
-    const value = event.target.value;
-    if (!keywords.value.map(k => k.keyword).includes(value)) {
-      event.target.value = '';
-      alert('Please select a keyword from the list.');
-    }
-}
 </script>
 
 <template>
   <div class="course-section">
-    <div class="course-form">
-      <p>Please ensure that your course adheres to our guidelines.</p>
-      <button class="guideline-button" @click="toggleGuidelinesModal">Guidelines</button>
-      <p>If you're unsure about any aspect of our guidelines, please take a moment to review them. We appreciate your cooperation in maintaining a positive and constructive community.</p>
-    </div>
 
     <guidelines class="course-form" v-if="showGuidelinesModal" @close="showGuidelinesModal = false" />
 
@@ -177,7 +164,7 @@ function validateKeywordInput(event) {
       <div>
         <div>
           <label for="keywords">Keywords:</label>
-            <input type="text" id="keywords" list="keywordList" @input="validateKeywordInput">
+            <input type="text" id="keywords" list="keywordList">
             <datalist id="keywordList">
               <option v-for="keyword in keywords">{{keyword.keyword}}</option>
             </datalist>
@@ -208,7 +195,7 @@ function validateKeywordInput(event) {
         <label for="image">Image URL:</label>
         <input type="text" id="image" v-model="course.image" maxlength="255">
       </div>
-      <button type="submit">Create Post</button>
+      <button type="submit">Create Course</button>
     </form>
   </div>
 </template>
