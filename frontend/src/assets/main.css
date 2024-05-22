@@ -44,6 +44,10 @@ footer h5 {
   color: #EAEAEA;
 }
 
+label {
+  font-family: 'Inter', sans-serif;
+}
+
 .hero-text {
   font-family: 'Inter', sans-serif;
   font-size: 60px;
