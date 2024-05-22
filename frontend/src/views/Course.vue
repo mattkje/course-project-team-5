@@ -211,7 +211,6 @@ function populateCoursePage() {
                   document.getElementById('providerList').appendChild(providerElement);
                   providerElement.addEventListener('click', function() {
                     document.getElementById('enrollButton').textContent = "Buy for " + symbol + finalPrice.toFixed(2);
-                    console.log(providerID + " hei"); //275
                     document.getElementById('notShowingLocationText').innerText = 'Showing location for provider ' + provider.name
                     initMap(provider.latitude, provider.longitude);
 
@@ -239,6 +238,7 @@ function populateCoursePage() {
                       cursor: 'pointer',
                       transition: 'all .5s',
                       marginRight: '10px',
+                      pointerEvents: 'all',
                     });
 
 
@@ -1286,6 +1286,7 @@ button {
   border-radius: 12px;
   transition: all .5s;
   margin-right: 10px;
+  pointer-events: none;
 }
 
 .enroll-button:hover {

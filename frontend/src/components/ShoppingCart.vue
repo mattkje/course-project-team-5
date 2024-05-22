@@ -90,7 +90,7 @@ async function populateCart() {
   for (let i = 0; i < courseIds.length; i++) {
     let courseId = courseIds[i];
     let providerId = providerIds[i]; // Get the corresponding providerId
-    
+
     const course = await fetchCourseById(API_URL, courseId);
     const currency = await fetchCurrencies(API_URL);
 
