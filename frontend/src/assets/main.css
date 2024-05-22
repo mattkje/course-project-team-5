@@ -303,6 +303,28 @@ label {
 }
 
 
+@media (max-width: 769px){
+
+  .featured > * {
+    min-width: 270px !important;
+  }
+  .data-Science > * {
+    min-width: 270px !important;
+  }
+
+  .digital-marketing > * {
+    min-width: 270px !important;
+  }
+
+  .information-technologies > * {
+    min-width: 270px !important;
+  }
+
+  .learniverse-pro > * {
+    min-width: 270px !important;
+  }
+}
+
 
 @media (max-width: 1250px) {
 

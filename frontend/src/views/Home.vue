@@ -556,14 +556,15 @@ function loadButtons() {
     align-content: center;
     width: 100%;
     height: min-content;
-    margin: 0;
+    margin: 20px 0;
     display: flex;
     flex-direction: row;
     overflow: auto;
-
+    gap: 15px;
     scrollbar-width: none;
     -ms-overflow-style: none;
   }
+
   .greeting {
     border: none;
     width: 100%;
