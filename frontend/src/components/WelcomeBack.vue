@@ -45,10 +45,6 @@ function error() {
   }
 }
 
-@media (min-width: 769px) {
-
-}
-
 span {
   font-weight: 900;
 }

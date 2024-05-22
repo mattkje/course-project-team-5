@@ -815,7 +815,8 @@ function activeFailed() {
     flex-direction: column;
     justify-content: center;
     align-content: center;
-    width: 1300px;
+    width: 100%;
+    max-width: 1300px;
     margin: 50px auto;
     padding: 20px;
     border-radius: 20px;
@@ -827,10 +828,11 @@ function activeFailed() {
     background: #f8f8ff;
     border: 1px solid rgba(0, 0, 0, 0.08);
     border-radius: 20px;
+    max-width: 1300px;
     width: 100%;
     min-height: 550px;
     padding: 50px 30px;
-    margin: 30px 0;
+    margin: 0 auto 200px auto;
     display: flex;
     overflow: auto;
 
