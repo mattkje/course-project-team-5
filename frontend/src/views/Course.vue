@@ -627,7 +627,14 @@ function activeFailed() {
 
 <style scoped>
 
-@media (max-width: 769px) {
+@media (max-width:769px){
+  #courseInformation{
+    margin: 15px 0;
+  }
+}
+
+@media (max-width: 1100px) {
+
   .course-image-box {
     display: flex;
     flex-direction: column;
@@ -641,7 +648,7 @@ function activeFailed() {
     border-radius: 20px;
     background-color: #3c3c3c;
     height: auto;
-    width: 400px;
+    width: 93%;
     object-fit: cover;
     margin: 10px auto;
     box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
@@ -649,7 +656,7 @@ function activeFailed() {
 
   .courseLinkElement {
     display: flex;
-    max-width: 400px;
+    max-width: 93%;
     margin: 0 auto;
     flex-direction: row;
     align-items: center;
@@ -674,7 +681,7 @@ function activeFailed() {
     border-radius: 20px;
     padding: 20px;
     margin: 10px auto;
-    width: 400px;
+    width: 93%;
     height: max-content;
     box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
   }
@@ -685,7 +692,7 @@ function activeFailed() {
     flex-direction: column;
     justify-content: center;
     align-content: center;
-    width: 400px;
+    width: 93%;
     margin: 10px auto;
     padding: 20px;
     border-radius: 20px;
@@ -713,7 +720,7 @@ function activeFailed() {
     border-radius: 20px;
     padding: 20px;
     margin: auto;
-    width: 400px;
+    width: 93%;
     height: max-content;
     box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
   }
@@ -759,7 +766,7 @@ function activeFailed() {
 
 }
 
-@media (min-width: 769px) {
+@media (min-width: 1100px) {
   .course-image-box {
     display: flex;
     align-content: center;
@@ -824,7 +831,7 @@ function activeFailed() {
   }
 
   .featured {
-    justify-content: space-between;
+    justify-content: flex-start;
     background: #f8f8ff;
     border: 1px solid rgba(0, 0, 0, 0.08);
     border-radius: 20px;
