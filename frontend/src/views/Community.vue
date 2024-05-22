@@ -1,16 +1,18 @@
 <script setup>
-import { getCurrentInstance, onMounted, ref } from "vue";
+import {getCurrentInstance, onMounted, ref} from "vue";
 import {getAuthenticatedUser} from "@/js/authentication";
 import router from "@/router";
 import Alert from "@/components/Alert.vue";
+import {sendApiRequest, sendTokenRefreshRequest} from "@/js/requests";
+import {getCookie, isTokenAboutToExpire} from "@/js/tools";
 
-const { appContext } = getCurrentInstance();
+const {appContext} = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
 const searchQuery = ref('');
 const showAlert = ref(false);
 
 onMounted(() => {
-  populateCourses();
+  populateCourses()
 });
 
 function populateCourses() {
@@ -23,17 +25,28 @@ function populateCourses() {
       })
       .then(courses => {
         const courseBlock = document.querySelector('.course-block');
+
         // Clear the course block
         courseBlock.innerHTML = '';
-        courses.forEach(course => {
+        courses.forEach(async course => {
           if (course.title.toLowerCase().includes(searchQuery.value.toLowerCase())) {
-            // Create a new course card element
+
+
             const courseCard = document.createElement('a');
             courseCard.className = 'course-card';
             courseCard.href = `/community/post?id=${course.courseId}`;
-            const imageUrl = course.image ? course.image : '/noImageCom.svg';
+            let imageData = '/account.svg';
+            const response = await fetch(API_URL + '/users/' + course.author + '/image');
+            const imageString = await response.text();
+
+            if (imageString !== null) {
+              imageData = 'data:image/jpeg;base64,' + imageString;
+              console.log(imageData);
+            }
+
+
             courseCard.innerHTML = `
-                        <img src="${imageUrl}" alt="Course ${course.courseId}">
+                        <img src="${imageData}" alt="Course ${course.courseId}">
                         <div class="course-card-description">
                             <h3>${course.title}</h3>
                             <p>Posted By: ${course.author}</p>
@@ -48,6 +61,10 @@ function populateCourses() {
       .catch(error => {
         console.log('There was a problem with the fetch operation: ' + error.message);
       });
+}
+
+function createPosts(course, data, courseBlock) {
+
 }
 
 //For searching through posts
@@ -72,7 +89,7 @@ function searchPosts() {
   }
 }
 
-function authenticatePost(){
+function authenticatePost() {
   const currentUser = getAuthenticatedUser();
   if (!currentUser) {
     showAlert.value = true;
@@ -91,32 +108,58 @@ const handleButtonClick = (button) => {
   }
 };
 
+function onTokenRefreshSuccess() {
+  console.log("Token has been refreshed.");
+  sendApiRequest(API_URL, "GET", "/users/" + user.username, onProfileDataSuccess);
+}
+
+function onTokenRefreshError(error) {
+  console.error("Error refreshing token: ", error);
+  window.location.href = ("/no-access");
+}
+
+async function loadProfileData(course, courseblock) {
+  console.log("Loading profile data from API...");
+  const jwt = getCookie("jwt");
+  if (jwt && isTokenAboutToExpire(jwt)) {
+    sendTokenRefreshRequest(onTokenRefreshSuccess, onTokenRefreshError);
+  } else {
+    await sendApiRequest(API_URL, "GET", "/users/" + course.author, onSuccess);
+  }
+}
+
+function onSuccess(data) {
+  createPosts(data.course, data, courseblock)
+}
+
 </script>
 
 <template>
-  <Alert v-show="showAlert === true" title="Missing user" message="You must create a user to access this functionality" :buttons="['OK', 'Cancel']" @buttonClicked="handleButtonClick"></Alert>
+  <Alert v-show="showAlert === true" title="Missing user" message="You must create a user to access this functionality"
+         :buttons="['OK', 'Cancel']" @buttonClicked="handleButtonClick"></Alert>
   <div id="background" class="background">
     <img class="planet" src="/greenPlanet.svg">
+    <div class="logo-button">
+      <h4 class="logo-top">Learniverse&nbsp;</h4>
+      <h4 class="logo-bottom">Community</h4>
+    </div>
   </div>
   <div class="course-section">
     <div class="community-top-container">
-    <div class="community-title-container">
-      <div class="title">
-        <h1>Community</h1>
-        <p class="description">Connect with other learners, share your knowledge, and grow together.</p>
+      <div class="community-title-container">
+        <button class="fancy-button" @click="authenticatePost">
+          <p>Create Post</p>
+        </button>
       </div>
-      <button class="fancy-button" @click="authenticatePost">
-        <p>Create Post</p>
-      </button>
-    </div>
-    <div class="search-container">
+      <div class="search-container">
 
-      <div class="search-bar">
-        <label for="myTextBox"></label>
-        <input class="search-prompt" type="text" id="myTextBox" name="myTextBox" placeholder="Search for community posts" v-model="searchQuery" @input="searchPosts">
-        <img class="search-icon" src="/search.png" alt="Connect">
+        <div class="search-bar">
+          <label for="myTextBox"></label>
+          <input class="search-prompt" type="text" id="myTextBox" name="myTextBox"
+                 placeholder="Search for community posts" v-model="searchQuery" @input="searchPosts">
+          <img class="search-icon" src="/search.png" alt="Connect">
+        </div>
       </div>
-    </div>
     </div>
     <div class="course-block" ref="courseBlock">
     </div>
@@ -177,6 +220,7 @@ const handleButtonClick = (button) => {
       background-color: #262626;
     }
   }
+
   .fancy-button p {
     color: #EAEAEA;
     font-family: 'Inter', sans-serif;
@@ -192,7 +236,7 @@ const handleButtonClick = (button) => {
     height: min-content;
     background: linear-gradient(180deg, rgba(21, 16, 82, 0.14) 0%, rgba(158, 150, 255, 0.14) 100%);
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     flex-direction: column;
     width: 100%;
@@ -233,15 +277,13 @@ const handleButtonClick = (button) => {
     border: 0.5px solid #252525;
     transition: all 0.3s ease-in-out;
     white-space: nowrap;
+
     &:hover {
       background-color: #262626;
       box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
     }
   }
 }
-
-
-
 
 
 .hero-container {
@@ -279,7 +321,6 @@ const handleButtonClick = (button) => {
   background-color: var(--light-3);
   margin: 0;
 }
-
 
 
 .search-icon {
@@ -376,13 +417,36 @@ const handleButtonClick = (button) => {
 }
 
 
-
-
 .community-title-container {
   display: flex;
   justify-content: space-between;
   margin: auto;
   width: 60%;
+}
+
+.logo-button {
+  position: absolute;
+  top: 310px;
+  margin-left: auto;
+  margin-right: auto;
+  height: 70px;
+  border: none;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.logo-top {
+  font-size: 50px;
+  font-weight: bold;
+  padding-left: 5px;
+  color: #ececf4;
+}
+
+.logo-bottom {
+  font-size: 50px;
+  font-weight: bold;
+  color: #4eeb91;
 }
 
 </style>
