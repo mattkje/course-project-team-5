@@ -310,7 +310,8 @@ public class CourseService {
     }
   }
 
-  public void postKeywordsToCourse(int courseId, List<Integer> keywordIds) {
+  public void postKeywordsToCourse(int courseId, Set<Integer> keywordIds) {
+
     for (Integer keywordId : keywordIds) {
       CourseKeywords courseKeyword = new CourseKeywords();
       courseKeyword.setCourseId(courseId);
