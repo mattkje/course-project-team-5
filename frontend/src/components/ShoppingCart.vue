@@ -186,41 +186,56 @@ function calculateTotalCost(rate) {
 
 async function addCourseToCart(courseList, course, price, courseId, name, symbol) {
   const courseBody = document.createElement("tbody");
-  courseBody.classList.add("course-block");
-  const line = document.createElement("hr");
-  courseBody.appendChild(line);
+  courseBody.classList.add("course-block-cart");
+
   courseList.appendChild(courseBody);
 
   const row = document.createElement("tr");
-  row.classList.add("course-card");
+  row.classList.add("course-card-cart");
   row.style.cursor = "pointer";
 
-  const courseName = document.createElement("p");
+  const courseName = document.createElement("h3");
   courseName.innerText = course.course.title;
-  courseName.style.paddingLeft = "20px";
 
   const providerName = document.createElement("p");
-  providerName.innerText = name;
-  providerName.style.paddingLeft = "20px";
+  providerName.innerText = 'Provider: ' + name;
+
+  const leftInfo = document.createElement("div")
+  leftInfo.className = "left-cart-info";
+  leftInfo.append(courseName, providerName);
+
+
 
   const coursePrice = document.createElement("p");
   coursePrice.innerText = symbol + " " + price.toFixed(2);
-  coursePrice.style.paddingLeft = "100px";
+  coursePrice.className = "cart-item-price";
 
   const courseImg = document.createElement("img");
   courseImg.classList.add("course-image");
   courseImg.src = course.course.image || '/noImageCom.svg';
 
-  row.appendChild(courseImg);
-  row.appendChild(courseName);
-  row.appendChild(providerName);
-  row.appendChild(coursePrice);
+  const leftSection = document.createElement("div")
+  leftSection.className = "left-cart-section";
+  leftSection.append(courseImg, leftInfo);
+
+
+
+  const removeButton = createRemoveButton(courseId, courseBody);
+  removeButton.className = "cart-item-remove";
+
+  const rightSection = document.createElement("div")
+  rightSection.className = "right-cart-section";
+  rightSection.append(coursePrice, removeButton);
+
+  row.appendChild(leftSection);
   courseBody.appendChild(row);
+  courseBody.append(rightSection)
 
   editCourseCard(row, course);
 
-  const removeButton = createRemoveButton(courseId, courseBody);
-  courseBody.appendChild(removeButton);
+
+
+
 
   await updateCartTotal(); // Update total cost whenever a course is added or removed xd
 }
@@ -360,40 +375,42 @@ function showPrice(data) {
       </li>
     </ul>
   <div class="parent-container">
-    <div class="left-items">
-      <div class="title">
-        <h1>Cart</h1>
-        <p class="itemCountText"> {{ cartText }}</p>
+    <div class="title">
+      <h1>Cart</h1>
+      <p class="itemCountText"> {{ cartText }}</p>
+    </div>
+    <div class="center-container">
+      <div class="left-items">
+        <div class="flexible-grid-container">
+          <div class="cart-label-box">
+            <p>Course</p>
+            <p>Price</p>
+          </div>
+          <div class="course-table">
+            <h2>Your cart is empty</h2>
+          </div>
+        </div>
       </div>
-      <div class="flexible-grid-container">
-        <div class="cart-label-box">
-          <p>Course</p>
-          <p>Price</p>
+      <div class="flex-couponCart-container">
+        <div class="couponContainer">
+          <h1>Coupon Code</h1>
+          <p>You can apply a coupon code to get a discount on your purchase.</p>
+          <div class="options">
+            <input type="text" placeholder="Enter coupon code here"/>
+            <br>
+            <button @click="applyCoupon">Apply</button>
+          </div>
+
         </div>
-        <div class="course-table">
-          <h2>Your cart is empty</h2>
+        <div class="couponContainer">
+          <h1>Cart Total</h1>
+          <p class="cartTotal">Here is the total cost of your cart.</p>
+          <p class="totalPrice"></p>
+          <div class="totalAmount"></div>
         </div>
+        <button class="checkout-button">Checkout</button>
       </div>
     </div>
-    <div class="flex-couponCart-container">
-      <div class="couponContainer">
-        <h1>Coupon Code</h1>
-        <p>You can apply a coupon code to get a discount on your purchase.</p>
-        <div class="options">
-          <input type="text" placeholder="Enter coupon code here"/>
-          <br>
-          <button @click="applyCoupon">Apply</button>
-        </div>
-
-      </div>
-      <div class="couponContainer">
-        <h1>Cart Total</h1>
-        <p class="cartTotal">Here is the total cost of your cart.</p>
-        <p class="totalPrice"></p>
-        <div class="totalAmount"></div>
-      </div>
-      <button class="checkout-button">Checkout</button>
-  </div>
   </div>
 </template>
 
@@ -416,7 +433,7 @@ function showPrice(data) {
     justify-content: flex-start;
     margin: 50px auto;
     padding: 5px;
-    height: 50%;
+    height: max-content;
     width: 400px;
     align-items: center;
   }
@@ -437,10 +454,14 @@ function showPrice(data) {
 }
 
 @media (min-width: 769px) {
+
+
   .parent-container {
     margin: 0;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
     align-items: center;
   }
 
@@ -450,17 +471,26 @@ function showPrice(data) {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    margin: 50px auto;
+    margin: 0;
     padding: 5px;
-    height: 50%;
-    width: 100%;
+    width: 1000px;
     align-items: center;
   }
 
+  .center-container {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin: auto;
+    height: 100%;
+  }
+
   .left-items {
-    height: 93vh;
+    height: 100%; /* Ensure it takes the full height */
     width: 1000px;
-    margin: 0 auto;
+    margin: 30px 10px;
+    display: flex;
+    flex-direction: column;
   }
 
   .flex-couponCart-container {
@@ -468,18 +498,21 @@ function showPrice(data) {
     flex-direction: column;
     justify-content: space-between;
     background-color: var(--light-1);
-    border-radius: 10px;
-    margin: 0;
+    border-radius: 20px;
+    margin: 30px 10px;
     padding: 0 50px;
-    height: 93vh;
+    height: 100%;
     width: 500px;
     align-items: center;
   }
+
 }
 
 .title {
+  display: flex;
+  justify-content: center;
   text-decoration: none;
-  margin: 50px auto 0 auto;
+  margin: 20px 1000px auto 0;
   width: 100%;
 }
 
@@ -524,15 +557,10 @@ function showPrice(data) {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  width: 70%;
+  width: 90%;
 }
 
-.course-card {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 40px;
-}
+
 
 .course-img {
   width: 100px;
