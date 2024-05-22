@@ -195,8 +195,7 @@ function error() {
 }
 
 .membership-wrap {
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto;
   width: 93%;
   max-width: 900px;
   box-sizing: border-box;

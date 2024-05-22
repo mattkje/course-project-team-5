@@ -27,18 +27,12 @@ function handleAlert() {
     <h2>Learniverse Pro</h2>
     <Alert v-show="showAlert" title="Missing user" message="You must create a user to access this functionality" :buttons="['OK', 'Cancel']" @buttonClicked="handleButtonClick"></Alert>
     <Subscription  @show-alert="handleAlert"/>
+    <div name="filler" style="height: 500px"></div>
   </div>
 
 </template>
 
 <style scoped>
-@media (max-width: 600px) {
-
-  #planet {
-    height: 120px;
-    animation: ease-in-out pulse 5s infinite;
-  }
-}
 
 .background {
   background: linear-gradient(180deg, rgba(21, 16, 82, 0.14) 0%, rgba(133, 132, 145, 0.14) 100%);
@@ -58,22 +52,30 @@ function handleAlert() {
   animation: ease-in-out fadeIn 1.5s;
 }
 
+@media (max-width: 769px) {
+  .background {
+    background: #05060d;
+  }
+}
+
 .planet {
   margin: 80px auto 10px auto;
-  height: 200px;
+  width: 100%;
+  max-height: 200px;
+  height: 100%;
   animation: ease-out pulse 5s infinite;
 }
 
 
 @keyframes pulse {
   0% {
-    transform: scale(1);
+    transform: scale(100%);
   }
   50% {
-    transform: scale(1.1);
+    transform: scale(110%);
   }
   100% {
-    transform: scale(1);
+    transform: scale(100%);
   }
 }
 
@@ -89,5 +91,7 @@ function handleAlert() {
 .purchase-button span {
   font-weight: 700;
 }
+
+
 
 </style>
