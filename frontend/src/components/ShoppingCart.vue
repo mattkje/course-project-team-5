@@ -54,10 +54,10 @@ function onProfileDataSuccess(data) {
 async function populateCart() {
   const allCookies = document.cookie;
   const { courseIds, providerIds, prices } = getCourseAndProviderIds(allCookies);
-
   const defaultCurrency = setDefaultCurrency() || 'USD';
-
   const currencies = await fetchCurrencies(API_URL);
+  const cartTotal = document.getElementsByClassName("cartTotal")[0];
+  cartTotal.innerText = "";
 
   let symbol = '';
   console.log(currencies.length);
@@ -298,6 +298,8 @@ async function updateCartTotal() {
 async function updateCourseToCartTotal() {
   const cartTotal = document.getElementsByClassName("cartTotal")[0];
 
+  cartTotal.innerText = "";
+
   // Remove all child nodes of cartTotal
   while (cartTotal.firstChild) {
     cartTotal.removeChild(cartTotal.firstChild);
@@ -404,7 +406,7 @@ function showPrice(data) {
         </div>
         <div class="couponContainer">
           <h1>Cart Total</h1>
-          <p class="cartTotal">Here is the total cost of your cart.</p>
+          <p class="cartTotal"></p>
           <p class="totalPrice"></p>
           <div class="totalAmount"></div>
         </div>
