@@ -1,11 +1,14 @@
 <script setup>
 import {ref, onMounted, getCurrentInstance} from 'vue';
 import {getCookie} from "@/js/tools";
+import {sendApiRequest} from "@/js/requests";
 
 const users = ref([]);
 const loading = ref(true);
 const {appContext} = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
+const userAction = ref(false);
+const activeUser = ref('');
 
 onMounted(async () => {
   const response = await fetch(API_URL + '/users', {
@@ -40,24 +43,71 @@ async function deleteUser(user) {
   return "User successfully deleted";
 }
 
+function userActions(user) {
+  userAction.value = true;
+  activeUser.value = user;
+}
+
+function deactivateUser() {
+  userAction.value = false;
+}
+
+function addRole() {
+  const role = document.getElementById('user-select-add').value
+  sendApiRequest(API_URL, 'POST', '/users/' + activeUser.value.username + '/add-role', onRoleSuccess, role, error)
+}
+
+function deleteRole() {
+  const role = document.getElementById('user-select-remove').value
+  console.log(role);
+  sendApiRequest(API_URL, 'DELETE', '/users/' + activeUser.value.username + '/delete-role', onRoleSuccess, role, error)
+}
+
+function onRoleSuccess(data) {
+  console.log(data)
+  alert("Role added successfully");
+}
+
+function error() {
+  alert("An error occurred");
+}
 </script>
 
 <template>
   <div class="page-background" id="profileInformation">
-    <div v-show="loading" class="three-body">
+    <div class="user-roles" v-show="userAction">
+      <button class="fancy-button" style="width: 100px" @click="deactivateUser()">< Go back</button>
+      <div class="role-manager">
+        <select class="user-select" id="user-select-add">
+          <option value="ROLE_ADMIN">Admin</option>
+          <option value="ROLE_USER">User</option>
+          <option value="ROLE_PRO">Pro</option>
+      </select>
+      <button class="fancy-button" style="width: 100px" @click="addRole()">Add Role</button>
+      </div>
+      <div class="role-manager">
+        <select class="user-select" id="user-select-remove">
+          <option value="ROLE_ADMIN">Admin</option>
+          <option value="ROLE_USER">User</option>
+          <option value="ROLE_PRO">Pro</option>
+        </select>
+        <button class="fancy-button" style="width: 100px" @click="deleteRole()">Delete Role</button>
+      </div>
+    </div>
+    <div v-show="loading === true" class="three-body">
       <div class="three-body__dot"></div>
       <div class="three-body__dot"></div>
       <div class="three-body__dot"></div>
     </div>
-    <div class="title">
+    <div v-show="!userAction" class="title">
       <h1>User Management</h1>
       <p>User Account</p>
     </div>
-    <div class="page-highlight" v-show="!loading">
+    <div class="page-highlight" v-show="!loading && userAction === false">
       <div v-for="user in users" :key="user.id" class="user-block">
         <p>{{ user.username }}</p>
         <div class="right-content">
-          <button class="fancy-button" @click="">Actions</button>
+          <button class="fancy-button" @click="userActions(user)">Actions</button>
           <button class="fancy-button" style="background-color: orangered; color: white" @click="deleteUser(user)">Delete</button>
         </div>
       </div>
@@ -143,9 +193,32 @@ async function deleteUser(user) {
   }
 }
 
+.user-select {
+  width: 100px;
+  height: 30px;
+  border-radius: 10px;
+  border: 1px solid var(--light-1);
+  background-color: var(--light-3);
+  color: var(--dark-3);
+  font-size: 15px;
+  font-weight: bold;
+  margin: 10px;
 
+}
 
+.user-roles {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+}
 
+.role-manager {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
 
 .right-content {
   display: flex;

@@ -49,6 +49,7 @@ public class SecurityConfiguration {
   @Bean
   public SecurityFilterChain apiSecurityFilterChain(HttpSecurity http) throws Exception {
     http
+            .cors(AbstractHttpConfigurer::disable)
             .csrf(AbstractHttpConfigurer::disable)
         .securityMatchers((matchers) -> matchers.requestMatchers("/api/courses"))
         .authorizeHttpRequests((requests) -> requests.anyRequest().permitAll())
@@ -71,6 +72,7 @@ public class SecurityConfiguration {
   @Bean
   public SecurityFilterChain putMethodSecurityFilterChain(HttpSecurity http) throws Exception {
     http
+            .cors(AbstractHttpConfigurer::disable)
             .csrf(AbstractHttpConfigurer::disable)
             .securityMatchers((matchers) -> matchers.requestMatchers("/api/users/*/add-role", "/api/users/*/delete-role"))
             .authorizeHttpRequests((requests) -> requests.anyRequest().permitAll())

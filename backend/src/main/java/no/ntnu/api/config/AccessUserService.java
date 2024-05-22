@@ -255,6 +255,7 @@ public class AccessUserService implements UserDetailsService {
   public void addRole(String username, String role) {
     Optional<User> userOptional = userRepository.findByUsername(username);
     if (userOptional.isPresent()) {
+      role = role.replace("\"", "");
       User user = userRepository.findByUsername(username).get();
       user.addRole(roleRepository.findOneByName(role));
       userRepository.save(user);
@@ -270,6 +271,7 @@ public class AccessUserService implements UserDetailsService {
   public void deleteRole(String username, String role) {
     Optional<User> userOptional = userRepository.findByUsername(username);
     if (userOptional.isPresent()) {
+      role = role.replace("\"", "");
       User user = userRepository.findByUsername(username).get();
       user.getRoles().remove(roleRepository.findOneByName(role));
       userRepository.save(user);

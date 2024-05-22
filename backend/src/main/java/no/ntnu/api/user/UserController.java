@@ -213,7 +213,7 @@ public class UserController {
      * @param role The role to add
      * @return The response
      */
-    @PutMapping("/{username}/add-role")
+    @PostMapping("/{username}/add-role")
     public ResponseEntity<?> addRole(@PathVariable String username, @RequestBody String role) {
         if(userService.isAdmin()) {
             userService.addRole(username, role);
@@ -230,7 +230,7 @@ public class UserController {
      * @param role The role to delete
      * @return The response
      */
-    @PutMapping("/{username}/delete-role")
+    @DeleteMapping("/{username}/delete-role")
     public ResponseEntity<?> deleteRole(@PathVariable String username, @RequestBody String role) {
         if(userService.isAdmin()) {
             userService.deleteRole(username, role);
