@@ -55,7 +55,7 @@ async function populateCart() {
   const allCookies = document.cookie;
   const { courseIds, providerIds, prices } = getCourseAndProviderIds(allCookies);
 
-  const defaultCurrency = setDefaultCurrency() || 'NOK';
+  const defaultCurrency = setDefaultCurrency() || 'USD';
 
   const currencies = await fetchCurrencies(API_URL);
 
@@ -195,6 +195,7 @@ function createRemoveButton(courseId, courseBody) {
   removeButton.onclick = function() {
     document.cookie = 'courseId_' + courseId + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     document.cookie = 'providerId_' + courseId + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    document.cookie = 'price_' + courseId + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
     courseBody.remove();
   };
   return removeButton;
