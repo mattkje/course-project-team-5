@@ -550,8 +550,7 @@ function loadButtons() {
   .digital-marketing,
   .information-technologies,
   .learniverse-pro {
-
-    border-radius: 20px;
+    padding: 20px;
     justify-content: flex-start;
     align-content: center;
     width: 100%;
