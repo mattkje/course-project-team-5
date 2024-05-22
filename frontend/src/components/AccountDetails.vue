@@ -37,6 +37,8 @@
     </div>
     <hr>
     <div class="course-options">
+      <input type="file" id="imageInput" accept="image/*">
+      <button class="fancy-button" @click="changeProfilePicture">Add profile picture</button>
       <button class="fancy-button" @click="newPassword">Change password</button>
       <button class="fancy-button" @click="doLogoutToHome">Log out</button>
     </div>
@@ -51,6 +53,7 @@ export default defineComponent({
     return {
       newPassword: () => context.emit("newPassword"),
       doLogoutToHome: () => context.emit("doLogoutToHome"),
+      changeProfilePicture: () => context.emit("changeProfilePicture"),
     };
   },
 });
@@ -199,7 +202,7 @@ hr {
   margin-bottom: 20px;
 }
 
-.fancy-button:nth-child(2) {
+.fancy-button:nth-child(4) {
   background-color: #fad8d8;
 }
 </style>

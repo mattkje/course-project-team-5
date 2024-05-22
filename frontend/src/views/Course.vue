@@ -3,7 +3,6 @@ import {getCurrentInstance, onMounted, ref} from 'vue';
 import "@/assets/coursePage.css"
 import {getAuthenticatedUser, hasRole} from "@/js/authentication";
 import MarkdownIt from "markdown-it";
-import myStore from '@/js/store.js';
 import {createContentBox, fetchCourses, fetchCurrencies} from "@/js/populationTools";
 import { setCookie } from "@/js/tools";
 import {sendApiRequest} from "@/js/requests";

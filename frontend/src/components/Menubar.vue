@@ -5,7 +5,6 @@ import {getAuthenticatedUser, hasRole, isAuthorized} from "@/js/authentication";
 import {computed} from "vue";
 import {useStore} from "vuex";
 
-import myStore from '@/js/store.js';
 import {getCookie, isTokenAboutToExpire} from "@/js/tools";
 import {sendApiRequest, sendTokenRefreshRequest} from "@/js/requests";
 

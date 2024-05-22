@@ -416,7 +416,9 @@ public class AccessUserService implements UserDetailsService {
    */
   public void addImageToUser(String image) {
     if (getSessionUser() != null && image != null) {
+      image = image.replace("\"", "");
       getSessionUser().user().setImage(image);
+      userRepository.save(getSessionUser().user());
     }
   }
 

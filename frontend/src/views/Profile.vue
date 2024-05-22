@@ -1,6 +1,8 @@
 <template>
+  <Alert v-show="showAlert1" title="Error" message="Passwords don't match" :buttons="[ 'OK' ]" @buttonClicked="handleButtonClick"></Alert>
+  <Alert v-show="showAlert2" title="Error" message="The password must be longer than 8 characters" :buttons="[ 'OK' ]" @buttonClicked="handleButtonClick"></Alert>
   <div id="background" class="background">
-    <img class="planet" src="/settingsPlanet.svg">
+    <img alt="planet" class="planet" src="/settingsPlanet.svg">
   </div>
   <div class="profile-background">
     <div class="profile-bar">
@@ -15,7 +17,7 @@
         <button class="nav-button" @click="subscription()"><img alt="Subscription" class="nav-icon"src="/settingswallet.svg">Subscription</button>
       </div>
       <AccountDetails v-show="navigate === 'accountDetails' && !loading && !changePassword" @newPassword="newPassword()"
-                      @doLogoutToHome="doLogoutToHome()"/>
+                      @doLogoutToHome="doLogoutToHome()" @changeProfilePicture="changeProfilePicture()"/>
       <div class="profile-box" id="profileInformation" v-show="navigate === 'myCourses' && !loading">
         <div v-show="loading" class="three-body">
           <div class="three-body__dot"></div>
@@ -71,6 +73,7 @@ import {getCookie, isTokenAboutToExpire} from "@/js/tools";
 import PasswordChange from "@/components/PasswordChange.vue";
 import AccountDetails from "@/components/AccountDetails.vue";
 import Subscription from "@/components/Subscription.vue";
+import Alert from "@/components/Alert.vue";
 
 onMounted(loadProfileData);
 const loading = ref(true);
@@ -79,6 +82,8 @@ const changePassword = ref(false);
 let navigate = ref("accountDetails");
 const { appContext } = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
+const showAlert1 = ref(false);
+const showAlert2 = ref(false);
 
 async function loadProfileData() {
   navigate.value = "accountDetails";
@@ -164,19 +169,16 @@ function changePasswordRequest() {
   const confirmPassword = document.getElementById("confirmPassword").value;
 
   if (newPassword !== confirmPassword) {
-    alert("New password and confirm password do not match.");
-    return;
+    showAlert1.value = true;
   } else if (newPassword.length < 8) {
-    alert("Password must be at least 8 characters long.");
-    return;
+    showAlert2.value = true;
+  } else {
+    const data = {
+      oldPassword: oldPassword,
+      newPassword: newPassword
+    };
+    sendApiRequest(API_URL,"PUT", "/users/" + user.username + "/change-password", onChangePasswordSuccess, data, onChangePasswordError);
   }
-
-  const data = {
-    oldPassword: oldPassword,
-    newPassword: newPassword
-  };
-
-  sendApiRequest(API_URL,"PUT", "/users/" + user.username + "/change-password", onChangePasswordSuccess, data, onChangePasswordError);
 }
 
 function onChangePasswordSuccess(data) {
@@ -187,7 +189,6 @@ function onChangePasswordSuccess(data) {
 
 function onChangePasswordError(error) {
   console.error("Error changing password: ", error);
-  alert("Error changing password. Please try again.");
 }
 
 function endSubscription() {
@@ -255,6 +256,34 @@ function doLogoutToHome() {
 
 function cancelChangePassword() {
   changePassword.value = false;
+}
+
+function handleButtonClick() {
+  showAlert1.value = false;
+  showAlert2.value = false;
+}
+
+// Code made by external sources
+function changeProfilePicture() {
+  const input = document.getElementById('imageInput');
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const base64String = e.target.result.split(',')[1];
+      console.log(base64String);
+      sendApiRequest(API_URL, 'PUT', '/users/' + user.username + '/change-image', onProfilePictureSuccess, base64String, onProfilePictureError);
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+function onProfilePictureSuccess(data) {
+  console.log("Profile picture changed: ", data);
+  alert("Profile picture changed successfully.");
+}
+
+function onProfilePictureError(error) {
+  console.error("Error changing profile picture: ", error);
 }
 </script>
 
