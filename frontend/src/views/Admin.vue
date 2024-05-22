@@ -47,14 +47,6 @@ function courseManage() {
   navigate.value = "courseManage";
 }
 
-function createCourse() {
-  window.location.href = ("/create-course");
-}
-
-function createProvider() {
-  window.location.href = ("/create-provider");
-}
-
 </script>
 
 <template>
@@ -80,14 +72,6 @@ function createProvider() {
         <button class="nav-button" @click="postManage()">
           <img class="nav-icon"src="/settingsPost.svg">
           <p>Post Management</p>
-        </button>
-        <button class="nav-button" @click="createCourse()">
-          <img class="nav-icon" src="/settingscoursesplus.svg">
-          <p>Create Course</p>
-        </button>
-        <button class="nav-button" @click="createProvider()">
-          <img class="nav-icon" src="/settingsprovider.svg">
-          <p>Create Provider</p>
         </button>
       </div>
       <AdminUserManagement v-show="navigate === 'userManage' && !loading"/>

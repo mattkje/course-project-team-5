@@ -168,13 +168,13 @@ function removeKeyword(keyword) {
             <datalist id="keywordList">
               <option v-for="keyword in keywords">{{keyword.keyword}}</option>
             </datalist>
-          <button type="button" class="fancy-button" @click="addKeyword">Add keyword</button>
+          <button type="button" style="height: 40px" @click="addKeyword">Add keyword</button>
         </div>
         <div>
           <p>Activated keywords:</p>
           <ul>
             <li v-for="keyword in activatedKeywords">{{keyword.keyword}}
-              <button type="button" @click="removeKeyword(keyword)">x</button>
+              <button type="button" style="height: 30px; width: 30px" @click="removeKeyword(keyword)">x</button>
             </li>
           </ul>
         </div>
@@ -210,8 +210,8 @@ function removeKeyword(keyword) {
   max-width: 900px;
   margin: auto auto 50px auto;
   padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 5px;
+  background-color: #ffffff;
+  border-radius: 20px;
 }
 
 .form-group {
@@ -224,63 +224,52 @@ function removeKeyword(keyword) {
 }
 
 label {
+  font-family: Inter, sans-serif;
+  font-weight: bold;
+  font-size: 16px;
   display: block;
   margin-bottom: 5px;
 }
 
 input[type="text"],
 textarea {
+  font-family: Inter, sans-serif;
   width: 100%;
+  height: 60px;
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  border: 2px solid var(--light-2);
+  border-radius: 15px;
   font-size: 16px;
 }
 
-button[type="submit"] {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  background-color: var(--base-1);
-  color: #fff;
+button {
+
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+  color: #ffffff;
+  font-size: 20px;
+  background: #000000;
   border: none;
-  border-radius: 5px;
-  font-size: 16px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 70px;
+  border-radius: 15px;
   cursor: pointer;
-}
-
-button[type="submit"]:hover {
-  background-color: var(--base-2);
-}
-
-.formatting-tools {
   margin-top: 10px;
-}
-
-.formatting-tools button {
-  margin-right: 5px;
-  padding: 5px 10px;
-  background-color: #ffffff;
-  box-shadow: none;
-  border-radius: 5px;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.formatting-tools button:hover {
-  background-color: #e0e0e0;
-}
-
-.guideline-button{
-  padding: 0;
-  color: var(--base-1);
-  background: none;
-  border: none;
+  transition: all .5s;
 
   &:hover {
-    color: var(--base-2);
+    transform: scale(1.01);
+    transition-duration: .5s;
+  }
+
+  &:active {
+    transform: scale(0.95);
+    transition-duration: .5s;
   }
 }
+
 
 #max-characters {
   font-size: 14px;

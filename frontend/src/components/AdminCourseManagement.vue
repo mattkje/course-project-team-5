@@ -76,6 +76,17 @@ async function disableCourse(courseProvider) {
       <h1>Course Management</h1>
       <p>Review active courses</p>
     </div>
+    <div class="button-bar">
+      <router-link to="/create-course" class="option-button">
+        <img class="nav-icon" src="/settingscoursesplus.svg">
+        <p>Create Course</p>
+      </router-link>
+      <router-link to="/create-provider" class="option-button">
+        <img class="nav-icon" src="/settingsprovider.svg">
+        <p>Create Provider</p>
+      </router-link>
+    </div>
+
     <div class="page-highlight" v-show="!loading">
       <div v-for="courseProvider in courses" :key="courseProvider.course.id" class="user-block">
         <p>{{ courseProvider.course.title }}</p>
@@ -170,7 +181,12 @@ async function disableCourse(courseProvider) {
 }
 
 
-
+.button-bar {
+  width: 98%;
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+}
 
 
 
@@ -179,4 +195,38 @@ async function disableCourse(courseProvider) {
   align-items: center;
   justify-content: space-between;
 }
+
+.option-button {
+  background: #8fec8f;
+  border: none;
+  display: flex;
+  text-decoration: none;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 70px;
+  border-radius: 15px;
+  cursor: pointer;
+  margin: 10px;
+  transition: all .5s;
+
+  &:active {
+    transform: scale(0.95);
+    transition-duration: .5s;
+  }
+}
+
+.option-button img{
+  width: 40px;
+  height: 40px;
+  filter: brightness(0) invert(1);
+}
+
+.option-button p {
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+  color: #ffffff;
+  font-size: 20px;
+}
+
 </style>
