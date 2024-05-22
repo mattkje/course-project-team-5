@@ -10,6 +10,7 @@ const password = ref('');
 let compo = ref('login');
 const { appContext } = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
+const showAlert = ref(false);
 
 const login = async () => {
   if(getAuthenticatedUser()) {
@@ -39,7 +40,7 @@ function goToMainPage() {
 
 <template>
 <meta name="login page">
-  <Alert v-else title="Already logged in" message="You are already logged in" :buttons="[ 'Go to main page' ]" @buttonClicked="goToMainPage"></Alert>
+  <Alert v-show="showAlert" title="Already logged in" message="You are already logged in" :buttons="[ 'Go to main page' ]" @buttonClicked="goToMainPage"></Alert>
   <form @submit.prevent="login" id="loginForm" method="post">
     <div class="login-container">
       <div class="login-box" v-show="compo === 'login'">

@@ -98,7 +98,7 @@ async function loadProfileData() {
       await sendApiRequest(API_URL,"GET", "/users/" + user.username, onProfileDataSuccess, onProfileDataError);
     }
   } else {
-    window.location.href = ("/no-access");
+    window.location.href = ("/login");
   }
 }
 
