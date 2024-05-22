@@ -795,8 +795,9 @@ function activeFailed() {
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
-    margin-left: 100px;
-    width: min-content;
+    max-width: 1300px;
+    margin: 0 auto;
+    width: 100%;
     white-space: nowrap;
   }
 
