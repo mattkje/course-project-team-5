@@ -35,11 +35,11 @@ function populateCourses() {
             const courseCard = document.createElement('a');
             courseCard.className = 'course-card';
             courseCard.href = `/community/post?id=${course.courseId}`;
-            let imageData = '/account.svg';
+            let imageData = '/nopfp.svg';
             const response = await fetch(API_URL + '/users/' + course.author + '/image');
             const imageString = await response.text();
 
-            if (imageString !== null) {
+            if (isValidBase64(imageString)) {
               imageData = 'data:image/jpeg;base64,' + imageString;
               console.log(imageData);
             }
@@ -70,8 +70,9 @@ function populateCourses() {
       });
 }
 
-function createPosts(course, data, courseBlock) {
-
+function isValidBase64(base64String) {
+  const base64Regex = /^[A-Za-z0-9+/=]+$/;
+  return base64Regex.test(base64String);
 }
 
 //For searching through posts
@@ -191,6 +192,7 @@ function onSuccess(data) {
     position: relative;
     width: 400px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100%;
@@ -216,7 +218,7 @@ function onSuccess(data) {
   }
 
   .post-button {
-
+    margin-top: 10px;
     padding: 10px;
     border-radius: 20px;
     text-decoration: none;

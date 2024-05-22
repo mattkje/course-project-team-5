@@ -365,6 +365,29 @@ VALUES
     ('Machine Learning with R', 'waltjohnson', 'Machine Learning', 'This course covers the fundamental concepts of machine learning using R.','This is the course content','2024-03-24',  null),
     ('Database Management with SQL', 'john_doe', 'Database', 'This course provides a comprehensive introduction to SQL and database management.','This is the course content','2024-04-07',  'https://s33046.pcdn.co/wp-content/uploads/2022/09/options-command.png');
 
+
+INSERT INTO community_posts (author, title, category, description, content, post_date, image)
+VALUES
+    ('alice_smith', 'Introduction to Machine Learning', 'Machine Learning', 'Basics of ML', 'This post covers the basics of machine learning, including key concepts and common algorithms.', '2024-05-20', 'https://helios-i.mashable.com/imagery/articles/03RCOjKBQZkI3SIj1edJKU0/hero-image.fill.size_1248x702.v1623390541.png'),
+    ('bob_jones', 'Understanding Neural Networks', 'Artificial Intelligence', 'Neural networks explained', 'An in-depth explanation of neural networks, how they work, and their applications in AI.', '2024-05-18', 'https://www.trentonsystems.com/hubfs/Neural_Networks.png'),
+
+    ('carol_lee', 'Python Programming for Beginners', 'Programming', 'Learn Python basics', 'A comprehensive guide for beginners to learn Python programming, including syntax and basic functions.', '2024-05-15', 'https://files.realpython.com/media/Python-Basics-Your-First-Python-Program_Watermarked.bee327fe83d3.jpg'),
+
+    ('dave_brown', 'Data Structures and Algorithms', 'Computer Science', 'DSA fundamentals', 'An overview of essential data structures and algorithms every computer science student should know.', '2024-05-12', 'https://media.geeksforgeeks.org/wp-content/cdn-uploads/20230726161506/Data-structure-algorithm-%E2%80%93-1-3.png'),
+
+    ('eve_wilson', 'Building Web Applications with JavaScript', 'Web Development', 'JavaScript web apps', 'A tutorial on how to build dynamic web applications using JavaScript and modern frameworks.', '2024-05-10', 'https://i.ytimg.com/vi/XnM3TxqXdP0/maxresdefault.jpg'),
+
+    ('frank_johnson', 'Cybersecurity Best Practices', 'Cybersecurity', 'Stay safe online', 'This post discusses essential cybersecurity practices to protect yourself and your data online.', '2024-05-08', 'https://www.theforage.com/blog/wp-content/uploads/2022/12/what-is-cybersecurity.jpg'),
+
+    ('grace_martin', 'Introduction to Cloud Computing', 'Cloud Computing', 'Cloud basics', 'An introductory guide to cloud computing, including key concepts and benefits of using cloud services.', '2024-05-05', 'https://assets-eu-01.kc-usercontent.com/77bbf83a-1306-0152-fea5-3b5eaf937634/3cfa2b2c-5fca-4182-bed4-5e8a36b0d277/GettyImages-1428916501.webp'),
+
+    ('henry_clark', 'Advanced SQL Techniques', 'Database', 'Master SQL', 'A post on advanced SQL techniques to optimize and enhance your database queries and operations.', '2024-05-03', 'https://cdn.sanity.io/images/oaglaatp/production/feb9c80a48a201140dcfa20559b73ab1b803e59b-1200x800.png?w=1200&h=800&auto=format'),
+
+    ('isabel_moore', 'Exploring Artificial Intelligence', 'Artificial Intelligence', 'AI applications', 'An exploration of various applications of artificial intelligence in different industries.', '2024-05-01', 'https://media.geeksforgeeks.org/wp-content/uploads/20230606132338/Artificial-Intelligence-Applications.webp'),
+
+    ('jack_kim', 'Introduction to DevOps', 'DevOps', 'DevOps fundamentals', 'A beginner\'s guide to DevOps, including key practices and tools used in the industry.', '2024-04-28', 'https://www.whizlabs.com/blog/wp-content/uploads/2019/10/devops-introduction.jpg');
+
+
 INSERT INTO user_courses (user_id, course_id)
 VALUES (1, 1),
        (1, 2),

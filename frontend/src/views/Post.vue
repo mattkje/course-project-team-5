@@ -64,31 +64,7 @@ onMounted(() => {
 const {appContext} = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
 
-const user = '';
 
-function onTokenRefreshSuccess() {
-  console.log("Token has been refreshed.");
-  sendApiRequest(API_URL,"GET", "/users/" + user.username, onProfileDataSuccess);
-}
-
-function onTokenRefreshError(error) {
-  console.error("Error refreshing token: ", error);
-  window.location.href = ("/no-access");
-}
-
-async function loadProfileData(user) {
-  console.log("Loading profile data from API...");
-  const jwt = getCookie("jwt");
-  if (jwt && isTokenAboutToExpire(jwt)) {
-    sendTokenRefreshRequest(onTokenRefreshSuccess, onTokenRefreshError);
-  } else {
-    await sendApiRequest(API_URL,"GET", "/users/" + user, onProfileDataSuccess);
-  }
-}
-
-function onProfileDataSuccess(data) {
-  document.getElementById("postProfilePicture").src = 'data:image/jpeg;base64,' + data.user.image;
-}
 
 
 // Function to populate the course page with the course data
@@ -110,15 +86,21 @@ function populateCoursePage() {
         return response.json();
       })
       //Continuing if course exists
-      .then(data => {
-
-        loadProfileData(data.author);
+      .then(async data => {
 
         //Populating the similar courses box
         populatePosts('.featured');
 
         const formattedDate = formatDate(data.postDate)
 
+        let imageData = '/nopfp.svg';
+        const response = await fetch(API_URL + '/users/' + data.author + '/image');
+        const imageString = await response.text();
+
+        if (isValidBase64(imageString)) {
+          imageData = 'data:image/jpeg;base64,' + imageString;
+          console.log(imageData);
+        }
 
 
         const markdownText = data.content;
@@ -133,6 +115,7 @@ function populateCoursePage() {
         document.getElementById('courseDescription').innerText = data.description;
         document.getElementById('postContent').innerHTML = htmlContent;
         document.getElementById('courseImage').src = data.image || '/noImageCom.svg';
+        document.getElementById("postProfilePicture").src = imageData;
         document.getElementById('courseTitle').innerText = data.title;
 
 
@@ -141,6 +124,10 @@ function populateCoursePage() {
 
 }
 
+function isValidBase64(base64String) {
+  const base64Regex = /^[A-Za-z0-9+/=]+$/;
+  return base64Regex.test(base64String);
+}
 
 //Should add "st", "nd", "rd" or "th" to the day number.
 function getOrdinalSuffix(day) {
@@ -177,44 +164,73 @@ function populatePosts() {
 
         courseBlock.innerHTML = '';
 
-        courses.forEach(course => {
+        courses.forEach(async course => {
 
           if (course.author === document.getElementById('postAuthor').innerText && course.title !== document.getElementById('courseTitle').innerText) {
             document.getElementById('pbsu').innerText = 'Posts by the same user';
             const courseCard = document.createElement('a');
             courseCard.className = 'course-card';
             courseCard.href = `/community/post?id=${course.courseId}`;
+            let imageData = '/nopfp.svg';
+            const response = await fetch(API_URL + '/users/' + course.author + '/image');
+            const imageString = await response.text();
 
-            const imageUrl = course.image ? course.image : '/noImageCom.svg';
+            if (isValidBase64(imageString)) {
+              imageData = 'data:image/jpeg;base64,' + imageString;
+              console.log(imageData);
+            }
+
+            const formattedDate = formatDate(course.postDate)
             courseCard.innerHTML = `
-                <img src="${imageUrl}" alt="Course ${course.courseId}">
-                <div class="course-card-description">
-                    <h3>${course.title}</h3>
-                    <p>Posted By: ${course.author}</p>
-                    <p>${course.description}</p>
-                </div>`;
+                    <div class="post-parent">
+                        <img src="${imageData}" alt="Course ${course.courseId}">
+                        <div class="course-card-description">
+                            <h3>${course.title}</h3>
+                            <div class="author-and-date">
+                                <p class="author-text">${course.author}</p>
+                                <p>Posted ${formattedDate}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="post-category">${course.category}</p>
 
+                    `;
             // Append the course card to the course block
             courseBlock.appendChild(courseCard);
           }
 
         });
         if (courseBlock.innerHTML === '') {
-          courses.forEach(course => {
+          courses.forEach(async course => {
             if (course.title !== document.getElementById('courseTitle').innerText) {
               document.getElementById('pbsu').innerText = 'Other posts';
               const courseCard = document.createElement('a');
               courseCard.className = 'course-card';
               courseCard.href = `/community/post?id=${course.courseId}`;
+              let imageData = '/nopfp.svg';
+              const response = await fetch(API_URL + '/users/' + course.author + '/image');
+              const imageString = await response.text();
 
-              const imageUrl = course.image ? course.image : '/noImageCom.svg';
+              if (isValidBase64(imageString)) {
+                imageData = 'data:image/jpeg;base64,' + imageString;
+                console.log(imageData);
+              }
+
+              const formattedDate = formatDate(course.postDate)
               courseCard.innerHTML = `
-                <img src="${imageUrl}" alt="Course ${course.courseId}">
-                <div class="course-card-description">
-                    <h3>${course.title}</h3>
-                    <p>Posted By: ${course.author}</p>
-                    <p>${course.description}</p>
-                </div>`;
+                    <div class="post-parent">
+                        <img src="${imageData}" alt="Course ${course.courseId}">
+                        <div class="course-card-description">
+                            <h3>${course.title}</h3>
+                            <div class="author-and-date">
+                                <p class="author-text">${course.author}</p>
+                                <p>Posted ${formattedDate}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="post-category">${course.category}</p>
+
+                    `;
               // Append the course card to the course block
               courseBlock.appendChild(courseCard);
             }
