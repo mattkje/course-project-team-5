@@ -1,6 +1,5 @@
 <script setup>
 import {ref, computed, onMounted, getCurrentInstance, defineEmits} from 'vue';
-  import Guidelines from "@/components/Guidelines.vue";
   import {getAuthenticatedUser, hasRole} from "@/js/authentication";
   import {sendApiRequest} from "@/js/requests";
   import flatPickr from 'vue-flatpickr-component';
@@ -14,7 +13,6 @@ import {ref, computed, onMounted, getCurrentInstance, defineEmits} from 'vue';
     conjunction: ' to ',
   });
 
-  const showGuidelinesModal = ref(false);
   const keywords = ref([]);
   const activatedKeywords = ref([]);
   const emit = defineEmits(['navigate']);
@@ -33,12 +31,7 @@ import {ref, computed, onMounted, getCurrentInstance, defineEmits} from 'vue';
 
 const { appContext } = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
-
-  const remainingCharacters = computed(() => 6000 - course.value.description.length);
-
-  function toggleGuidelinesModal() {
-  showGuidelinesModal.value = !showGuidelinesModal.value;
-}
+const remainingCharacters = computed(() => 6000 - course.value.description.length);
 
 async function createCourse() {
     if(course.value.closestCourseSession) {
@@ -97,20 +90,6 @@ function keywordError() {
 
   function error() {
   alert('There was an error creating the course. Please try again.');
-}
-
-  function resetForm() {
-  course.value = {
-    title: '',
-    category: '',
-    level: '',
-    closestCourseSession: '',
-    courseSize: '',
-    hoursPerWeek: '',
-    relatedCertifications: '',
-    description: '',
-    image: ''
-  }
 }
 
 function addKeyword() {

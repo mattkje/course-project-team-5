@@ -69,7 +69,7 @@ public class CourseController {
     }
 
     @PostMapping("/api/courses/keywords/{courseId}")
-    public ResponseEntity<?> postKeywordToCourse(@PathVariable int courseId, @RequestBody List<Integer> keywordIds) {
+    public ResponseEntity<?> postKeywordToCourse(@PathVariable int courseId, @RequestBody Set<Integer> keywordIds) {
         if(userService.isAdmin()) {
             courseService.postKeywordsToCourse(courseId, keywordIds);
             return ResponseEntity.status(HttpStatus.CREATED).build();

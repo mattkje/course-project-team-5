@@ -2,9 +2,9 @@
 import {getCurrentInstance, onMounted, ref} from 'vue';
 import {doLogout, getAuthenticatedUser, hasRole, removeRole} from "@/js/authentication";
 import {sendApiRequest, sendTokenRefreshRequest} from "@/js/requests";
-import {createContentBox, fetchCourseById, fetchCourses, fetchCurrencies} from "@/js/populationTools";
+import {createContentBox, fetchCourseById, fetchCourses, fetchCurrencies, fetchProviders} from "@/js/populationTools";
 import {getCookie, isTokenAboutToExpire} from "@/js/tools";
-import {setDefaultCurrency} from "@/js/currency";
+import {currency, setDefaultCurrency} from "@/js/currency";
 
 let price = 0;
 let data = 0;
@@ -53,6 +53,9 @@ function onProfileDataSuccess(data) {
 async function populateCart() {
   const allCookies = document.cookie;
   const { courseIds, providerIds } = getCourseAndProviderIds(allCookies);
+  const defaultCurrency = setDefaultCurrency() || 'USD';
+
+  console.log(defaultCurrency);
 
   const courseList = document.getElementsByClassName("course-table")[0];
   clearCart(courseList);
@@ -62,16 +65,34 @@ async function populateCart() {
     return;
   }
 
+  let conversionRate = 0;
+  const currencies = await fetchCurrencies(API_URL);
+  if (currencies && currencies[defaultCurrency]) {
+    conversionRate = currencies[defaultCurrency];
+  }
+  console.log(currencies);
+
+
   for (let i = 0; i < courseIds.length; i++) {
     const courseId = courseIds[i];
     const providerId = providerIds[i];
 
     const course = await fetchCourseById(API_URL, courseId);
-    const currency = await fetchCurrencies(API_URL);
+    let provider = course.providers;
+    let name = "";
+    let priceDefaultCurrency = 0;
+    provider.forEach(prov => {
+      if (Number(prov.courseProviderId) === Number(providerId)) {
+        name = prov.name;
+        priceDefaultCurrency = prov.currency;
+      }
+    });
 
-    const finalPrice = getFinalPrice(course.providers, providerId);
+    //const providers = course.providers;
+    
+    let finalPrice = getFinalPrice(course.providers, providerId);
     console.log(finalPrice);
-    addCourseToCart(courseList, course, finalPrice, courseId);
+    addCourseToCart(courseList, course, finalPrice, courseId, name, priceDefaultCurrency);
   }
 }
 
@@ -115,8 +136,7 @@ function getFinalPrice(providers, providerId) {
   });
   return finalPrice;
 }
-
-function addCourseToCart(courseList, course, finalPrice, courseId) {
+function addCourseToCart(courseList, course, finalPrice, courseId, name, priceDefaultCurrency) {
   const courseBody = document.createElement("tbody");
   courseBody.classList.add("course-block");
   const line = document.createElement("hr");
@@ -131,18 +151,27 @@ function addCourseToCart(courseList, course, finalPrice, courseId) {
   courseName.innerText = course.course.title;
   courseName.style.paddingLeft = "20px";
 
+  const providerName = document.createElement("p");
+  providerName.innerText = name;
+  providerName.style.paddingLeft = "20px";
+
   const coursePrice = document.createElement("p");
-  coursePrice.innerText = finalPrice;
+  coursePrice.innerText = priceDefaultCurrency + " " + finalPrice;
   coursePrice.style.paddingLeft = "100px";
 
   const courseImg = document.createElement("img");
   courseImg.classList.add("course-image");
   courseImg.src = course.course.image || '/noImageCom.svg';
 
+
+
   row.appendChild(courseImg);
   row.appendChild(courseName);
+  row.appendChild(providerName);
   row.appendChild(coursePrice);
   courseBody.appendChild(row);
+
+  editCourseCard(row, course);
 
   const removeButton = createRemoveButton(courseId, courseBody);
   courseBody.appendChild(removeButton);

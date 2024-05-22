@@ -177,7 +177,7 @@ function populateCoursePage() {
                 }
 
                 const priceInDefaultCurrency = provider.price / rate;
-                const providerID = provider.courseProviderId; //244
+                const providerID = provider.courseProviderId;
                 addCourseToCart(providerID);
 
 

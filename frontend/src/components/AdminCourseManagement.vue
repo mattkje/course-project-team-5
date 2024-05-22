@@ -93,10 +93,6 @@ function createProvider() {
         <img class="nav-icon" src="/settingsprovider.svg">
         <p>Create Provider</p>
       </button>
-      <button class="option-button" @click="createKeyword">
-        <img class="nav-icon" src="/settingskeywords.svg">
-        <p>Create Keyword</p>
-      </button>
     </div>
 
     <div class="page-highlight" v-show="!loading">
