@@ -51,97 +51,112 @@ function onProfileDataSuccess(data) {
 }
 
 async function populateCart() {
-  // Get all course IDs from cookies
   const allCookies = document.cookie;
+  const { courseIds, providerIds } = getCourseAndProviderIds(allCookies);
+
+  const courseList = document.getElementsByClassName("course-table")[0];
+  clearCart(courseList);
+
+  if (courseIds.length === 0) {
+    displayEmptyCartMessage(courseList);
+    return;
+  }
+
+  for (let i = 0; i < courseIds.length; i++) {
+    const courseId = courseIds[i];
+    const providerId = providerIds[i];
+
+    const course = await fetchCourseById(API_URL, courseId);
+    const currency = await fetchCurrencies(API_URL);
+
+    const finalPrice = getFinalPrice(course.providers, providerId);
+    console.log(finalPrice);
+    addCourseToCart(courseList, course, finalPrice, courseId);
+  }
+}
+
+function getCourseAndProviderIds(allCookies) {
   const cookieArray = allCookies.split('; ');
   let courseIds = [];
   let providerIds = [];
 
-
-  for (let i = 0; i < cookieArray.length; i++) {
-    const cookie = cookieArray[i].split('=');
-    const name = cookie[0];
-    const value = cookie[1];
+  cookieArray.forEach(cookieStr => {
+    const [name, value] = cookieStr.split('=');
     if (name.startsWith('courseId_')) {
       courseIds.push(value);
     }
     if (name.startsWith('providerId_')) {
       providerIds.push(value);
     }
-  }
+  });
+
   console.log(courseIds);
+  return { courseIds, providerIds };
+}
 
-  // Get the course table element
-  const courseList = document.getElementsByClassName("course-table")[0];
-
-  // Remove "The cart is empty"
+function clearCart(courseList) {
   if (courseList.children.length > 0) {
     courseList.removeChild(courseList.children[0]);
   }
+}
 
-  if (courseIds.length === 0) {
-    const emptyCartMessage = document.createElement("h2");
-    emptyCartMessage.innerText = "Your cart is empty";
-    courseList.appendChild(emptyCartMessage);
-    return;
-  }
+function displayEmptyCartMessage(courseList) {
+  const emptyCartMessage = document.createElement("h2");
+  emptyCartMessage.innerText = "Your cart is empty";
+  courseList.appendChild(emptyCartMessage);
+}
 
-  // Loop through the course IDs
-  for (let i = 0; i < courseIds.length; i++) {
-    let courseId = courseIds[i];
-    let providerId = providerIds[i]; // Get the corresponding providerId
+function getFinalPrice(providers, providerId) {
+  let finalPrice = 0;
+  providers.forEach(provider => {
+    if (Number(provider.courseProviderId) === Number(providerId)) {
+      finalPrice = provider.price;
+    }
+  });
+  return finalPrice;
+}
 
-    const course = await fetchCourseById(API_URL, courseId);
-    const currency = await fetchCurrencies(API_URL);
+function addCourseToCart(courseList, course, finalPrice, courseId) {
+  const courseBody = document.createElement("tbody");
+  courseBody.classList.add("course-block");
+  const line = document.createElement("hr");
+  courseBody.appendChild(line);
+  courseList.appendChild(courseBody);
 
-    console.log(course);
+  const row = document.createElement("tr");
+  row.classList.add("course-card");
+  row.style.cursor = "pointer";
 
-    let providers = course.providers;
-    console.log(providers);
-    let finalPrice = 0;
+  const courseName = document.createElement("p");
+  courseName.innerText = course.course.title;
+  courseName.style.paddingLeft = "20px";
 
-    providers.forEach(providers => {
+  const coursePrice = document.createElement("p");
+  coursePrice.innerText = finalPrice;
+  coursePrice.style.paddingLeft = "100px";
 
-     if (Number(providers.courseProviderId) === Number(providerId)){
-       finalPrice = providers.price;
-     }
+  const courseImg = document.createElement("img");
+  courseImg.classList.add("course-image");
+  courseImg.src = course.course.image || '/noImageCom.svg';
 
-    });
+  row.appendChild(courseImg);
+  row.appendChild(courseName);
+  row.appendChild(coursePrice);
+  courseBody.appendChild(row);
 
+  const removeButton = createRemoveButton(courseId, courseBody);
+  courseBody.appendChild(removeButton);
+}
 
-    const courseBody = document.createElement("tbody");
-    courseBody.classList.add("course-block");
-    const line = document.createElement("hr");
-    courseBody.appendChild(line);
-    courseList.appendChild(courseBody);
-
-
-    const row = document.createElement("tr");
-    const courseName = document.createElement("p");
-    const coursePrice = document.createElement("p");
-    const courseImg = document.createElement("img");
-    courseImg.classList.add("course-image");
-    row.classList.add("course-card");
-    row.style.cursor = "pointer";
-    courseName.innerText = course.course.title;
-    coursePrice.innerText = finalPrice;
-    coursePrice.style.paddingLeft = "100px"; //Pls help
-    courseName.style.paddingLeft = "20px";
-    courseImg.src = course.course.image || '/noImageCom.svg';
-    row.appendChild(courseImg);
-    row.appendChild(courseName);
-    row.appendChild(coursePrice); // Append the price to the row
-    courseBody.appendChild(row);
-
-    // Create a remove button for each course
-    const removeButton = document.createElement("button");
-    removeButton.innerText = "Remove";
-    removeButton.onclick = function() {
-      document.cookie = 'courseId_' + courseId + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-      courseBody.remove();
-    };
-    courseBody.appendChild(removeButton);
-  }
+function createRemoveButton(courseId, courseBody) {
+  const removeButton = document.createElement("button");
+  removeButton.innerText = "Remove";
+  removeButton.onclick = function() {
+    document.cookie = 'courseId_' + courseId + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    document.cookie = 'providerId_' + courseId + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    courseBody.remove();
+  };
+  return removeButton;
 }
 
 function editCourseCard(object, course) {
