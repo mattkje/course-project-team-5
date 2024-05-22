@@ -53,8 +53,9 @@ function onProfileDataSuccess(data) {
 async function populateCart() {
   const allCookies = document.cookie;
   const { courseIds, providerIds } = getCourseAndProviderIds(allCookies);
-  const defaultCurrency = setDefaultCurrency() || 'NOK';
-  console.log(defaultCurrency + "hehehe");
+  const defaultCurrency = setDefaultCurrency() || 'USD';
+
+  console.log(defaultCurrency);
 
   const courseList = document.getElementsByClassName("course-table")[0];
   clearCart(courseList);
@@ -64,27 +65,34 @@ async function populateCart() {
     return;
   }
 
+  let conversionRate = 0;
+  const currencies = await fetchCurrencies(API_URL);
+  if (currencies && currencies[defaultCurrency]) {
+    conversionRate = currencies[defaultCurrency];
+  }
+  console.log(currencies);
+
 
   for (let i = 0; i < courseIds.length; i++) {
     const courseId = courseIds[i];
     const providerId = providerIds[i];
 
-    const course = await fetchCourseById(API_URL, courseId);;
+    const course = await fetchCourseById(API_URL, courseId);
     let provider = course.providers;
     let name = "";
+    let priceDefaultCurrency = 0;
     provider.forEach(prov => {
       if (Number(prov.courseProviderId) === Number(providerId)) {
-        console.log("hehehe" + prov.name);
         name = prov.name;
+        priceDefaultCurrency = prov.currency;
       }
-      console.log(name);
     });
 
-    const providers = course.providers;
+    //const providers = course.providers;
     
     let finalPrice = getFinalPrice(course.providers, providerId);
     console.log(finalPrice);
-    addCourseToCart(courseList, course, finalPrice, courseId, name);
+    addCourseToCart(courseList, course, finalPrice, courseId, name, priceDefaultCurrency);
   }
 }
 
@@ -128,7 +136,7 @@ function getFinalPrice(providers, providerId) {
   });
   return finalPrice;
 }
-function addCourseToCart(courseList, course, finalPrice, courseId, name) {
+function addCourseToCart(courseList, course, finalPrice, courseId, name, priceDefaultCurrency) {
   const courseBody = document.createElement("tbody");
   courseBody.classList.add("course-block");
   const line = document.createElement("hr");
@@ -148,7 +156,7 @@ function addCourseToCart(courseList, course, finalPrice, courseId, name) {
   providerName.style.paddingLeft = "20px";
 
   const coursePrice = document.createElement("p");
-  coursePrice.innerText = finalPrice;
+  coursePrice.innerText = priceDefaultCurrency + " " + finalPrice;
   coursePrice.style.paddingLeft = "100px";
 
   const courseImg = document.createElement("img");
