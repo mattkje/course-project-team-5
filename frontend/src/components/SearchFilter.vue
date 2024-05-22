@@ -520,13 +520,14 @@ watchEffect(() => {
 
           <div class="wrapper" id="priceText" :class="{'visible': isPriceVisible, 'hidden': !isPriceVisible}">
             <div class="price-input-container">
-              <div class="price-input">
-                <label for="min-price">Min Price:</label>
+              <div class="price-input" id="min-price-input">
+                <label for="min-price">Min Price</label>
                 <p>-</p>
                 <input type="number" id="min-price" v-model="minPrice" min="0" placeholder="Minimum Price" @change="sortByPriceRange">
               </div>
-              <div class="price-input">
-                <label for="max-price">Max Price:</label>
+              <p id ="mobile-separator">-</p>
+              <div class="price-input" id="max-price-input">
+                <label for="max-price">Max Price</label>
                 <p>-</p>
                 <input type="number" id="max-price" v-model="maxPrice" min="1" placeholder="Maximum Price" @change="sortByPriceRange">
               </div>
@@ -771,7 +772,6 @@ watchEffect(() => {
 }
 
 @media (max-width: 769px) {
-
   .flexible-grid {
     margin: 0;
     justify-content: center;
@@ -1022,6 +1022,10 @@ Button:active {
   transform: scale(0.8);
 }
 
+#mobile-separator{
+  display: none;
+}
+
 @media (max-width: 1250px) {
 
   .overflowContainer {
@@ -1132,6 +1136,37 @@ Button:active {
   .separator {
     display: block;
   }
+
+  .price-input-container {
+    flex-direction: row;
+    align-items: baseline;
+    padding: 0 20px;
+  }
+
+  #mobile-separator {
+    display: block;
+  }
+
+ #min-price-input {
+  justify-content: flex-start;
+  }
+
+ #max-price-input {
+   justify-content: flex-end;
+ }
+
+  .price-input p {
+    display: none;
+  }
+
+  .price-input label {
+    display: none;
+  }
+
+  .price-input input {
+    width: 70%;
+  }
+
 
 }
 </style>
