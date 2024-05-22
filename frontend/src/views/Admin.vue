@@ -1,11 +1,12 @@
 <script setup>
 
-import PasswordChange from "@/components/PasswordChange.vue";
 import {onMounted, ref} from "vue";
 import {getAuthenticatedUser, hasRole} from "@/js/authentication";
 import AdminUserManagement from "@/components/AdminUserManagement.vue";
 import AdminCourseManagement from "@/components/AdminCourseManagement.vue";
 import AdminPostManagement from "@/components/AdminPostManagement.vue";
+import CreateCourse from "@/views/CreateCourse.vue";
+import CreateProvider from "@/views/CreateProvider.vue";
 
 
 onMounted(loadProfileData);
@@ -47,9 +48,23 @@ function courseManage() {
   navigate.value = "courseManage";
 }
 
+function handleNavigate(value) {
+  console.log(value);
+  navigate.value = value;
+  window.scroll(0,0);
+}
+
+function handleNavigateBack(value) {
+  navigate.value = value;
+  window.scroll(0,0);
+}
+
 </script>
 
 <template>
+  <CreateCourse v-on:navigateBack="handleNavigateBack" v-show="navigate === 'createCourse' && !loading"/>
+  <CreateProvider v-on:navigateBack="handleNavigateBack" v-show="navigate === 'createProvider' && !loading"/>
+  <div v-show="navigate !== 'createCourse' && navigate !== 'createProvider'">
   <div id="background" class="background">
     <img class="planet" src="/whiteMoon.png">
   </div>
@@ -75,9 +90,10 @@ function courseManage() {
         </button>
       </div>
       <AdminUserManagement v-show="navigate === 'userManage' && !loading"/>
-      <AdminCourseManagement v-show="navigate === 'courseManage' && !loading"/>
+      <AdminCourseManagement v-on:navigate="handleNavigate" v-show="navigate === 'courseManage' && !loading"/>
       <AdminPostManagement v-show="navigate === 'postManage' && !loading"/>
     </div>
+  </div>
   </div>
 </template>
 

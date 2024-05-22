@@ -139,7 +139,7 @@ public class CourseService {
     }
 
     for (CourseKeywords keyword : courseKeywordRepository.findAll()) {
-      keywordMap.put(keyword.getKeywordId(), keyword);
+      keywordMap.put(keyword.getKeywordObj(), keyword);
     }
 
     CourseProvider provider = providerMap.get(providerId);
@@ -310,11 +310,13 @@ public class CourseService {
     }
   }
 
-  public void postKeywordToCourse(int courseId, int keywordId) {
-    CourseKeywords courseKeyword = new CourseKeywords();
-    courseKeyword.setCourseId(courseId);
-    courseKeyword.setKeywordObj(keywordRepository.findById((long) keywordId).orElse(null));
-    courseKeywordRepository.save(courseKeyword);
+  public void postKeywordsToCourse(int courseId, List<Integer> keywordIds) {
+    for (Integer keywordId : keywordIds) {
+      CourseKeywords courseKeyword = new CourseKeywords();
+      courseKeyword.setCourseId(courseId);
+      courseKeyword.setKeywordObj(keywordId);
+      courseKeywordRepository.save(courseKeyword);
+    }
   }
 
   public Collection<Keywords> getAllKeywords() {
@@ -330,4 +332,5 @@ public class CourseService {
     }
     return getCourseInfo(highestId);
   }
+
 }

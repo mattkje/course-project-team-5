@@ -1,5 +1,5 @@
 <script setup>
-import {ref, onMounted, getCurrentInstance} from 'vue';
+import {ref, onMounted, getCurrentInstance, defineEmits} from 'vue';
 import Guidelines from "@/components/Guidelines.vue";
 import {getAuthenticatedUser, hasRole} from "@/js/authentication";
 import {sendApiRequest} from "@/js/requests";
@@ -8,17 +8,14 @@ const showGuidelinesModal = ref(false);
 const provider = ref({
   name: ''
 });
+const emit = defineEmits(['navigate']);
 
 const { appContext } = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
 
-function toggleGuidelinesModal() {
-  showGuidelinesModal.value = !showGuidelinesModal.value;
-}
-
 function createProvider() {
   console.log(provider.value)
-  sendApiRequest(API_URL,'POST', '/providers', onSuccess, provider, error);
+  sendApiRequest(API_URL,'POST', '/providers', onSuccess, provider.value, error);
 }
 
 onMounted(() => {
@@ -46,6 +43,10 @@ function resetForm() {
     name: ''
   };
 }
+
+function removeCourse() {
+  emit('navigateBack', 'courseManage');
+}
 </script>
 
 <template>
@@ -55,6 +56,10 @@ function resetForm() {
 
     <form @submit.prevent="createProvider" class="provider-form">
       <div class="form-group">
+        <button type="button" class="back" @click="removeCourse">
+          <img class="nav-icon" src="/angle-small-left.svg">
+          <p>Back</p>
+        </button>
         <label for="name">Name:</label>
         <input type="text" id="name" v-model="provider.name" required maxlength="255">
       </div>
@@ -166,5 +171,47 @@ button[type="submit"]:hover {
   display: flex;
   font-size: 14px;
   color: var(--dark-1);
+}
+
+.nav-icon {
+  width: 23px;
+  height: 23px;
+}
+
+.back {
+  display: flex;
+  background: none;
+  flex-direction: row;
+  justify-content: start;
+  width: 10%;
+  color: black;
+}
+
+button {
+
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+  color: #ffffff;
+  font-size: 20px;
+  background: #000000;
+  border: none;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 70px;
+  border-radius: 15px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all .5s;
+
+  &:hover {
+    transform: scale(1.01);
+    transition-duration: .5s;
+  }
+
+  &:active {
+    transform: scale(0.95);
+    transition-duration: .5s;
+  }
 }
 </style>

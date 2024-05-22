@@ -1,12 +1,12 @@
 <script setup>
-import {ref, onMounted, getCurrentInstance} from 'vue';
+import {ref, onMounted, getCurrentInstance, defineProps, defineEmits} from 'vue';
 import {getCookie} from "@/js/tools";
 
 const courses = ref([]);
 const loading = ref(true);
 const {appContext} = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
-
+const emit = defineEmits(['navigate']);
 onMounted(async () => {
   const response = await fetch(API_URL + '/courses', {
     headers: {
@@ -63,6 +63,14 @@ async function disableCourse(courseProvider) {
   location.reload();
 }
 
+function createCourse() {
+  emit('navigate', 'createCourse');
+}
+
+function createProvider() {
+  emit('navigate', 'createProvider');
+}
+
 </script>
 
 <template>
@@ -77,14 +85,18 @@ async function disableCourse(courseProvider) {
       <p>Review active courses</p>
     </div>
     <div class="button-bar">
-      <router-link to="/create-course" class="option-button">
+      <button class="option-button" @click="createCourse">
         <img class="nav-icon" src="/settingscoursesplus.svg">
         <p>Create Course</p>
-      </router-link>
-      <router-link to="/create-provider" class="option-button">
+      </button>
+      <button class="option-button" @click="createProvider">
         <img class="nav-icon" src="/settingsprovider.svg">
         <p>Create Provider</p>
-      </router-link>
+      </button>
+      <button class="option-button" @click="createKeyword">
+        <img class="nav-icon" src="/settingskeywords.svg">
+        <p>Create Keyword</p>
+      </button>
     </div>
 
     <div class="page-highlight" v-show="!loading">

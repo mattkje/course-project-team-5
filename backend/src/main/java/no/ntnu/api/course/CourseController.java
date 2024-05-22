@@ -68,19 +68,10 @@ public class CourseController {
         }
     }
 
-    @PostMapping("/api/courses/keyword/{courseId}/{keywordId}")
-    public ResponseEntity<?> postKeywordToCourse(@PathVariable int courseId, @PathVariable int keywordId) {
-        for(CourseWithProvidersAndKeywords course : courseService.getAllCourses()) {
-            if(course.course().getId() == courseId) {
-                for(CourseKeywords keyword : course.keywords()) {
-                    if(keyword.getKeywordId() == keywordId) {
-                        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-                    }
-                }
-            }
-        }
+    @PostMapping("/api/courses/keywords/{courseId}")
+    public ResponseEntity<?> postKeywordToCourse(@PathVariable int courseId, @RequestBody List<Integer> keywordIds) {
         if(userService.isAdmin()) {
-            courseService.postKeywordToCourse(courseId, keywordId);
+            courseService.postKeywordsToCourse(courseId, keywordIds);
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } else {
             return null;
