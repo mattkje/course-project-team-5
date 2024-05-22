@@ -241,6 +241,23 @@ function populateCoursePage() {
                       pointerEvents: 'all',
                     });
 
+                    Object.assign(addCartButton.style, {
+                      width: '40%',
+                      height: '50px',
+                      borderRadius: '12px',
+                      border: 'none',
+                      backgroundColor: '#090909',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      cursor: 'pointer',
+                      transitionDuration: '.5s',
+                      overflow: 'hidden',
+                      boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.103)',
+                      position: 'relative',
+                      pointerEvents: 'all',
+                    });
+
 
 
                   });
@@ -1321,7 +1338,8 @@ button {
   height: 50px;
   border-radius: 12px;
   border: none;
-  background-color: #090909;
+  background-color: grey;
+  //background-color: #090909;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1330,6 +1348,7 @@ button {
   overflow: hidden;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.103);
   position: relative;
+  pointer-events: none;
 }
 
 .IconContainer {
