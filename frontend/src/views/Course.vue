@@ -519,6 +519,18 @@ function activeFailed() {
 <template>
   <div class="course-page-background" v-show="!addProvider">
 
+    <div class="administrator" v-show="hasRole('ROLE_ADMIN')">
+      <div id="title">
+        <p>Admin View</p>
+        <hr>
+      </div>
+      <div class="administrator-content">
+        <div class="active-status">
+          <p>Active status: <span id="active"></span></p>
+          <button class="fancy-button" @click="changeActive">Change status</button>
+        </div>
+      </div>
+    </div>
     <div v-show="!loading" class="courseLinkElement">
       <a href="/">Courses</a>
       <p>&nbsp;->&nbsp;</p>
@@ -527,18 +539,6 @@ function activeFailed() {
       <a href="#" id="courseTitleLink"></a>
     </div>
     <div v-show="!loading" class="providerList">
-      <div class="administrator" v-show="hasRole('ROLE_ADMIN')">
-        <div id="title">
-          <p>Admin View</p>
-          <hr>
-        </div>
-        <div class="administrator-content">
-          <div class="active-status">
-            <p>Active status: <span id="active"></span></p>
-            <button class="fancy-button" @click="changeActive">Change status</button>
-          </div>
-        </div>
-      </div>
       <div class=""></div>
       <div class="course-image-box">
         <img id="courseImage" class="course-image" alt="Course Image">
@@ -771,9 +771,6 @@ function activeFailed() {
       transition-duration: .5s;
     }
   }
-  .similarCourses {
-
-  }
 
   .administrator {
     display: flex;
@@ -781,10 +778,11 @@ function activeFailed() {
     background-color: var(--light-1);
     border-radius: 20px;
     padding: 20px;
-    width: 300px;
-    margin: 50px auto;
+    width: 90%;
+    margin:auto auto 40px auto;
     flex-direction: column;
     align-items: center;
+
   }
 
   .administrator #title p {
@@ -885,7 +883,7 @@ function activeFailed() {
     border-radius: 20px;
     padding: 20px;
     width: 1000px;
-    margin: 50px auto;
+    margin:auto auto 40px auto;
     flex-direction: column;
     align-items: center;
   }
