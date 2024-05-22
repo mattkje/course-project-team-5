@@ -1,8 +1,9 @@
 <script setup>
 import {getCurrentInstance, ref} from 'vue';
 import {showFormError} from "@/js/tools";
-import {sendAuthenticationRequest} from "@/js/authentication";
+import {getAuthenticatedUser, sendAuthenticationRequest} from "@/js/authentication";
 import Register from "@/components/Register.vue";
+import Alert from "@/components/Alert.vue";
 
 const username = ref('');
 const password = ref('');
@@ -11,7 +12,11 @@ const { appContext } = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
 
 const login = async () => {
-  sendAuthenticationRequest(API_URL, username.value, password.value, onLoginSuccess, showFormError);
+  if(getAuthenticatedUser()) {
+    showAlert.value = true;
+  }else {
+    sendAuthenticationRequest(API_URL, username.value, password.value, onLoginSuccess, showFormError);
+  }
 };
 
 function onLoginSuccess() {
@@ -26,10 +31,15 @@ function changeCompo() {
     compo.value = 'login';
   }
 }
+
+function goToMainPage() {
+  window.location.href = '/';
+}
 </script>
 
 <template>
 <meta name="login page">
+  <Alert v-else title="Already logged in" message="You are already logged in" :buttons="[ 'Go to main page' ]" @buttonClicked="goToMainPage"></Alert>
   <form @submit.prevent="login" id="loginForm" method="post">
     <div class="login-container">
       <div class="login-box" v-show="compo === 'login'">
