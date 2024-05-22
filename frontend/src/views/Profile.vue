@@ -212,6 +212,9 @@ function addCourses(data) {
   courseList.children[0].remove();
   const courseBody = document.createElement("tbody");
   courseBody.classList.add("course-block");
+  courseBody.style.width= "80%";
+  courseBody.style.margin = "auto";
+  courseBody.style.maxWidth = "600px";
   const line = document.createElement("hr");
   line.style.Width = "100%";
   line.style.margin = "20px";
@@ -226,9 +229,12 @@ function addCourses(data) {
     courseImg.classList.add("course-image");
     row.classList.add("course-card");
     row.style.cursor = "pointer";
+    row.style.justifyContent = "flex-start";
     courseName.innerText = course.course.title;
     courseName.style.paddingLeft = "20px";
     courseImg.src = course.course.image || '/noImageCom.svg';
+    courseImg.style.borderRadius = "0";
+    courseImg.style.margin = "0 10px 0 10px";
     row.appendChild(courseImg);
     row.appendChild(courseName);
     editCourseCard(row, course);
