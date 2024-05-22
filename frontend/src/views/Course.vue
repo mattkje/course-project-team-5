@@ -10,6 +10,7 @@ import {sendApiRequest} from "@/js/requests";
 
 const loading = ref(true);
 const addProvider = ref(false);
+const pricesInDefaultCurrency = new Map();
 
 //Test cookies
 function addCourseToCart() {
@@ -45,6 +46,7 @@ function populateCoursePage() {
       .then(currencies => {
 
         fetch(API_URL + `/courses/${id}`)
+
             //Checking if course exists
             .then(response => {
               if (!response.ok) {
@@ -177,6 +179,8 @@ function populateCoursePage() {
                 }
 
                 const priceInDefaultCurrency = provider.price / rate;
+                pricesInDefaultCurrency.set(provider.courseProviderId, priceInDefaultCurrency);
+                console.log(pricesInDefaultCurrency)
                 const providerID = provider.courseProviderId;
                 addCourseToCart(providerID);
 
@@ -221,6 +225,7 @@ function populateCoursePage() {
                     addCartButton.addEventListener('click', function() {
                       setCookie('courseId_' + courseId, courseId, 1);
                       setCookie('providerId_' + courseId, providerID, 1);
+                      setCookie('price_' + courseId,pricesInDefaultCurrency.get(providerID), 1);
                     })
 
                     //This is just a temporary solution to make the button work as it should
