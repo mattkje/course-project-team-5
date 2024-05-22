@@ -227,6 +227,8 @@ function populateCoursePage() {
                     const courseId = urlParams.get('id');
                     const buyButton = document.getElementById('enrollButton');
 
+
+                    // True when a provider is selected, changes button style accordingly
                     isActive.value = true;
 
                     buyButton.addEventListener('click', function() {
