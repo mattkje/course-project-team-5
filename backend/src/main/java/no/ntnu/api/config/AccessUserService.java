@@ -338,4 +338,8 @@ public class AccessUserService implements UserDetailsService {
       getSessionUser().user().setImage(image);
     }
   }
+
+  public String getImage(String username) {
+    return getUser(username).user().getImage();
+  }
 }

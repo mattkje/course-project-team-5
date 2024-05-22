@@ -179,6 +179,11 @@ public class UserController {
         }
     }
 
+    @GetMapping("/{username}/image")
+    public ResponseEntity<?> getProfilePicture(@PathVariable String username) {
+        return new ResponseEntity<>(userService.getImage(username), HttpStatus.OK);
+    }
+
     /**
      * Delete a user.
      *
