@@ -30,7 +30,7 @@
     font-size: 12px;
     font-weight: 900;
     color: #282828;
-    margin: auto;
+    margin: auto auto auto 10px;
 }
 
 hr {
