@@ -87,7 +87,7 @@ function goToLogin() {
           </div>
           <div class="login-text-field">
             <label for="email">Email*:</label>
-            <input v-model="email" class="login-prompt" type="text" id="email" name="email" placeholder="Enter your email" maxlength="45" required autofocus/>
+            <input v-model="email" class="login-prompt" type="text" id="email" pattern=".+@.+" name="email" placeholder="Enter your email" maxlength="45" required autofocus/>
           </div>
           <div class="login-text-field">
             <label for="phoneNumber">Phone Number:</label>
