@@ -52,9 +52,9 @@ let pricedChildren = new Map();
 const date = ref(null);
 const config = ref({
   mode: 'range',
-  dateFormat: 'J of F',
+  dateFormat: 'Y-m-d',
   altInput: true,
-  altFormat: 'Y-m-d',
+  altFormat: 'J of F',
   minDate: 'today',
   wrap: true,
 });
@@ -63,10 +63,10 @@ const flatpickr = ref(null);
 
  const getDate = () => {
   const flatpickerInstance = flatpickr.value.fp;
-  const InputValue = flatpickerInstance.input.value.split(' to ');
-  const AltInputValue = flatpickerInstance.altInput.value.split(' to ');
-  const [startDateText, endDateText] = InputValue;
-  const [startDate, endDate] = AltInputValue;
+  const inputValue = flatpickerInstance.input.value.split(' to ');
+  const altInputValue = flatpickerInstance.altInput.value.split(' to ');
+  const [startDateText, endDateText] = altInputValue;
+  const [startDate, endDate] = inputValue;
 
 
   sortByDate(startDate, endDate, startDateText, endDateText);
@@ -530,13 +530,13 @@ watchEffect(() => {
             <div class="price-input-container">
               <div class="price-input" id="min-price-input">
                 <label for="min-price">Min Price</label>
-                <p>-</p>
+                <p style="color:#5666ff">-</p>
                 <input type="number" id="min-price" v-model="minPrice" min="0" placeholder="Minimum Price" @change="sortByPriceRange">
               </div>
               <p id ="mobile-separator">-</p>
               <div class="price-input" id="max-price-input">
                 <label for="max-price">Max Price</label>
-                <p>-</p>
+                <p style="color:#5666ff">-</p>
                 <input type="number" id="max-price" v-model="maxPrice" min="1" placeholder="Maximum Price" @change="sortByPriceRange">
               </div>
             </div>
@@ -820,7 +820,10 @@ header h2 {
   min-height: 40px;
   width: 100%;
   text-align: center;
+  border: 1px solid #5666ff;
+  border-radius: 5px;
 }
+
 
 .price-input-container {
   width: 100%;
@@ -864,7 +867,7 @@ input[type="number"]::-webkit-inner-spin-button {
   margin: 10px 0 0 0;
   border-radius: 10px;
   border: none;
-  color: var(--dark-3);
+  color: #656565FF;
   font-family: Inter, sans-serif;
   font-size: 18px;
   font-weight: bold;
@@ -872,11 +875,12 @@ input[type="number"]::-webkit-inner-spin-button {
   transition: background 0.3s;
 
   &:hover {
-    color: #5565fd;
+    color: var(--dark-3);
     border: none;
     transform: scale(1);
   }
 }
+
 
 #priceText,
 #categoryContainer,
@@ -970,6 +974,7 @@ input[type="number"]::-webkit-inner-spin-button {
   background-color: #5666ff;
   color: white;
   border: none;
+  border-radius: 0 5px 5px 0;
 }
 .svgContainer {
   display: flex;
@@ -978,6 +983,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
   border: 1px solid #5666ff;
   border-right:none;
+  border-radius: 5px 0 0 5px;
 
   min-height: 40px;
   padding-left: 5px;
@@ -995,6 +1001,16 @@ input[type="number"]::-webkit-inner-spin-button {
   opacity: 0.7;
   transition: opacity .2s;
   -webkit-transition: .2s;
+}
+
+#creditSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  background: #5666ff;
+  border-radius: 50%;
+  cursor: pointer;
 }
 
 
@@ -1092,7 +1108,7 @@ Button:active {
   .mobile-h3 {
     font-size: 24px;
     font-weight: bold;
-    color: var(--dark-3);
+    color: #656565FF;
   }
 
   .filter-container {
@@ -1190,6 +1206,7 @@ Button:active {
 
   #mobile-separator {
     display: block;
+    color: #5666ff;
   }
 
  #min-price-input {
@@ -1210,8 +1227,13 @@ Button:active {
 
   .price-input input {
     width: 70%;
+    border: 1px solid #5666ff;
+    border-radius: 5px;
   }
 
+  .dateBoxContainer {
+    padding: 0 20px;
+  }
 
 }
 </style>
