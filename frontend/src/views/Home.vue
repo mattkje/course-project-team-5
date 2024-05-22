@@ -233,22 +233,25 @@
     <div class="greeting"></div>
   </div>
   <div class="pro-box" v-if="getAuthenticatedUser() === null">
-    <img class="bend-bottom" src="/bend.svg" alt="Connect">
-    <h2>Featured courses from</h2>
-    <div class="greeting">
-      <img class="featured-providers"
-           src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Microsoft_logo_%282012%29.svg/1024px-Microsoft_logo_%282012%29.svg.png"
-           alt="Provider"/>
-      <img class="featured-providers" src="https://1000logos.net/wp-content/uploads/2016/10/Apple-Logo.png"
-           alt="Provider"/>
-      <img class="featured-providers"
-           src="https://upload.wikimedia.org/wikipedia/en/thumb/3/35/Pearson_logo.svg/2560px-Pearson_logo.svg.png"
-           alt="Provider"/>
-      <img class="featured-providers"
-           src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/2560px-Amazon_logo.svg.png"
-           alt="Provider"/>
+    <div class="stars-background">
+      <img class="bend-bottom" src="/bend.svg" alt="Connect">
+      <h2>Featured courses from</h2>
+      <div class="featured-providers-box">
+        <img class="featured-providers"
+             src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Microsoft_logo_%282012%29.svg/1024px-Microsoft_logo_%282012%29.svg.png"
+             alt="Provider"/>
+        <img class="featured-providers" src="https://1000logos.net/wp-content/uploads/2016/10/Apple-Logo.png"
+             alt="Provider"/>
+        <img class="featured-providers"
+             src="https://upload.wikimedia.org/wikipedia/en/thumb/3/35/Pearson_logo.svg/2560px-Pearson_logo.svg.png"
+             alt="Provider"/>
+        <img class="featured-providers"
+             src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/2560px-Amazon_logo.svg.png"
+             alt="Provider"/>
+      </div>
+      <p class="pro-text">Learniverse offers courses from top providers like Microsoft, Apple, Pearson, and Amazon.</p>
     </div>
-    <p class="pro-text">Learniverse offers courses from top providers like Microsoft, Apple, Pearson, and Amazon.</p>
+
     <img class="bend" src="/bend.svg" alt="Connect">
   </div>
   <div class="course-section">
@@ -570,9 +573,35 @@ function loadButtons() {
     display: flex;
     margin: 0 auto;
   }
+
+  .featured-providers-box {
+    border: none;
+    width: 100%;
+    justify-content: center;
+    align-content: center;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    margin: 30px auto;
+  }
+
   .greeting h1 {
+    margin-top: 30px;
     text-align: center;
     font-size: 30px;
+  }
+
+  .stars-background h2 {
+    color: var(--dark-1) !important;
+    text-align: center;
+    font-size: 24px;
+  }
+
+  .stars-background p {
+    color: var(--dark-1);
+    text-align: center;
+    font-size: 16px;
+    margin-bottom: 50px;
   }
 
   .pro-container {
@@ -662,6 +691,29 @@ function loadButtons() {
     left: 70px;
     height: 10px;
     width: 90px;
+  }
+
+  .stars-background {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    background-color: var(--light-3);
+
+  }
+
+  .bend {
+    display: none;
+  }
+
+  .bend-bottom {
+    display: none;
+  }
+
+  .featured-providers {
+    margin: 30px auto;
+    width: auto;
+    height: 40px;
+    filter: brightness(0);
   }
 }
 
@@ -783,6 +835,26 @@ function loadButtons() {
     width: 90px;
   }
 
+  .bend {
+    max-width: 100%;
+    transform: translateY(2px);
+    margin: 0;
+    padding: 0;
+  }
+
+  .bend-bottom {
+    rotate: 180deg;
+    max-width: 100%;
+    transform: translateY(2px);
+    margin: 0;
+    padding: 0;
+  }
+
+  .featured-providers {
+    height: 3vw;
+    filter: brightness(0) invert(1);
+  }
+
 }
 
 
@@ -815,20 +887,7 @@ ul {
 }
 
 
-.bend {
-  max-width: 100%;
-  transform: translateY(2px);
-  margin: 0;
-  padding: 0;
-}
 
-.bend-bottom {
-  rotate: 180deg;
-  max-width: 100%;
-  transform: translateY(2px);
-  margin: 0;
-  padding: 0;
-}
 
 
 @keyframes fadeIn {
@@ -957,10 +1016,7 @@ input:focus {
   text-rendering: optimizeLegibility;
 }
 
-.featured-providers {
-  height: 3vw;
-  filter: brightness(0) invert(1);
-}
+
 
 button {
   background-color: transparent;

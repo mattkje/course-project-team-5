@@ -3,24 +3,26 @@
 </script>
 
 <template>
-  <div id="background" class="background">
-    <div class="hero-container">
-      <div class="hero-box">
-        <h1 id="hero-text" class="hero-text">Unleash&nbsp;Your Learning&nbsp;Journey</h1>
-        <p id="hero-description" class="hero-description">
-          Access premium courses, explore diverse topics, and unleash your potential through our platform.
-        </p>
-        <img id="planet" class="planet1" src="/logo.svg" alt="Logo">
+  <div class="background">
+    <div id="overlay" class="overlay">
+      <div class="hero-container">
+        <div class="hero-box">
+          <h1 id="hero-text" class="hero-text">Unleash&nbsp;Your Learning&nbsp;Journey</h1>
+          <p id="hero-description" class="hero-description">
+            Access premium courses, explore diverse topics, and unleash your potential through our platform.
+          </p>
+          <img id="planet" class="planet1" src="/logo.svg" alt="Logo">
 
+        </div>
       </div>
+      <img class="bend" src="/bend.svg">
     </div>
-    <img class="bend" src="/bend.svg">
   </div>
 </template>
 
 <style scoped>
 @media (max-width: 600px) {
-  #background {
+  #overlay {
     height: 600px;
   }
 
@@ -37,9 +39,21 @@
     height: 120px;
     animation: ease-in-out pulse 5s infinite;
   }
+  .bend {
+    display: none;
+  }
+
 }
 
 .background {
+  background-color: black;
+  background-image: url('/public/starsTrans.png');
+  background-repeat: repeat;
+  background-position: top;
+  background-size: cover;
+}
+
+.overlay {
   top: 0;
   height: min-content;
   background: linear-gradient(180deg, rgba(21, 16, 82, 0.14) 0%, rgba(158, 150, 255, 0.14) 100%);

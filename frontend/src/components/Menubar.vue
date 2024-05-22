@@ -201,8 +201,16 @@ function setDefaultCurrency() {
     background-color: #f4f6f8;
     border-bottom: 1px solid #d3d3d3;
     backdrop-filter: none;
+    height: 67px;
     box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
 
+  }
+
+  .content {
+    display: flex;
+    justify-content: space-between;
+    height: 67px;
+    width: 100%;
   }
 
   #desktop {
@@ -239,7 +247,7 @@ function setDefaultCurrency() {
     position: fixed;
     top: 0;
     z-index: 200;
-    height: 100vh;
+    height: 2000px;
     width: 100vw;
   }
 
@@ -251,7 +259,7 @@ function setDefaultCurrency() {
 
   .solid-background {
     background-color: var(--light-3);
-    height: 100vh;
+    height: 2000px;
     width: 300px;
   }
 
@@ -318,6 +326,13 @@ function setDefaultCurrency() {
     max-width: min-content;
     align-items: center;
   }
+  .content {
+    display: flex;
+    justify-content: space-between;
+    height: 70px;
+    width: 100%;
+  }
+
 }
 
 .menubar {
@@ -327,12 +342,7 @@ function setDefaultCurrency() {
   z-index: 100;
 }
 
-.content {
-  display: flex;
-  justify-content: space-between;
-  height: 70px;
-  width: 100%;
-}
+
 
 
 
@@ -476,23 +486,35 @@ function setDefaultCurrency() {
   border: 1px solid var(--light-2);
   border-radius: 7px;
   margin: 10px;
-  width: 40px;
-  height: 40px;
-}
-
-.mobile-header-button img {
-  filter: brightness(0);
-  opacity: 0.7;
-  margin: 9px;
-  width: 20px;
-  height: 20px;
+  max-width: 35px;
+  max-height: 35px;
+  min-width: 35px;
+  min-height: 35px;
+  display: flex; /* Added flex display */
+  align-items: center; /* Center content vertically */
+  justify-content: center; /* Center content horizontally */
 }
 
 .mobile-header-button svg {
-  margin: 3px auto auto auto;
+  box-sizing: border-box;
+  pointer-events: none;
+  overflow: visible !important;
+  width: 100%; /* Optional: Ensures the SVG scales properly */
+  height: 100%; /* Optional: Ensures the SVG scales properly */
+}
+
+
+.mobile-header-button img {
+  filter: brightness(0);
+  overflow: visible !important;
+  box-sizing: border-box;
+  text-align: center;
+  display: flex;
+  pointer-events: none;
+  opacity: 0.7;
+  margin: auto;
   width: 20px;
   height: 20px;
-  opacity: 0.5;
 }
 
 .mobile-login-button {

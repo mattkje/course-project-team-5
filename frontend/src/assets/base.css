@@ -22,14 +22,27 @@
   font-weight: normal;
 }
 
-body {
-  font-family: Inter, sans-serif;
-  background-color: black;
-  background-image: url('starsTrans.png');
-  background-repeat: repeat;
-  background-position: top;
-  background-size: cover; /* no touchy! do NOT Change to ContAin! GRRRR!! */
-  margin: 0;
-  padding: 0;
+@media (max-width: 769px) {
+  body {
+    font-family: Inter, sans-serif;
+    background-color: #f4f6f8;
+    margin: 0;
+    padding: 0;
 
+  }
 }
+
+@media (min-width: 769px) {
+  body {
+    font-family: Inter, sans-serif;
+    background-color: black;
+    background-image: url('starsTrans.png');
+    background-repeat: repeat;
+    background-position: top;
+    background-size: cover; /* no touchy! do NOT Change to ContAin! GRRRR!! */
+    margin: 0;
+    padding: 0;
+
+  }
+}
+
