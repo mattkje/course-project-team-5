@@ -348,7 +348,7 @@ function editCourseCard(object, course) {
           <p class="totalPrice"></p>
           <div class="totalAmount"></div>
         </div>
-        <button class="checkout-button">Checkout</button>
+        <router-link to="/payment" class="checkout-button">Checkout</router-link>
       </div>
     </div>
   </div>
@@ -482,6 +482,7 @@ function editCourseCard(object, course) {
   cursor: pointer;
   transition: all .5s;
   margin-right: 10px;
+  text-decoration: none;
 }
 
 .course-item {
