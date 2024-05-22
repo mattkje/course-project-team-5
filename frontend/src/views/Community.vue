@@ -44,14 +44,21 @@ function populateCourses() {
               console.log(imageData);
             }
 
+            const formattedDate = formatDate(course.postDate)
 
             courseCard.innerHTML = `
+                    <div class="post-parent">
                         <img src="${imageData}" alt="Course ${course.courseId}">
                         <div class="course-card-description">
                             <h3>${course.title}</h3>
-                            <p>Posted By: ${course.author}</p>
-                            <p>${course.description}</p>
+                            <div class="author-and-date">
+                                <p class="author-text">${course.author}</p>
+                                <p>Posted ${formattedDate}</p>
+                            </div>
                         </div>
+                    </div>
+                    <p class="post-category">${course.category}</p>
+
                     `;
             // Append the course card to the course block
             courseBlock.appendChild(courseCard);
@@ -128,6 +135,13 @@ async function loadProfileData(course, courseblock) {
   }
 }
 
+function formatDate(dateString) {
+  const date = new Date(dateString);
+
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  return date.toLocaleDateString(undefined, options);
+}
+
 function onSuccess(data) {
   createPosts(data.course, data, courseblock)
 }
@@ -146,11 +160,6 @@ function onSuccess(data) {
   </div>
   <div class="course-section">
     <div class="community-top-container">
-      <div class="community-title-container">
-        <button class="fancy-button" @click="authenticatePost">
-          <p>Create Post</p>
-        </button>
-      </div>
       <div class="search-container">
 
         <div class="search-bar">
@@ -159,6 +168,9 @@ function onSuccess(data) {
                  placeholder="Search for community posts" v-model="searchQuery" @input="searchPosts">
           <img class="search-icon" src="/search.png" alt="Connect">
         </div>
+        <button class="post-button" @click="authenticatePost">
+          <p>Create Post</p>
+        </button>
       </div>
     </div>
     <div class="course-block" ref="courseBlock">
@@ -203,7 +215,7 @@ function onSuccess(data) {
     display: none;
   }
 
-  .fancy-button {
+  .post-button {
 
     padding: 10px;
     border-radius: 20px;
@@ -221,7 +233,7 @@ function onSuccess(data) {
     }
   }
 
-  .fancy-button p {
+  .post-button p {
     color: #EAEAEA;
     font-family: 'Inter', sans-serif;
     font-weight: bold;
@@ -259,20 +271,23 @@ function onSuccess(data) {
     width: 60%;
     background-color: var(--light-1);
     border-radius: 20px;
+    height: 60px;
+    margin-right: 20px;
     position: relative;
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
   }
 
-  .fancy-button {
+  .post-button {
     color: #EAEAEA;
     font-family: 'Inter', sans-serif;
     font-weight: bold;
     font-size: 14px;
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 20px;
     text-decoration: none;
     display: flex;
-    min-width: 100px;
+    min-width: 70px;
+    height: 60px;
     background: #0C0C0C;
     border: 0.5px solid #252525;
     transition: all 0.3s ease-in-out;
@@ -281,6 +296,14 @@ function onSuccess(data) {
     &:hover {
       background-color: #262626;
       box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
+    }
+
+    p {
+      color: #EAEAEA !important;
+      font-family: 'Inter', sans-serif;
+      font-weight: bold;
+      font-size: 16px;
+      margin: auto;
     }
   }
 }
@@ -447,6 +470,11 @@ function onSuccess(data) {
   font-size: 50px;
   font-weight: bold;
   color: #4eeb91;
+}
+
+.author-and-date {
+  display: flex;
+  flex-direction: row;
 }
 
 </style>

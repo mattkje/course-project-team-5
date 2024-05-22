@@ -53,7 +53,6 @@
 import {getCurrentInstance, onMounted} from 'vue';
 import "@/assets/coursePage.css"
 import MarkdownIt from 'markdown-it';
-import {hasRole} from "@/js/authentication";
 import {sendApiRequest, sendTokenRefreshRequest} from "@/js/requests";
 import {getCookie, isTokenAboutToExpire} from "@/js/tools";
 
@@ -118,14 +117,8 @@ function populateCoursePage() {
         //Populating the similar courses box
         populatePosts('.featured');
 
-        const dateText = formatDate(data.postDate)
+        const formattedDate = formatDate(data.postDate)
 
-        // Convert the original date string to a Date object
-        const date = new Date(dateText);
-
-        // Format the date to a more readable format
-        const options = { year: 'numeric', month: 'long', day: 'numeric' };
-        const formattedDate = date.toLocaleDateString(undefined, options);
 
 
         const markdownText = data.content;
@@ -164,16 +157,10 @@ function getOrdinalSuffix(day) {
 
 // Output: 2024-02-01
 function formatDate(dateString) {
-  const originalDate = new Date(dateString);
+  const date = new Date(dateString);
 
-  const year = originalDate.getFullYear();
-
-  const month = originalDate.getMonth() + 1;
-  const day = originalDate.getDate();
-
-  const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-
-  return formattedDate;
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  return date.toLocaleDateString(undefined, options);
 }
 
 function populatePosts() {
