@@ -8,6 +8,7 @@ import { setCookie } from "@/js/tools";
 import {sendApiRequest} from "@/js/requests";
 
 const loading = ref(true);
+const loadingSimilar = ref(true);
 const addProvider = ref(false);
 const pricesInDefaultCurrency = new Map();
 
@@ -346,13 +347,19 @@ async function populateCourses(selector) {
   try {
     const [data, currencies] = await Promise.all([fetchCourses(API_URL), fetchCurrencies(API_URL)]);
 
-    data.forEach(courseProvider => {
+    let similarCourses = -1;
 
-      if (courseProvider.course.category === document.getElementById('courseCategoryLink').innerText) {
+    data.forEach(courseProvider => {
+      if (courseProvider.course.category === document.getElementById('courseCategoryLink').innerText && courseProvider.course.title !== document.getElementById('courseTitleLink').innerText){
         const contentBox = createContentBox(courseProvider, currencies, defaultCurrency);
         document.querySelector(selector).appendChild(contentBox.cloneNode(true));
+        similarCourses++;
       }
     });
+    
+    if(similarCourses > 0) {
+      loadingSimilar.value = false;
+    }
     loading.value = false;
   } catch (error) {
     console.error('Error:', error);
@@ -578,11 +585,11 @@ function activeFailed() {
   </div>
 
 
-    <div v-show="!loading"class="similarCourses">
+    <div v-show="!loadingSimilar" class="similarCourses">
       <h2>Similar Courses</h2>
     </div>
 
-    <div v-show="!loading" class="featured">
+    <div v-show="!loadingSimilar" class="featured">
       <!--- Featured courses will be appended here --->
     </div>
   </div>
@@ -701,8 +708,6 @@ function activeFailed() {
   }
 
   .featured {
-
-    border-radius: 20px;
     justify-content: flex-start;
     align-content: center;
     width: 100%;
@@ -711,7 +716,7 @@ function activeFailed() {
     display: flex;
     flex-direction: row;
     overflow: auto;
-
+    gap: 15px;
     scrollbar-width: none;
     -ms-overflow-style: none;
   }
