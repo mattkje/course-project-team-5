@@ -152,7 +152,6 @@ function getFinalPrice(providers, providerId) {
 
 async function addCourseToCartTotal(course, price, symbol) {
   const cartTotal = document.getElementsByClassName("cartTotal")[0];
-
   const courseInfo = document.createElement("p");
   courseInfo.innerText = course.course.title + ": " + symbol + " " + price.toFixed(2);
   cartTotal.appendChild(courseInfo);
@@ -167,11 +166,6 @@ async function addCourseToCartTotal(course, price, symbol) {
       break;
     }
   }
-  //const totalCost = calculateTotalCost(rate);
-  //const totalCostElement = document.createElement("p");
-  //totalCostElement.innerText = " " + "Total: " + symbol + " " + totalCost;
-  //totalCostElement.style.fontWeight = "bold";
-  //cartTotal.appendChild(totalCostElement)
 }
 
 function calculateTotalCost(rate) {
@@ -246,7 +240,7 @@ function createRemoveButton(courseId, courseBody) {
       const courseList = document.getElementsByClassName("course-table")[0];
       displayEmptyCartMessage(courseList);
     }
-
+    await updateCourseToCartTotal();
     await updateCartTotal();
   };
   return removeButton;
@@ -284,6 +278,55 @@ async function updateCartTotal() {
   totalCostElement.innerText = "Total: " + symbol + " " + totalCost.toFixed(2);
   totalCostElement.style.fontWeight = "bold";
   totalPrice.appendChild(totalCostElement);
+}
+
+async function updateCourseToCartTotal() {
+  const cartTotal = document.getElementsByClassName("cartTotal")[0];
+
+  // Remove all child nodes of cartTotal
+  while (cartTotal.firstChild) {
+    cartTotal.removeChild(cartTotal.firstChild);
+  }
+
+  const allCookies = document.cookie;
+  const { courseIds, providerIds, prices } = getCourseAndProviderIds(allCookies);
+
+  const defaultCurrency = setDefaultCurrency() || 'USD';
+  const currencies = await fetchCurrencies(API_URL);
+
+  let symbol = '';
+  let rate = 0;
+
+  for (let i = 0; i < currencies.length; i++) {
+    if (currencies[i].code === defaultCurrency) {
+      symbol = currencies[i].symbol;
+      rate = currencies[i].rate;
+      break;
+    }
+  }
+
+  let totalCost = 0;
+
+  for (let i = 0; i < courseIds.length; i++) {
+    const courseId = courseIds[i];
+    const providerId = providerIds[i];
+    let price = prices[i] * rate;
+
+    const course = await fetchCourseById(API_URL, courseId);
+    let provider = course.providers;
+    let name = "";
+    provider.forEach(prov => {
+      if (Number(prov.courseProviderId) === Number(providerId)) {
+        name = prov.name;
+      }
+    });
+
+    const courseInfo = document.createElement("p");
+    courseInfo.innerText = course.course.title + ": " + symbol + " " + price.toFixed(2);
+    cartTotal.appendChild(courseInfo);
+
+    totalCost += price;
+  }
 }
 
 function editCourseCard(object, course) {
