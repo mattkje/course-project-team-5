@@ -2,7 +2,7 @@
 import {getCurrentInstance, onMounted, ref} from 'vue';
 import {doLogout, getAuthenticatedUser, hasRole, removeRole} from "@/js/authentication";
 import {sendApiRequest, sendTokenRefreshRequest} from "@/js/requests";
-import {createContentBox, fetchCourseById, fetchPrice, fetchCourses, fetchCurrencies} from "@/js/populationTools";
+import {createContentBox, fetchCourseById, fetchCourses, fetchCurrencies} from "@/js/populationTools";
 import {getCookie, isTokenAboutToExpire} from "@/js/tools";
 import {setDefaultCurrency} from "@/js/currency";
 
@@ -57,6 +57,7 @@ async function populateCart() {
   let courseIds = [];
   let providerIds = [];
 
+
   for (let i = 0; i < cookieArray.length; i++) {
     const cookie = cookieArray[i].split('=');
     const name = cookie[0];
@@ -68,6 +69,7 @@ async function populateCart() {
       providerIds.push(value);
     }
   }
+  console.log(courseIds);
 
   // Get the course table element
   const courseList = document.getElementsByClassName("course-table")[0];
@@ -88,13 +90,14 @@ async function populateCart() {
   for (let i = 0; i < courseIds.length; i++) {
     let courseId = courseIds[i];
     let providerId = providerIds[i]; // Get the corresponding providerId
-
-
-    await sendApiRequest(API_URL,"GET", '/providers/api/courses/' + courseId + '/providers/' + providerId + '/price', (data) => showPrice(data), onFailure);
+    
     const course = await fetchCourseById(API_URL, courseId);
+    const currency = await fetchCurrencies(API_URL);
+
+    console.log(course);
 
     let providers = course.providers;
-
+    console.log(providers);
     let finalPrice = 0;
 
     providers.forEach(providers => {
@@ -102,8 +105,9 @@ async function populateCart() {
      if (Number(providers.courseProviderId) === Number(providerId)){
        finalPrice = providers.price;
      }
+
     });
-    
+
     // Create a new tbody element for each course
     const courseBody = document.createElement("tbody");
     courseBody.classList.add("course-block");
