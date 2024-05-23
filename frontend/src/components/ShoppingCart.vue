@@ -192,7 +192,7 @@ async function addCourseToCart(courseList, course, price, courseId, name, symbol
 
   editCourseCard(row, course);
 
-  await updateCartTotal(); // Update total cost whenever a course is added or removed xd
+  await updateCartTotal();
 }
 
 function createRemoveButton(courseId, courseBody) {
@@ -265,7 +265,6 @@ async function updateCourseToCartTotal() {
 
   cartTotal.innerText = "";
 
-  // Remove all child nodes of cartTotal
   while (cartTotal.firstChild) {
     cartTotal.removeChild(cartTotal.firstChild);
   }
@@ -317,10 +316,7 @@ function editCourseCard(object, course) {
   object.onclick = function () {
     window.location.href = ("/courses/?id=" + course.course.courseId);
   };
-
-
 }
-
 </script>
 
 <template>
