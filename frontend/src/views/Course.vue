@@ -4,7 +4,7 @@ import "@/assets/coursePage.css"
 import {getAuthenticatedUser, hasRole} from "@/js/authentication";
 import MarkdownIt from "markdown-it";
 import {createContentBox, fetchCourses, fetchCurrencies} from "@/js/populationTools";
-import { setCookie } from "@/js/tools";
+import {setCookie} from "@/js/tools";
 import {sendApiRequest} from "@/js/requests";
 import Alert from "@/components/Alert.vue";
 
@@ -25,17 +25,32 @@ function addCourseToCart() {
 onMounted(() => {
   populateCoursePage();
   populateProviders();
+  loadButtons();
 });
 
 
-
-
-
-const { appContext } = getCurrentInstance();
+const {appContext} = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
 
 // Google Maps API (Looks like nonsense, but is not. So Do Not Delete!)
-(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
+(g => {
+  var h, a, k, p = "The Google Maps JavaScript API", c = "google", l = "importLibrary", q = "__ib__", m = document,
+      b = window;
+  b = b[c] || (b[c] = {});
+  var d = b.maps || (b.maps = {}), r = new Set, e = new URLSearchParams,
+      u = () => h || (h = new Promise(async (f, n) => {
+        await (a = m.createElement("script"));
+        e.set("libraries", [...r] + "");
+        for (k in g) e.set(k.replace(/[A-Z]/g, t => "_" + t[0].toLowerCase()), g[k]);
+        e.set("callback", c + ".maps." + q);
+        a.src = `https://maps.${c}apis.com/maps/api/js?` + e;
+        d[q] = f;
+        a.onerror = () => h = n(Error(p + " could not load."));
+        a.nonce = m.querySelector("script[nonce]")?.nonce || "";
+        m.head.append(a)
+      }));
+  d[l] ? console.warn(p + " only loads once. Ignoring:", g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n))
+})
 ({key: "AIzaSyAhRVHfIjsffeR6UTu-ypmHJvnlZqg5a2s", v: "weekly"});
 
 // Function to populate the course page with the course data
@@ -65,7 +80,7 @@ function populateCoursePage() {
             //Continuing if course exists
             .then(data => {
 
-              if(data.course.active === false && !hasRole('ROLE_ADMIN')) {
+              if (data.course.active === false && !hasRole('ROLE_ADMIN')) {
                 window.location.href = '/no-access';
               }
               if (data.course.active === false) {
@@ -93,7 +108,7 @@ function populateCoursePage() {
 
               const sizeText = document.createElement('p');
               sizeText.innerText += `${data.course.courseSize}` + " ECTS Credits";
-              sizeText.style.color ='#6c6c6c'
+              sizeText.style.color = '#6c6c6c'
 
               const courseSizeElement = document.getElementById('courseSize');
               courseSizeElement.appendChild(sizeIcon);
@@ -107,8 +122,8 @@ function populateCoursePage() {
               const durationText = document.createElement('p');
               const rawStartDate = `${data.course.startDate}`;
               const rawEndDate = `${data.course.endDate}`;
-              durationText.innerText += formatDate(rawStartDate,rawEndDate);
-              durationText.style.color ='#6c6c6c'
+              durationText.innerText += formatDate(rawStartDate, rawEndDate);
+              durationText.style.color = '#6c6c6c'
 
               const courseDurationElement = document.getElementById('closestCourseSession');
               courseDurationElement.appendChild(durationIcon);
@@ -121,7 +136,7 @@ function populateCoursePage() {
 
               const hoursText = document.createElement('p');
               hoursText.innerText += `${data.course.hoursPerWeek}` + " h/w";
-              hoursText.style.color ='#6c6c6c'
+              hoursText.style.color = '#6c6c6c'
 
               const courseHoursElement = document.getElementById('hoursPerWeek');
               courseHoursElement.appendChild(hoursIcon);
@@ -134,7 +149,7 @@ function populateCoursePage() {
 
               const certificationText = document.createElement('p');
               certificationText.innerText += `${data.course.relatedCertifications}`;
-              certificationText.style.color ='#6c6c6c'
+              certificationText.style.color = '#6c6c6c'
 
               const courseCertElement = document.getElementById('relatedCertifications');
               courseCertElement.appendChild(certificationIcon);
@@ -147,7 +162,7 @@ function populateCoursePage() {
 
               const difficultyText = document.createElement('p');
               difficultyText.innerText += `${data.course.level}`;
-              difficultyText.style.color ='#6c6c6c'
+              difficultyText.style.color = '#6c6c6c'
 
               const courseDifficultyElement = document.getElementById('difficulty');
               courseDifficultyElement.appendChild(difficultyIcon);
@@ -160,7 +175,7 @@ function populateCoursePage() {
 
               const locationText = document.createElement('p');
               locationText.innerText += "On-site";
-              locationText.style.color ='#6c6c6c'
+              locationText.style.color = '#6c6c6c'
 
               const locationElement = document.getElementById('location');
               locationElement.appendChild(locationIcon);
@@ -206,8 +221,8 @@ function populateCoursePage() {
                   locationIcon.src = '/online.svg';
                   locationText.innerText = 'Online';
                   document.getElementById('providerList').appendChild(providerElement);
-                  providerElement.addEventListener('click', function() {
-                    if (hasRole('ROLE_PRO')){
+                  providerElement.addEventListener('click', function () {
+                    if (hasRole('ROLE_PRO')) {
                       document.getElementById('enrollButton').className = 'pro-enroll-button'
                       document.getElementById('enrollButton').textContent = "Go to Course";
                     } else {
@@ -219,7 +234,7 @@ function populateCoursePage() {
                 } else {
                   providerElement.innerHTML = provider.name;
                   document.getElementById('providerList').appendChild(providerElement);
-                  providerElement.addEventListener('click', function() {
+                  providerElement.addEventListener('click', function () {
                     document.getElementById('enrollButton').textContent = "Buy for " + symbol + finalPrice.toFixed(2);
                     document.getElementById('notShowingLocationText').innerText = 'Showing location for provider ' + provider.name
                     initMap(provider.latitude, provider.longitude);
@@ -232,14 +247,14 @@ function populateCoursePage() {
                     // True when a provider is selected, changes button style accordingly
                     isActive.value = true;
 
-                    buyButton.addEventListener('click', function() {
+                    buyButton.addEventListener('click', function () {
                       setCookie('courseId_' + courseId, courseId, 1);
                       setCookie('providerId_' + courseId, providerID, 1);
                       setCookie('price_' + courseId, pricesInDefaultCurrency.get(providerID), 1);
                     })
-                    if(document.getElementById('cartButton') !== null){
+                    if (document.getElementById('cartButton') !== null) {
                       const addCartButton = document.getElementById('cartButton');
-                      addCartButton.addEventListener('click', function() {
+                      addCartButton.addEventListener('click', function () {
                         setCookie('courseId_' + courseId, courseId, 1);
                         setCookie('providerId_' + courseId, providerID, 1);
                         setCookie('price_' + courseId, pricesInDefaultCurrency.get(providerID), 1);
@@ -256,7 +271,7 @@ function populateCoursePage() {
                 addProviderButton.classList.add("provider-choose");
                 addProviderButton.id = "add-provider";
                 document.getElementById('providerList').appendChild(addProviderButton);
-                addProviderButton.addEventListener('click', function() {
+                addProviderButton.addEventListener('click', function () {
                   changeProviderValue();
                 });
 
@@ -330,14 +345,14 @@ async function populateCourses(selector) {
     let similarCourses = -1;
 
     data.forEach(courseProvider => {
-      if (courseProvider.course.category === document.getElementById('courseCategoryLink').innerText && courseProvider.course.title !== document.getElementById('courseTitleLink').innerText){
+      if (courseProvider.course.category === document.getElementById('courseCategoryLink').innerText && courseProvider.course.title !== document.getElementById('courseTitleLink').innerText) {
         const contentBox = createContentBox(courseProvider, currencies, defaultCurrency);
         document.querySelector(selector).appendChild(contentBox.cloneNode(true));
         similarCourses++;
       }
     });
-    
-    if(similarCourses > 0) {
+
+    if (similarCourses > 0) {
       loadingSimilar.value = false;
     }
     loading.value = false;
@@ -357,10 +372,10 @@ async function initMap(lat, lng) {
 
     document.getElementById('map-container').style.display = "block";
 
-    const position = { lat: lat, lng: lng };
+    const position = {lat: lat, lng: lng};
 
-    const { Map } = await google.maps.importLibrary("maps");
-    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+    const {Map} = await google.maps.importLibrary("maps");
+    const {AdvancedMarkerElement} = await google.maps.importLibrary("marker");
 
     // The map, centered at Uluru
     map = new Map(document.getElementById("map"), {
@@ -400,7 +415,7 @@ function currency() {
         if (defaultCurrency) {
           select.value = defaultCurrency;
         }
-        document.getElementById('currencySelect').addEventListener('change', function() {
+        document.getElementById('currencySelect').addEventListener('change', function () {
           document.cookie = `defaultCurrency=${this.value}; path=/; max-age=31536000`;
           location.reload();
         });
@@ -431,8 +446,8 @@ function changeProviderValue() {
 }
 
 function populateProviders() {
-  sendApiRequest(API_URL,'GET', '/providers', providerComplete, providerFailed);
-  sendApiRequest(API_URL,'GET', '/currency', currencyComplete, currencyFailed);
+  sendApiRequest(API_URL, 'GET', '/providers', providerComplete, providerFailed);
+  sendApiRequest(API_URL, 'GET', '/currency', currencyComplete, currencyFailed);
 }
 
 function currencyComplete(data) {
@@ -464,7 +479,7 @@ function addNewProvider() {
     currency: singleProvider.value.currency,
   };
 
-  sendApiRequest(API_URL,'POST', '/providers/' + providerData.courseId, addProviderSuccess, providerData, addProviderFailed);
+  sendApiRequest(API_URL, 'POST', '/providers/' + providerData.courseId, addProviderSuccess, providerData, addProviderFailed);
 
 }
 
@@ -479,7 +494,7 @@ function addProviderFailed() {
 
 function changeActive() {
   const urlParams = new URLSearchParams(window.location.search);
-  sendApiRequest(API_URL,'PUT', '/courses/active/' + urlParams.get('id'), activeSuccess, null, activeFailed);
+  sendApiRequest(API_URL, 'PUT', '/courses/active/' + urlParams.get('id'), activeSuccess, null, activeFailed);
 }
 
 function activeSuccess() {
@@ -495,10 +510,66 @@ function handleButtonClick() {
   showAlert.value = false;
   window.location.href = '/login';
 }
+
+function loadButtons() {
+  const scrollAmount = 332;
+  const scrollDuration = 500;
+
+  function smoothScroll(target, direction) {
+    const start = target.scrollLeft;
+    const increment = direction === 'right' ? scrollAmount : -scrollAmount;
+    let startTime = null;
+
+    function animateScroll(currentTime) {
+      if (!startTime) {
+        startTime = currentTime;
+      }
+
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / scrollDuration, 1);
+
+      // Used copilot to generate the easing function
+      const easeInOutCubic = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      const easedProgress = easeInOutCubic(progress);
+
+      target.scrollLeft = start + increment * easedProgress;
+
+      if (progress < 1) {
+        requestAnimationFrame(animateScroll);
+      }
+    }
+
+    requestAnimationFrame(animateScroll);
+    const usernameLabel = document.getElementById('usernameLabel');
+    if (usernameLabel) {
+      usernameLabel.textContent = 'Welcome, ' + localStorage.getItem('username');
+    }
+  }
+
+  function addScrollEvent(containerId, leftButtonId, rightButtonId) {
+    const container = document.querySelector(containerId);
+    const scrollLeftButton = document.getElementById(leftButtonId);
+    const scrollRightButton = document.getElementById(rightButtonId);
+
+    scrollLeftButton.addEventListener('click', () => {
+      smoothScroll(container, 'left');
+    });
+
+    scrollRightButton.addEventListener('click', () => {
+      smoothScroll(container, 'right');
+    });
+  }
+
+  //addScrollEvent('.similarCourses', 'scrollLeftButton', 'scrollRightButton');
+  addScrollEvent('.featured', 'scrollLeftButton', 'scrollRightButton');
+
+}
+
 </script>
 
 <template>
-  <Alert v-if="showAlert" title="User required" message="Please log in to enroll in a course" :buttons="['OK']" @buttonClicked="handleButtonClick" />
+  <Alert v-if="showAlert" title="User required" message="Please log in to enroll in a course" :buttons="['OK']"
+         @buttonClicked="handleButtonClick"/>
   <div class="course-page-background" v-show="!addProvider">
     <div v-show="!loading" class="courseLinkElement">
       <a href="/">Courses</a>
@@ -531,7 +602,9 @@ function handleButtonClick() {
           <hr>
           <div class="course-action-box">
 
-            <router-link to="/payment" id="enrollButton" :class="{'enroll-button': !isActive, 'enroll-button-active': isActive}">Buy now</router-link>
+            <router-link to="/payment" id="enrollButton"
+                         :class="{'enroll-button': !isActive, 'enroll-button-active': isActive}">Buy now
+            </router-link>
             <button :class="{'cartButton': !isActive, 'cartButton-active': isActive}" id="cartButton">
                     <span class="IconContainer">
                         <img class="cart-icon-small" src="/cart-small.svg" alt="Cart">
@@ -551,18 +624,27 @@ function handleButtonClick() {
       <h3>Location</h3>
       <p id="notShowingLocationText">Please select a provider to show location</p>
       <div id="map-container" class="map-container" style="display: none">
-        <div id="map" ></div>
+        <div id="map"></div>
       </div>
-  </div>
+    </div>
 
-
-    <div v-show="!loadingSimilar" class="similarCourses">
+    <div class="greeting">
       <h2>Similar Courses</h2>
     </div>
 
-    <div v-show="!loadingSimilar" class="featured">
-      <!--- Featured courses will be appended here --->
+    <div v-show="!loadingSimilar" class="content-container">
+      <button id="scrollLeftButton">
+        <img class="leftArrow" src="/arrow.svg" alt="Connect">
+      </button>
+      <div v-show="!loading" class="featured">
+
+      </div>
+      <button id="scrollRightButton">
+        <img class="rightArrow" src="/arrow.svg" alt="Connect">
+      </button>
+
     </div>
+
   </div>
   <div class="addProvider" v-show="addProvider">
     <div class="provider-box">
@@ -590,10 +672,10 @@ function handleButtonClick() {
             </select>
           </div>
           <div class="provider-options">
-            <button type="submit" >Add Provider</button>
+            <button type="submit">Add Provider</button>
             <button @click="changeProviderValue">Cancel</button>
           </div>
-          </form>
+        </form>
       </div>
     </div>
   </div>
@@ -602,10 +684,11 @@ function handleButtonClick() {
 
 <style scoped>
 
-@media (max-width:769px){
-  #courseInformation{
+@media (max-width: 769px) {
+  #courseInformation {
     margin: 15px 0;
   }
+
   .courseLinkElement {
     padding-top: 20px;
   }
@@ -642,6 +725,7 @@ function handleButtonClick() {
     white-space: nowrap;
     overflow-x: hidden;
   }
+
   .courseLinkElement p {
     font-weight: bold;
     font-size: 10px;
@@ -678,6 +762,11 @@ function handleButtonClick() {
     box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
   }
 
+  #scrollLeftButton,
+  #scrollRightButton {
+    display: none;
+  }
+
   .featured {
     padding: 20px;
     justify-content: flex-start;
@@ -693,6 +782,16 @@ function handleButtonClick() {
     -ms-overflow-style: none;
   }
 
+  .greeting {
+    border: none;
+    width: 100%;
+    justify-content: center;
+    align-content: center;
+    text-decoration: none;
+    display: flex;
+    margin: 0 auto;
+  }
+
   .provider-box {
     background-color: var(--light-1);
     border-radius: 20px;
@@ -702,10 +801,12 @@ function handleButtonClick() {
     height: max-content;
     box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
   }
+
   .provider-form {
     display: flex;
     flex-direction: column;
   }
+
   .provider-form input, .provider-form select {
     padding: 10px;
     border: none;
@@ -806,6 +907,50 @@ function handleButtonClick() {
     text-decoration: none;
   }
 
+  .greeting {
+    border: none;
+    border-radius: 15px;
+    width: 60%;
+    justify-content: flex-start;
+    align-content: center;
+    text-decoration: none;
+    display: flex;
+    margin: 0 auto;
+  }
+
+  .content-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+  }
+
+  .rightArrow {
+    transform: scaleX(-1);
+    transition: filter 0.5s ease;
+
+    &:hover {
+      filter: brightness(0.8);
+    }
+
+    &:active {
+      filter: brightness(0.9);
+    }
+  }
+
+  .leftArrow {
+    transition: filter 0.5s ease;
+
+    &:hover {
+      filter: brightness(0.8);
+    }
+
+    &:active {
+      filter: brightness(0.9);
+    }
+  }
+
   .course-info {
     background-color: var(--light-1);
     border-radius: 0 20px 20px 0;
@@ -827,23 +972,6 @@ function handleButtonClick() {
     padding: 20px;
     border-radius: 20px;
     box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
-  }
-
-  .featured {
-    justify-content: flex-start;
-    background: #f8f8ff;
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    border-radius: 20px;
-    max-width: 1300px;
-    width: 100%;
-    min-height: 550px;
-    padding: 50px 30px;
-    margin: 0 auto 200px auto;
-    display: flex;
-    overflow: auto;
-
-    scrollbar-width: none;
-    -ms-overflow-style: none;
   }
 
   .administrator {
@@ -875,7 +1003,6 @@ function handleButtonClick() {
 }
 
 
-
 .course-page-background {
   font-family: Inter, sans-serif;
   background-color: var(--light-3);
@@ -895,9 +1022,9 @@ button {
 }
 
 .button-disabled {
-   background-color: grey;
-   cursor: not-allowed;
- }
+  background-color: grey;
+  cursor: not-allowed;
+}
 
 ul {
   list-style-type: none;
@@ -1077,20 +1204,7 @@ input:focus {
 }
 
 
-.similarCourses {
-  border: none;
-  border-radius: 15px;
-  align-content: center;
-  text-decoration: none;
-  display: flex;
-  margin: 10px auto;
-  width: 93%;
-  padding: 10px;
-  max-width: 1300px;
-}
-
-
-.course-description-box h3{
+.course-description-box h3 {
   font-size: 20px;
   font-weight: bold;
 }
@@ -1098,7 +1212,6 @@ input:focus {
 #courseDescription {
   color: #282828;
 }
-
 
 
 .hbox {
@@ -1118,7 +1231,7 @@ input:focus {
   width: 40px;
   height: 40px;
   padding-left: 20px;
-  transform:translateY(-3px);
+  transform: translateY(-3px);
 }
 
 .cart {
@@ -1148,7 +1261,7 @@ input:focus {
 hr {
   border: 0;
   height: 3px;
-  background:  #6c6c6c;
+  background: #6c6c6c;
   margin: 20px 0;
 }
 
@@ -1164,8 +1277,6 @@ hr {
   font-weight: bold;
   color: #575757;
 }
-
-
 
 
 .course-action-box {
@@ -1213,7 +1324,6 @@ hr {
 }
 
 
-
 .clear {
   clear: both;
 }
@@ -1259,9 +1369,9 @@ hr {
 .filter-box {
   background-color: rgba(29, 28, 32, 0.7);
   backdrop-filter: blur(5px);
-  border: 1px solid rgba(255,255,255,.08);
+  border: 1px solid rgba(255, 255, 255, .08);
   margin: 3vw;
-  padding:2vw;
+  padding: 2vw;
   border-radius: 17px;
 }
 
@@ -1276,6 +1386,7 @@ hr {
   margin: auto;
   border-radius: 20px;
 }
+
 #map {
   height: 400px;
   max-width: 1400px;
@@ -1432,7 +1543,7 @@ button {
 }
 
 .CartBtn:hover .text {
-  transform: translate(10px,0px);
+  transform: translate(10px, 0px);
   transition-duration: .5s;
 }
 
