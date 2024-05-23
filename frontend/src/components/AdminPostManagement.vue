@@ -105,16 +105,17 @@ async function deleteCourse(post) {
 @media (min-width: 769px) {
   .page-background {
     background-color: var(--light-1);
-    padding: 30px;
+    padding: 30px 20px 30px 20px;
     border-radius: 30px;
-    margin: auto;
+    margin: 10px 10px 10px 10px;
     display: flex;
     flex-direction: column;
     justify-content: left;
     align-content: center;
-    width: 60%;
+    max-width: 1100px;
+    width: 55%;
     overflow: hidden;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
   }
 
   .page-highlight {
@@ -140,6 +141,16 @@ async function deleteCourse(post) {
     border-radius: 5px;
     margin-bottom: 10px;
     background-color: var(--light-3);
+  }
+}
+@media (max-width: 1150px) {
+  .page-highlight {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 20px 0;
+    grid-template-rows: auto;
+    justify-content: space-between;
   }
 }
 .right-content {

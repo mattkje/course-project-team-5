@@ -69,10 +69,6 @@ function handleNavigateBack(value) {
     <img class="planet" src="/whiteMoon.png">
   </div>
   <div class="profile-background">
-    <div class="profile-bar">
-
-    </div>
-
     <div class="profile-display">
       <div class="navigation-bar">
         <p>Admin tools</p>
@@ -109,6 +105,7 @@ function handleNavigateBack(value) {
     flex-direction: column;
     justify-content: center;
     padding: 0 0 50px 0;
+    gap: 1.5%;
   }
 
   .navigation-bar {
@@ -196,7 +193,7 @@ function handleNavigateBack(value) {
   }
   .profile-box {
     background-color: var(--light-1);
-    padding: 30px;
+    padding: 30px 20px 30px 20px;
     border-radius: 30px;
     margin: 10px;
     display: flex;
@@ -212,18 +209,21 @@ function handleNavigateBack(value) {
     flex-direction: row;
     justify-content: center;
     padding: 0 0 50px 0;
+    gap: 1.5%;
   }
 
   .navigation-bar {
     display: flex;
     flex-direction: column;
+    width: 60%;
+    max-width: 450px;
   }
 
   .navigation-bar p {
     font-weight: bold;
     color: var(--light-2);
     font-size: 17px;
-    margin-left: 70px;
+    padding-left: 50px;
   }
 
   .nav-button {
@@ -232,18 +232,18 @@ function handleNavigateBack(value) {
     font-family: 'Inter', sans-serif;
     font-weight: 900;
     font-size: 23px;
-    padding: 10px 20px;
-    border-radius: 10px;
+    border-radius: 10px 20px;
     text-decoration: none;
     align-items: center;
     display: flex;
     border: none;
     margin-bottom: 5px;
-    margin-left: 50px;
-    width: 450px;
+    width: 100%;
     max-height: 50px;
     min-height: 50px;
     transition: all 0.15s ease-in-out;
+    padding-left: 50px;
+    gap: 4%;
   }
 
   .nav-button p {
