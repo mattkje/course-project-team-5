@@ -6,11 +6,13 @@ import MarkdownIt from "markdown-it";
 import {createContentBox, fetchCourses, fetchCurrencies} from "@/js/populationTools";
 import { setCookie } from "@/js/tools";
 import {sendApiRequest} from "@/js/requests";
+import Alert from "@/components/Alert.vue";
 
 const loading = ref(true);
 const loadingSimilar = ref(true);
 const addProvider = ref(false);
 const pricesInDefaultCurrency = new Map();
+const showAlert = ref(false);
 
 
 const isActive = ref(false);
@@ -225,6 +227,12 @@ function populateCoursePage() {
                     const urlParams = new URLSearchParams(window.location.search);
                     const courseId = urlParams.get('id');
                     const buyButton = document.getElementById('enrollButton');
+                    if(getAuthenticatedUser() === null) {
+                      buyButton.classList.add('button-disabled');
+                      buyButton.classList.remove('enroll-button');
+                      showAlert.value = true;
+                      buyButton.style.pointerEvents = 'none';
+                    }
 
 
                     // True when a provider is selected, changes button style accordingly
@@ -235,12 +243,14 @@ function populateCoursePage() {
                       setCookie('providerId_' + courseId, providerID, 1);
                       setCookie('price_' + courseId, pricesInDefaultCurrency.get(providerID), 1);
                     })
-                    const addCartButton = document.getElementById('cartButton');
-                    addCartButton.addEventListener('click', function() {
-                      setCookie('courseId_' + courseId, courseId, 1);
-                      setCookie('providerId_' + courseId, providerID, 1);
-                      setCookie('price_' + courseId, pricesInDefaultCurrency.get(providerID), 1);
-                    })
+                    if(document.getElementById('cartButton') !== null){
+                      const addCartButton = document.getElementById('cartButton');
+                      addCartButton.addEventListener('click', function() {
+                        setCookie('courseId_' + courseId, courseId, 1);
+                        setCookie('providerId_' + courseId, providerID, 1);
+                        setCookie('price_' + courseId, pricesInDefaultCurrency.get(providerID), 1);
+                      })
+                    }
                   });
                 }
 
@@ -486,9 +496,15 @@ function activeSuccess() {
 function activeFailed() {
   alert('Failed to change active status');
 }
+
+function handleButtonClick() {
+  showAlert.value = false;
+  window.location.href = '/login';
+}
 </script>
 
 <template>
+  <Alert v-if="showAlert" title="User required" message="Please log in to enroll in a course" :buttons="['OK']" @buttonClicked="handleButtonClick" />
   <div class="course-page-background" v-show="!addProvider">
 
     <div class="administrator" v-show="hasRole('ROLE_ADMIN')">
@@ -535,7 +551,7 @@ function activeFailed() {
           <div class="course-action-box">
 
             <router-link to="/payment" id="enrollButton" :class="{'enroll-button': !isActive, 'enroll-button-active': isActive}">Buy now</router-link>
-            <button :class="{'cartButton': !isActive, 'cartButton-active': isActive}" id="cartButton">
+            <button v-if="getAuthenticatedUser === null" :class="{'cartButton': !isActive, 'cartButton-active': isActive}" id="cartButton">
                     <span class="IconContainer">
                         <img class="cart-icon-small" src="/cart-small.svg" alt="Cart">
                     </span>
