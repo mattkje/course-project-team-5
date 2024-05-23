@@ -1,7 +1,6 @@
 package no.ntnu.api.provider;
 
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 
@@ -16,31 +15,23 @@ public class CourseProvider {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "course_provider_id")
-    @Schema(description = "The course provider id")
     private int courseProviderId;
-
     @Column(name = "course_id")
-    @Schema(description = "The course id")
     private int courseId;
 
     @ManyToOne
     @JoinColumn(name = "provider_id")
-    @Schema(description = "The provider id")
     private Provider provider;
 
     @Column
-    @Schema(description = "The course provider price")
     private float price;
     @Column
-    @Schema(description = "The course provider currency")
     private String currency;
 
     @Column(precision = 9, scale = 6)
-    @Schema(description = "The course provider latitude")
     private BigDecimal latitude;
 
     @Column(precision = 9, scale = 6)
-    @Schema(description = "The course provider longitude")
     private BigDecimal longitude;
 
     /**

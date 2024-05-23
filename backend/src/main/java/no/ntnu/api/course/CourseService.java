@@ -1,5 +1,8 @@
 package no.ntnu.api.course;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 import no.ntnu.api.keywords.CourseKeywords;
 import no.ntnu.api.keywords.CourseKeywordsRepository;
 import no.ntnu.api.keywords.Keywords;
@@ -10,11 +13,7 @@ import no.ntnu.api.provider.Provider;
 import no.ntnu.api.provider.ProviderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
-
-import java.util.*;
 
 /**
  * Service class for the Course entity.
@@ -30,9 +29,10 @@ public class CourseService {
 
   /**
    * Constructor for the CourseService class.
-   * @param courseRepository The repository for the Course entity.
+   *
+   * @param courseRepository         The repository for the Course entity.
    * @param courseProviderRepository The repository for the CourseProvider entity.
-   * @param keywordRepository The repository for the CourseKeywords entity.
+   * @param keywordRepository        The repository for the CourseKeywords entity.
    */
   @Autowired
   public CourseService(CourseRepository courseRepository,
@@ -49,6 +49,7 @@ public class CourseService {
 
   /**
    * Returns all the courses in the database.
+   *
    * @return a collection of all the courses in the database.
    */
   public List<CourseWithProvidersAndKeywords> getAllCourses() {
@@ -62,7 +63,8 @@ public class CourseService {
   }
 
   /**
-   * Returns the course that has the matching id as the path variable. If the course does not exist the method will
+   * Returns the course that has the matching id as the path variable.
+   * If the course does not exist the method will
    * return a NOT FOUND response.
    *
    * @param courseId id representing a course. All id's are different.
@@ -79,7 +81,8 @@ public class CourseService {
   }
 
   /**
-   * Returns the course that has the matching id as the path variable. If the course does not exist the method will.
+   * Returns the course that has the matching id as the path variable.
+   * If the course does not exist the method will.
    *
    * @param courseId id representing a course. All id's are different.
    * @return keywords with matching id or a NOT FOUND response.
@@ -95,7 +98,8 @@ public class CourseService {
   }
 
   /**
-   * Returns the course that has the matching id as the path variable. If the course does not exist the method will.
+   * Returns the course that has the matching id as the path variable.
+   * If the course does not exist the method will.
    *
    * @param courseId id representing a course. All id's are different.
    * @return course with matching id or a NOT FOUND response.
@@ -109,12 +113,13 @@ public class CourseService {
     return null;
   }
 
-    /**
-     * Returns the course that has the matching id as the path variable. If the course does not exist the method will.
-     *
-     * @param courseId id representing a course. All id's are different.
-     * @return course with matching id or a NOT FOUND response.
-     */
+  /**
+   * Returns the course that has the matching id as the path variable.
+   * If the course does not exist the method will.
+   *
+   * @param courseId id representing a course. All id's are different.
+   * @return course with matching id or a NOT FOUND response.
+   */
   public CourseWithProvidersAndKeywords getCourseWithProviders(Integer courseId) {
     Course course = getCourseInfo(courseId);
     List<CourseProvider> providers = getProviders(courseId);
@@ -126,7 +131,7 @@ public class CourseService {
    * This method should return a course with provider.
    *
    * @param providerId The provider of the course
-   * @param courseId The id of the course
+   * @param courseId   The id of the course
    * @return The course
    */
   public CourseWithProvidersAndKeywords getCourse(Integer courseId, Integer providerId,
@@ -176,11 +181,11 @@ public class CourseService {
     }
   }
 
-    /**
-     * Posts a new course into the API, the course cannot be null.
-     *
-     * @param course The course to be added into the database
-     */
+  /**
+   * Posts a new course into the API, the course cannot be null.
+   *
+   * @param course The course to be added into the database
+   */
   public void postCourse(Course course) {
     if (course != null) {
       courseRepository.save(course);
@@ -203,7 +208,7 @@ public class CourseService {
   /**
    * Deletes a provider from the api, the provider is chosen by the given id parameter.
    *
-   * @param courseId The id of the course
+   * @param courseId   The id of the course
    * @param providerId The id of the provider
    */
   public void deleteProvider(int courseId, int providerId) {
@@ -230,7 +235,7 @@ public class CourseService {
 
   public Collection<Course> getCoursesByProvider(String providerName) {
     return courseRepository.findAllByProviderName(providerName);
-}
+  }
 
   public Collection<Course> getCoursesByLevel(String level) {
     return courseRepository.findByLevel(level);
@@ -240,6 +245,11 @@ public class CourseService {
     return courseRepository.findBySizeGreaterThanEqual(size);
   }
 
+  /**
+   * Returns the course with the lowest price for each course.
+   *
+   * @return a map containing the course name as the key and the lowest price as the value.
+   */
   public Map<String, Double> getLowestPrice() {
     Map<String, Double> courseLowestPriceMap = new HashMap<>();
     List<Course> courses = this.fetchAllCourses();
@@ -261,6 +271,15 @@ public class CourseService {
     return this.courseRepository.findAllByCourseId(ids);
   }
 
+  /**
+   * Returns all the courses in the database that have a start date greater than or equal to the
+   * startDate and an end date less than or equal to the endDate.
+   *
+   * @param startDate The start date of the date range
+   * @param endDate   The end date of the date range
+   * @return a collection of all the courses in the database that have a start date greater than or
+   * equal to the startDate and an end date less than or equal to the endDate
+   */
   public Collection<Course> getCoursesWithinDateRange(String startDate, String endDate) {
     // Define the date format
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -273,6 +292,11 @@ public class CourseService {
     return courseRepository.findAllByStartDateGreaterThanEqualAndEndDateLessThanEqual(start, end);
   }
 
+  /**
+   * Changes the active status of a course.
+   *
+   * @param id The id of the course to change the active status of
+   */
   public void changeActiveCourse(int id) {
     Course courseToChange = getCourseInfo(id);
     if (courseToChange != null) {
@@ -281,35 +305,49 @@ public class CourseService {
     }
   }
 
+  /**
+   * Returns the course with the lowest price for each course.
+   *
+   * @return a map containing the course name as the key and the lowest price as the value.
+   */
   public double getCoursePriceByProviderIdAndCourseId(int providerId, int courseId) {
     // Retrieve the course by id
     Course course = getCourseInfo(courseId);
     if (course == null) {
-        throw new NoSuchElementException("No course found with id: " + courseId);
+      throw new NoSuchElementException("No course found with id: " + courseId);
     }
 
     // Retrieve the provider of the course by id
     Provider provider = providerRepository.findById((long) providerId).orElse(null);
     if (provider == null) {
-        throw new NoSuchElementException("No provider found with id: " + providerId);
+      throw new NoSuchElementException("No provider found with id: " + providerId);
     }
 
     // Retrieve the course provider
-    CourseProvider courseProvider = courseProviderRepository.findByCourseIdAndProviderId(courseId, providerId);
+    CourseProvider courseProvider
+        = courseProviderRepository.findByCourseIdAndProviderId(courseId, providerId);
     if (courseProvider == null) {
-        throw new NoSuchElementException("No course provider found with course id: " + courseId + " and provider id: " + providerId);
+      throw new NoSuchElementException("No course provider found with course id: "
+          + courseId + " and provider id: " + providerId);
     }
 
     // Return the price of the course for the provider
     return courseProvider.getPrice();
-}
+  }
+
 
   public void postKeyword(Keywords keyword) {
-    if(keyword != null) {
+    if (keyword != null) {
       keywordRepository.save(keyword);
     }
   }
 
+  /**
+   * Posts a new keyword into the API, the keyword cannot be null.
+   *
+   * @param courseId   The id of the course
+   * @param keywordIds The keyword to be added into the database
+   */
   public void postKeywordsToCourse(int courseId, Set<Integer> keywordIds) {
 
     for (Integer keywordId : keywordIds) {
@@ -324,23 +362,30 @@ public class CourseService {
     return keywordRepository.findAll();
   }
 
+
   public Course getNewestCourse() {
     int highestId = 0;
     for (Course course : courseRepository.findAll()) {
-      if(course.getCourseId() > highestId) {
+      if (course.getCourseId() > highestId) {
         highestId = course.getCourseId();
       }
     }
     return getCourseInfo(highestId);
   }
 
+  /**
+   * Returns a map of courses and their keywords.
+   *
+   * @return a map of courses and their keywords
+   */
   public Map<Integer, List<Keywords>> getKeywordsOfCourse() {
     Map<Integer, List<Keywords>> courses = new HashMap<>();
     for (Course course : courseRepository.findAll()) {
       List<Keywords> keywords = new ArrayList<>();
       for (CourseKeywords courseKeyword : courseKeywordRepository.findAll()) {
         if (course.getCourseId() == courseKeyword.getCourseId()) {
-          keywords.add(keywordRepository.findById((long) courseKeyword.getKeywordObj()).orElse(null));
+          keywords.add(keywordRepository.findById((long)
+              courseKeyword.getKeywordObj()).orElse(null));
         }
       }
       courses.put(course.getCourseId(), keywords);

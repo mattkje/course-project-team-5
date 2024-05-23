@@ -3,12 +3,12 @@ package no.ntnu.api.config;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import java.util.Date;
+import java.util.function.Function;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-import java.util.function.Function;
 
 /**
  * Utility class for handling JWT tokens.
@@ -19,12 +19,12 @@ public class JwtUtil {
   @Value("${jwt.secret_key}")
   private String SECRET_KEY;
   /**
-   * Key inside JWT token where roles are stored
+   * Key inside JWT token where roles are stored.
    */
   private static final String ROLE_KEY = "roles";
 
   /**
-   * Generate a JWT token for an authenticated user
+   * Generate a JWT token for an authenticated user.
    *
    * @param userDetails Object containing user details
    * @return JWT token string
@@ -44,7 +44,7 @@ public class JwtUtil {
   }
 
   /**
-   * Find username from a JWT token
+   * Find username from a JWT token.
    *
    * @param token JWT token
    * @return Username
@@ -54,7 +54,7 @@ public class JwtUtil {
   }
 
   /**
-   * Check if a token is valid for a given user
+   * Check if a token is valid for a given user.
    *
    * @param token       Token to validate
    * @param userDetails Object containing user details
@@ -83,6 +83,13 @@ public class JwtUtil {
     return extractExpiration(token).before(new Date());
   }
 
+  /**
+   * Refresh a JWT token.
+   *
+   * @param refreshToken Token to refresh
+   * @param userDetails  Object containing user details
+   * @return New JWT token
+   */
   public String refreshToken(String refreshToken, UserDetails userDetails) {
     final String username = extractUsername(refreshToken);
     if (username.equals(userDetails.getUsername()) && !isTokenExpired(refreshToken)) {

@@ -1,7 +1,6 @@
 package no.ntnu.api.course;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import no.ntnu.api.provider.Provider;
@@ -16,41 +15,29 @@ import java.util.List;
 @Table(name = "courses")
 public class Course {
     @Id
-    @Schema(description = "The course id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int courseId;
     @Column()
-    @Schema(description = "The course title")
     private String title;
     @Column(length = 100)
-    @Schema(description = "The course category")
     private String category;
     @Column(length = 50)
-    @Schema(description = "The course level")
     private String level;
     @Column(name = "start_date")
-    @Schema(description = "The course start date")
     private LocalDate start_date;
     @Column(name = "end_date")
-    @Schema(description = "The course size")
     private LocalDate end_date;
     @Column(name = "course_size", length = 5)
-    @Schema(description = "The course hours per week")
     private double courseSize;
     @Column(name = "hours_per_week")
-    @Schema(description = "The course certifications")
     private int hoursPerWeek;
     @Column(name = "related_certifications")
-    @Schema(description = "The course id")
     private String relatedCertifications;
     @Column(name = "description", length = 6000)
-    @Schema(description = "The course description")
     private String description;
     @Column
-    @Schema(description = "The course image")
     private String image;
     @Column
-    @Schema(description = "The course active status")
     private boolean active;
 
     @ManyToMany(fetch = FetchType.LAZY)

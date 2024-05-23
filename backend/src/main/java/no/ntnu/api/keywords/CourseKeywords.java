@@ -1,7 +1,6 @@
 package no.ntnu.api.keywords;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
 /**
@@ -16,16 +15,13 @@ public class CourseKeywords {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Schema(description = "The course keywords id")
     @Column(name = "course_keyword_id")
     private int courseKeywordId;
 
     @Column(name = "course_id")
-    @Schema(description = "The course id")
     private int courseId;
 
     @Column(name = "keyword_id")
-    @Schema(description = "The keyword id")
     private int keyword;
 
     /**

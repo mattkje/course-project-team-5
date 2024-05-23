@@ -2,10 +2,10 @@ package no.ntnu.api.provider;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
-import no.ntnu.api.course.Course;
-
 import java.util.ArrayList;
 import java.util.List;
+import no.ntnu.api.course.Course;
+
 
 /**
  * Represents a provider of a course. A provider is an entity that offers courses to users.
@@ -31,8 +31,8 @@ public class Provider {
   /**
    * Empty constructor needed for JPA.
    */
-    public Provider() {
-    }
+  public Provider() {
+  }
 
   /**
    * Get the id of the provider.
@@ -43,11 +43,11 @@ public class Provider {
     return this.providerId;
   }
 
-    /**
-     * Get the name of the provider.
-     *
-     * @return The name of the provider
-     */
+  /**
+   * Get the name of the provider.
+   *
+   * @return The name of the provider
+   */
   public String getName() {
     return this.name;
   }
@@ -61,11 +61,11 @@ public class Provider {
     this.providerId = providerId;
   }
 
-    /**
-     * Set the name of the provider.
-     *
-     * @param name The name of the provider
-     */
+  /**
+   * Set the name of the provider.
+   *
+   * @param name The name of the provider
+   */
   public void setName(String name) {
     this.name = name;
   }

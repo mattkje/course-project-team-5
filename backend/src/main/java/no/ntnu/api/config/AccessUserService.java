@@ -428,11 +428,17 @@ public class AccessUserService implements UserDetailsService {
     return getUser(username).user().getImage();
   }
 
-    public void deleteUserCourse(User user, int courseId) {
-        for (UserCourses userCourse : userCoursesRepository.findAll()) {
-        if (userCourse.getUserId() == user.getUserId() && userCourse.getCourse().getCourseId() == courseId) {
-            userCoursesRepository.delete(userCourse);
-        }
-        }
+  /**
+   * Delete a course from the currently logged in user.
+   *
+   * @param courseId The ID of the course to delete
+   */
+  public void deleteUserCourse(User user, int courseId) {
+    for (UserCourses userCourse : userCoursesRepository.findAll()) {
+      if (userCourse.getUserId() == user.getUserId()
+          && userCourse.getCourse().getCourseId() == courseId) {
+        userCoursesRepository.delete(userCourse);
+      }
     }
+  }
 }

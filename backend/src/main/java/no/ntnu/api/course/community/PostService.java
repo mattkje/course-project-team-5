@@ -17,6 +17,7 @@ public class PostService {
 
   /**
    * Constructor for the CourseService class.
+   *
    * @param courseRepository The repository for the Course entity.
    */
   @Autowired
@@ -26,7 +27,8 @@ public class PostService {
 
 
   /**
-   * Returns the course that has the matching id as the path variable. If the course does not exist the method will.
+   * Returns the course that has the matching id as the path variable.
+   * If the course does not exist the method will.
    *
    * @param courseId id representing a course. All id's are different.
    * @return course with matching id or a NOT FOUND response.
@@ -40,11 +42,11 @@ public class PostService {
     return null;
   }
 
-    /**
-     * Posts a new course into the API, the course cannot be null.
-     *
-     * @param post The course to be added into the database
-     */
+  /**
+   * Posts a new course into the API, the course cannot be null.
+   *
+   * @param post The course to be added into the database
+   */
   public void postCourse(Post post) {
     if (post != null) {
       courseRepository.save(post);
@@ -67,7 +69,8 @@ public class PostService {
 
   /**
    * Updates an existing course in the database.
-   * @param id The ID of the course to update.
+   *
+   * @param id            The ID of the course to update.
    * @param updatedCourse The updated course object.
    * @return true if the update was successful, false otherwise.
    */

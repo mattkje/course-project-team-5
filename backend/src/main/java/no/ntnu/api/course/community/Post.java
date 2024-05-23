@@ -1,6 +1,5 @@
 package no.ntnu.api.course.community;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,29 +15,21 @@ import java.util.Date;
 @Table(name = "community_posts")
 public class Post {
     @Id
-    @Schema(description = "The course active status")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column()
-    @Schema(description = "The post title")
     private String title;
     @Column()
-    @Schema(description = "The post author")
     private String author;
     @Column(length = 100)
-    @Schema(description = "The post category")
     private String category;
     @Column(length = 100)
-    @Schema(description = "The post description")
     private String description;
     @Column(length = 6000)
-    @Schema(description = "The post content")
     private String content;
     @Column()
-    @Schema(description = "The post post date")
     private Date postDate;
     @Column
-    @Schema(description = "The post image")
     private String image;
 
     public Post() { // This constructor is empty due to the use of the @Entity annotation
