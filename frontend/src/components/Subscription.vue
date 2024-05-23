@@ -11,7 +11,7 @@
                 <div class="ind-membership-purchase-col">
                   <div class="ind-membership-purchase-name">1 month (30 days)</div>
                   <div class="ind-membership-purchase-price">
-                    <span class="ind-membership-purchase-price-value">38,00 kr</span>
+                    <span class="ind-membership-purchase-price-value" id="monthly">10 USD</span>
                   </div>
                 </div>
                 <div class="ind-membership-purchase-button">
@@ -24,7 +24,7 @@
                 <div class="ind-membership-purchase-col">
                   <div class="ind-membership-purchase-name">3 months (90 days)</div>
                   <div class="ind-membership-purchase-price">
-                    <span class="ind-membership-purchase-price-value">76,00 kr</span>
+                    <span class="ind-membership-purchase-price-value" id="quarterly">25 USD</span>
                   </div>
                 </div>
                 <div class="ind-membership-purchase-button">
@@ -33,7 +33,7 @@
                   </button>
                   <div class="monthly-price-notice">
                     <p class="monthly-price-notice__monthly-price">
-                      <span>Equivalent to: 26,00 kr/month</span>
+                      <span id ="quarterly-equivalent">Equivalent to: 26,00 kr/month</span>
                     </p>
                   </div>
                 </div>
@@ -42,7 +42,7 @@
                 <div class="ind-membership-purchase-col">
                   <div class="ind-membership-purchase-name">12 months (365 days)</div>
                   <div class="ind-membership-purchase-price">
-                    <span class="ind-membership-purchase-price-value">190,00 kr</span>
+                    <span class="ind-membership-purchase-price-value" id="yearly">100 USD</span>
                   </div>
                 </div>
                 <div class="ind-membership-purchase-button">
@@ -51,7 +51,7 @@
                   </button>
                   <div class="monthly-price-notice">
                     <p class="monthly-price-notice__monthly-price">
-                      <span>Equivalent to: 16,00 kr/month</span>
+                      <span id="yearly-equaivalent">Equivalent to: 16,00 kr/month</span>
                     </p>
                   </div>
                 </div>
@@ -67,11 +67,37 @@
 import {sendApiRequest} from "@/js/requests";
 import {addRole, getAuthenticatedUser} from "@/js/authentication";
 import Alert from "@/components/Alert.vue";
-import {getCurrentInstance, defineEmits} from "vue";
+import {getCurrentInstance, defineEmits, onMounted} from "vue";
+import {currency, setDefaultCurrency} from "@/js/currency";
 
 const emit = defineEmits(['show-alert']);
 const { appContext } = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
+
+
+onMounted(() => {
+  document.title = 'Learniverse - Subscription';
+  getCurrencyRates();
+});
+
+async function getCurrencyRates() {
+  const defaultCurrency = setDefaultCurrency() || 'USD'
+  console.log(defaultCurrency)
+  await sendApiRequest(API_URL, 'GET', '/currency', (response) => {
+    console.log(response)
+    response.forEach(currency => {
+      if (currency.code == defaultCurrency) {
+        document.getElementById('monthly').innerText = (10 * currency.rate).toFixed(0 ) + ' ' + currency.code;
+        document.getElementById('quarterly').innerText = (25 * currency.rate).toFixed(0 ) + ' ' + currency.code;
+        document.getElementById('quarterly-equivalent').innerText = ('Equivalent to: ' + (25 * currency.rate / 3).toFixed(0) + ' ' + currency.code + '/month')
+        document.getElementById('yearly').innerText = (100 * currency.rate).toFixed(0 ) + ' ' + currency.code;
+        document.getElementById('yearly-equaivalent').innerText = ('Equivalent to: ' + (100 * currency.rate / 12).toFixed(0) + ' ' + currency.code + '/month')
+      }
+    });
+  }, (error) => {
+    console.log(error);
+  });
+}
 
 async function add1MonthSubscription() {
   if(getAuthenticatedUser()) await sendApiRequest(API_URL,'PUT', '/users/purchase-pro/1-month', successfulExecution, error);
