@@ -1,7 +1,13 @@
 <script setup>
 import {getCurrentInstance, onMounted, ref, watchEffect} from "vue";
 import {currency, setDefaultCurrency} from "@/js/currency";
-import {createContentBox, fetchCourses, fetchCurrencies, fetchProviders} from "@/js/populationTools";
+import {
+  createContentBox,
+  fetchCourses,
+  fetchCoursesWithKeyWords,
+  fetchCurrencies,
+  fetchProviders
+} from "@/js/populationTools";
 import {sendApiRequest} from "@/js/requests";
 import flatPickr from 'vue-flatpickr-component';
 import 'flatpickr/dist/flatpickr.css';
@@ -81,15 +87,31 @@ async function populateCourses(selector) {
   document.querySelector(selector).innerHTML = '';
   const defaultCurrency = setDefaultCurrency() || 'USD';
   try {
-    const [data, currencies, providers] = await Promise.all([fetchCourses(API_URL), fetchCurrencies(API_URL), fetchProviders(API_URL)]);
+    const [data, currencies, providers,keywords] = await Promise.all([fetchCourses(API_URL), fetchCurrencies(API_URL), fetchProviders(API_URL),fetchCoursesWithKeyWords(API_URL)]);
 
     coursesData.value = data;
     currenciesData.value = currencies;
     providerData.value = providers;
 
+
+
     data.forEach(courseProvider => {
       if (courseProvider.course.title.toLowerCase().includes(searchQuery.value.toLowerCase()) || courseProvider.course.category.toLowerCase().includes(searchQuery.value.toLowerCase())) {
         const contentBox = createContentBox(courseProvider, currencies, defaultCurrency);
+        if (keywords.hasOwnProperty(courseProvider.course.courseId)) {
+
+          let keywordObject = keywords[courseProvider.course.courseId];
+          if (keywordObject.length > 0) {
+            const keywordText = document.createElement('p');
+            keywordText.className = 'content-box-keyword';
+            keywordText.id = `keyword-${courseProvider.course.courseId}`;
+            keywordObject.forEach(keyword => {
+              keywordText.innerText += `${keyword.keyword}, `;
+            });
+            keywordText.style.display = 'none';
+            contentBox.appendChild(keywordText);
+          }
+        }
         document.querySelector(selector).appendChild(contentBox.cloneNode(true));
       }
     });
@@ -412,7 +434,12 @@ async function sortByPriceRange() {
 function searchCourses() {
   for (let child of children) {
     let childTitle = child.querySelector('.content-box-title').textContent.toLowerCase();
-    if (!childTitle.includes(searchQuery.value.toLowerCase())) {
+    let childKeywords = '';
+    if (child.querySelector('.content-box-keyword') !== null) {
+      childKeywords = child.querySelector('.content-box-keyword').innerText;
+    }
+    console.log(childKeywords)
+    if (!childTitle.includes(searchQuery.value.toLowerCase()) && !childKeywords.toLowerCase().includes(searchQuery.value.toLowerCase()) && searchQuery.value !== '') {
       searchedChildren.set(child, 1);
     } else if (searchedChildren.has(child)) {
       searchedChildren.delete(child);

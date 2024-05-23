@@ -30,6 +30,11 @@ export async function fetchProviders(API_URL) {
     return response.json();
 }
 
+export async function fetchCoursesWithKeyWords(API_URL) {
+    const response = await fetch(API_URL + '/courses/keywords');
+    return response.json();
+}
+
 export function createContentBox(courseProvider, currencies, defaultCurrency) {
     const contentBox = document.createElement('a');
     contentBox.href = `/courses?id=${courseProvider.course.courseId}`;
