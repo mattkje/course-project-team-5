@@ -71,7 +71,7 @@ export default {
       }
     });
 
-    return { currentImage };
+    return {currentImage};
   },
 };
 </script>
@@ -86,36 +86,76 @@ export default {
   background-color: var(--light-3);
 }
 
-.course-display {
-  text-decoration: none;
-  width: 1300px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
-  margin: 75px auto auto auto;
-  border-radius: 20px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  &:hover {
-    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.33);
+@media (max-width: 1100px) {
+  .course-display {
+    text-decoration: none;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
+    margin: 75px auto auto auto;
+    border-radius: 20px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+      box-shadow: 0 4px 5px rgba(0, 0, 0, 0.33);
+    }
+  }
+
+  .course-display-info {
+    background-color: var(--light-1);
+    padding: 20px;
+    height: 250px;
+    width: 100%;
+    margin: 0;
+    border-radius: 0 0 20px 20px;
+  }
+
+  img {
+    width: 100%;
+    object-fit: cover;
+    height: 250px;
+    border-radius: 20px 20px 0 0;
   }
 }
 
-.course-display-info {
-  background-color: var(--light-1);
-  padding: 20px;
-  height: 500px;
-  width: 600px;
-  margin: 0;
-  border-radius: 0 20px 20px 0;
+@media (min-width: 1100px) {
+  .course-display {
+    text-decoration: none;
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
+    margin: 75px auto auto auto;
+    border-radius: 20px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+      box-shadow: 0 4px 5px rgba(0, 0, 0, 0.33);
+    }
+  }
+
+  .course-display-info {
+    background-color: var(--light-1);
+    padding: 20px;
+    height: 500px;
+    width: 600px;
+    margin: 0;
+    border-radius: 0 20px 20px 0;
+  }
+
+  img {
+    width: 100%;
+    object-fit: cover;
+    height: 500px;
+    border-radius: 20px 0 0 20px;
+  }
+
 }
 
-img {
-  width: 100%;
-  object-fit: cover;
-  height: 500px;
-  border-radius: 20px 0 0 20px;
-}
 
 .curtain {
   position: absolute;
@@ -124,7 +164,7 @@ img {
   align-items: center;
   top: 146px;
   height: 500px;
-  width: 1300px;
+  width: 70%;
   left: 0;
   right: 0;
   margin-left: auto;

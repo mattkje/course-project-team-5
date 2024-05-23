@@ -41,7 +41,7 @@ function error() {
 
   .background h1 {
     font-size: 30px;
-    margin: 20px 0;
+    margin: 20px 0 ;
   }
 }
 
@@ -56,6 +56,16 @@ span {
   align-items: center;
   flex-direction: column;
   margin: 0;
+}
+
+.background h1 {
+  background-color: var(--light-1);
+  padding: 20px;
+  width: 70%;
+  text-align: center;
+  border-radius: 20px;
+  margin: 20px 0 60px 0;
+  box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
 }
 
 </style>
