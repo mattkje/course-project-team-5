@@ -1,13 +1,42 @@
 <script>
+
 export default {
   name: "PaymentSuccess",
   methods: {
     returnHome() {
       // Assuming you are using Vue Router, this navigates to the home page
       this.$router.push('/');
+    },
+    removeCookies(courseId) {
+      document.cookie = 'courseId_' + courseId + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+      document.cookie = 'providerId_' + courseId + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+      document.cookie = 'price_' + courseId + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    },
+    returnHomeAndRemoveCookies() {
+      const allCookies = document.cookie;
+      const { courseIds } = this.getCourseAndProviderIds(allCookies);
+      courseIds.forEach(courseId => {
+        this.removeCookies(courseId);
+      });
+      this.returnHome();
+    },
+    getCourseAndProviderIds(allCookies) {
+      const cookieArray = allCookies.split('; ');
+      let courseIds = [];
+
+      cookieArray.forEach(cookieStr => {
+        const [name, value] = cookieStr.split('=');
+        if (name.startsWith('courseId_')) {
+          courseIds.push(value);
+        }
+      });
+
+      return { courseIds };
     }
   }
 }
+
+
 </script>
 
 
@@ -18,7 +47,7 @@ export default {
       <h1>Payment Successful</h1>
       <p>This is a simulated payment successful page</p>
     </div>
-    <button @click="returnHome">Return Home</button>
+    <button @click="returnHomeAndRemoveCookies">Return Home</button>
   </div>
 
 </template>
