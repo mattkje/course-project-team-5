@@ -1,8 +1,13 @@
 package no.ntnu.api.user;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import java.util.List;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import no.ntnu.api.config.*;
 import no.ntnu.api.course.userCourses.UserCourses;
 import no.ntnu.api.role.Role;
@@ -296,46 +301,6 @@ public class UserController {
   }
 
   /**
-   * Allow user to buy a pro subscription.
-   *
-   * @param subscriptionType The type of subscription
-   * @return The response
-   */
-  @Schema(description = "Allow user to buy a pro subscription")
-  @PutMapping("/purchase-pro/{subscriptionType}")
-  public ResponseEntity<?> purchasePro(@PathVariable String subscriptionType) {
-    UserWithCourses sessionUser = userService.getSessionUser();
-    if (sessionUser != null) {
-      if (userService.isPro()) {
-        return ResponseEntity.status(
-            HttpStatus.BAD_REQUEST).body("This user already has the Pro role");
-      }
-      userService.purchasePro(sessionUser.user(), subscriptionType);
-      return ResponseEntity.status(HttpStatus.OK).body("Pro role successfully added");
-    } else {
-      return ResponseEntity.status(
-          HttpStatus.UNAUTHORIZED).body("Profile data accessible only to authenticated users");
-    }
-  }
-
-  @Schema(description = "Unsubscribe from a pro subscription")
-  @PutMapping("/unsubscribe")
-  public ResponseEntity<?> unsubscribe() {
-    UserWithCourses sessionUser = userService.getSessionUser();
-    if (sessionUser != null) {
-      if (!userService.isPro()) {
-        return ResponseEntity.status(
-            HttpStatus.BAD_REQUEST).body("This user does not have the Pro role");
-      }
-      userService.unsubscribe(sessionUser.user());
-      return ResponseEntity.status(HttpStatus.OK).body("Pro role successfully removed");
-    } else {
-      return ResponseEntity.status(
-          HttpStatus.UNAUTHORIZED).body("Profile data accessible only to authenticated users");
-    }
-  }
-
-  /**
    * Check for expired subscriptions and remove pro role if expired.
    */
   @Schema(description = "Check for expired subscriptions and remove pro role if expired")
@@ -354,22 +319,71 @@ public class UserController {
   public ResponseEntity<?> addCourse(@PathVariable int courseId) {
     UserWithCourses sessionUser = userService.getSessionUser();
     if (sessionUser != null) {
-      userService.addUserCourse(sessionUser.user(), courseId);
-      return ResponseEntity.status(HttpStatus.OK).body("Course successfully added");
+        userService.addUserCourse(sessionUser.user(), courseId);
+        return ResponseEntity.status(HttpStatus.OK).body("Course successfully added");
     }
-    return ResponseEntity.status(
-        HttpStatus.UNAUTHORIZED).body("Profile data accessible only to authenticated users");
-  }
+      return ResponseEntity.status(
+              HttpStatus.UNAUTHORIZED).body("Profile data accessible only to authenticated users");
+    }
+    /**
+     * Allow user to buy a pro subscription.
+     *
+     * @param subscriptionType The type of subscription
+     * @return The response
+     */
 
-  @Schema(description = "Delete a course for a user")
-  @DeleteMapping("/delete-course/{courseId}")
-  public ResponseEntity<?> deleteCourse(@PathVariable int courseId) {
-    UserWithCourses sessionUser = userService.getSessionUser();
-    if (sessionUser != null) {
-      userService.deleteUserCourse(sessionUser.user(), courseId);
-      return ResponseEntity.status(HttpStatus.OK).body("Course successfully deleted");
+    @PutMapping("/purchase-pro/{subscriptionType}")
+    @ApiOperation(value= "Purchase a pro subscription", notes = "Allow user to buy a pro subscription")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Pro role successfully added"),
+            @ApiResponse(responseCode = "400", description = "This user already has the Pro role"),
+            @ApiResponse(responseCode = "401", description = "Profile data accessible only to authenticated users")
+    })
+    public ResponseEntity<?> purchasePro(@ApiParam("Type of subscription the user wants to buy. ex: '1-month', '3months'.") @PathVariable String subscriptionType) {
+        UserWithCourses sessionUser = userService.getSessionUser();
+        if (sessionUser != null) {
+            if (userService.isPro()) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("This user already has the Pro role");
+            }
+            userService.purchasePro(sessionUser.user(), subscriptionType);
+            return ResponseEntity.status(HttpStatus.OK).body("Pro role successfully added");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Profile data accessible only to authenticated users");
+        }
     }
-    return ResponseEntity.status(
-        HttpStatus.UNAUTHORIZED).body("Profile data accessible only to authenticated users");
+
+    @PutMapping("/unsubscribe")
+    @ApiOperation(value= "Unsubscribe from pro subscription", notes = "Remove pro role from user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Pro role successfully removed"),
+            @ApiResponse(responseCode = "400", description = "This user does not have the Pro role"),
+            @ApiResponse(responseCode = "401", description = "Profile data accessible only to authenticated users")
+    })
+    public ResponseEntity<?> unsubscribe() {
+            UserWithCourses sessionUser = userService.getSessionUser();
+            if (sessionUser != null) {
+                if (!userService.isPro()) {
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("This user does not have the Pro role");
+                }
+                userService.unsubscribe(sessionUser.user());
+                return ResponseEntity.status(HttpStatus.OK).body("Pro role successfully removed");
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Profile data accessible only to authenticated users");
+            }
+        }
+
+    @DeleteMapping("/delete-course/{courseId}")
+    @Operation(summary = "Delete a course for a user", description = "Delete a course for a user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Course successfully deleted"),
+            @ApiResponse(responseCode = "401", description = "Profile data accessible only to authenticated users")
+    })
+    public ResponseEntity<?> deleteCourse(@PathVariable int courseId) {
+        UserWithCourses sessionUser = userService.getSessionUser();
+        if (sessionUser != null) {
+            userService.deleteUserCourse(sessionUser.user(), courseId);
+            return ResponseEntity.status(HttpStatus.OK).body("Course successfully deleted");
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Profile data accessible only to authenticated users");
+    }
   }
-}

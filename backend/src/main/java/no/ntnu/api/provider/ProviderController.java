@@ -1,7 +1,9 @@
 package no.ntnu.api.provider;
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.Operation;
 import java.util.List;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import no.ntnu.api.config.AccessUserService;
 import no.ntnu.api.course.Course;
 import no.ntnu.api.course.CourseService;
@@ -26,22 +28,26 @@ public class ProviderController {
     this.userService = userService;
   }
 
-  @Schema(description = "Get all providers")
   @GetMapping
+  @Operation(summary = "Get all providers", description = "Returns a list of all providers.")
   public List<Provider> getAllProviders() {
     return providerService.getAllProviders();
   }
 
-  @Schema(description = "Get a provider by id")
   @GetMapping("/{id}")
+    @Operation(summary = "Get provider by id", description = "Returns the provider that has the matching id as the path variable.")
   public ResponseEntity<Provider> getProviderById(@PathVariable Integer id) {
     return providerService.getProviderById(id)
         .map(ResponseEntity::ok)
         .orElse(ResponseEntity.notFound().build());
   }
 
-  @Schema(description = "Get all courses by provider id")
   @GetMapping("/{providerId}/courses")
+    @Operation(summary = "Get courses by provider", description = "Returns a list of courses that are provided by the provider with the matching id as the path variable.")
+  @ApiResponses(value = {
+    @ApiResponse(responseCode = "200", description = "Courses found"),
+    @ApiResponse(responseCode = "404", description = "Courses not found")
+  })
   public ResponseEntity<List<Course>> getCoursesByProvider(@PathVariable Long providerId) {
     List<Course> courses = courseService.getCoursesByProviderId(providerId);
     if (courses.isEmpty()) {
@@ -51,8 +57,12 @@ public class ProviderController {
     }
   }
 
-  @Schema(description = "Get a provider by name")
   @GetMapping("/name/{name}")
+  @Operation(summary = "Get provider by name", description = "Returns the provider that has the matching name as the path variable.")
+  @ApiResponses(value = {
+    @ApiResponse(responseCode = "200", description = "Provider found"),
+    @ApiResponse(responseCode = "404", description = "Provider not found")
+  })
   public ResponseEntity<Long> getProviderIdByName(@PathVariable String name) {
     return providerService.getProviderIdByName(name)
         .map(ResponseEntity::ok)
@@ -66,10 +76,12 @@ public class ProviderController {
    * @param provider The provider to be added into the database
    * @return either a bad request or created status.
    */
-  @Schema(description = "Post a provider")
   @PostMapping("{courseId}")
-  public ResponseEntity<CourseProvider> postProvider(
-      @PathVariable int courseId, @RequestBody CourseProvider provider) {
+  @Operation(summary = "Post provider", description = "Posts a new provider into the API.")
+  @ApiResponses(value = {
+          @ApiResponse(responseCode = "201", description = "Provider created"),
+          @ApiResponse(responseCode = "400", description = "Bad request")})
+  public ResponseEntity<CourseProvider> postProvider(@PathVariable int courseId, @RequestBody CourseProvider provider) {
     if (provider == null && userService.isAdmin()) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     } else {
@@ -78,8 +90,12 @@ public class ProviderController {
     }
   }
 
-  @Schema(description = "Get the price of a course given a provider id and a course id")
   @GetMapping("/api/courses/{courseId}/providers/{providerId}/price")
+  @Operation(summary = "Get course price by provider id and course id", description = "Returns the price of the course that has the matching id as the path variable.")
+  @ApiResponses(value = {
+          @ApiResponse(responseCode = "200", description = "Course price found"),
+          @ApiResponse(responseCode = "404", description = "Course price not found")
+  })
   public ResponseEntity<Double> getCoursePriceByProviderIdAndCourseId(
       @PathVariable int courseId, @PathVariable int providerId) {
     double price;
@@ -92,8 +108,12 @@ public class ProviderController {
     return ResponseEntity.status(HttpStatus.OK).body(price);
   }
 
-  @Schema(description = "Post a provider")
   @PostMapping
+    @Operation(summary = "Post provider", description = "Posts a new provider into the API.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Provider created"),
+            @ApiResponse(responseCode = "400", description = "Bad request")
+    })
   public ResponseEntity<Provider> postProvider(@RequestBody Provider provider) {
     if (provider == null && userService.isAdmin()) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
