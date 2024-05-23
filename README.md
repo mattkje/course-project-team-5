@@ -53,6 +53,18 @@ Vue.js is a progressive JavaScript framework for building user interfaces. Unlik
 
 </div>
 
+## How To
+Before you begin, ensure you have installed the latest version of Node.js.
+
+ ```
+   Setup MySQL -  Setup New Connection - Host: localhost Port 3306 - User: root - Password: 'Your password'
+   run /backend/src/main/resources/db.migration/update-schema.sql
+   run /backend/src/main/java/no/ntnu/Application (This has to be configured with a .env file, which is not provided)
+
+   run 'npm install' to install dependencies.
+   To set up the frontend, you have to set up a npm configuration which runs 'run' as command 
+    and 'serve' as Scripts (you have to select the /frontend/package.json) as package.json.
+```
 
 ## Requirements
 
@@ -97,17 +109,3 @@ shareable links, stock of products)
 - **[Documentation](https://drive.google.com/drive/folders/1dnp1F-qoZYDw4lbvyHWyZIOfUUeed7VV)** Google Drive folder containing all documents.
 - **[Wireframes](https://www.figma.com/file/5t3L0Wnz9uqJoAvucoNp63/IDATA-2301-%26-2306-Wireframes?type=design&node-id=0%3A1&mode=design&t=kIWWhxp0uJbGogJn-1)** Sketches for the website, reference point for building web application.
 - **[Mindmap](https://mm.tt/app/map/3112803398?t=xNWqS5i0rP)** Ideas and notes related to the project.
-
-## How To
-Before you begin, ensure you have installed the latest version of Node.js.
-
- ```
-   Setup MySQL -  Setup New Connection - Host: localhost Port 3306 - User: root - Password: 'Your password'
-   run /backend/src/main/resources/db.migration/update-schema.sql
-   run /backend/src/main/java/no/ntnu/Application (This has to be configured with a .env file, which is not provided)
-
-   run 'npm install' to install dependencies.
-   To set up the frontend, you have to set up a npm configuration which runs 'run' as command 
-    and 'serve' as Scripts (you have to select the /frontend/package.json) as package.json.
-```
-
