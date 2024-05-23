@@ -438,7 +438,6 @@ function searchCourses() {
     if (child.querySelector('.content-box-keyword') !== null) {
       childKeywords = child.querySelector('.content-box-keyword').innerText;
     }
-    console.log(childKeywords)
     if (!childTitle.includes(searchQuery.value.toLowerCase()) && !childKeywords.toLowerCase().includes(searchQuery.value.toLowerCase()) && searchQuery.value !== '') {
       searchedChildren.set(child, 1);
     } else if (searchedChildren.has(child)) {

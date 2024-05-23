@@ -159,8 +159,11 @@ img {
   25% {
     transform: scaleX(0);
   }
-  80% {
+  50% {
     transform: scaleX(0);
+  }
+  95% {
+    transform: scaleX(1);
   }
   100% {
     transform: scaleX(100%);
