@@ -320,16 +320,11 @@ function editCourseCard(object, course) {
 </script>
 
 <template>
-    <h1></h1>
-    <ul>
-      <li class="title" v-for="course in courses" :key="course.id">
-        {{ course.name }}
-      </li>
-    </ul>
+    <h1>
+    </h1>
   <div class="parent-container">
     <div class="title">
       <h1>Cart</h1>
-      <p class="itemCountText"> {{ cartText }}</p>
     </div>
     <div class="center-container">
       <div class="left-items">
@@ -438,7 +433,7 @@ function editCourseCard(object, course) {
   }
 
   .left-items {
-    height: 100%; /* Ensure it takes the full height */
+    height: 100%;
     width: 1000px;
     margin: 30px 10px;
     display: flex;
@@ -539,13 +534,6 @@ function editCourseCard(object, course) {
 
 .course-name {
   margin-right: 20px;
-}
-
-.remove-button {
-  align-self: flex-end;
-  color: red;
-  background: none;
-  border: none;
 }
 
 .couponContainer {
