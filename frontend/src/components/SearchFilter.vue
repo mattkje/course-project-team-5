@@ -136,6 +136,7 @@ function populateCheckboxes(selector, data,dataType,checkedRef, changeHandler) {
 
       const label = document.createElement('label');
       label.className = 'cbx';
+      label.style='max-width: 100%'
       label.setAttribute('for', itemName);
       label.textContent = itemName;
       checkboxWrapper.appendChild(label);
