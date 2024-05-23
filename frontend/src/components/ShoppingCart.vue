@@ -263,7 +263,6 @@ async function updateCartTotal() {
 
   const totalCostElement = document.createElement("p");
   totalCostElement.innerText = "Total: " + symbol + " " + totalCost.toFixed(2);
-  totalCostElement.style.fontWeight = "bold";
   totalPrice.appendChild(totalCostElement);
 }
 

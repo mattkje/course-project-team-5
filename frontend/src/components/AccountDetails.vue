@@ -1,10 +1,5 @@
 <template>
   <div class="profile-box" id="profileInformation">
-    <div v-show="loading" class="three-body">
-      <div class="three-body__dot"></div>
-      <div class="three-body__dot"></div>
-      <div class="three-body__dot"></div>
-    </div>
     <div class="title" v-show="!changePassword">
       <h1>Account Details</h1>
       <p>Manage your profile</p>

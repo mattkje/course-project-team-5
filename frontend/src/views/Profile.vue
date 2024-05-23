@@ -16,14 +16,21 @@
         <button class="nav-button" @click="myCourses()"><img alt="My Courses" class="nav-icon" src="/settingscourses.svg">My Courses</button>
         <button class="nav-button" @click="subscription()"><img alt="Subscription" class="nav-icon"src="/settingswallet.svg">Subscription</button>
       </div>
+
+      <div v-show="loading" class="loader">
+        <div class="wrapper">
+          <div class="circle"></div>
+          <div class="line-1"></div>
+          <div class="line-2"></div>
+          <div class="line-3"></div>
+          <div class="line-4"></div>
+          <div class="line-5"></div>
+        </div>
+      </div>
+
       <AccountDetails v-show="navigate === 'accountDetails' && !loading && !changePassword" @newPassword="newPassword()"
                       @doLogoutToHome="doLogoutToHome()" @changeProfilePicture="changeProfilePicture()"/>
       <div class="profile-box" id="profileInformation" v-show="navigate === 'myCourses' && !loading">
-        <div v-show="loading" class="three-body">
-          <div class="three-body__dot"></div>
-          <div class="three-body__dot"></div>
-          <div class="three-body__dot"></div>
-        </div>
         <div class="title" v-show="!loading">
           <h1>My Courses</h1>
           <p>Manage your courses</p>
@@ -398,6 +405,18 @@ function onProfilePictureError(error) {
     box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
   }
 
+  .loader {
+    position: relative;
+    width: 93%;
+    height: 740px;
+    margin: 10px auto;
+    border: 1px solid #ffffff;
+    border-radius: 30px;
+    padding: 20px 20px 40px 20px;
+    background-color: #ffffff;
+    overflow: hidden;
+  }
+
 }
 
 @media (min-width: 1201px) {
@@ -481,6 +500,18 @@ function onProfilePictureError(error) {
     background-color: var(--light-3);
     margin: 0;
     padding-top: 50px;
+  }
+  .loader {
+    position: relative;
+    max-width: 1100px;
+    width: 55%;
+    height: 740px;
+    margin: 10px auto;
+    border: 1px solid #ffffff;
+    border-radius: 30px;
+    padding: 20px 20px 40px 20px;
+    background-color: #ffffff;
+    overflow: hidden;
   }
 }
 
@@ -574,5 +605,94 @@ hr {
   display: flex;
   justify-content: center;
   gap: 20px;
+}
+
+
+
+.loader:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: linear-gradient(110deg, rgba(227, 227, 227, 0) 0%, rgba(227, 227, 227, 0) 40%, rgba(255, 255, 255, 0.5) 50%, rgba(227, 227, 227, 0) 60%, rgba(227, 227, 227, 0) 100%);
+  animation: gradient-animation_2 1.2s linear infinite;
+}
+
+.loader .wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.loader .wrapper > div {
+  background-color: #ececec;
+}
+
+.loader .circle {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  height: 20px;
+  width: 30%;
+}
+
+.loader .circle {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  height: 20px;
+  width: 30%;
+}
+
+.loader .line-1 {
+  position: absolute;
+  top: 70px;
+  left: 0;
+  height: 10px;
+  width: 20%;
+}
+
+.loader .line-2 {
+  position: absolute;
+  top: 210px;
+  left: 0;
+  height: 10px;
+  width: 64%;
+}
+
+.loader .line-3 {
+  position: absolute;
+  top: 300px;
+  left: 0px;
+  height: 50px;
+  width: 100%;
+}
+
+.loader .line-4 {
+  position: absolute;
+  top: 400px;
+  left: 0px;
+  height: 50px;
+  width: 92%;
+}
+
+.loader .line-5 {
+  position: absolute;
+  top: 500px;
+  left: 0;
+  height: 50px;
+  width: 100%;
+}
+
+@keyframes gradient-animation_2 {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
 }
 </style>
