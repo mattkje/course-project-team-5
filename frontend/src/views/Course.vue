@@ -692,6 +692,59 @@ function loadButtons() {
   .courseLinkElement {
     padding-top: 20px;
   }
+
+
+  #scrollLeftButton,
+  #scrollRightButton {
+    display: none;
+  }
+}
+
+@media (min-width: 769px) {
+  .featured {
+    justify-content: space-between;
+    background: #f8f8ff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    width: 100%;
+    min-height: 550px;
+    padding: 50px 30px;
+    margin: 30px 0;
+    display: flex;
+    overflow: auto;
+  }
+
+  .content-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+  }
+
+  .rightArrow {
+    transform: scaleX(-1);
+    transition: filter 0.5s ease;
+
+    &:hover {
+      filter: brightness(0.8);
+    }
+
+    &:active {
+      filter: brightness(0.9);
+    }
+  }
+
+  .leftArrow {
+    transition: filter 0.5s ease;
+
+    &:hover {
+      filter: brightness(0.8);
+    }
+
+    &:active {
+      filter: brightness(0.9);
+    }
+  }
 }
 
 @media (max-width: 1100px) {
@@ -762,10 +815,6 @@ function loadButtons() {
     box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
   }
 
-  #scrollLeftButton,
-  #scrollRightButton {
-    display: none;
-  }
 
   .featured {
     padding: 20px;
@@ -907,6 +956,22 @@ function loadButtons() {
     text-decoration: none;
   }
 
+  .featured {
+    justify-content: space-between;
+    background: #f8f8ff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 20px;
+    width: 100%;
+    min-height: 550px;
+    padding: 50px 30px;
+    margin: 30px 0;
+    display: flex;
+    overflow: auto;
+
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
   .greeting {
     border: none;
     border-radius: 15px;
@@ -918,38 +983,9 @@ function loadButtons() {
     margin: 0 auto;
   }
 
-  .content-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
-    padding: 0;
-  }
 
-  .rightArrow {
-    transform: scaleX(-1);
-    transition: filter 0.5s ease;
 
-    &:hover {
-      filter: brightness(0.8);
-    }
 
-    &:active {
-      filter: brightness(0.9);
-    }
-  }
-
-  .leftArrow {
-    transition: filter 0.5s ease;
-
-    &:hover {
-      filter: brightness(0.8);
-    }
-
-    &:active {
-      filter: brightness(0.9);
-    }
-  }
 
   .course-info {
     background-color: var(--light-1);
