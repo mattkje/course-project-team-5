@@ -1,10 +1,8 @@
 <script setup>
-import {getCurrentInstance, onMounted, ref} from 'vue';
-import {doLogout, getAuthenticatedUser, hasRole, removeRole} from "@/js/authentication";
-import {sendApiRequest, sendTokenRefreshRequest} from "@/js/requests";
-import {createContentBox, fetchCourseById, fetchCourses, fetchCurrencies, fetchProviders} from "@/js/populationTools";
-import {getCookie, isTokenAboutToExpire, setCookie} from "@/js/tools";
-import {currency, setDefaultCurrency} from "@/js/currency";
+import {getCurrentInstance, onMounted} from 'vue';
+import {fetchCourseById, fetchCurrencies} from "@/js/populationTools";
+import {getCookie, setCookie} from "@/js/tools";
+import {setDefaultCurrency} from "@/js/currency";
 
 let price = 0;
 let data = 0;
@@ -21,11 +19,9 @@ async function applyCoupon() {
     return;
   } else {
     setCookie("coupon", couponCode, 1)
-    alert("Coupon code applied successfully! You have received a 20% discount on your purchase.")
+    alert("Coupon code (" + couponCode.toUpperCase() +") applied successfully! You have received a 20% discount on your purchase.")
   }
-  //remove
   updateCartTotal();
-  console.log(couponCode);
 }
 
 onMounted(async () => {
@@ -252,7 +248,6 @@ async function updateCartTotal() {
 
   if (appliedCouponCode !== null) {
     totalCost *= 0.8;
-    console.log("wtf");
   }
 
   const couponCodeAppliedMessage = document.createElement("p");
