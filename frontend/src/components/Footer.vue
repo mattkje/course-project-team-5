@@ -10,6 +10,8 @@
         <h5>Contact Us</h5>
         <p>Email: info@learniverse.com</p>
         <p>Phone: +47 70 70 70 70</p>
+        <p>Address: Festningsgata 2</p>
+        <p>7014 Trondheim</p>
       </div>
       <div class="footer-section">
         <h5>Created by Team 5 at</h5>

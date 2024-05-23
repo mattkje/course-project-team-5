@@ -3,6 +3,7 @@
   <div class="membership-wrap">
     <div class="learniverse-membership">
       <h3>Learniverse Pro Membership</h3>
+      <p class="message">Learniverse Pro courses are not hosted by Learniverse Connect, but with close partners borrowing our brand</p>
       <div class="membership-plans">
         <div class="list-of-memberships">
           <div class="list-of-prices">
@@ -165,6 +166,9 @@ function error() {
   animation: ease-in-out fadeIn 1.5s;
 }
 
+.message {
+  margin: 0 0 0 30px;
+}
 
 .course-card img {
   width: 100%;
