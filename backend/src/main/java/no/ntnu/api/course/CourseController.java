@@ -171,4 +171,9 @@ public class CourseController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
+
+    @GetMapping("/api/courses/keywords")
+    public ResponseEntity<?> getKeywordsofCourses() {
+        return ResponseEntity.status(HttpStatus.OK).body(courseService.getKeywordsOfCourse());
+    }
 }

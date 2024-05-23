@@ -334,4 +334,17 @@ public class CourseService {
     return getCourseInfo(highestId);
   }
 
+  public Map<Integer, List<Keywords>> getKeywordsOfCourse() {
+    Map<Integer, List<Keywords>> courses = new HashMap<>();
+    for (Course course : courseRepository.findAll()) {
+      List<Keywords> keywords = new ArrayList<>();
+      for (CourseKeywords courseKeyword : courseKeywordRepository.findAll()) {
+        if (course.getCourseId() == courseKeyword.getCourseId()) {
+          keywords.add(keywordRepository.findById((long) courseKeyword.getKeywordObj()).orElse(null));
+        }
+      }
+      courses.put(course.getCourseId(), keywords);
+    }
+    return courses;
+  }
 }
