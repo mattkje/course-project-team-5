@@ -14,68 +14,68 @@ import jakarta.persistence.*;
 @Table(name = "course_keywords")
 public class CourseKeywords {
 
-    @Schema(description = "The course keyword id")
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "course_keyword_id")
-    private int courseKeywordId;
+  @Schema(description = "The course keyword id")
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "course_keyword_id")
+  private int courseKeywordId;
 
-    @Schema(description = "The course id")
-    @Column(name = "course_id")
-    private int courseId;
+  @Schema(description = "The course id")
+  @Column(name = "course_id")
+  private int courseId;
 
-    @Schema(description = "The keyword id")
-    @Column(name = "keyword_id")
-    private int keyword;
+  @Schema(description = "The keyword id")
+  @Column(name = "keyword_id")
+  private int keyword;
 
-    /**
-     * Empty constructor needed for JPA.
-     */
-    public CourseKeywords() {
-    }
+  /**
+   * Empty constructor needed for JPA.
+   */
+  public CourseKeywords() {
+  }
 
-    /**
-     * Set the id of the keyword.
-     *
-     * @param keyword The id of the keyword
-     */
-    public void setKeywordObj(int keyword) {
-        this.keyword = keyword;
-    }
+  /**
+   * Set the id of the keyword.
+   *
+   * @param keyword The id of the keyword
+   */
+  public void setKeywordObj(int keyword) {
+    this.keyword = keyword;
+  }
 
-    /**
-     * Get the id of the keyword.
-     *
-     * @return The id of the keyword
-     */
-    public int getKeywordObj() {
-        return keyword;
-    }
+  /**
+   * Get the id of the keyword.
+   *
+   * @return The id of the keyword
+   */
+  public int getKeywordObj() {
+    return keyword;
+  }
 
-    /**
-     * Set the id of the course.
-     *
-     * @param keywordName The id of the course
-     */
-    public void setCourseId(int keywordName) {
-        this.courseId = keywordName;
-    }
+  /**
+   * Set the id of the course.
+   *
+   * @param keywordName The id of the course
+   */
+  public void setCourseId(int keywordName) {
+    this.courseId = keywordName;
+  }
 
-    /**
-     * Get the id of the course.
-     *
-     * @return The id of the course
-     */
-    public Integer getCourseId() {
-        return courseId;
-    }
+  /**
+   * Get the id of the course.
+   *
+   * @return The id of the course
+   */
+  public Integer getCourseId() {
+    return courseId;
+  }
 
-    /**
-     * Get the id of the course keyword.
-     *
-     * @return The id of the course keyword
-     */
-    public Integer getCourseKeywordId() {
-        return courseKeywordId;
-    }
+  /**
+   * Get the id of the course keyword.
+   *
+   * @return The id of the course keyword
+   */
+  public Integer getCourseKeywordId() {
+    return courseKeywordId;
+  }
 }

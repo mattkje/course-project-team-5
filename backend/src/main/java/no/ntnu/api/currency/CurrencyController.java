@@ -12,26 +12,26 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/currency")
 public class CurrencyController {
 
-    private final CurrencyService currencyService;
+  private final CurrencyService currencyService;
 
-    /**
-     * Create controller
-     *
-     * @param currencyService The service to use
-     */
-    @Autowired
-    public CurrencyController(CurrencyService currencyService) {
-        this.currencyService = currencyService;
-    }
+  /**
+   * Create controller.
+   *
+   * @param currencyService The service to use
+   */
+  @Autowired
+  public CurrencyController(CurrencyService currencyService) {
+    this.currencyService = currencyService;
+  }
 
-    /**
-     * Get all currencies
-     *
-     * @return List of currencies
-     */
-    @Schema(description = "Get all currencies")
-    @GetMapping
-    public List<Currency> getCurrencies() {
-        return currencyService.getCurrencies();
-    }
+  /**
+   * Get all currencies.
+   *
+   * @return List of currencies
+   */
+  @Schema(description = "Get all currencies")
+  @GetMapping
+  public List<Currency> getCurrencies() {
+    return currencyService.getCurrencies();
+  }
 }

@@ -9,6 +9,7 @@ import java.util.Base64;
  * The generated key is a Base64 string which can be used as a JWT secret key.
  * The generated key should be kept secret and used for
  * signing and verifying JWT tokens in your application.
+ *
  * <p>
  *  Written with assistance from AI
  */
