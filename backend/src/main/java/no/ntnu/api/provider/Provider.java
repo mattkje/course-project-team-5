@@ -1,5 +1,6 @@
 package no.ntnu.api.provider;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import no.ntnu.api.course.Course;
 
@@ -16,12 +17,15 @@ public class Provider {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Schema(description = "The provider id")
   private int providerId;
 
   @Column
+  @Schema(description = "The provider name")
   private String name;
 
   @ManyToMany(mappedBy = "providers")
+  @Schema(description = "The provider courses")
   private List<Course> courses = new ArrayList<>();
 
   /**

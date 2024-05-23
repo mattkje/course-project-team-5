@@ -1,5 +1,6 @@
 package no.ntnu.api.user;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import no.ntnu.api.config.*;
 import no.ntnu.api.course.userCourses.UserCourses;
 import no.ntnu.api.role.Role;
@@ -39,6 +40,7 @@ public class UserController {
      * @return A list of all users
      */
     @GetMapping
+    @Schema(description = "Returns all users")
     public ResponseEntity<?> getAllUsers() {
         if(userService.isAdmin()) {
             return ResponseEntity.status(HttpStatus.OK).body(userService.getAllUsers());
@@ -53,6 +55,7 @@ public class UserController {
      * @param request The registration request
      */
     @PostMapping("/register")
+    @Schema(description = "Adds user to database")
     public ResponseEntity<String> register(@RequestBody RegistrationRequest request) {
         String errorMessage = userService.tryCreateNewUser(request.getUsername(), request.getPassword(),
                 request.getEmail(), request.getFirstName(), request.getLastName(), request.getPhoneNumber());
@@ -72,6 +75,7 @@ public class UserController {
      * @return The authentication response
      */
     @PostMapping("/login")
+    @Schema(description = "Authenticates user")
     public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequest authenticationRequest) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
@@ -93,6 +97,7 @@ public class UserController {
      * @return The profile of the user
      */
     @GetMapping("/{username}")
+    @Schema(description = "Get the profile of a user.")
     public ResponseEntity<?> getProfile(@PathVariable String username) {
         if(userService.getSessionUser() != null) {
             if(userService.isAdmin() || userService.getSessionUser().user().getUsername().equals(username)){
@@ -116,6 +121,7 @@ public class UserController {
      * @throws InterruptedException
      */
     @PutMapping("/{username}")
+    @Schema(description = "Update the profile of a user.")
     public ResponseEntity<String> updateProfile(@PathVariable String username, @RequestBody UserProfileDto profileData)
             throws InterruptedException {
         UserWithCourses sessionUser = userService.getSessionUser();
@@ -147,6 +153,7 @@ public class UserController {
      * @return The response
      */
     @PutMapping("/{username}/change-password")
+    @Schema(description = "Change the password of a user")
     public ResponseEntity<?> changePassword(@PathVariable String username, @RequestBody ChangePasswordRequest details) {
         if(details.getNewPassword().length() < 8) {
             return new ResponseEntity<>("Password must be at least 8 characters long", HttpStatus.BAD_REQUEST);
@@ -167,6 +174,7 @@ public class UserController {
     }
 
     @PutMapping("/{username}/change-image")
+    @Schema(description = "Changes image in database")
     public ResponseEntity<?> changeProfilePicture(@PathVariable String username, @RequestBody String image) {
         UserWithCourses sessionUser = userService.getSessionUser();
         if (sessionUser != null && sessionUser.user().getUsername().equals(username)) {
@@ -180,6 +188,7 @@ public class UserController {
     }
 
     @GetMapping("/{username}/image")
+    @Schema(description = "Gets image from database")
     public ResponseEntity<?> getProfilePicture(@PathVariable String username) {
         return new ResponseEntity<>(userService.getImage(username), HttpStatus.OK);
     }
@@ -191,6 +200,7 @@ public class UserController {
      * @return The response
      */
     @DeleteMapping("/{username}")
+    @Schema(description = "Delete a user.")
     public ResponseEntity<?> deleteUser(@PathVariable String username) {
         for(User user : userService.getAllUsers()) {
             if(user.getUsername().equals(username)) {
@@ -214,6 +224,7 @@ public class UserController {
      * @return The response
      */
     @PostMapping("/{username}/add-role")
+    @Schema(description = "Add a role to a user.")
     public ResponseEntity<?> addRole(@PathVariable String username, @RequestBody String role) {
         if(userService.isAdmin()) {
             userService.addRole(username, role);
@@ -231,6 +242,7 @@ public class UserController {
      * @return The response
      */
     @DeleteMapping("/{username}/delete-role")
+    @Schema(description = "Delete a role from a user.")
     public ResponseEntity<?> deleteRole(@PathVariable String username, @RequestBody String role) {
         if(userService.isAdmin()) {
             userService.deleteRole(username, role);
@@ -246,6 +258,7 @@ public class UserController {
      * @return The response
      */
     @PostMapping("/refresh-token")
+    @Schema(description = "Refresh a jwt token.")
     public ResponseEntity<?> refreshToken(@RequestBody TokenRefreshRequest tokenRefreshRequest) {
         try {
             String refreshToken = tokenRefreshRequest.getRefreshToken();
@@ -268,6 +281,7 @@ public class UserController {
      * @return The response
      */
     @PutMapping("/purchase-pro/{subscriptionType}")
+    @Schema(description = "Allow user to buy a pro subscription.")
     public ResponseEntity<?> purchasePro(@PathVariable String subscriptionType) {
         UserWithCourses sessionUser = userService.getSessionUser();
         if (sessionUser != null) {
@@ -282,6 +296,7 @@ public class UserController {
     }
 
     @PutMapping("/unsubscribe")
+    @Schema(description = "Unsubscribes a user")
     public ResponseEntity<?> unsubscribe() {
         UserWithCourses sessionUser = userService.getSessionUser();
         if (sessionUser != null) {
@@ -299,6 +314,7 @@ public class UserController {
      * Check for expired subscriptions and remove pro role if expired.
      */
     @Scheduled(cron = "0 0 0 * * ?")
+    @Schema(description = "Check for expired subscriptions and remove pro role if expired.")
     public void checkExpiredSubscriptions() {
         LocalDate now = LocalDate.now();
         List<User> usersWithExpiredSubscriptions = userService.findBySubscriptionEndDateBefore(now);
@@ -309,6 +325,7 @@ public class UserController {
     }
 
     @PostMapping("/add-course/{courseId}")
+    @Schema(description = "Adds course to database")
     public ResponseEntity<?> addCourse(@PathVariable int courseId) {
         UserWithCourses sessionUser = userService.getSessionUser();
         if (sessionUser != null) {
@@ -319,6 +336,7 @@ public class UserController {
     }
 
     @DeleteMapping("/delete-course/{courseId}")
+    @Schema(description = "Deletes course from database")
     public ResponseEntity<?> deleteCourse(@PathVariable int courseId) {
         UserWithCourses sessionUser = userService.getSessionUser();
         if (sessionUser != null) {

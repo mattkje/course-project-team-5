@@ -1,5 +1,6 @@
 package no.ntnu.api.keywords;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
 /**
@@ -11,10 +12,12 @@ import jakarta.persistence.*;
 public class Keywords {
 
   @Id
+  @Schema(description = "The keyword id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int keywordId;
 
   @Column
+  @Schema(description = "The keyword name")
   private String keywordName;
 
   /**
