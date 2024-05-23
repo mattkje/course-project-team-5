@@ -16,32 +16,22 @@ const store = useStore();
 const cartItemCount = computed(() => myStore.getters.cartItemCount);
 
 
-function onTokenRefreshSuccess() {
-  console.log("Token has been refreshed.");
-  sendApiRequest(API_URL,"GET", "/users/" + user.username, onProfileDataSuccess);
-}
 
-function onTokenRefreshError(error) {
-  console.error("Error refreshing token: ", error);
-  window.location.href = ("/no-access");
-}
 
 async function loadProfileData() {
-  if(getAuthenticatedUser()) {
-    console.log("Loading profile data from API...");
-    const jwt = getCookie("jwt");
-    if (jwt && isTokenAboutToExpire(jwt)) {
-      sendTokenRefreshRequest(onTokenRefreshSuccess, onTokenRefreshError);
-    } else {
-      await sendApiRequest(API_URL,"GET", "/users/" + user.username, onProfileDataSuccess);
-    }
+  const response = await fetch(API_URL + '/users/' + user.username + '/image');
+  const imageString = await response.text();
+  if (isValidBase64(imageString)) {
+    document.getElementById("profile-picture").src = 'data:image/jpeg;base64,' + imageString;
+    document.getElementById("mobile-profile-picture").src = 'data:image/jpeg;base64,' + imageString;
   }
 }
 
-function onProfileDataSuccess(data) {
-  document.getElementById("profile-picture").src = 'data:image/jpeg;base64,' + data.user.image;
-  document.getElementById("mobile-profile-picture").src = 'data:image/jpeg;base64,' + data.user.image;
+function isValidBase64(base64String) {
+  const base64Regex = /^[A-Za-z0-9+/=]+$/;
+  return base64Regex.test(base64String);
 }
+
 
 
 const integertest = 0;
@@ -130,7 +120,7 @@ function setDefaultCurrency() {
           </router-link>
           <router-link v-if="getAuthenticatedUser() === null" to="/login" class="fancy-button">Log&nbsp;in</router-link>
           <router-link to="/profile" v-else class="profile">
-            <img id="profile-picture" alt="Cart">
+            <img id="profile-picture" src="/nopfp.svg" alt="Cart">
           </router-link>
         </div>
       </div>
@@ -155,7 +145,7 @@ function setDefaultCurrency() {
             </router-link>
             <router-link v-if="getAuthenticatedUser() === null" to="/login" class="mobile-login-button">Log&nbsp;in</router-link>
             <router-link to="/profile" v-else class="mobile-profile">
-              <img id="mobile-profile-picture" src="/account.svg">
+              <img id="mobile-profile-picture" src="/nopfp.svg">
             </router-link>
           </div>
         </div>
@@ -425,6 +415,7 @@ function setDefaultCurrency() {
 .profile img {
   width: 40px;
   height: 40px;
+  object-fit: cover;
   border-radius: 50%;
 }
 
@@ -438,6 +429,7 @@ function setDefaultCurrency() {
 .mobile-profile img {
   width: 40px;
   height: 40px;
+  object-fit: cover;
   border-radius: 50%;
 }
 

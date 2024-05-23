@@ -182,7 +182,6 @@ async function updateCartTotal() {
 
   const totalCostElement = document.createElement("p");
   totalCostElement.innerText = "Total: " + symbol + " " + totalCost.toFixed(2);
-  totalCostElement.style.fontWeight = "bold";
   totalPrice.appendChild(totalCostElement);
 }
 
@@ -243,7 +242,7 @@ async function updateCartTotal() {
     </div>
   </div>
   <div class="right-content">
-    <p>cart items</p>
+    <p class="totalTitle">Cart items</p>
     <p class="totalItems"></p>
     <p class="totalPrice"></p>
   </div>
@@ -252,58 +251,142 @@ async function updateCartTotal() {
 
 <style scoped>
 
-h4 {
-  margin: 50px 0 20px 0;
-  font-size: 50px;
-  color: black;
+
+@media (max-width: 769px) {
+  .parent-container {
+    background-color: var(--light-3);
+    margin: 0;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+  }
+
+  .express-payment {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    width: 100%;
+    margin: 40px auto;
+    padding: 20px;
+    border: 2px solid var(--light-2);
+    border-radius: 20px;
+  }
+
+  .express-payment button {
+    width: 50%;
+    margin: 5px auto;
+    align-content: center;
+    font-weight: bold;
+  }
+
+  .left-content {
+    display: flex;
+    flex-direction: column;
+    width: 93%;
+    margin: auto;
+  }
+
+  .left-content h4 {
+    color: var(--dark-1);
+  }
+
+  .right-content {
+    display: flex;
+    flex-direction: column;
+    background-color: #000000;
+    padding: 10px;
+    text-align: right;
+    border-radius: 20px;
+    margin: 10px auto auto auto;
+    width: 93%;
+  }
+
+  .totalTitle {
+    text-align: left;
+    font-family: Inter, sans-serif !important;
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffffff;
+  }
+
+  .totalItems {
+    font-family: Inter, sans-serif !important;
+    font-size: 17px;
+    color: #b0b0b0;
+  }
+
+  .totalPrice {
+    font-family: Inter, sans-serif !important;
+    font-weight: 900;
+    font-size: 23px;
+    color: white;
+  }
+
+  .form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  .edandcvv input[type="text"] {
+    width: 100%;
+    margin: 0;
+  }
 }
 
-h5 {
-  background-color: black;
-  color: white;
-  padding: 10px;
-  border-radius: 15px;
-  margin: 30px 0;
-}
+@media (min-width: 769px) {
+  .parent-container {
+    background-color: var(--light-3);
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+  }
 
-.parent-container {
-  background-color: var(--light-3);
-  margin: 0;
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  height: 100%;
-}
+  .express-payment {
+    display: flex;
+    margin: 40px auto;
+    padding: 20px;
+    border: 2px solid var(--light-2);
+    border-radius: 20px;
+  }
 
-.left-content {
-  display: flex;
-  flex-direction: column;
-  width: 1000px;
-  margin: auto;
-}
+  .express-payment button {
+    align-content: center;
+    font-weight: bold;
+  }
 
-.right-content {
-  display: flex;
-  flex-direction: row;
-  background-color: white;
-  width: 600px;
-}
+  .left-content {
+    display: flex;
+    flex-direction: column;
+    width: 1000px;
+    margin: auto;
+  }
 
-.express-payment {
-  display: flex;
-  margin: 40px auto;
-  padding: 20px;
-  border: 2px solid var(--light-2);
-  border-radius: 20px;
-}
+  .right-content {
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+    width: 600px;
+  }
 
-.express-payment button {
-  align-content: center;
-  font-weight: bold;
-}
+  .form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
 
-.center-container {
-
+  .edandcvv input[type="text"] {
+    width: 480px;
+    margin: 0;
+  }
 }
 
 .cwc-box {
@@ -334,13 +417,7 @@ h5 {
   color: #333;
 }
 
-.form-group input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
+
 
 button {
   width: 100%;
@@ -408,10 +485,7 @@ textarea {
   justify-content: space-between;
 }
 
-.edandcvv input[type="text"] {
-  width: 480px;
-  margin: 0;
-}
+
 
 .express-payment img {
   width: 50%;
