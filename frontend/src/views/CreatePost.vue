@@ -46,110 +46,104 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import {getAuthenticatedUser} from '@/js/authentication'; // Assuming the correct path
 import Guidelines from "@/components/Guidelines.vue";
 import {getCookie} from "@/js/tools";
 import {sendApiRequest} from "@/js/requests";
-import {getCurrentInstance} from "vue";
+import {computed, getCurrentInstance, onMounted, reactive, ref} from "vue";
 
+const { appContext } = getCurrentInstance();
+const API_URL = appContext.config.globalProperties.$apiAddress;
+const showGuidelinesModal = ref(false);
+const post = ref({
+  title: '',
+  author: '',
+  category: '',
+  description: '',
+  content: '',
+  postDate: '',
+  image: ''
+});
 
+onMounted(() => {
+  const currentUser = getAuthenticatedUser();
+  if (!currentUser) {
+    window.location.href = ('/login');
+}});
 
-export default {
-  components: {Guidelines},
-  mounted() {
-    const currentUser = getAuthenticatedUser();
-    if (!currentUser) {
-      window.location.href = ('/login');
-    }
-  },
-  setup() {
-    const { appContext } = getCurrentInstance();
-    const API_URL = appContext.config.globalProperties.$apiAddress;
-  },
-  data() {
-    return {
-      showGuidelinesModal: false,
-      post: {
-        title: '',
-        author: '',
-        category: '',
-        description: '',
-        content: '',
-        postDate: '',
-        image: ''
-      }
-    };
-  },
-  computed: {
-    remainingCharacters() {
-      return 6000 - this.post.content.length;
-    }
-  },
-  methods: {
-    insertText(text, field) {
-      const textarea = document.getElementById(field);
-      const startPos = textarea.selectionStart;
-      const endPos = textarea.selectionEnd;
-      const textBefore = textarea.value.substring(0, startPos);
-      const textAfter = textarea.value.substring(endPos, textarea.value.length);
-      if (text.includes("#")) {
-        textarea.value = textBefore + text + textarea.value.substring(startPos, endPos);
-      } else {
-        textarea.value = textBefore + text + textarea.value.substring(startPos, endPos) + text + textAfter;
-      }
-      textarea.focus();
-      textarea.setSelectionRange(startPos + text.length, endPos + text.length);
-    },
-    toggleGuidelinesModal() {
-      this.showGuidelinesModal = !this.showGuidelinesModal;
-    },
-    createPost() {
-      const currentUser = getAuthenticatedUser();
-      if (!currentUser) {
-        console.error('User not authenticated');
-        return;
-      }
+computed(remainingCharacters);
 
-      this.post.author = currentUser.username;
-      this.post.postDate = new Date().toISOString();
-      const token = getCookie('jwt');
+function remainingCharacters() {
+  return 6000 - this.post.content.length;
+}
 
-      fetch( 'https://localhost:8443/api/community/courses', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + token,
-        },
-        body: JSON.stringify(this.post)
-      })
-          .then(response => {
-            if (!response.ok) {
-              console.log(response);
-              throw new Error('Failed to create post');
-            }
-            console.log('Post created successfully');
-            alert('Post created successfully!');
-            this.resetForm();
-            sendApiRequest(API_URL,'GET', '/community/courses', success, error);
-          })
-          .catch(error => {
-            console.error('Error creating post:', error);
-          });
-    },
-    resetForm() {
-      this.post = {
-        title: '',
-        author: '',
-        category: '',
-        description: '',
-        content: '',
-        postDate: '',
-        image: ''
-      };
-    }
+function insertText(text, field) {
+  const textarea = document.getElementById(field);
+  const startPos = textarea.selectionStart;
+  const endPos = textarea.selectionEnd;
+  const textBefore = textarea.value.substring(0, startPos);
+  const textAfter = textarea.value.substring(endPos, textarea.value.length);
+  if (text.includes("#")) {
+    textarea.value = textBefore + text + textarea.value.substring(startPos, endPos);
+  } else {
+    textarea.value = textBefore + text + textarea.value.substring(startPos, endPos) + text + textAfter;
   }
-};
+  textarea.focus();
+  textarea.setSelectionRange(startPos + text.length, endPos + text.length);
+}
+
+function toggleGuidelinesModal() {
+  this.showGuidelinesModal = !this.showGuidelinesModal;
+}
+
+function createPost() {
+  const currentUser = getAuthenticatedUser();
+  if (!currentUser) {
+    console.error('User not authenticated');
+    return;
+  }
+
+  post.value.author = currentUser.username;
+  post.value.postDate = new Date().toISOString();
+  const token = getCookie('jwt');
+
+  fetch( API_URL + '/community/courses', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token,
+    },
+    body: JSON.stringify(post.value)
+  })
+      .then(response => {
+        if (!response.ok) {
+          console.log(response);
+          throw new Error('Failed to create post');
+        }
+        console.log('Post created successfully');
+        alert('Post created successfully!');
+        resetForm();
+        sendApiRequest(API_URL,'GET', '/community/courses', success, error);
+      })
+      .catch(error => {
+        console.error('Error creating post:', error);
+      });
+}
+
+function resetForm() {
+  this.post = {
+    title: '',
+    author: '',
+    category: '',
+    description: '',
+    content: '',
+    postDate: '',
+    image: ''
+  };
+}
+
+const components = reactive({Guidelines});
 
 function success(data) {
   let recentPost = data[data.length - 1];
