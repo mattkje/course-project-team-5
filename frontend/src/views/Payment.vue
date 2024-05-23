@@ -3,6 +3,7 @@ import Alert from "@/components/Alert.vue";
 import {getCurrentInstance, ref} from "vue";
 import {setDefaultCurrency} from "@/js/currency";
 import {fetchCourseById, fetchCurrencies} from "@/js/populationTools";
+import {getCookie} from "@/js/tools";
 
 const {appContext} = getCurrentInstance();
 
@@ -171,6 +172,13 @@ async function updateCartTotal() {
     let price = prices[i] * rate;
     totalCost += price;
   }
+
+  const couponCodeApplied = getCookie("coupon");
+  const couponCodeAppliedMessage = document.createElement("p");
+  couponCodeAppliedMessage.innerText = "Coupon applied: " + couponCodeApplied.toUpperCase() + " (20% off)";
+  totalPrice.appendChild(couponCodeAppliedMessage);
+
+  totalCost *= 0.8;
 
   const totalCostElement = document.createElement("p");
   totalCostElement.innerText = "Total: " + symbol + " " + totalCost.toFixed(2);
