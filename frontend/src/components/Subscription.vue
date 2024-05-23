@@ -301,7 +301,7 @@ function error() {
     transition-duration: .5s;
   }
 }
-#monthly-purchase-button {;
+#monthly-purchase-button {
   min-width: 188px;
 }
 
