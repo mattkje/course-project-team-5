@@ -4,10 +4,13 @@ import {getCurrentInstance, ref} from "vue";
 import {setDefaultCurrency} from "@/js/currency";
 import {fetchCourseById, fetchCurrencies} from "@/js/populationTools";
 import {getCookie} from "@/js/tools";
+import PaymentSuccess from "@/components/PaymentSuccess.vue";
+import paymentSuccess from "@/components/PaymentSuccess.vue";
 
 const {appContext} = getCurrentInstance();
 
 const showAlert = ref(true);
+const paymentSuccessful = ref(false);
 const cardNumber = ref("");
 const cardHolder = ref("");
 const expiryDate = ref("");
@@ -75,7 +78,7 @@ const validateForm = () => {
     return false;
   }
   alert("Payment details are valid");
-  // Further form submission logic goes here
+  paymentSuccessful.value = true;
 };
 
 async function populateCart() {
@@ -193,8 +196,9 @@ async function updateCartTotal() {
 </script>
 
 <template>
+  <PaymentSuccess v-show="paymentSuccessful"/>
   <Alert v-show="showAlert === true" title="Disclaimer" message=" This page is for demonstration purposes only. It is not functional, and any information entered will not be processed or stored." :buttons="['Understood']" @buttonClicked="handleButtonClick"></Alert>
-<div class="parent-container">
+<div v-show="!paymentSuccessful" class="parent-container">
   <div class="left-content">
     <h4>LEARNIVERSE</h4>
     <div class="center-container">
@@ -371,6 +375,11 @@ async function updateCartTotal() {
     flex-direction: column;
     width: 1000px;
     margin: auto;
+  }
+
+  .left-content h4{
+    margin-top: 50px;
+    color: var(--dark-1);
   }
 
   .right-content {
