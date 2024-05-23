@@ -3,7 +3,7 @@ import {getCurrentInstance, onMounted, ref} from 'vue';
 import {doLogout, getAuthenticatedUser, hasRole, removeRole} from "@/js/authentication";
 import {sendApiRequest, sendTokenRefreshRequest} from "@/js/requests";
 import {createContentBox, fetchCourseById, fetchCourses, fetchCurrencies, fetchProviders} from "@/js/populationTools";
-import {getCookie, isTokenAboutToExpire} from "@/js/tools";
+import {getCookie, isTokenAboutToExpire, setCookie} from "@/js/tools";
 import {currency, setDefaultCurrency} from "@/js/currency";
 
 let price = 0;
@@ -13,9 +13,19 @@ const {appContext} = getCurrentInstance();
 const API_URL = appContext.config.globalProperties.$apiAddress;
 
 
-
-//Cookie test
 async function applyCoupon() {
+  const couponCode = document.getElementsByClassName("couponText")[0].value;
+
+  if (!couponCode || !couponCode.trim()) {
+    alert("Please enter a valid coupon code");
+    return;
+  } else {
+    setCookie("coupon", couponCode, 1)
+    alert("Coupon code applied successfully! You have received a 20% discount on your purchase.")
+  }
+  //remove
+  updateCartTotal();
+  console.log(couponCode);
 }
 
 onMounted(async () => {
@@ -238,6 +248,19 @@ async function updateCartTotal() {
     totalCost += price;
   }
 
+  const appliedCouponCode = getCookie("coupon");
+
+  if (appliedCouponCode !== null) {
+    totalCost *= 0.8;
+    console.log("wtf");
+  }
+
+  const couponCodeApplied = getCookie("coupon");
+  const couponCodeAppliedMessage = document.createElement("p");
+  couponCodeAppliedMessage.innerText = "Coupon applied: " + couponCodeApplied.toUpperCase() + " (20% off)";
+  totalPrice.appendChild(couponCodeAppliedMessage);
+
+
   const totalCostElement = document.createElement("p");
   totalCostElement.innerText = "Total: " + symbol + " " + totalCost.toFixed(2);
   totalCostElement.style.fontWeight = "bold";
@@ -336,7 +359,7 @@ function editCourseCard(object, course) {
           <h1>Coupon Code</h1>
           <p>You can apply a coupon code to get a discount on your purchase.</p>
           <div class="options">
-            <input type="text" placeholder="Enter coupon code here"/>
+            <input type="text" class="couponText" placeholder="Enter coupon code here"/>
             <br>
             <button @click="applyCoupon">Apply</button>
           </div>
