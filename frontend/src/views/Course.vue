@@ -226,7 +226,13 @@ function populateCoursePage() {
                       document.getElementById('enrollButton').className = 'pro-enroll-button'
                       document.getElementById('enrollButton').textContent = "Go to Course";
                     } else {
+                      document.getElementById('enrollButton').className = 'pro-enroll-button'
                       document.getElementById('enrollButton').textContent = "Enroll for " + symbol + finalPrice.toFixed(2) + "/month";
+                      const enrollButton = document.getElementById('enrollButton');
+
+                      enrollButton.addEventListener('click', () => {
+                        window.location.href = '/pro';
+                      });
                     }
 
                     initMap(provider.latitude, provider.longitude);
