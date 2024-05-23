@@ -105,12 +105,12 @@ async function add1MonthSubscription() {
 }
 
 async function add3MonthsSubscription() {
-  if(getAuthenticatedUser()) await sendApiRequest(API_URL,'PUT', '/users/purchase-pro/3-month', successfulExecution, error);
+  if(getAuthenticatedUser()) await sendApiRequest(API_URL,'PUT', '/users/purchase-pro/3-months', successfulExecution, error);
   else emit('show-alert');
 }
 
 async function add12MonthsSubscription() {
-  if(getAuthenticatedUser()) await sendApiRequest(API_URL,'PUT', '/users/purchase-pro/12-month', successfulExecution, error);
+  if(getAuthenticatedUser()) await sendApiRequest(API_URL,'PUT', '/users/purchase-pro/12-months', successfulExecution, error);
   else emit('show-alert');
 }
 
