@@ -337,10 +337,6 @@ function onSuccess(data) {
 @media (max-width: 1100px) {
   .course-block {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-auto-rows: auto;
-    gap: 10px;
-    overflow-y: auto;
     grid-column-gap: 30px;
     padding-top: 20px;
     justify-content: center;

@@ -285,7 +285,7 @@ hr {
             background: var(--light-1);
             border-radius: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 93%;
+            width: 90%;
             height: 150px;
             max-height: 150px;
             text-decoration: none;
@@ -303,10 +303,9 @@ hr {
             flex-direction: column;
             justify-content: flex-start;
             align-items: flex-start;
-            margin: 10px;
-            max-height: 150px;
+            margin: 0 5px;
             width: 100%;
-            text-wrap: nowrap;
+
             overflow: hidden;
         }
 
@@ -357,6 +356,8 @@ hr {
             color: white !important;
             font-weight: bold;
             text-align: center;
+            max-height: 30px;
+            margin-top: 10px;
             align-content: center;
             width: 200px;
         }

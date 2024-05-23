@@ -26,7 +26,7 @@ const handleButtonClick = () => {
 };
 
 const validateCardNumber = (number) => {
-  const regex = /^\d{4} \d{4} \d{4} \d{4}(?: \d{3})?$/; // Example for 16-digit card numbers with optional 3-digit ending
+  const regex = /^\d{4} \d{4} \d{4} \d{4}(?: \d{3})?$/;
   return regex.test(number);
 };
 
@@ -36,7 +36,7 @@ const validateExpiryDate = (date) => {
 
   const today = new Date();
   const month = parseInt(date.split('/')[0], 10);
-  const year = parseInt(date.split('/')[1], 10) + 2000; // Assuming 20xx format
+  const year = parseInt(date.split('/')[1], 10) + 2000;
 
   if (year < today.getFullYear()) return false;
   if (year === today.getFullYear() && month < (today.getMonth() + 1)) return false;
@@ -77,7 +77,6 @@ const validateForm = () => {
     alert("Invalid CVV");
     return false;
   }
-  alert("Payment details are valid");
   paymentSuccessful.value = true;
 };
 

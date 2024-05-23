@@ -756,6 +756,7 @@ function loadButtons() {
     position: relative;
     height: 390px;
     width: 270px;
+    min-width: 270px;
     margin: 30px;
     border: 1px solid #ffffff;
     padding: 20px 20px 40px 20px;
