@@ -1,12 +1,14 @@
 package no.ntnu.tools;
 
-import java.util.Base64;
 import java.security.SecureRandom;
+import java.util.Base64;
+
 
 /**
  * The SecretKeyGenerator class is a utility class that generates a key.
  * The generated key is a Base64 string which can be used as a JWT secret key.
- * The generated key should be kept secret and used for signing and verifying JWT tokens in your application.
+ * The generated key should be kept secret and used for
+ * signing and verifying JWT tokens in your application.
  */
 public class SecretKeyGenerator {
   /**

@@ -1,9 +1,9 @@
 package no.ntnu.api.course;
 
+import java.util.List;
 import no.ntnu.api.keywords.CourseKeywords;
 import no.ntnu.api.provider.CourseProvider;
 
-import java.util.List;
 
 /**
  * Represents a course with its providers and keywords.

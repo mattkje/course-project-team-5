@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -33,5 +32,6 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
 Collection<Course> findAllByProviderName(@Param("providerName") String providerName);
 
   @Query("SELECT c FROM Course c WHERE c.start_date >= :start AND c.end_date <= :end")
-  Collection<Course> findAllByStartDateGreaterThanEqualAndEndDateLessThanEqual(@Param("start") LocalDate start, @Param("end") LocalDate end);
+  Collection<Course> findAllByStartDateGreaterThanEqualAndEndDateLessThanEqual(
+      @Param("start") LocalDate start, @Param("end") LocalDate end);
 }

@@ -12,84 +12,84 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "currencies")
 public class Currency {
-    @Id
-    private String code;
-    @Column()
-    private String name;
-    @Column()
-    private String symbol;
-    @Column(precision = 10, scale = 2)
-    private BigDecimal rate;
+  @Id
+  private String code;
+  @Column()
+  private String name;
+  @Column()
+  private String symbol;
+  @Column(precision = 10, scale = 2)
+  private BigDecimal rate;
 
-    /**
-     * Get the code of the currency.
-     *
-     * @return The code of the currency
-     */
-    public String getCode() {
-        return code;
-    }
+  /**
+   * Get the code of the currency.
+   *
+   * @return The code of the currency
+   */
+  public String getCode() {
+    return code;
+  }
 
-    /**
-     * Set the code of the currency.
-     *
-     * @param code The code of the currency
-     */
-    public void setCode(String code) {
-        this.code = code;
-    }
+  /**
+   * Set the code of the currency.
+   *
+   * @param code The code of the currency
+   */
+  public void setCode(String code) {
+    this.code = code;
+  }
 
-    /**
-     * Get the name of the currency.
-     *
-     * @return The name of the currency
-     */
-    public String getName() {
-        return name;
-    }
+  /**
+   * Get the name of the currency.
+   *
+   * @return The name of the currency
+   */
+  public String getName() {
+    return name;
+  }
 
-    /**
-     * Set the name of the currency.
-     *
-     * @param name The name of the currency
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
+  /**
+   * Set the name of the currency.
+   *
+   * @param name The name of the currency
+   */
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    /**
-     * Get the symbol of the currency.
-     *
-     * @return The symbol of the currency
-     */
-    public String getSymbol() {
-        return symbol;
-    }
+  /**
+   * Get the symbol of the currency.
+   *
+   * @return The symbol of the currency
+   */
+  public String getSymbol() {
+    return symbol;
+  }
 
-    /**
-     * Set the symbol of the currency.
-     *
-     * @param symbol The symbol of the currency
-     */
-    public void setSymbol(String symbol) {
-        this.symbol = symbol;
-    }
+  /**
+   * Set the symbol of the currency.
+   *
+   * @param symbol The symbol of the currency
+   */
+  public void setSymbol(String symbol) {
+    this.symbol = symbol;
+  }
 
-    /**
-     * Get the rate of the currency.
-     *
-     * @return The rate of the currency
-     */
-    public BigDecimal getRate() {
-        return rate;
-    }
+  /**
+   * Get the rate of the currency.
+   *
+   * @return The rate of the currency
+   */
+  public BigDecimal getRate() {
+    return rate;
+  }
 
-    /**
-     * Set the rate of the currency.
-     *
-     * @param rate The rate of the currency
-     */
-    public void setRate(BigDecimal rate) {
-        this.rate = rate;
-    }
+  /**
+   * Set the rate of the currency.
+   *
+   * @param rate The rate of the currency
+   */
+  public void setRate(BigDecimal rate) {
+    this.rate = rate;
+  }
 }

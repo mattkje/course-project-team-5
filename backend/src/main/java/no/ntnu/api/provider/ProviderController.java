@@ -1,5 +1,6 @@
 package no.ntnu.api.provider;
 
+import java.util.List;
 import no.ntnu.api.config.AccessUserService;
 import no.ntnu.api.course.Course;
 import no.ntnu.api.course.CourseService;
@@ -8,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/providers")
@@ -19,7 +19,8 @@ public class ProviderController {
   private final AccessUserService userService;
 
   @Autowired
-  public ProviderController(ProviderService providerService, CourseService courseService, AccessUserService userService) {
+  public ProviderController(ProviderService providerService,
+                            CourseService courseService, AccessUserService userService) {
     this.providerService = providerService;
     this.courseService = courseService;
     this.userService = userService;
@@ -55,23 +56,27 @@ public class ProviderController {
   }
 
   /**
-   * Posts a new provider into the API, the provider cannot be null and responds with status
+   * Posts a new provider into the API, the provider cannot be null and responds with status.
+   *
+   *
    * @param courseId The id of the course
    * @param provider The provider to be added into the database
    * @return either a bad request or created status.
    */
   @PostMapping("{courseId}")
-  public ResponseEntity<CourseProvider> postProvider(@PathVariable int courseId, @RequestBody CourseProvider provider) {
-    if(provider == null && userService.isAdmin()) {
+  public ResponseEntity<CourseProvider> postProvider(@PathVariable int courseId,
+                                                     @RequestBody CourseProvider provider) {
+    if (provider == null && userService.isAdmin()) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-    }else {
+    } else {
       courseService.postProvider(courseId, provider);
       return ResponseEntity.status(HttpStatus.CREATED).body(provider);
     }
   }
 
   @GetMapping("/api/courses/{courseId}/providers/{providerId}/price")
-  public ResponseEntity<Double> getCoursePriceByProviderIdAndCourseId(@PathVariable int courseId, @PathVariable int providerId) {
+  public ResponseEntity<Double> getCoursePriceByProviderIdAndCourseId(
+      @PathVariable int courseId, @PathVariable int providerId) {
     double price;
     try {
       price = courseService.getCoursePriceByProviderIdAndCourseId(providerId, courseId);
@@ -84,9 +89,9 @@ public class ProviderController {
 
   @PostMapping
   public ResponseEntity<Provider> postProvider(@RequestBody Provider provider) {
-    if(provider == null && userService.isAdmin()) {
+    if (provider == null && userService.isAdmin()) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-    }else {
+    } else {
       providerService.addProvider(provider);
       return ResponseEntity.status(HttpStatus.CREATED).body(provider);
     }

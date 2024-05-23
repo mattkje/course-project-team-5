@@ -63,7 +63,8 @@ public class SecurityConfiguration {
     http
         .csrf(AbstractHttpConfigurer::disable)
         .cors(AbstractHttpConfigurer::disable)
-        .securityMatchers((matchers) -> matchers.requestMatchers("/api/users/login", "/api/users/register"))
+        .securityMatchers((matchers) ->
+            matchers.requestMatchers("/api/users/login", "/api/users/register"))
         .authorizeHttpRequests((requests) -> requests.anyRequest().permitAll())
         .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     return http.build();
@@ -74,7 +75,8 @@ public class SecurityConfiguration {
     http
             .cors(AbstractHttpConfigurer::disable)
             .csrf(AbstractHttpConfigurer::disable)
-            .securityMatchers((matchers) -> matchers.requestMatchers("/api/users/*/add-role", "/api/users/*/delete-role"))
+            .securityMatchers((matchers)
+                -> matchers.requestMatchers("/api/users/*/add-role", "/api/users/*/delete-role"))
             .authorizeHttpRequests((requests) -> requests.anyRequest().permitAll())
             .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     return http.build();

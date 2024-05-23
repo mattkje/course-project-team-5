@@ -1,15 +1,15 @@
 package no.ntnu.api.currency;
 
+import java.util.*;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
 
 /**
- * Service for currency operations
+ * Service for currency operations.
  */
 @Service
 public class CurrencyService {
-    private final CurrencyRepository currencyRepository;
+  private final CurrencyRepository currencyRepository;
 
   /**
    * Create a new currency service.
@@ -27,7 +27,7 @@ public class CurrencyService {
    * @return The currency with the given code, or null if not found
    */
   public Currency findByCode(String code) {
-      return currencyRepository.findByCode(code);
+    return currencyRepository.findByCode(code);
   }
 
   /**
