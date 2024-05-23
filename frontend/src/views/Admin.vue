@@ -223,7 +223,6 @@ function handleNavigateBack(value) {
     font-weight: bold;
     color: var(--light-2);
     font-size: 17px;
-    padding-left: 50px;
   }
 
   .nav-button {
