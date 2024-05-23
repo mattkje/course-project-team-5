@@ -1,0 +1,2299 @@
+{
+	"info": {
+		"_postman_id": "fc74d52e-55f7-4b6a-a9de-aaf434f4ff43",
+		"name": "Learniverse",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32839759"
+	},
+	"item": [
+		{
+			"name": "Get all users (w/o auth)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set('port', 8443);\r",
+							"pm.environment.set('link', \"https://localhost:\");"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{link}}{{port}}/api/users",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all courses (w/o auth)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"let response = pm.response.json();\r",
+							"pm.environment.set(\"course-id\", response[0].course.courseId);\r",
+							"pm.environment.set(\"category\", response[0].course.category);\r",
+							"pm.environment.set(\"providerId\", response[0].providers[0].provider.providerId);\r",
+							"pm.environment.set(\"level\", response[1].course.level);\r",
+							"pm.environment.set(\"course-size\", response[0].course.courseSize);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{link}}{{port}}/api/courses",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"courses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all keywords (w/o auth)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{link}}{{port}}/api/keywords",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"keywords"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all keywords for all courses",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{link}}{{port}}/api/courses/keywords",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"courses",
+						"keywords"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a course (w/o auth)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{link}}{{port}}/api/courses/{{course-id}}",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"courses",
+						"{{course-id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a course (w/o auth)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{link}}{{port}}/api/courses/{{course-id}}",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"courses",
+						"{{course-id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post a course (w/o auth)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Test Course\",\r\n    \"category\": \"Test Category\",\r\n    \"level\": \"Expert\",\r\n    \"closestCourseSession\": \"Test Date\",\r\n    \"courseSize\": 2.5,\r\n    \"hoursPerWeek\": 10,\r\n    \"relatedCertifications\": \"Test Certification\",\r\n    \"description\": \"Test Description\",\r\n    \"image\": \"Test Image\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{link}}{{port}}/api/courses",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"courses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get courses by category (w/o auth)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json();\r",
+							"let targetCategory = pm.environment.get(\"category\");\r",
+							"let allMatch = true;\r",
+							"\r",
+							"if(Array.isArray(response) && response.length > 0) {\r",
+							"    response.forEach((item => {\r",
+							"        if (item.category !== targetCategory) {\r",
+							"            allMatch = false;\r",
+							"        }\r",
+							"    }))\r",
+							"}\r",
+							"\r",
+							"pm.test(\"All items have matching category\", function () {\r",
+							"    pm.expect(allMatch).to.be.true;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{link}}{{port}}/api/courses/category/{{category}}",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"courses",
+						"category",
+						"{{category}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get courses by level (w/o auth)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json();\r",
+							"let targetLevel = pm.environment.get(\"level\");\r",
+							"let allMatch = true;\r",
+							"\r",
+							"if(Array.isArray(response) && response.length > 0) {\r",
+							"    response.forEach((item => {\r",
+							"        if (item.level !== targetLevel) {\r",
+							"            allMatch = false;\r",
+							"        }\r",
+							"    }))\r",
+							"}\r",
+							"\r",
+							"pm.test(\"All items have matching level\", function () {\r",
+							"    pm.expect(allMatch).to.be.true;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{link}}{{port}}/api/courses/level/{{level}}",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"courses",
+						"level",
+						"{{level}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get courses by courseSize (w/o auth)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json();\r",
+							"let targetCourseSize = pm.environment.get(\"course-size\");\r",
+							"let allMatch = true;\r",
+							"\r",
+							"if(Array.isArray(response) && response.length > 0) {\r",
+							"    response.forEach((item => {\r",
+							"        if (item.courseSize < targetCourseSize) {\r",
+							"            allMatch = false;\r",
+							"        }\r",
+							"    }))\r",
+							"}\r",
+							"\r",
+							"pm.test(\"All items same courseSize or bigger\", function () {\r",
+							"    pm.expect(allMatch).to.be.true;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{link}}{{port}}/api/courses/course_size/{{course-size}}",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"courses",
+						"course_size",
+						"{{course-size}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all community courses (w/o auth)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"let response = pm.response.json();\r",
+							"pm.environment.set(\"communityId\", response[0].courseId);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{link}}{{port}}/api/community/courses",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"community",
+						"courses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a community course (w/o auth)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"let matchingId = false;\r",
+							"\r",
+							"if (pm.response.json().courseId === pm.environment.get(\"communityId\")) matchingId = true;\r",
+							"\r",
+							"pm.test(\"communityId matches with responseId\", function () {\r",
+							"    pm.expect(matchingId).to.be.true;\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{link}}{{port}}/api/community/courses/{{communityId}}",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"community",
+						"courses",
+						"{{communityId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a community course (w/o auth)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{link}}{{port}}/api/community/courses/{{communityId}}",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"community",
+						"courses",
+						"{{communityId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post community course (w/o auth)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Test Course\",\r\n    \"author\": \"Test Author\",\r\n    \"category\": \"Test Category\",\r\n    \"description\": \"Test Description\",\r\n    \"content\": \"Test Content\",\r\n    \"image\": \"Test Image\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{link}}{{port}}/api/community/courses",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"community",
+						"courses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all providers (w/o auth)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"let response = pm.response.json();\r",
+							"\r",
+							"pm.environment.set(\"providerId2\", response[0].providerId);\r",
+							"pm.environment.set(\"providerName\", response[0].name);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{link}}{{port}}/api/providers",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"providers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a provider by id (w/o auth)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"let matchingId = false;\r",
+							"\r",
+							"if (pm.response.json().providerId === pm.environment.get(\"providerId2\")) matchingId = true;\r",
+							"\r",
+							"pm.test(\"providerId matches with responseId\", function () {\r",
+							"    pm.expect(matchingId).to.be.true;\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{link}}{{port}}/api/providers/{{providerId2}}",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"providers",
+						"{{providerId2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get courses by providerName",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{link}}{{port}}/api/courses/provider/{{providerName}}",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"courses",
+						"provider",
+						"{{providerName}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get courses by providerId (w/o auth)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{link}}{{port}}/api/providers/{{providerId2}}/courses",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"providers",
+						"{{providerId2}}",
+						"courses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get providerId by name (w/o auth)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"let matchingId = false;\r",
+							"\r",
+							"if (pm.response.json() === pm.environment.get(\"providerId2\")) matchingId = true;\r",
+							"\r",
+							"pm.test(\"response matches with id of same provider\", function () {\r",
+							"    pm.expect(matchingId).to.be.true;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{link}}{{port}}/api/providers/name/{{providerName}}",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"providers",
+						"name",
+						"{{providerName}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New user, short password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"testuser\",\r\n    \"password\": \"123\",\r\n    \"email\": \"testuser@example.com\",\r\n    \"firstName\": \"Test\",\r\n    \"lastName\": \"User\",\r\n    \"phoneNumber\": \"1234567890\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{link}}{{port}}/api/users/register",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.environment.set(\"username\", \"testuser\");"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"testuser\",\r\n  \"password\": \"testpassword\",\r\n  \"email\": \"testuser@example.com\",\r\n  \"firstName\": \"Test\",\r\n  \"lastName\": \"User\",\r\n  \"phoneNumber\": \"1234567890\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{link}}{{port}}/api/users/register",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.environment.set('token', pm.response.json().jwt)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"testuser\",\r\n    \"password\": \"testpassword\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{link}}{{port}}/api/users/login",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all users (w/ auth)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"url": {
+					"raw": "{{link}}{{port}}/api/users",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get user (w/ auth)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"let matchingId = false;\r",
+							"\r",
+							"if (pm.response.json().user.username === pm.environment.get(\"username\")) matchingId = true;\r",
+							"\r",
+							"pm.test(\"response matches with the same username\", function () {\r",
+							"    pm.expect(matchingId).to.be.true;\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "{{link}}{{port}}/api/users/{{username}}",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"{{username}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a course (w/ auth)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"url": {
+					"raw": "{{link}}{{port}}/api/courses/{{course-id}}",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"courses",
+						"{{course-id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post a course (w/ auth)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Test Course\",\r\n    \"category\": \"Test Category\",\r\n    \"level\": \"Test Level\",\r\n    \"closestCourseSession\": \"Test Date\",\r\n    \"courseSize\": 2.5,\r\n    \"hoursPerWeek\": 10,\r\n    \"relatedCertifications\": \"Test Certification\",\r\n    \"description\": \"Test Description\",\r\n    \"image\": \"Test image\",\r\n    \"providers\": {}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{link}}{{port}}/api/courses",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"courses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a post (w/ auth)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"url": {
+					"raw": "{{link}}{{port}}/api/community/courses/{{communityId}}",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"community",
+						"courses",
+						"{{communityId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post community course (w/ auth)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"let response = pm.response.json();\r",
+							"\r",
+							"pm.environment.set(\"communityPostId\", response.courseId);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Test Course\",\r\n    \"author\": \"testuser\",\r\n    \"category\": \"Test Category\",\r\n    \"description\": \"Test Description\",\r\n    \"content\": \"Test Content\",\r\n    \"postDate\": \"2024-05-17\",\r\n    \"image\": \"Test Image\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{link}}{{port}}/api/community/courses",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"community",
+						"courses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete the created post (w/ auth)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"url": {
+					"raw": "{{link}}{{port}}/api/community/courses/{{communityPostId}}",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"community",
+						"courses",
+						"{{communityPostId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Change user's password (too short)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"oldPassword\": \"testpassword\",\r\n  \"newPassword\": \"123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{link}}{{port}}/api/users/{{username}}/change-password",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"{{username}}",
+						"change-password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Change user's password (w/ authentication)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"oldPassword\": \"testpassword\",\r\n  \"newPassword\": \"newtestpassword\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{link}}{{port}}/api/users/testuser/change-password",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"testuser",
+						"change-password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login with new password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.environment.set('token', pm.response.json().jwt)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"testuser\",\r\n    \"password\": \"newtestpassword\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{link}}{{port}}/api/users/login",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add role (w/ authentication)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "ROLE_ADMIN",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{link}}{{port}}/api/users/{{username}}/add-role",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"{{username}}",
+						"add-role"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete role (w/ authentication)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "ROLE_USER",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{link}}{{port}}/api/users/{{username}}/delete-role",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"{{username}}",
+						"delete-role"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Purchase pro (w/ authentication)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"url": {
+					"raw": "{{link}}{{port}}/api/users/purchase-pro/1-month",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"purchase-pro",
+						"1-month"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Repeat purchase",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"url": {
+					"raw": "{{link}}{{port}}/api/users/purchase-pro/1-month",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"purchase-pro",
+						"1-month"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete registered user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"User successfully deleted\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"url": {
+					"raw": "{{link}}{{port}}/api/users/{{username}}",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"{{username}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login to admin account",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.environment.set('adminToken', pm.response.json().jwt)\r",
+							"pm.environment.set('adminUsername', \"chuck\");"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"chuck\",\r\n    \"password\": \"Nunchucks2024\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{link}}{{port}}/api/users/login",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all courses w/ admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{adminToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{link}}{{port}}/api/courses",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"courses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get newest course w/ admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{adminToken}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{link}}{{port}}/api/courses/newest",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"courses",
+						"newest"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all users w/ admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{adminToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{link}}{{port}}/api/users",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get another user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{adminToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{link}}{{port}}/api/users/{{adminUsername}}",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"{{adminUsername}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register new user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.environment.set(\"username\", \"testuser\");"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"testuser\",\r\n  \"password\": \"testpassword\",\r\n  \"email\": \"testuser@example.com\",\r\n  \"firstName\": \"Test\",\r\n  \"lastName\": \"User\",\r\n  \"phoneNumber\": \"1234567890\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{link}}{{port}}/api/users/register",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add a role to another user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{adminToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "ROLE_ADMIN",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{link}}{{port}}/api/users/{{username}}/add-role",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"{{username}}",
+						"add-role"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete the newly added role",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{adminToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "ROLE_ADMIN",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{link}}{{port}}/api/users/{{username}}/delete-role",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"{{username}}",
+						"delete-role"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete new user w/ admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{adminToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{link}}{{port}}/api/users/{{username}}",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"{{username}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create course w/ admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.environment.set(\"adminCourse\", pm.response.json().courseId);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{adminToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Test Course\",\r\n    \"category\": \"Test Category\",\r\n    \"level\": \"Test Level\",\r\n    \"startDate\": \"2024-05-20\",\r\n    \"endDate\": \"2024-05-22\",\r\n    \"courseSize\": 2.5,\r\n    \"hoursPerWeek\": 10,\r\n    \"relatedCertifications\": \"Test Certification\",\r\n    \"description\": \"Test Description\",\r\n    \"image\": \"Test image\",\r\n    \"providers\": {}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{link}}{{port}}/api/courses",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"courses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update course to be inactive w/ admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{adminToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{link}}{{port}}/api/courses/active/{{adminCourse}}",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"courses",
+						"active",
+						"{{adminCourse}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete course w/ admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{adminToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{link}}{{port}}/api/courses/{{adminCourse}}",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"courses",
+						"{{adminCourse}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create post w/ admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.environment.set(\"adminPost\", pm.response.json().courseId);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{adminToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Test Course\",\r\n    \"author\": \"testuser\",\r\n    \"category\": \"Test Category\",\r\n    \"description\": \"Test Description\",\r\n    \"content\": \"Test Content\",\r\n    \"postDate\": \"2024-05-17\",\r\n    \"image\": \"Test Image\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{link}}{{port}}/api/community/courses",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"community",
+						"courses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete post w/ admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{adminToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{link}}{{port}}/api/community/courses/{{adminPost}}",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"community",
+						"courses",
+						"{{adminPost}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add course to user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{adminToken}}"
+					}
+				],
+				"url": {
+					"raw": "{{link}}{{port}}/api/users/add-course/2",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"add-course",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a new provider",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Test provider added to provider table\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.name).to.eql(\"test provider\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{adminToken}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"test provider\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{link}}{{port}}/api/providers",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"providers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Creating new keyword",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.environment.set(\"keywordId\", pm.response.json().id);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{adminToken}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"keyword\": \"test keyword\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{link}}{{port}}/api/courses/keyword",
+					"host": [
+						"{{link}}{{port}}"
+					],
+					"path": [
+						"api",
+						"courses",
+						"keyword"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
