@@ -459,76 +459,175 @@ hr {
 
 }
 
-.course-card-cart {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    margin: 10px;
-    width: 100%;
-    text-decoration: none;
-
-    transition: transform 0.1s ease;
-
-    &:hover {
-        transform: scale(1.01);
+@media (max-width: 769px) {
+    .course-table {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        max-width: 400px;
     }
-}
 
-.course-block-cart {
-    display: flex;
-    width: 100%;
-    margin: auto;
-}
+    .course-card-cart {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        margin: 10px;
+        max-width: 380px;
+        text-decoration: none;
 
+        transition: transform 0.1s ease;
 
-.left-cart-section {
-    display: flex;
-}
-
-.right-cart-section {
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    margin: auto 0;
-}
-
-.left-cart-info {
-    margin-left: 10px;
-}
-
-.left-cart-info p {
-    color: var(--dark-3);
-}
-
-.course-image {
-    border-radius: 10px;
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-}
-
-.cart-item-price {
-    margin: auto 10px auto 0;
-    text-wrap: nowrap;
-}
-
-.cart-item-remove {
-    font-family: 'Inter', sans-serif;
-    font-weight: bold;
-    color: #ffffff;
-    font-size: 15px;
-    padding: 5px 10px;
-    background: #000000;
-    border: none;
-    align-items: center;
-    justify-content: center;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: all .5s;
-
-    &:active {
-        transform: scale(0.95);
-        transition-duration: .5s;
+        &:hover {
+            transform: scale(1.01);
+        }
     }
+
+    .course-block-cart {
+        display: flex;
+        width: 100%;
+        margin: auto;
+    }
+
+
+    .left-cart-section {
+        display: flex;
+    }
+
+    .right-cart-section {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-content: center;
+        margin: 20px 0;
+    }
+
+    .left-cart-info {
+        margin-left: 10px;
+    }
+
+    .left-cart-info h3 {
+        font-size: 16px;
+    }
+
+    .left-cart-info p {
+        color: var(--dark-3);
+    }
+
+    .course-image {
+        border-radius: 10px;
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+    }
+
+    .cart-item-price {
+        margin: auto 10px auto 0;
+        text-wrap: nowrap;
+    }
+
+    .cart-item-remove {
+        font-family: 'Inter', sans-serif;
+        font-weight: bold;
+        color: #ffffff;
+        font-size: 15px;
+        padding: 5px 10px;
+        background: #000000;
+        border: none;
+        align-items: center;
+        justify-content: center;
+        border-radius: 15px;
+        cursor: pointer;
+        transition: all .5s;
+
+        &:active {
+            transform: scale(0.95);
+            transition-duration: .5s;
+        }
+    }
+
+}
+
+@media (min-width: 769px) {
+    .course-table {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        width: 90%;
+    }
+
+    .course-card-cart {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin: 10px;
+        width: 100%;
+        text-decoration: none;
+
+        transition: transform 0.1s ease;
+
+        &:hover {
+            transform: scale(1.01);
+        }
+    }
+
+    .course-block-cart {
+        display: flex;
+        width: 100%;
+        margin: auto;
+    }
+
+
+    .left-cart-section {
+        display: flex;
+    }
+
+    .right-cart-section {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        margin: auto 0;
+    }
+
+    .left-cart-info {
+        margin-left: 10px;
+    }
+
+    .left-cart-info p {
+        color: var(--dark-3);
+    }
+
+    .course-image {
+        border-radius: 10px;
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+    }
+
+    .cart-item-price {
+        margin: auto 10px auto 0;
+        text-wrap: nowrap;
+    }
+
+    .cart-item-remove {
+        font-family: 'Inter', sans-serif;
+        font-weight: bold;
+        color: #ffffff;
+        font-size: 15px;
+        padding: 5px 10px;
+        background: #000000;
+        border: none;
+        align-items: center;
+        justify-content: center;
+        border-radius: 15px;
+        cursor: pointer;
+        transition: all .5s;
+
+        &:active {
+            transform: scale(0.95);
+            transition-duration: .5s;
+        }
+    }
+
 }

@@ -150,7 +150,6 @@ async function addCourseToCart(courseList, course, price, courseId, name, symbol
 
   const row = document.createElement("tr");
   row.classList.add("course-card-cart");
-  row.style.cursor = "pointer";
 
   const courseName = document.createElement("h3");
   courseName.innerText = course.course.title;
@@ -310,8 +309,7 @@ async function updateCourseToCartTotal() {
 }
 
 function editCourseCard(object, course) {
-  object.style.minWidth = "500px";
-  object.style.minHeight = "50px";
+
   object.onclick = function () {
     window.location.href = ("/courses/?id=" + course.course.courseId);
   };
@@ -500,12 +498,7 @@ function editCourseCard(object, course) {
   margin-bottom: 10px;
 }
 
-.course-table {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  width: 90%;
-}
+
 
 
 
