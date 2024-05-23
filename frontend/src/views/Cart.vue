@@ -12,8 +12,6 @@ import ShoppingCart from "@/components/ShoppingCart.vue";
 const cartText = ref('Your cart is empty');
 
 
-
-
 </script>
 
 

@@ -13,7 +13,6 @@ const API_URL = appContext.config.globalProperties.$apiAddress;
 
 async function applyCoupon() {
   const couponCode = document.getElementsByClassName("couponText")[0].value;
-
   if (!couponCode || !couponCode.trim()) {
     alert("Please enter a valid coupon code");
     return;
