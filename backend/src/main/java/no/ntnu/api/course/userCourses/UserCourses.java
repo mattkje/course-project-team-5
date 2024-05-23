@@ -1,6 +1,7 @@
 package no.ntnu.api.course.userCourses;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import no.ntnu.api.course.Course;
 
@@ -9,13 +10,16 @@ import no.ntnu.api.course.Course;
 public class UserCourses {
 
   @Id
+  @Schema(description = "The user course id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "user_course_id")
   private int userCourseId;
 
+  @Schema(description = "The user id")
   @Column(name = "user_id")
   private int userId;
 
+  @Schema(description = "The course id")
   @ManyToOne
   @JoinColumn(name = "course_id")
   private Course course;

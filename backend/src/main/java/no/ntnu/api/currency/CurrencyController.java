@@ -1,5 +1,6 @@
 package no.ntnu.api.currency;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +29,7 @@ public class CurrencyController {
      *
      * @return List of currencies
      */
+    @Schema(description = "Get all currencies")
     @GetMapping
     public List<Currency> getCurrencies() {
         return currencyService.getCurrencies();

@@ -1,6 +1,7 @@
 package no.ntnu.api.keywords;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
 /**
@@ -13,14 +14,17 @@ import jakarta.persistence.*;
 @Table(name = "course_keywords")
 public class CourseKeywords {
 
+    @Schema(description = "The course keyword id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "course_keyword_id")
     private int courseKeywordId;
 
+    @Schema(description = "The course id")
     @Column(name = "course_id")
     private int courseId;
 
+    @Schema(description = "The keyword id")
     @Column(name = "keyword_id")
     private int keyword;
 
