@@ -500,19 +500,6 @@ function handleButtonClick() {
 <template>
   <Alert v-if="showAlert" title="User required" message="Please log in to enroll in a course" :buttons="['OK']" @buttonClicked="handleButtonClick" />
   <div class="course-page-background" v-show="!addProvider">
-
-    <div class="administrator" v-show="hasRole('ROLE_ADMIN')">
-      <div id="title">
-        <p>Admin View</p>
-        <hr>
-      </div>
-      <div class="administrator-content">
-        <div class="active-status">
-          <p>Active status: <span id="active"></span></p>
-          <button class="fancy-button" @click="changeActive">Change status</button>
-        </div>
-      </div>
-    </div>
     <div v-show="!loading" class="courseLinkElement">
       <a href="/">Courses</a>
       <p>&nbsp;->&nbsp;</p>
@@ -692,11 +679,12 @@ function handleButtonClick() {
   }
 
   .featured {
+    padding: 20px;
     justify-content: flex-start;
     align-content: center;
     width: 100%;
     height: min-content;
-    margin: 0;
+    margin: 20px 0;
     display: flex;
     flex-direction: row;
     overflow: auto;
@@ -761,7 +749,7 @@ function handleButtonClick() {
     border-radius: 20px;
     padding: 20px;
     width: 90%;
-    margin:auto auto 40px auto;
+    margin: 0 auto;
     flex-direction: column;
     align-items: center;
 
@@ -865,7 +853,7 @@ function handleButtonClick() {
     border-radius: 20px;
     padding: 20px;
     width: 1000px;
-    margin:auto auto 40px auto;
+    margin: 0 auto;
     flex-direction: column;
     align-items: center;
   }
@@ -891,7 +879,6 @@ function handleButtonClick() {
 .course-page-background {
   font-family: Inter, sans-serif;
   background-color: var(--light-3);
-  color: #090909;
   margin: 0;
   padding: 0;
 }
