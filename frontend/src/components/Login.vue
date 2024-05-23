@@ -188,7 +188,7 @@ function goToMainPage() {
 
   .login-box {
     height: min-content;
-    background: linear-gradient(#f3f3ff -0%, #ede9ff 100%);
+    background: var(--light-1);
     backdrop-filter: blur(5px);
     border: 2px solid #ffffff;
     box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
@@ -209,14 +209,15 @@ function goToMainPage() {
 
   .login-prompt {
     color: var(--dark-1);
-    width: 400px;
-    height: 40px;
+    font-family: Inter, sans-serif;
+    width: 100%;
+    height: 70px;
+    border-radius: 15px;
+    padding: 20px;
     border: none;
-    background-color: var(--light-1);
-    border-radius: 10px;
-    font-size: 12px;
+    font-size: 17px;
+    background-color: var(--light-3);
     margin: 10px 0;
-    box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.2);
   }
 
   .header-button {
@@ -237,26 +238,25 @@ function goToMainPage() {
     display: none;
   }
 
-  .standard-button {
-    width: 100%;
-    height: 40px;
-    color: var(--dark-1);
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    font-size: 15px;
-    display: flex;
-    justify-content: center;
+  button {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    color: #ffffff;
+    font-size: 20px;
+    background: #000000;
+    border: none;
     align-items: center;
-    text-decoration: none;
-    background: var(--light-1);
-    border: 0.5px solid #ffffff;
-    transition: all 0.2s ease-in-out;
-    box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 1px 1px rgba(0, 0, 0, .25);
-    &:hover {
-      background-color: var(--light-3);
-      box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
-      cursor: pointer;
+    justify-content: center;
+    width: 100%;
+    height: 70px;
+    border-radius: 15px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all .5s;
+
+    &:active {
+      transform: scale(0.95);
+      transition-duration: .5s;
     }
   }
 
@@ -264,9 +264,10 @@ function goToMainPage() {
     margin-left: 20px;
     color: var(--dark-1);
     font-family: 'Inter', sans-serif;
-    font-size: 13px;
-
+    font-size: 17px;
+    font-weight: bold;
   }
+
   .logo {
     width: 60px;
     height: 60px;

@@ -65,34 +65,37 @@ function goToLogin() {
             <h4 class="logo-top">Learniverse&nbsp;</h4>
             <h4 class="logo-bottom">Connect</h4>
           </router-link>
-          <div class="login-text-field">
-            <label for="username">Username*:</label>
-            <input v-model="username" class="login-prompt" type="text" id="username" name="username" placeholder="Enter a username" maxlength="16" required autofocus/>
+          <div class="field-flow">
+            <div class="login-text-field">
+              <label for="username">Username*:</label>
+              <input v-model="username" class="login-prompt" type="text" id="username" name="username" placeholder="Enter a username" maxlength="16" required autofocus/>
+            </div>
+            <div class="login-text-field">
+              <label for="password">Password*:</label>
+              <input v-model="password" class="login-prompt" type="password" id="password" name="password" placeholder="Enter a password" maxlength="64" required autofocus/>
+            </div>
+            <div class="login-text-field">
+              <label for="repeatPassword">Repeat password*:</label>
+              <input v-model="repeatPassword" class="login-prompt" type="password" id="repeatPassword" name="repeatPassword" placeholder="Repeat the password" maxlength="64" required autofocus>
+            </div>
+            <div class="login-text-field">
+              <label for="firstName">First Name*:</label>
+              <input v-model="firstName" class="login-prompt" type="text" id="firstName" name="firstName" placeholder="Enter your first name" maxlength="20" x required autofocus/>
+            </div>
+            <div class="login-text-field">
+              <label for="lastName">Last Name*:</label>
+              <input v-model="lastName" class="login-prompt" type="text" id="lastName" name="lastName" placeholder="Enter your last name" maxlength="20" required autofocus/>
+            </div>
+            <div class="login-text-field">
+              <label for="email">Email*:</label>
+              <input v-model="email" class="login-prompt" type="text" id="email" pattern=".+@.+" name="email" placeholder="Enter your email" maxlength="45" required autofocus/>
+            </div>
+            <div class="login-text-field">
+              <label for="phoneNumber">Phone Number:</label>
+              <input v-model="phoneNumber" class="login-prompt" type="text" id="phoneNumber" name="phoneNumber" placeholder="Enter your phone number" maxlength="20" required autofocus/>
+            </div>
           </div>
-          <div class="login-text-field">
-            <label for="password">Password*:</label>
-            <input v-model="password" class="login-prompt" type="password" id="password" name="password" placeholder="Enter a password" maxlength="64" required autofocus/>
-          </div>
-          <div class="login-text-field">
-            <label for="repeatPassword">Repeat password*:</label>
-            <input v-model="repeatPassword" class="login-prompt" type="password" id="repeatPassword" name="repeatPassword" placeholder="Repeat the password" maxlength="64" required autofocus>
-          </div>
-          <div class="login-text-field">
-            <label for="firstName">First Name*:</label>
-            <input v-model="firstName" class="login-prompt" type="text" id="firstName" name="firstName" placeholder="Enter your first name" maxlength="20" x required autofocus/>
-          </div>
-          <div class="login-text-field">
-            <label for="lastName">Last Name*:</label>
-            <input v-model="lastName" class="login-prompt" type="text" id="lastName" name="lastName" placeholder="Enter your last name" maxlength="20" required autofocus/>
-          </div>
-          <div class="login-text-field">
-            <label for="email">Email*:</label>
-            <input v-model="email" class="login-prompt" type="text" id="email" pattern=".+@.+" name="email" placeholder="Enter your email" maxlength="45" required autofocus/>
-          </div>
-          <div class="login-text-field">
-            <label for="phoneNumber">Phone Number:</label>
-            <input v-model="phoneNumber" class="login-prompt" type="text" id="phoneNumber" name="phoneNumber" placeholder="Enter your phone number" maxlength="20" required autofocus/>
-          </div>
+
 
           <button class="standard-button" type="submit" id="signup-button">Create user</button>
 
@@ -204,18 +207,20 @@ function goToLogin() {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 100%;
     margin-bottom: 0;
   }
 
 
   .login-box {
     height: min-content;
-    background: linear-gradient(#f3f3ff -0%, #ede9ff 100%);
+    background: var(--light-1);
     backdrop-filter: blur(5px);
     border: 2px solid #ffffff;
     box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
     display: flex;
+    width: 1000px;
+    justify-content: center;
     align-items: center;
     padding: 30px;
     border-radius: 20px;
@@ -225,21 +230,32 @@ function goToLogin() {
     margin-bottom: 20px;
   }
 
+  .field-flow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: auto;
+    gap: 10px;
+    overflow-y: auto;
+  }
+
+
   .login-field-box {
+
     align-items: center;
     margin-bottom: 10px;
   }
 
   .login-prompt {
     color: var(--dark-1);
-    width: 400px;
-    height: 40px;
+    font-family: Inter, sans-serif;
+    width: 300px;
+    height: 50px;
+    border-radius: 15px;
+    padding: 20px;
     border: none;
-    background-color: var(--light-1);
-    border-radius: 10px;
-    font-size: 12px;
+    font-size: 17px;
+    background-color: var(--light-3);
     margin: 10px 0;
-    box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.2);
   }
 
   .header-button {
@@ -260,26 +276,25 @@ function goToLogin() {
     display: none;
   }
 
-  .standard-button {
-    width: 100%;
-    height: 40px;
-    color: var(--dark-1);
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    font-size: 15px;
-    display: flex;
-    justify-content: center;
+  button {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    color: #ffffff;
+    font-size: 20px;
+    background: #000000;
+    border: none;
     align-items: center;
-    text-decoration: none;
-    background: var(--light-1);
-    border: 0.5px solid #ffffff;
-    transition: all 0.2s ease-in-out;
-    box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 1px 1px rgba(0, 0, 0, .25);
-    &:hover {
-      background-color: var(--light-3);
-      box-shadow: 0 -1px 0 rgba(0, 0, 0, .04), 0 2px 4px rgba(0, 0, 0, .25);
-      cursor: pointer;
+    justify-content: center;
+    width: 100%;
+    height: 70px;
+    border-radius: 15px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all .5s;
+
+    &:active {
+      transform: scale(0.95);
+      transition-duration: .5s;
     }
   }
 
@@ -287,14 +302,14 @@ function goToLogin() {
     margin-left: 20px;
     color: var(--dark-1);
     font-family: 'Inter', sans-serif;
-    font-size: 13px;
-
+    font-size: 17px;
+    font-weight: bold;
   }
+
   .logo {
     width: 60px;
     height: 60px;
-    margin: auto;
-
+    margin: 0;
   }
 
 }
