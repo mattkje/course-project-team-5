@@ -227,12 +227,6 @@ function populateCoursePage() {
                     const urlParams = new URLSearchParams(window.location.search);
                     const courseId = urlParams.get('id');
                     const buyButton = document.getElementById('enrollButton');
-                    if(getAuthenticatedUser() === null) {
-                      buyButton.classList.add('button-disabled');
-                      buyButton.classList.remove('enroll-button');
-                      showAlert.value = true;
-                      buyButton.style.pointerEvents = 'none';
-                    }
 
 
                     // True when a provider is selected, changes button style accordingly
@@ -551,7 +545,7 @@ function handleButtonClick() {
           <div class="course-action-box">
 
             <router-link to="/payment" id="enrollButton" :class="{'enroll-button': !isActive, 'enroll-button-active': isActive}">Buy now</router-link>
-            <button v-if="getAuthenticatedUser !== null" :class="{'cartButton': !isActive, 'cartButton-active': isActive}" id="cartButton">
+            <button :class="{'cartButton': !isActive, 'cartButton-active': isActive}" id="cartButton">
                     <span class="IconContainer">
                         <img class="cart-icon-small" src="/cart-small.svg" alt="Cart">
                     </span>
