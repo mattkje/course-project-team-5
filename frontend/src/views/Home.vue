@@ -530,6 +530,8 @@ function loadButtons() {
 </script>
 
 <style scoped>
+
+
 @media (max-width: 769px) {
 
   #scrollLeftButton,
@@ -752,6 +754,22 @@ function loadButtons() {
     display: none;
   }
 
+  .featured-providers-box {
+    border: none;
+    width: 100%;
+    justify-content: center;
+    align-content: center;
+    text-decoration: none;
+    display: flex;
+    flex-direction: row;
+    margin: 30px auto;
+  }
+
+  .featured-providers {
+    margin: 0 10px;
+  }
+
+
   .loader {
     position: relative;
     height: 390px;
@@ -915,6 +933,7 @@ ul {
 
 .pro-box h2 {
   color: white;
+  text-align: center;
 }
 
 .course-section {
@@ -1001,6 +1020,8 @@ input:focus {
 
 .pro-text {
   color: white;
+  text-align: center;
+  padding: 0 20px;
 }
 
 .content-container {
