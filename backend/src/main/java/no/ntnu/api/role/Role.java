@@ -1,6 +1,7 @@
 package no.ntnu.api.role;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,12 +22,15 @@ import java.util.Set;
 @Entity(name = "roles")
 @Table(name = "roles")
 public class Role {
+    @Schema(description = "The role id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Schema(description = "The role name")
     private String name;
 
+    @Schema(description = "The users that have this role")
     @JsonBackReference
     @ManyToMany(mappedBy = "roles")
     private Set<User> users = new LinkedHashSet<>();

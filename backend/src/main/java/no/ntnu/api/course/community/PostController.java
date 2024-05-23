@@ -1,5 +1,6 @@
 package no.ntnu.api.course.community;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Collection;
 
 import no.ntnu.api.config.AccessUserService;
@@ -32,6 +33,7 @@ public class PostController {
      * @param id id representing a course. All id's are different.
      * @return a Http response either containing the course with matching id or a NOT FOUND response.
      */
+    @Schema(description = "Returns the post that has the matching id as the path variable.")
     @GetMapping("/api/community/courses/{id}")
     public ResponseEntity<Post> getCourse(@PathVariable int id) {
         if(postService.getCourseInfo(id) != null) {
@@ -41,6 +43,7 @@ public class PostController {
         }
     }
 
+    @Schema(description = "Deletes the post that has the matching id as the path variable.")
     @DeleteMapping("/api/community/courses/{id}")
     public ResponseEntity<String> deleteCourse(@PathVariable int id) {
         if(getCourse(id) == null) {
@@ -63,6 +66,7 @@ public class PostController {
      * @return a collection of all the courses in the database.
      */
 
+    @Schema(description = "Returns all the courses in the database.")
     @GetMapping("/api/community/courses")
     public Collection<Post> getCourses() {
         return postService.getAllCourses();
@@ -74,6 +78,7 @@ public class PostController {
      * @param post The post to create.
      * @return ResponseEntity indicating success or failure.
      */
+    @Schema(description = "Creates a new course.")
     @PostMapping("/api/community/courses")
     public ResponseEntity<Post> postCourse(@RequestBody Post post) {
         if(post != null && (userService.isUser() || userService.isAdmin() ||userService.isPro() )) {

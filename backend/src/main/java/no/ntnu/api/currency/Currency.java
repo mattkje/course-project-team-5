@@ -1,5 +1,6 @@
 package no.ntnu.api.currency;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 
@@ -12,12 +13,16 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "currencies")
 public class Currency {
+    @Schema(description = "The currency code / abbreviation")
     @Id
     private String code;
+    @Schema(description = "The currency name")
     @Column()
     private String name;
+    @Schema(description = "The currency symbol")
     @Column()
     private String symbol;
+    @Schema(description = "The currency exchange rate")
     @Column(precision = 10, scale = 2)
     private BigDecimal rate;
 

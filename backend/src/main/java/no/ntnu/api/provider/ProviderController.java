@@ -1,5 +1,6 @@
 package no.ntnu.api.provider;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import no.ntnu.api.config.AccessUserService;
 import no.ntnu.api.course.Course;
 import no.ntnu.api.course.CourseService;
@@ -25,11 +26,13 @@ public class ProviderController {
     this.userService = userService;
   }
 
+  @Schema(description = "Get all providers")
   @GetMapping
   public List<Provider> getAllProviders() {
     return providerService.getAllProviders();
   }
 
+  @Schema(description = "Get a provider by id")
   @GetMapping("/{id}")
   public ResponseEntity<Provider> getProviderById(@PathVariable Integer id) {
     return providerService.getProviderById(id)
@@ -37,6 +40,7 @@ public class ProviderController {
         .orElse(ResponseEntity.notFound().build());
   }
 
+  @Schema(description = "Get all courses by provider id")
   @GetMapping("/{providerId}/courses")
   public ResponseEntity<List<Course>> getCoursesByProvider(@PathVariable Long providerId) {
     List<Course> courses = courseService.getCoursesByProviderId(providerId);
@@ -47,6 +51,7 @@ public class ProviderController {
     }
   }
 
+  @Schema(description = "Get a provider by name")
   @GetMapping("/name/{name}")
   public ResponseEntity<Long> getProviderIdByName(@PathVariable String name) {
     return providerService.getProviderIdByName(name)
@@ -60,6 +65,7 @@ public class ProviderController {
    * @param provider The provider to be added into the database
    * @return either a bad request or created status.
    */
+  @Schema(description = "Post a provider")
   @PostMapping("{courseId}")
   public ResponseEntity<CourseProvider> postProvider(@PathVariable int courseId, @RequestBody CourseProvider provider) {
     if(provider == null && userService.isAdmin()) {
@@ -70,6 +76,7 @@ public class ProviderController {
     }
   }
 
+  @Schema(description = "Get the price of a course given a provider id and a course id")
   @GetMapping("/api/courses/{courseId}/providers/{providerId}/price")
   public ResponseEntity<Double> getCoursePriceByProviderIdAndCourseId(@PathVariable int courseId, @PathVariable int providerId) {
     double price;
@@ -82,6 +89,7 @@ public class ProviderController {
     return ResponseEntity.status(HttpStatus.OK).body(price);
   }
 
+  @Schema(description = "Post a provider")
   @PostMapping
   public ResponseEntity<Provider> postProvider(@RequestBody Provider provider) {
     if(provider == null && userService.isAdmin()) {

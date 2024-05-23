@@ -1,5 +1,6 @@
 package no.ntnu.api.user;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import no.ntnu.api.config.*;
 import no.ntnu.api.course.userCourses.UserCourses;
 import no.ntnu.api.role.Role;
@@ -38,6 +39,7 @@ public class UserController {
      *
      * @return A list of all users
      */
+    @Schema(description = "Get all users")
     @GetMapping
     public ResponseEntity<?> getAllUsers() {
         if(userService.isAdmin()) {
@@ -52,6 +54,7 @@ public class UserController {
      *
      * @param request The registration request
      */
+    @Schema(description = "Register a new user")
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody RegistrationRequest request) {
         String errorMessage = userService.tryCreateNewUser(request.getUsername(), request.getPassword(),
@@ -71,6 +74,7 @@ public class UserController {
      * @param authenticationRequest The authentication request
      * @return The authentication response
      */
+    @Schema(description = "Authenticate a user")
     @PostMapping("/login")
     public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequest authenticationRequest) {
         try {
@@ -92,6 +96,7 @@ public class UserController {
      * @param username The username of the user
      * @return The profile of the user
      */
+    @Schema(description = "Get the profile of a user")
     @GetMapping("/{username}")
     public ResponseEntity<?> getProfile(@PathVariable String username) {
         if(userService.getSessionUser() != null) {
@@ -115,6 +120,7 @@ public class UserController {
      * @return The response
      * @throws InterruptedException
      */
+    @Schema(description = "Update the profile of a user")
     @PutMapping("/{username}")
     public ResponseEntity<String> updateProfile(@PathVariable String username, @RequestBody UserProfileDto profileData)
             throws InterruptedException {
@@ -146,6 +152,7 @@ public class UserController {
      * @param details The new password
      * @return The response
      */
+    @Schema(description = "Change the password of a user")
     @PutMapping("/{username}/change-password")
     public ResponseEntity<?> changePassword(@PathVariable String username, @RequestBody ChangePasswordRequest details) {
         if(details.getNewPassword().length() < 8) {
@@ -166,6 +173,7 @@ public class UserController {
         }
     }
 
+    @Schema(description = "Change the profile picture of a user")
     @PutMapping("/{username}/change-image")
     public ResponseEntity<?> changeProfilePicture(@PathVariable String username, @RequestBody String image) {
         UserWithCourses sessionUser = userService.getSessionUser();
@@ -178,7 +186,7 @@ public class UserController {
             return new ResponseEntity<>("Profile data for other users not accessible!", HttpStatus.FORBIDDEN);
         }
     }
-
+    @Schema(description = "Get the profile picture of a user")
     @GetMapping("/{username}/image")
     public ResponseEntity<?> getProfilePicture(@PathVariable String username) {
         return new ResponseEntity<>(userService.getImage(username), HttpStatus.OK);
@@ -190,6 +198,7 @@ public class UserController {
      * @param username The username of the user
      * @return The response
      */
+    @Schema(description = "Delete a user")
     @DeleteMapping("/{username}")
     public ResponseEntity<?> deleteUser(@PathVariable String username) {
         for(User user : userService.getAllUsers()) {
@@ -213,6 +222,7 @@ public class UserController {
      * @param role The role to add
      * @return The response
      */
+    @Schema(description = "Add a role to a user")
     @PostMapping("/{username}/add-role")
     public ResponseEntity<?> addRole(@PathVariable String username, @RequestBody String role) {
         if(userService.isAdmin()) {
@@ -230,6 +240,7 @@ public class UserController {
      * @param role The role to delete
      * @return The response
      */
+    @Schema(description = "Delete a role from a user")
     @DeleteMapping("/{username}/delete-role")
     public ResponseEntity<?> deleteRole(@PathVariable String username, @RequestBody String role) {
         if(userService.isAdmin()) {
@@ -245,6 +256,7 @@ public class UserController {
      * @param tokenRefreshRequest The refresh token request
      * @return The response
      */
+    @Schema(description = "Refresh a jwt token")
     @PostMapping("/refresh-token")
     public ResponseEntity<?> refreshToken(@RequestBody TokenRefreshRequest tokenRefreshRequest) {
         try {
@@ -267,6 +279,7 @@ public class UserController {
      * @param subscriptionType The type of subscription
      * @return The response
      */
+    @Schema(description = "Allow user to buy a pro subscription")
     @PutMapping("/purchase-pro/{subscriptionType}")
     public ResponseEntity<?> purchasePro(@PathVariable String subscriptionType) {
         UserWithCourses sessionUser = userService.getSessionUser();
@@ -281,6 +294,7 @@ public class UserController {
         }
     }
 
+    @Schema(description = "Unsubscribe from a pro subscription")
     @PutMapping("/unsubscribe")
     public ResponseEntity<?> unsubscribe() {
         UserWithCourses sessionUser = userService.getSessionUser();
@@ -298,6 +312,7 @@ public class UserController {
     /**
      * Check for expired subscriptions and remove pro role if expired.
      */
+    @Schema(description = "Check for expired subscriptions and remove pro role if expired")
     @Scheduled(cron = "0 0 0 * * ?")
     public void checkExpiredSubscriptions() {
         LocalDate now = LocalDate.now();
@@ -308,6 +323,7 @@ public class UserController {
         }
     }
 
+    @Schema(description = "Get all courses for a user")
     @PostMapping("/add-course/{courseId}")
     public ResponseEntity<?> addCourse(@PathVariable int courseId) {
         UserWithCourses sessionUser = userService.getSessionUser();
@@ -318,6 +334,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Profile data accessible only to authenticated users");
     }
 
+    @Schema(description = "Delete a course for a user")
     @DeleteMapping("/delete-course/{courseId}")
     public ResponseEntity<?> deleteCourse(@PathVariable int courseId) {
         UserWithCourses sessionUser = userService.getSessionUser();

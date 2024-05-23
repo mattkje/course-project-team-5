@@ -57,7 +57,8 @@ Vue.js is a progressive JavaScript framework for building user interfaces. Unlik
 Before you begin, ensure you have installed the latest version of Node.js.
 
  ```
-   Setup MySQL -  Setup New Connection - Host: localhost Port 3306 - User: root - Password: 'Your password'
+   Setup MySQL -  Setup New Connection - Host: localhost Port 3306
+   User: root - Password: 'Your password'
    run /backend/src/main/resources/db.migration/update-schema.sql
    run /backend/src/main/java/no/ntnu/Application (This has to be configured with a .env file, which is not provided)
 
