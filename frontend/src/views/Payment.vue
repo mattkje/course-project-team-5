@@ -285,7 +285,7 @@ async function updateCartTotal() {
   }
 
   .express-payment button {
-    width: 50%;
+    width: 200px;
     margin: 5px auto;
     align-content: center;
     font-weight: bold;
@@ -350,11 +350,13 @@ async function updateCartTotal() {
 @media (min-width: 769px) {
   .parent-container {
     background-color: var(--light-3);
-    margin: 0;
+    margin: auto;
     display: flex;
-    justify-content: space-between;
-    width: 100%;
-    height: 100%;
+    justify-content: flex-start;
+    align-content: flex-start;
+    padding: 50px;
+    width: 100vw;
+    height: 100vh;
   }
 
   .express-payment {
@@ -371,10 +373,14 @@ async function updateCartTotal() {
   }
 
   .left-content {
+    background-color: var(--light-1);
+    border-radius: 20px;
     display: flex;
+    padding: 20px;
     flex-direction: column;
     width: 1000px;
-    margin: auto;
+    height: 100%;
+    margin: auto 10px auto auto;
   }
 
   .left-content h4{
@@ -382,11 +388,35 @@ async function updateCartTotal() {
     color: var(--dark-1);
   }
 
+  .totalTitle {
+    text-align: left;
+    font-family: Inter, sans-serif !important;
+    font-size: 20px;
+    font-weight: bold;
+    color: #000000;
+  }
+
+  .totalItems {
+    font-family: Inter, sans-serif !important;
+    font-size: 17px;
+    color: #3b3b3b;
+  }
+
+  .totalPrice {
+    font-family: Inter, sans-serif !important;
+    font-weight: 900;
+    font-size: 23px;
+    color: #000000;
+  }
+
   .right-content {
+    border-radius: 20px;
+    background-color: var(--light-1);
     display: flex;
-    flex-direction: row;
-    background-color: white;
-    width: 600px;
+    flex-direction: column;
+    width: 500px;
+    padding: 20px;
+    margin: 0 auto auto 10px;
   }
 
   .form-group input {
@@ -396,9 +426,8 @@ async function updateCartTotal() {
     border-radius: 4px;
     box-sizing: border-box;
   }
-
   .edandcvv input[type="text"] {
-    width: 480px;
+    width: 100%;
     margin: 0;
   }
 }
