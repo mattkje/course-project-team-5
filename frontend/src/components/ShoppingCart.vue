@@ -255,9 +255,8 @@ async function updateCartTotal() {
     console.log("wtf");
   }
 
-  const couponCodeApplied = getCookie("coupon");
   const couponCodeAppliedMessage = document.createElement("p");
-  couponCodeAppliedMessage.innerText = "Coupon applied: " + couponCodeApplied.toUpperCase() + " (20% off)";
+  couponCodeAppliedMessage.innerText = "Coupon applied: " + appliedCouponCode.toUpperCase() + " (20% off)";
   totalPrice.appendChild(couponCodeAppliedMessage);
 
 

@@ -19,6 +19,9 @@ const cartItemCount = computed(() => myStore.getters.cartItemCount);
 
 
 async function loadProfileData() {
+  if(getAuthenticatedUser() === null) {
+    return;
+  }
   const response = await fetch(API_URL + '/users/' + user.username + '/image');
   const imageString = await response.text();
   if (isValidBase64(imageString)) {
@@ -114,7 +117,7 @@ function setDefaultCurrency() {
         <div class="right-content">
             <select aria-label="Currency" class="fancy-button" id="currencySelect">
             </select>
-          <router-link to="/cart" class="fancy-button-round" v-show="isAuthorized()">
+          <router-link to="/cart" class="fancy-button-round">
             <img class="cart" src="/cart.svg" alt="Cart">
             <span class="cart-count" v-if="integertest > 0">{{ integertest }}</span>
           </router-link>
