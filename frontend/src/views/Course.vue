@@ -551,7 +551,7 @@ function handleButtonClick() {
           <div class="course-action-box">
 
             <router-link to="/payment" id="enrollButton" :class="{'enroll-button': !isActive, 'enroll-button-active': isActive}">Buy now</router-link>
-            <button v-if="getAuthenticatedUser === null" :class="{'cartButton': !isActive, 'cartButton-active': isActive}" id="cartButton">
+            <button v-if="getAuthenticatedUser !== null" :class="{'cartButton': !isActive, 'cartButton-active': isActive}" id="cartButton">
                     <span class="IconContainer">
                         <img class="cart-icon-small" src="/cart-small.svg" alt="Cart">
                     </span>
